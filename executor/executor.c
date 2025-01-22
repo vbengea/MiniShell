@@ -66,9 +66,9 @@ int	main(int argc, char **argv, char **env)
 	(void) argc;
 	(void) argv;
 	(void) env;
-	(void) s;
 	(void) here_doc;
 	s = get_ast();
+	free(s);
 	return (0);
 }
 
