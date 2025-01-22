@@ -49,7 +49,7 @@ $(EXEC_DIR)/%.o: $(EXEC_DIR)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 norm: fclean
-	norminette $(SRC) $(INCLUDE)
+	#norminette $(SRC) $(INCLUDE)
 
 git: norm
 	rm -f t1

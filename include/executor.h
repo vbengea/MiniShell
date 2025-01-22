@@ -34,13 +34,20 @@ int		doexec(char *path, char **comm, char **arvp, int is_free);
 
 int		argument_index(char **argv);
 
+enum node_type {
+  AND,
+  OR,
+  PIPE,
+  EXEC
+};
+
 typedef struct s_node
 {
-	int				type;
+	enum node_type	type;
 	char			*value;
-	struct s_node	*left;
-	struct s_node	*base;
-	struct s_node	*right;
+	char 			*stdin
+	char			*stdout
+	struct s_node	**children;
 }	t_node;
 
 #endif
