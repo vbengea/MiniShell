@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/22 12:44:20 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:05:58 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+# include "libft/libft.h"
 
 int		execute(char *cmd, char **arvp);
 void	parent(int files[2], char **arvp, char **commands, int fd[2]);
