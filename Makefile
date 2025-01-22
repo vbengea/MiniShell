@@ -10,7 +10,7 @@ LFLAGS		:= 	$(LIBFT)
 
 EXEC_DIR			:=	executor
 INCLUDE		:= 	include/executor.h
-SRC			:= 	$(EXEC_DIR)/executor.c $(EXEC_DIR)/procecss.c $(EXEC_DIR)/utils.c
+SRC			:= 	$(EXEC_DIR)/executor.c $(EXEC_DIR)/process.c $(EXEC_DIR)/utils.c
 SRCB		:= 	exec
 
 OBJ 		:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC))
