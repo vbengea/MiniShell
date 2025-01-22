@@ -21,6 +21,32 @@
 
 # include "../libft/libft.h"
 
+typedef enum node_type {
+	AND,
+	OR,
+	PIPE,
+	EXEC
+}	node_type;
+
+typedef enum redirect {
+	IN,
+	OUT,
+	HEREDOC,
+	PIPEX,
+	STD
+}	redirect;
+
+typedef struct s_node
+{
+	enum node_type	type;
+	char			*value;
+	enum redirect	stdin;
+	enum redirect	stdout;
+	char 			*stdin_value;
+	char			*stdout_value;
+	struct s_node	**children;
+}	t_node;
+
 int		execute(char *cmd, char **arvp);
 void	parent(int files[2], char **arvp, char **commands, int fd[2]);
 void	children(int fd[2], int files[2], char **commands, char **arvp);
@@ -31,23 +57,11 @@ char	*environment(char *name, char **env);
 char	*find_path(char *cmd, char *env);
 void	cleanup(char *err, char **commands);
 int		doexec(char *path, char **comm, char **arvp, int is_free);
+int		has_blank(char *str);
 
-int		argument_index(char **argv);
+void	here_doc(int files[2], char *delimit, char *file2);
 
-typedef enum node_type {
-	AND,
-	OR,
-	PIPE,
-	EXEC
-}	node_type;
-
-typedef struct s_node
-{
-	enum node_type	type;
-	char			*value;
-	char 			*stdin;
-	char			*stdout;
-	struct s_node	**children;
-}	t_node;
+void	print_tree(t_node	*s);
+t_node*	get_tree();
 
 #endif

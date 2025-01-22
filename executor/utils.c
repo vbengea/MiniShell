@@ -75,6 +75,16 @@ void	cleanup(char *err, char **commands)
 	exit(1);
 }
 
+int	has_blank(char *str)
+{
+	if (ft_strchr(str, ' ') || ft_strchr(str, '\t' || ft_strchr(str, '\n') || \
+		ft_strchr(str, '\v' || ft_strchr(str, '\r') || ft_strchr(str, '\f'))))
+	{
+		return (1);
+	}
+	return (0);
+}
+
 int	doexec(char *path, char **comm, char **arvp, int is_free)
 {
 	if (path && access(path, F_OK | X_OK) == 0)

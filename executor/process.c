@@ -102,7 +102,7 @@ void	process(int argc, char **argv, char **arvp, int files[2])
 	int		j;
 	int		k;
 
-	i = argument_index(argv);
+	i = 2;
 	j = 0;
 	k = argc - (i + 1);
 	commands = malloc(sizeof(char *) * (k + 1));
