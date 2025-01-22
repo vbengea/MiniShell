@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/22 13:07:41 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:28:58 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,19 @@ int	has_blank(char *str)
 
 int	main(int argc, char **argv, char **arvp)
 {
-	int		files[2];
+	t_node	s;
 
-	if (argc >= 5)
-	{
-		if (ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])) == 0)
-		{
-			if (argc >= 6 && has_blank(argv[2]) == 0)
-				here_doc(files, argv[2], argv[argc - 1]);
-			else
-			{
-				ft_printf("Incorrect number of arguments\n");
-				exit(1);
-			}
-		}
-		else
-		{
-			files[0] = open(argv[1], O_RDONLY);
-			files[1] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		}
-		process(argc, argv, arvp, files);
-	}
-	else
-		ft_printf("Incorrect number of arguments\n");
+	(void) s;
 	return (0);
 }
+
+// 							||							
+// 													|
+// 				&&							<< EOF		>>
+// 		|				./mini.sh		cat -e				t2	
+// ls -l		>
+// 	cat -e		t2
+
+	// (ls -l | cat -e > t2 && ./mini.sh ) || (cat -e << EOF | >>t2)
+	// 1	OR
+	// 2	
