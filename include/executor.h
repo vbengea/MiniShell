@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/22 13:44:41 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:56:07 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ typedef struct s_node
 {
 	int				type;
 	char			*value;
-	struct s_list	**children;
+	struct s_node	*left;
+	struct s_node	*right;
 }	t_node;
 
 #endif
