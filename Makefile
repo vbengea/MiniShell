@@ -9,7 +9,7 @@ SFLAGS		:= 	-g3 -fsanitize=address
 LFLAGS		:= 	$(LIBFT)
 
 INCLUDE		:= 	include/executor.h
-SRC			:= 	executor/executor.c executor/procecss.c
+SRC			:= 	executor/executor.c executor/procecss.c executor/utils.c
 SRCB		:= 	
 
 OBJ 		:= 	$(SRC:.c=.o)

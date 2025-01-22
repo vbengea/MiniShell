@@ -6,12 +6,11 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:22:19 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/22 12:30:11 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:36:14 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/executor.h"
-
 
 int	execute(char *cmd, char **arvp)
 {
