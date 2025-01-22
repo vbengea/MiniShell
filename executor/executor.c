@@ -51,11 +51,24 @@ int	has_blank(char *str)
 	return (0);
 }
 
-int	main(int argc, char **argv, char **arvp)
+t_node*	get_ast()
 {
-	t_node	s;
+	t_node	*s;
 
+	s = malloc(sizeof(t_node));
+	s->type = PIPE;
+	return (s);
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_node	*s;
+	(void) argc;
+	(void) argv;
+	(void) env;
 	(void) s;
+	(void) here_doc;
+	s = get_ast();
 	return (0);
 }
 
