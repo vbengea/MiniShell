@@ -16,7 +16,7 @@ SRCB		:= 	exec
 OBJ 		:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC))
 OBJB 		:= 	$(SRCB:.c=.o)
 
-ARGS		:=	""
+ARGS		:=	t1 "grep Cl" "cat -e" t2
 
 all: $(NAME)
 
