@@ -6,7 +6,12 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/22 12:03:35 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:11:01 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef EXECUTOR_H
+
+# define EXECUTOR_H
+
+#endif

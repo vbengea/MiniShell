@@ -8,14 +8,14 @@ CFLAGS		:= 	-Wall -Wextra -Werror
 SFLAGS		:= 	-g3 -fsanitize=address
 LFLAGS		:= 	$(LIBFT)
 
-INCLUDE		:= 	minishell.h
-SRC			:= 	minishell.c common.c utils.c
-SRCB		:= 	minishell_bonus.c common.c utils.c
+INCLUDE		:= 	include/executor.h
+SRC			:= 	executor/executor.c
+SRCB		:= 	
 
 OBJ 		:= 	$(SRC:.c=.o)
 OBJB 		:= 	$(SRCB:.c=.o)
 
-ARGS		:=	t1 "grep Cl" "wc -l" t2
+ARGS		:=	""
 
 all: $(NAME)
 
