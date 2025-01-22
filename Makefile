@@ -25,7 +25,7 @@ $(NAME): $(LIBFT) $(OBJ) $(INCLUDE)
 
 clean:
 	make -C $(LIBFT_DIR) clean
-	rm -f *.o
+	rm -f $(EXEC_DIR)/*.o
 	rm -rf *.dSYM
 	rm -f z
 
