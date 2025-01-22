@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/22 13:08:14 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:44:41 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,12 @@ void	cleanup(char *err, char **commands);
 int		doexec(char *path, char **comm, char **arvp, int is_free);
 
 int		argument_index(char **argv);
+
+typedef struct s_node
+{
+	int				type;
+	char			*value;
+	struct s_list	**children;
+}	t_node;
 
 #endif
