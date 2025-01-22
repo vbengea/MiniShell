@@ -8,11 +8,12 @@ CFLAGS		:= 	-Wall -Wextra -Werror
 SFLAGS		:= 	-g3 -fsanitize=address
 LFLAGS		:= 	$(LIBFT)
 
+EXEC_DIR			:=	executor
 INCLUDE		:= 	include/executor.h
-SRC			:= 	executor/executor.c executor/procecss.c executor/utils.c
-SRCB		:= 	
+SRC			:= 	$(EXEC_DIR)/executor.c $(EXEC_DIR)/procecss.c $(EXEC_DIR)/utils.c
+SRCB		:= 	exec
 
-OBJ 		:= 	$(SRC:.c=.o)
+OBJ 		:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC))
 OBJB 		:= 	$(SRCB:.c=.o)
 
 ARGS		:=	""
@@ -43,7 +44,7 @@ bonus: $(LIBFT) $(OBJB) $(INCLUDE)
 $(LIBFT):
 	make -C $(LIBFT_DIR) all
 
-%.o: %.c
+$(EXEC_DIR)/%.o: $(EXEC_DIR)/%.c
 	rm -f bonus
 	$(CC) $(CFLAGS) -c -o $@ $<
 
