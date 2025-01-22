@@ -60,12 +60,10 @@ t_node*	get_ast()
 	return (s);
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(void)
 {
 	t_node	*s;
-	(void) argc;
-	(void) argv;
-	(void) env;
+
 	(void) here_doc;
 	s = get_ast();
 	free(s);
