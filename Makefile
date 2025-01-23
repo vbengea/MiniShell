@@ -10,7 +10,7 @@ LFLAGS		:= 	$(LIBFT)
 
 EXEC_DIR	:=	executor
 INCLUDE		:= 	include/executor.h
-SRC			:= 	$(EXEC_DIR)/main.c $(EXEC_DIR)/process.c $(EXEC_DIR)/utils.c $(EXEC_DIR)/utils2.c \
+SRC			:= 	$(EXEC_DIR)/main.c $(EXEC_DIR)/process.c $(EXEC_DIR)/utils.c $(EXEC_DIR)/execute.c \
 				$(EXEC_DIR)/mock.c 
 SRCB		:= 	
 

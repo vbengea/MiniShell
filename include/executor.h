@@ -28,40 +28,43 @@ typedef enum node_type {
 	EXEC
 }	node_type;
 
-typedef enum redirect {
-	IN,
-	OUT,
+typedef enum io {
+	STANDARD,
+	INFILE,
+	OUTFILE,
 	HEREDOC,
-	PIPEX,
-	STD
-}	redirect;
+	APPEND
+}	io;
 
 typedef struct s_node
 {
 	enum node_type	type;
 	char			*value;
-	enum redirect	stdin;
-	enum redirect	stdout;
+	enum io			stdin;
+	enum io			stdout;
 	char 			*stdin_value;
 	char			*stdout_value;
 	struct s_node	**children;
 }	t_node;
 
-int		execute(char *cmd, char **arvp);
-void	parent(int files[2], char **arvp, char **commands, int fd[2]);
-void	children(int fd[2], int files[2], char **commands, char **arvp);
-void	pipex(int files[2], char **arvp, char **commands);
-void	process(int argc, char **argv, char **arvp, int files[2]);
+void	redirect(int fd[2], struct s_node **children, node_type type);
+void	parent(int fd[2], struct s_node **children, char **env, node_type type);
+void	child(int fd[2], struct s_node **children, char **env, node_type type);
+void	pipex(struct s_node **children, char **env, int files[2], node_type type);
+void	process(t_node *node, char **env, int fd[2]);
 
+int		execute(char *cmd, char **arvp);
 char	*environment(char *name, char **env);
 char	*find_path(char *cmd, char *env);
-void	cleanup(char *err, char **commands);
+
+int		here_doc(char *delimit);
+void	cleanup(char *err);
 int		doexec(char *path, char **comm, char **arvp, int is_free);
-int		has_blank(char *str);
 
-void	here_doc(int files[2], char *delimit, char *file2);
-
-void	print_tree(t_node	*s);
 t_node*	get_tree();
+t_node*	get_stree();
+t_node*	get_stree2();
+t_node*	get_stree3();
+t_node*	get_stree4();
 
 #endif
