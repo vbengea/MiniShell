@@ -140,6 +140,9 @@ t_node*	get_stree3()
 	return (s);
 }
 
+/*
+	<< EOF grep Cl > t1 | ls -l
+*/
 t_node*	get_stree4()
 {
 	t_node	*s;
@@ -150,8 +153,8 @@ t_node*	get_stree4()
 		ennode(s, PIPE, 2);
 		s->children[0]->type = EXEC;
 		s->children[0]->value = "grep Cl";
-		s->children[0]->stdin = INFILE;
-		s->children[0]->stdin_value = "t1";
+		s->children[0]->stdin = HEREDOC;
+		s->children[0]->stdin_value = "EOF";
 		s->children[0]->stdout = OUTFILE;
 		s->children[0]->stdout_value = "t2";
 		s->children[1]->type = EXEC;
