@@ -40,11 +40,11 @@ typedef struct s_node
 {
 	enum node_type	type;
 	char			*value;
+	struct s_node	**children;
 	enum io			stdin;
 	enum io			stdout;
 	char 			*stdin_value;
 	char			*stdout_value;
-	struct s_node	**children;
 }	t_node;
 
 void	redirect(int fd[2], struct s_node **children, node_type type);
