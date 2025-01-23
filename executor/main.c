@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
-	s = get_stree4();
+	s = get_stree2();
 	fd[0] = STDIN_FILENO;
 	fd[1] = STDOUT_FILENO;
 	process(s, env, fd);
