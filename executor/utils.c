@@ -39,7 +39,7 @@ int	here_doc(char *delimit)
 	return (open("__tmp__", O_RDONLY));
 }
 
-static	void	ennode(t_node *s, enum node_type type, int n)
+void	ennode(t_node *s, enum node_type type, int n)
 {
 	int		i;
 
