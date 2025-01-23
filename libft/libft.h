@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juandanielflores <juandanielflores@stud    +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:08:22 by juandanielf       #+#    #+#             */
-/*   Updated: 2024/10/31 21:30:21 by juandanielf      ###   ########.fr       */
+/*   Updated: 2025/01/23 11:54:03 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <limits.h>
 # include <fcntl.h>
 # include <stdarg.h>
+# include <stdbool.h>
 
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -56,6 +57,7 @@ void			ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
 void			*ft_memmove(void *dest, const void *src, size_t n);
 void			clear_arr_of_strs(char **sp);
+bool			ft_isspace(char c);
 
 typedef struct splitter
 {
