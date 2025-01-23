@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/23 11:05:22 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/23 12:38:21 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_ast_node
 }	t_ast_node;
 
 #endif
+
+// Ejemplo de estructura si al final decidimos usar un array de hijos:
 
 // typedef struct s_ast_node
 // {
