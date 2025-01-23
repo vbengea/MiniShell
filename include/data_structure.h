@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/23 09:09:13 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/23 11:05:22 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,13 @@ typedef struct s_ast_node
 }	t_ast_node;
 
 #endif
+
+// typedef struct s_ast_node
+// {
+// 	t_node_type			type;
+// 	char				**args;
+// 	char				*file;
+// 	int					redirect_type;
+// 	struct s_ast_node	**children;
+// 	int					child_count;
+// } t_ast_node;
