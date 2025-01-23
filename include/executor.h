@@ -53,13 +53,14 @@ void	child(int fd[2], struct s_node **children, char **env, node_type type);
 void	pipex(struct s_node **children, char **env, int files[2], node_type type);
 void	process(t_node *node, char **env, int fd[2]);
 
-int		execute(char *cmd, char **arvp);
 char	*environment(char *name, char **env);
 char	*find_path(char *cmd, char *env);
+int		doexec(char *path, char **comm, char **arvp, int is_free);
+int		execute(char *cmd, char **arvp);
 
 int		here_doc(char *delimit);
 void	cleanup(char *err);
-int		doexec(char *path, char **comm, char **arvp, int is_free);
+void	ennode(t_node *s, enum node_type type, int n);
 
 t_node*	get_tree();
 t_node*	get_stree();

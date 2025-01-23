@@ -12,28 +12,6 @@
 
 #include "../include/executor.h"
 
-static	void	ennode(t_node *s, enum node_type type, int n)
-{
-	int		i;
-
-	i = 0;
-	s->type = type;
-	s->children = malloc(sizeof(t_node *) * (n + 1));
-	if (s->children)
-	{
-		while (i < n)
-		{
-			s->children[i] = malloc(sizeof(t_node));
-			if (!s->children[i])
-				exit(1);
-			i++;
-		}
-		s->children[n] = NULL;
-	}
-	else
-		exit(1);
-}
-
 /*
 	((echo 1 | cat -e | echo 2) | cat -e && echo 3) | cat -e | cat -e
 */
