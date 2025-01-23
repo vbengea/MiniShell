@@ -14,7 +14,7 @@
 
 static	void	ennode(t_node *s, enum node_type type, int n)
 {
-    int		i;
+	int		i;
 
 	i = 0;
 	s->type = type;
@@ -167,6 +167,6 @@ t_node*	get_stree4()
 // ls -l		>
 // 	cat -e		t2
 
-	// (ls -l | cat -e > t2 && ./mini.sh ) || (cat -e << EOF | >>t2)
-	// 1	OR
-	// 2	
+// (ls -l | cat -e > t2 && ./mini.sh ) || (cat -e << EOF | >>t2)
+// 1	OR
+// 2	
