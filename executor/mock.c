@@ -34,6 +34,9 @@ static	void	ennode(t_node *s, enum node_type type, int n)
 		exit(1);
 }
 
+/*
+	((echo 1 | cat -e | echo 2) | cat -e && echo 3) | cat -e | cat -e
+*/
 t_node*	get_tree()
 {
 	t_node	*s;
@@ -94,6 +97,9 @@ t_node*	get_stree()
 	return (s);
 }
 
+/*
+	echo 4 && ls -l | cat -e | cat -e && ls / | cat -e
+*/
 t_node*	get_stree2()
 {
 	t_node	*s;
@@ -111,14 +117,19 @@ t_node*	get_stree2()
 		s->children[1]->children[1]->value = "cat -e";
 		s->children[1]->children[2]->type = EXEC;
 		s->children[1]->children[2]->value = "cat -e";
-		ennode(s->children[2], PIPE, 1);
+		ennode(s->children[2], PIPE, 2);
 		s->children[2]->children[0]->type = EXEC;
 		s->children[2]->children[0]->value = "ls /";
+		s->children[2]->children[1]->type = EXEC;
+		s->children[2]->children[1]->value = "cat -e";
 	}
 
 	return (s);
 }
 
+/*
+	sleep 3 && ls -l && sleep 3 && ls -l
+*/
 t_node*	get_stree3()
 {
 	t_node	*s;
