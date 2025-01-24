@@ -11,7 +11,7 @@ LFLAGS		:= 	$(LIBFT)
 EXEC_DIR	:=	executor
 INCLUDE		:= 	include/executor.h
 SRC			:= 	$(EXEC_DIR)/main.c $(EXEC_DIR)/process.c $(EXEC_DIR)/utils.c $(EXEC_DIR)/execute.c \
-				$(EXEC_DIR)/mock.c 
+				$(EXEC_DIR)/binary.c $(EXEC_DIR)/bmock.c $(EXEC_DIR)/mock.c 
 SRCB		:= 	
 
 OBJ 		:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC))

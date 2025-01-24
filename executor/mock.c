@@ -6,12 +6,13 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:22:19 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 10:30:03 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 12:13:46 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/executor.h"
 
+// ((echo 1 | cat -e | echo 2) | cat -e && echo 3 && echo 4) | cat -e | cat -e
 t_node	*get_tree(void)
 {
 	t_node	*s;
@@ -49,7 +50,6 @@ t_node	*get_tree(void)
 		s->children[2]->type = EXEC;
 		s->children[2]->value = "cat -e";
 	}
-
 	return (s);
 }
 
@@ -137,15 +137,15 @@ t_node*	get_stree4(void)
 		s->children[0]->stdout = OUTFILE;
 		s->children[0]->stdout_value = "t2";
 		s->children[1]->type = EXEC;
-		s->children[1]->value = "ls -l";
+		s->children[0]->value = "ls -";
 	}
-
 	return (s);
 }
 // echo 4 && ls -l | cat -e | cat -e && ls / | cat -e
 // sleep 3 && ls -l && sleep 3 && ls -l
 // << EOF grep Cl > t1 | ls -l
 // ((echo 1 | cat -e | echo 2) | cat -e && echo 3) | cat -e | cat -e
+// echo 4 && ls -l | cat -e | cat -e && ls / | cat -e
 
 // 							||							
 // 													|
