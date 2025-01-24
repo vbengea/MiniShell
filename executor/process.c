@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:22:19 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 13:04:12 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:04:54 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@ void	redirect(int fd[2], struct s_node **children, node_type type)
 	{
 		outre = -1;
 		if (children[0]->stdout == OUTFILE)
-			outre = open(children[0]->stdout_value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+			outre = open(children[0]->stdout_value, O_WRONLY | O_CREAT | \
+				O_TRUNC, 0666);
 		else if (children[0]->stdout == APPEND)
-			outre = open(children[0]->stdout_value, O_WRONLY | O_CREAT | O_APPEND, 0666);
+			outre = open(children[0]->stdout_value, O_WRONLY | O_CREAT | \
+				O_APPEND, 0666);
 		if (outre < 0 || dup2(outre, STDOUT_FILENO) == -1)
 			cleanup("Error redirecting");
 	}
-	else if (type == PIPE && *(children + 1) && (dup2(fd[1], STDOUT_FILENO) == -1))
+	else if (type == PIPE && *(children + 1) && (dup2(fd[1], \
+		STDOUT_FILENO) == -1))
 		cleanup("Error redirecting");
 }
 
@@ -95,7 +98,8 @@ void	child(int fd[2], struct s_node **children, char **env, node_type type)
 	}
 }
 
-void	pipex(struct s_node **children, char **env, int files[2], node_type type)
+void	pipex(struct s_node **children, char **env, int files[2], 
+	node_type type)
 {
 	int	fd[2];
 	int	pid;
