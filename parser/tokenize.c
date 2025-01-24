@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:18:54 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/24 19:16:03 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/24 19:42:44 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,20 @@ void	skip_whitespace(const char *input, int *i)
 		(*i)++;
 }
 
-int	is_operator(char c)
+bool	is_operator(char c)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '&' || c == ';');
+	return (c == '|' || c == '<' || c == '>' || c == '&' || c == ';' || c == '(' || c == ')');
 }
 
-
-void	handle_operator(t_token **head, t_token *new_token, const char *input, int *i)
+bool	is_quote(char c)
 {
-	int		count;
-	char	op;
+	return (c == '\'' || c == '\"');
+}
+
+void handle_operator(t_token **head, t_token *new_token, const char *input, int *i)
+{
+	int  count;
+	char op;
 
 	op = input[*i];
 	count = 0;
@@ -46,6 +50,8 @@ void	handle_operator(t_token **head, t_token *new_token, const char *input, int 
 			new_token = create_token(TOKEN_HEREDOC, "<<");
 		else if (op == '>')
 			new_token = create_token(TOKEN_APPEND, ">>");
+		else
+			new_token = create_token(TOKEN_INVALID, "Invalid operator");
 	}
 	else if (count == 1)
 	{
@@ -57,6 +63,12 @@ void	handle_operator(t_token **head, t_token *new_token, const char *input, int 
 			new_token = create_token(TOKEN_REDIRECT_OUT, ">");
 		else if (op == '&')
 			new_token = create_token(TOKEN_BG, "&");
+		else if (op == '(')
+			new_token = create_token(TOKEN_OPEN_PAREN, "(");
+		else if (op == ')')
+			new_token = create_token(TOKEN_CLOSE_PAREN, ")");
+		else
+			new_token = create_token(TOKEN_INVALID, "Invalid operator");
 	}
 	else
 	{
@@ -64,6 +76,7 @@ void	handle_operator(t_token **head, t_token *new_token, const char *input, int 
 	}
 	add_token(head, new_token);
 }
+
 
 t_token *tokenize(const char *input, int *i)
 {
@@ -78,6 +91,11 @@ t_token *tokenize(const char *input, int *i)
 		if (is_operator(input[*i]))
 		{
 			handle_operator(&head, new_token, input, i);
+		}
+		else if (is_quote(input[*i]))
+		{
+			new_token = create_quoted_token(input, i);
+			add_token(&head, new_token);
 		}
 		else
 		{

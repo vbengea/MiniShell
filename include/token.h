@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:15:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/24 18:09:10 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/24 19:34:27 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ typedef enum e_token_type
 	TOKEN_APPEND,
 	TOKEN_HEREDOC,
 	TOEKN_EOF,
-	TOKEN_INVALID
+	TOKEN_INVALID,
+	TOKEN_OPEN_PAREN,
+	TOKEN_CLOSE_PAREN
 }	t_token_tpype;
 
 typedef struct	s_token
