@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/23 11:32:52 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/24 18:21:29 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include "executor.h"
 #include "token.h"
 #include "colors.h"
+
+#include "tokenizer_functions.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -6,7 +6,7 @@
 #    By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:11:00 by vbengea           #+#    #+#              #
-#    Updated: 2025/01/23 19:34:12 by vbengea          ###   ########.fr        #
+#    Updated: 2025/01/24 17:44:03 by vbengea          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
 # SRC_DIR = src
 
-SRC_FILES = tokenize.c \
-			stt.c
+SRC_FILES = tokenize.c
 
 OUTPUT = parser
 

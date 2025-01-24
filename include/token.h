@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:15:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/23 11:18:40 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/24 18:09:10 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,16 @@ typedef enum e_token_type
 {
 	TOKEN_WORD,
 	TOKEN_PIPE,
-	TOKEN_REDIRECT,
+	TOKEN_REDIRECT_IN,
+	TOKEN_REDIRECT_OUT,
 	TOKEN_AND,
+	TOKEN_BG,
 	TOKEN_OR,
 	TOKEN_SPACE,
-	TOEKN_EOF
+	TOKEN_APPEND,
+	TOKEN_HEREDOC,
+	TOEKN_EOF,
+	TOKEN_INVALID
 }	t_token_tpype;
 
 typedef struct	s_token
