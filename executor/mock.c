@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:22:19 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 10:27:42 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:28:35 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,10 @@ t_node*	get_stree4(void)
 
 	return (s);
 }
-	// echo 4 && ls -l | cat -e | cat -e && ls / | cat -e
-	// sleep 3 && ls -l && sleep 3 && ls -l
-	// << EOF grep Cl > t1 | ls -l
-	// ((echo 1 | cat -e | echo 2) | cat -e && echo 3) | cat -e | cat -e
+// echo 4 && ls -l | cat -e | cat -e && ls / | cat -e
+// sleep 3 && ls -l && sleep 3 && ls -l
+// << EOF grep Cl > t1 | ls -l
+// ((echo 1 | cat -e | echo 2) | cat -e && echo 3) | cat -e | cat -e
 
 // 							||							
 // 													|
