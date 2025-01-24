@@ -6,16 +6,13 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:22:19 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/22 12:36:14 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:27:42 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/executor.h"
 
-/*
-	((echo 1 | cat -e | echo 2) | cat -e && echo 3) | cat -e | cat -e
-*/
-t_node*	get_tree()
+t_node	*get_tree(void)
 {
 	t_node	*s;
 
@@ -54,7 +51,7 @@ t_node*	get_tree()
 	return (s);
 }
 
-t_node*	get_stree()
+t_node*	get_stree(void)
 {
 	t_node	*s;
 
@@ -75,10 +72,7 @@ t_node*	get_stree()
 	return (s);
 }
 
-/*
-	echo 4 && ls -l | cat -e | cat -e && ls / | cat -e
-*/
-t_node*	get_stree2()
+t_node*	get_stree2(void)
 {
 	t_node	*s;
 
@@ -105,10 +99,7 @@ t_node*	get_stree2()
 	return (s);
 }
 
-/*
-	sleep 3 && ls -l && sleep 3 && ls -l
-*/
-t_node*	get_stree3()
+t_node*	get_stree3(void)
 {
 	t_node	*s;
 
@@ -129,10 +120,7 @@ t_node*	get_stree3()
 	return (s);
 }
 
-/*
-	<< EOF grep Cl > t1 | ls -l
-*/
-t_node*	get_stree4()
+t_node*	get_stree4(void)
 {
 	t_node	*s;
 
@@ -152,6 +140,11 @@ t_node*	get_stree4()
 
 	return (s);
 }
+	// echo 4 && ls -l | cat -e | cat -e && ls / | cat -e
+	// sleep 3 && ls -l && sleep 3 && ls -l
+	// << EOF grep Cl > t1 | ls -l
+	// ((echo 1 | cat -e | echo 2) | cat -e && echo 3) | cat -e | cat -e
+
 // 							||							
 // 													|
 // 				&&							<< EOF		>>
