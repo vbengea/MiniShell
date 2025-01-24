@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/22 12:39:21 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 18:56:09 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,42 @@ int	doexec(char *path, char **comm, char **arvp, int is_free)
 		{
 			if (is_free)
 				free(path);
-			clear_arr_of_strs(comm);
+			// clear_arr_of_strs(comm);
 		}
 	}
 	if (path && is_free)
 		free(path);
-	clear_arr_of_strs(comm);
-	cleanup("Error executing command");
+	// clear_arr_of_strs(comm);
+	// cleanup("Error executing command");
+	cleanup(comm[0]);
 	return (-1);
+}
+
+int	bexecute(char **comm, char **arvp)
+{
+	char	*path;
+	char	*env;
+	int		is_free;
+
+	is_free = 0;
+	if (comm)
+	{
+		if (ft_strchr(comm[0], '/') != NULL)
+			path = comm[0];
+		else
+		{
+			env = environment("PATH", arvp);
+			if (env)
+			{
+				path = find_path(comm[0], env);
+				is_free = 1;
+			}
+			else
+				path = NULL;
+		}
+		return (doexec(path, comm, arvp, is_free));
+	}
+	return (0);
 }
 
 int	execute(char *cmd, char **arvp)

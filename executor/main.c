@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 13:05:17 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 20:52:55 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
+	(void) env;
+	(void) fd;
 	s = get_data_structure_1();
 	fd[0] = STDIN_FILENO;
 	fd[1] = STDOUT_FILENO;
