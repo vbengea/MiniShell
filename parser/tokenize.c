@@ -6,41 +6,11 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:18:54 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/24 18:39:31 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/24 19:16:03 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
-
-t_token	*create_token(t_token_tpype type, char *value)
-{
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = type;
-	token->value = ft_strdup(value);
-	token->next = NULL;
-	return (token);
-}
-
-void	add_token(t_token **head, t_token *new_token)
-{
-	t_token	*tmp;
-
-	if (!head || !new_token)
-		return ;
-	tmp = *head;
-	if (!tmp)
-	{
-		*head = new_token;
-		return ;
-	}
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new_token;
-}
 
 void	skip_whitespace(const char *input, int *i)
 {
@@ -90,30 +60,9 @@ void	handle_operator(t_token **head, t_token *new_token, const char *input, int 
 	}
 	else
 	{
-		// Handle invalid repeated operators
 		new_token = create_token(TOKEN_INVALID, "Invalid operator");
 	}
 	add_token(head, new_token);
-}
-
-
-t_token *create_word_token(const char *input, int *i)
-{
-	t_token	*new_token;
-	char	*temp;
-
-	new_token = create_token(TOKEN_WORD, "");
-	while (input[*i] && !is_operator(input[*i]) && !ft_isspace(input[*i]))
-	{
-		temp = malloc(ft_strlen(new_token->value) + 2);
-		ft_strcpy(temp, new_token->value);
-		temp[ft_strlen(new_token->value)] = input[*i];
-		temp[ft_strlen(new_token->value) + 1] = '\0';
-		free(new_token->value);
-		new_token->value = temp;
-		(*i)++;
-	}
-	return (new_token);
 }
 
 t_token *tokenize(const char *input, int *i)
