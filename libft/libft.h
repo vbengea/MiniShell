@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:08:22 by juandanielf       #+#    #+#             */
-/*   Updated: 2025/01/23 12:32:38 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/24 17:48:08 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void			*ft_memmove(void *dest, const void *src, size_t n);
 void			clear_arr_of_strs(char **sp);
 bool			ft_isspace(char c);
 char			*ft_strndup(const char *s, size_t n);
+char			*ft_strcpy(char *dst, const char *src);
 
 
 typedef struct splitter
