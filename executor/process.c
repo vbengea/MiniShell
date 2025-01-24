@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   proccess.c                                         :+:      :+:    :+:   */
+/*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:22:19 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/22 12:36:14 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:04:12 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	redirect(int fd[2], struct s_node **children, node_type type)
 		cleanup("Error redirecting");
 }
 
-void	parent(int fd[2], struct s_node **children, char **env, node_type type)
+static	void	waitit(node_type type)
 {
 	int		status;
 
@@ -58,6 +58,11 @@ void	parent(int fd[2], struct s_node **children, char **env, node_type type)
 			break ;
 		}
 	}
+}
+
+void	parent(int fd[2], struct s_node **children, char **env, node_type type)
+{
+	waitit(type);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		cleanup("Error changing STD IN");
 	if (*(children + 1))

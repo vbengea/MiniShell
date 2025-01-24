@@ -6,11 +6,12 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/22 12:39:21 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 12:47:43 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/executor.h"
+#include "../include/data_structure.h"
 
 void	cleanup(char *err)
 {
@@ -59,4 +60,16 @@ void	ennode(t_node *s, enum node_type type, int n)
 	}
 	else
 		exit(1);
+}
+
+#include "../include/data_structure.h" // Add the header file that contains the definition of 'enum t_node_type'
+
+void	binode(t_ast_node *s, enum e_node_type type)
+{
+	int		i;
+
+	i = 0;
+	s->type = type;
+	s->left = malloc(sizeof(t_ast_node *));
+	s->right = malloc(sizeof(t_ast_node *));
 }

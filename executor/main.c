@@ -6,12 +6,11 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 12:17:35 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:02:31 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
-#include "../include/data_structure.h"
+#include "../include/headers.h"
 
 int	main(int argc, char **argv, char **env)
 {
@@ -23,7 +22,7 @@ int	main(int argc, char **argv, char **env)
 	s = get_data_structure_1();
 	fd[0] = STDIN_FILENO;
 	fd[1] = STDOUT_FILENO;
-	process(s, env, fd);
+	binary(s, env, fd);
 	free(s);
 	return (0);
 }

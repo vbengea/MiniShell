@@ -6,10 +6,15 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 12:12:53 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:02:26 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
-#include "../include/data_structure.h"
+#include "../include/headers.h"
 
+void	binary(t_ast_node *s, char **env, int fd[2])
+{
+	(void) s;
+	(void) env;
+	(void) fd;
+}
