@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/24 18:29:09 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/24 19:12:09 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int		is_operator(char c);
 void	handle_operator(t_token **head, t_token *new_token, \
 		const char *input, int *i);
 t_token	*tokenize(const char *input, int *i);
-
+t_token	*create_word_token(const char *input, int *i);
 
 #endif
