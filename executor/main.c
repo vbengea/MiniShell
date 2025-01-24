@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 13:02:31 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:05:17 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_ast_node	*s;
-	int		fd[2];
+	int			fd[2];
 
 	(void) argc;
 	(void) argv;

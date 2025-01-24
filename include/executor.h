@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 12:50:28 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:23:39 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,9 @@ t_node*	get_stree4(void);
 t_ast_node	*get_data_structure_1(void);
 
 void	binary(t_ast_node *s, char **env, int fd[2]);
+void	bedirect(int fd[2], struct s_node **children, node_type type);
+void	barent(int fd[2], t_ast_node *node, char **env, node_type type);
+void	bhild(int fd[2], t_ast_node *node, char **env, node_type type);
+void	bipex(t_ast_node *node, char **env, int files[2], enum e_node_type type);
 
 #endif
