@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:22:19 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 10:28:35 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:30:03 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_node	*get_tree(void)
 {
 	t_node	*s;
+	t_node	*t;
 
 	s = malloc(sizeof(t_node));
 	if (s)
@@ -26,15 +27,16 @@ t_node	*get_tree(void)
 			if (s->children[0]->children[0])
 			{
 				ennode(s->children[0]->children[0], PIPE, 2);
-				if (s->children[0]->children[0]->children[0])
+				t = s->children[0]->children[0]->children[0];
+				if (t)
 				{
-					ennode(s->children[0]->children[0]->children[0], PIPE, 3);
-					s->children[0]->children[0]->children[0]->children[0]->type = EXEC;
-					s->children[0]->children[0]->children[0]->children[0]->value = "echo 1";
-					s->children[0]->children[0]->children[0]->children[1]->type = EXEC;
-					s->children[0]->children[0]->children[0]->children[1]->value = "cat -e";
-					s->children[0]->children[0]->children[0]->children[2]->type = EXEC;
-					s->children[0]->children[0]->children[0]->children[2]->value = "echo 2";
+					ennode(t, PIPE, 3);
+					t->children[0]->type = EXEC;
+					t->children[0]->value = "echo 1";
+					t->children[1]->type = EXEC;
+					t->children[1]->value = "cat -e";
+					t->children[2]->type = EXEC;
+					t->children[2]->value = "echo 2";
 				}
 				s->children[0]->children[0]->children[1]->type = EXEC;
 				s->children[0]->children[0]->children[1]->value = "cat -e";
