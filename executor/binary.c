@@ -69,10 +69,8 @@ static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env, int si
 {
 	if (!node)
 		return ;
-	if (type == NODE_AND)
-	{
+	if (type == NODE_AND || type == NODE_OR)
 		side = 1;
-	}
 	bedirect(fd, files, side);
 	if (node->type == NODE_CMND)
 	{

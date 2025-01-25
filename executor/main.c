@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
-	s = get_data_structure_1();
+	s = get_data_structure_2();
 	fd[0] = STDIN_FILENO;
 	fd[1] = STDOUT_FILENO;
 	binary(s, env, fd);
