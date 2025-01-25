@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
-#include "../include/data_structure.h"
+#include "../include/headers.h"
 
 void	cleanup(char *err)
 {
@@ -62,13 +61,8 @@ void	ennode(t_node *s, enum node_type type, int n)
 		exit(1);
 }
 
-#include "../include/data_structure.h" // Add the header file that contains the definition of 'enum t_node_type'
-
 void	binode(t_ast_node *s, t_node_type type)
 {
-	int		i;
-
-	i = 0;
 	s->type = type;
 	s->left = malloc(sizeof(t_ast_node));
 	s->right = malloc(sizeof(t_ast_node));

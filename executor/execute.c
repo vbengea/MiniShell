@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
+#include "../include/headers.h"
 
 char	*environment(char *name, char **env)
 {
@@ -81,8 +81,7 @@ int	doexec(char *path, char **comm, char **arvp, int is_free)
 	if (path && is_free)
 		free(path);
 	// clear_arr_of_strs(comm);
-	// cleanup("Error executing command");
-	cleanup(comm[0]);
+	cleanup("Error executing command");
 	return (-1);
 }
 
