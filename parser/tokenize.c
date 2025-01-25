@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:18:54 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/24 19:42:44 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/25 13:35:29 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,61 +28,33 @@ bool	is_quote(char c)
 	return (c == '\'' || c == '\"');
 }
 
-void handle_operator(t_token **head, t_token *new_token, const char *input, int *i)
-{
-	int  count;
-	char op;
 
-	op = input[*i];
-	count = 0;
-	while (input[*i] == op)
-	{
-		count++;
-		(*i)++;
-	}
-	if (count == 2)
-	{
-		if (op == '|')
-			new_token = create_token(TOKEN_OR, "||");
-		else if (op == '&')
-			new_token = create_token(TOKEN_AND, "&&");
-		else if (op == '<')
-			new_token = create_token(TOKEN_HEREDOC, "<<");
-		else if (op == '>')
-			new_token = create_token(TOKEN_APPEND, ">>");
-		else
-			new_token = create_token(TOKEN_INVALID, "Invalid operator");
-	}
+void dispatch_operator(t_token **head, t_token *new_token, char op, int count)
+{
+	if (op == '(' || op == ')')
+		handle_parens(head, new_token, op, count);
+	else if (count == 2)
+		handle_double_operators(head, new_token, op);
 	else if (count == 1)
-	{
-		if (op == '|')
-			new_token = create_token(TOKEN_PIPE, "|");
-		else if (op == '<')
-			new_token = create_token(TOKEN_REDIRECT_IN, "<");
-		else if (op == '>')
-			new_token = create_token(TOKEN_REDIRECT_OUT, ">");
-		else if (op == '&')
-			new_token = create_token(TOKEN_BG, "&");
-		else if (op == '(')
-			new_token = create_token(TOKEN_OPEN_PAREN, "(");
-		else if (op == ')')
-			new_token = create_token(TOKEN_CLOSE_PAREN, ")");
-		else
-			new_token = create_token(TOKEN_INVALID, "Invalid operator");
-	}
+		handle_single_operator(head, new_token, op);
 	else
 	{
 		new_token = create_token(TOKEN_INVALID, "Invalid operator");
+		add_token(head, new_token);
 	}
-	add_token(head, new_token);
 }
 
+void handle_operator(t_token **head, t_token *new_token, const char *input, int *i)
+{
+	char op = input[*i];
+	int count = count_consecutive_operators(input, i, op);
+	dispatch_operator(head, new_token, op, count);
+}
 
 t_token *tokenize(const char *input, int *i)
 {
 	t_token	*head;
 	t_token	*new_token;
-	// char	*temp;
 
 	head = NULL;
 	while (input[*i])
@@ -114,18 +86,41 @@ t_token	*tokenize_input(const char *input)
 	return (tokenize(input, &i));
 }
 
-int main(int argc, char **argv)
+void	free_token(t_token *token)
+{
+	t_token	*tmp;
+
+	while (token)
+	{
+		tmp = token;
+		token = token->next;
+		free(tmp->value);
+		free(tmp);
+	}
+}
+
+int main(int argc, char **argv, char **env)
 {
 	(void)argc;
+	(void)env;
+	(void)argv;
 	t_token	*token;
 	t_token	*tmp;
 
-	token = tokenize_input(argv[1]);
-	tmp = token;
-	while (tmp)
+	while (true)
 	{
-		printf("type: %d, value: %s\n", tmp->type, tmp->value);
-		tmp = tmp->next;
+		char *input = readline("minishell$ ");
+		if (!input)
+			break;
+		token = tokenize_input(input);
+		tmp = token;
+		while (tmp)
+		{
+			printf("type: %d, value: %s\n", tmp->type, tmp->value);
+			tmp = tmp->next;
+		}
+		free(input);
+		free_token(token);
 	}
 	return (0);
 }

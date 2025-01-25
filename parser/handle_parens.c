@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   headers.h                                          :+:      :+:    :+:   */
+/*   handle_operator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 10:47:03 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/25 13:16:24 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/25 13:22:56 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADERS_H
-# define HEADERS_H
+#include "../include/headers.h"
 
-#include "../libft/libft.h"
-#include "data_structure.h"
-#include "executor.h"
-#include "token.h"
-#include "colors.h"
+void	handle_parens(t_token **head, t_token *new_token, char op, int count)
+{
+	int	i;
 
-#include "tokenizer_functions.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-#endif
+	i = 0;
+	while (i < count)
+	{
+		if (op == '(')
+			new_token = create_token(TOKEN_OPEN_PAREN, "(");
+		else
+			new_token = create_token(TOKEN_CLOSE_PAREN, ")");
+		add_token(head, new_token);
+	}
+}
