@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   headers.h                                          :+:      :+:    :+:   */
+/*   count_consecutive_operators.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 10:47:03 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/25 13:32:38 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/25 13:32:55 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADERS_H
-# define HEADERS_H
+#include "../include/headers.h"
 
-#include "../libft/libft.h"
-#include "data_structure.h"
-#include "executor.h"
-#include "token.h"
-#include "colors.h"
+int	count_consecutive_operators(const char *input, int *i, char op)
+{
+	int	count;
 
-#include "tokenizer_functions.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-#endif
+	count = 0;
+	while (input[*i] == op)
+	{
+		count++;
+		(*i)++;
+	}
+	return count;
+}
