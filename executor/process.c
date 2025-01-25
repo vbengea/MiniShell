@@ -6,45 +6,13 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:22:19 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 13:04:54 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/25 17:02:39 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/executor.h"
 
-void	redirect(int fd[2], struct s_node **children, node_type type)
-{
-	int	inre;
-	int	outre;
-
-	if (children[0]->stdin)
-	{
-		inre = -1;
-		if (children[0]->stdin == INFILE)
-			inre = open(children[0]->stdin_value, O_RDONLY);
-		else if (children[0]->stdin == HEREDOC)
-			inre = here_doc(children[0]->stdin_value);
-		if (inre < 0 || dup2(inre, STDIN_FILENO) == -1)
-			cleanup("Error redirecting");
-	}
-	if (children[0]->stdout)
-	{
-		outre = -1;
-		if (children[0]->stdout == OUTFILE)
-			outre = open(children[0]->stdout_value, O_WRONLY | O_CREAT | \
-				O_TRUNC, 0666);
-		else if (children[0]->stdout == APPEND)
-			outre = open(children[0]->stdout_value, O_WRONLY | O_CREAT | \
-				O_APPEND, 0666);
-		if (outre < 0 || dup2(outre, STDOUT_FILENO) == -1)
-			cleanup("Error redirecting");
-	}
-	else if (type == PIPE && *(children + 1) && (dup2(fd[1], \
-		STDOUT_FILENO) == -1))
-		cleanup("Error redirecting");
-}
-
-static	void	waitit(node_type type)
+static	void	waitit(t_node_type_u type)
 {
 	int		status;
 
@@ -63,7 +31,8 @@ static	void	waitit(node_type type)
 	}
 }
 
-void	parent(int fd[2], struct s_node **children, char **env, node_type type)
+void	parent(int fd[2], struct s_node **children, char **env, \
+	t_node_type_u type)
 {
 	waitit(type);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
@@ -71,7 +40,7 @@ void	parent(int fd[2], struct s_node **children, char **env, node_type type)
 	if (*(children + 1))
 	{
 		close(fd[1]);
-		pipex(++children, env, NULL, type);
+		process(++children, env, NULL, type);
 	}
 	else
 	{
@@ -80,9 +49,11 @@ void	parent(int fd[2], struct s_node **children, char **env, node_type type)
 	}
 }
 
-void	child(int fd[2], struct s_node **children, char **env, node_type type)
+void	child(int fd[2], struct s_node **children, char **env, \
+	t_node_type_u type)
 {
-	redirect(fd, children, type);
+	redirect_stdin(children);
+	redirect_stdout(fd, children, type);
 	if (children)
 	{
 		if (children[0]->type == EXEC)
@@ -93,13 +64,13 @@ void	child(int fd[2], struct s_node **children, char **env, node_type type)
 		else
 		{
 			close(fd[0]);
-			process(children[0], env, fd);
+			process(children[0]->children, env, fd, children[0]->type);
 		}
 	}
 }
 
-void	pipex(struct s_node **children, char **env, int files[2], 
-	node_type type)
+void	process(struct s_node **children, char **env, int files[2], \
+	t_node_type_u type)
 {
 	int	fd[2];
 	int	pid;
@@ -119,9 +90,4 @@ void	pipex(struct s_node **children, char **env, int files[2],
 	{
 		parent(fd, children, env, type);
 	}
-}
-
-void	process(t_node *node, char **env, int fd[2])
-{
-	pipex(node->children, env, fd, node->type);
 }

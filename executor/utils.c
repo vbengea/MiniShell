@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/24 20:10:29 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:49:17 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,13 @@ void	binode(t_ast_node *s, t_node_type type, int n, char *args[])
 	s->left->right = NULL;
 	s->right->left = NULL;
 	s->right->right = NULL;
+}
+
+void	populate_node(t_ast_node *node)
+{
+	node->right->parent_type = node->type;
+	node->left->parent_type = node->type;
+	node->right->side = 1;
+	node->left->side = 0;
+	node->side = 0;
 }

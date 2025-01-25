@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 21:14:59 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:31:33 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ static	void	baitit(t_node_type type)
 	}
 }
 
-static	void	bparent(int fd[2], int files[2], t_ast_node *node, char **env, int side)
+static	void	bparent(int fd[2], int files[2], t_ast_node *node, char **env)
 {
 	if (!node)
 		return ;
 	baitit(node->type);
 	close(fd[1]);
-	if (side == 0)
+	if (node->side == 0)
 	{
 		files[0] = fd[0];
-		pipeit(node, env, files, 1);
+		binary(node, env, files, 1);
 	}
 	else
 		close(fd[0]);
@@ -65,13 +65,13 @@ static	void	bedirect(int fd[2], int files[2], int is_last)
 	close(fd[0]);
 }
 
-static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env, int side, t_node_type type)
+static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env)
 {
 	if (!node)
 		return ;
-	if (type == NODE_AND || type == NODE_OR)
-		side = 1;
-	bedirect(fd, files, side);
+	if (node->parent_type == NODE_AND || node->parent_type == NODE_OR)
+		node->side = 1;
+	bedirect(fd, files, node->side);
 	if (node->type == NODE_CMND)
 	{
 		if (bexecute(node->args, env) == -1)
@@ -79,11 +79,11 @@ static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env, int si
 	}
 	else
 	{
-		pipeit(node, env, files, 0);
+		binary(node, env, files, 0);
 	}
 }
 
-void	pipeit(t_ast_node *node, char **env, int files[2], int side)
+void	binary(t_ast_node *node, char **env, int files[2], int side)
 {
 	int	fd[2];
 	int	pid;
@@ -95,26 +95,19 @@ void	pipeit(t_ast_node *node, char **env, int files[2], int side)
 	pid = fork();
 	if (pid == -1)
 		cleanup("Error forking process");
+	populate_node(node);
 	if (pid == 0)
 	{
 		if (side)
-			bchild(fd, files, node->right, env, side, node->type);
+			bchild(fd, files, node->right, env);
 		else
-			bchild(fd, files, node->left, env, side, node->type);
+			bchild(fd, files, node->left, env);
 	}
 	else
 	{
 		if (side)
-			bparent(fd, files, node->right, env, side);
+			bparent(fd, files, node->right, env);
 		else
-			bparent(fd, files, node, env, side);
-	}
-}
-
-void	binary(t_ast_node *s, char **env, int fd[2])
-{
-	if (s->type == NODE_PIPE)
-	{
-		pipeit(s, env, fd, 0);
+			bparent(fd, files, node, env);
 	}
 }

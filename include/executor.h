@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 20:28:48 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/25 17:01:46 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,22 @@
 # include "../libft/libft.h"
 # include "./data_structure.h"
 
-typedef enum node_type {
+typedef enum node_type
+{
 	AND,
 	OR,
 	PIPE,
 	EXEC
-}	node_type;
+}	t_node_type_u;
 
-typedef enum io {
+typedef enum io
+{
 	STANDARD,
 	INFILE,
 	OUTFILE,
 	HEREDOC,
 	APPEND
-}	io;
+}	t_io;
 
 typedef struct s_node
 {
@@ -44,39 +46,45 @@ typedef struct s_node
 	struct s_node	**children;
 	enum io			stdin;
 	enum io			stdout;
-	char 			*stdin_value;
+	char			*stdin_value;
 	char			*stdout_value;
 }	t_node;
 
-void	redirect(int fd[2], struct s_node **children, node_type type);
-void	parent(int fd[2], struct s_node **children, char **env, node_type type);
-void	child(int fd[2], struct s_node **children, char **env, node_type type);
-void	pipex(struct s_node **children, char **env, int files[2], node_type type);
-void	process(t_node *node, char **env, int fd[2]);
+void		redirect_stdin(struct s_node **children);
+void		redirect_stdout(int fd[2], struct s_node **children, \
+	t_node_type_u type);
 
-char	*environment(char *name, char **env);
-char	*find_path(char *cmd, char *env);
-int		doexec(char *path, char **comm, char **arvp, int is_free);
-int		execute(char *cmd, char **arvp);
-int		bexecute(char **comm, char **arvp);
+void		parent(int fd[2], struct s_node **children, char **env, \
+	t_node_type_u type);
+void		child(int fd[2], struct s_node **children, char **env, \
+	t_node_type_u type);
+void		process(struct s_node **children, char **env, int files[2], \
+	t_node_type_u type);
 
-int		here_doc(char *delimit);
-void	cleanup(char *err);
-void	ennode(t_node *s, enum node_type type, int n);
-void	binode(t_ast_node *s, t_node_type type, int n, char **args);
+char		*environment(char *name, char **env);
+char		*find_path(char *cmd, char *env);
+int			doexec(char *path, char **comm, char **arvp, int is_free);
+int			execute(char *cmd, char **arvp);
+int			bexecute(char **comm, char **arvp);
 
-t_node*	get_tree(void);
-t_node*	get_stree(void);
-t_node*	get_stree2(void);
-t_node*	get_stree3(void);
-t_node*	get_stree4(void);
+int			here_doc(char *delimit);
+void		cleanup(char *err);
+void		ennode(t_node *s, enum node_type type, int n);
+void		binode(t_ast_node *s, t_node_type type, int n, char *args[]);
+
+t_node		*get_tree(void);
+t_node		*get_stree(void);
+t_node		*get_stree2(void);
+t_node		*get_stree3(void);
+t_node		*get_stree4(void);
 
 t_ast_node	*get_data_structure_0(void);
 t_ast_node	*get_data_structure_1(void);
 t_ast_node	*get_data_structure_2(void);
 t_ast_node	*get_data_structure_3(void);
 
-void	binary(t_ast_node *s, char **env, int fd[2]);
-void	pipeit(t_ast_node *node, char **env, int files[2], int side);
+void		binary(t_ast_node *node, char **env, int files[2], int side);
+void		populate_node(t_ast_node *node);
+void		get_tree_helper(t_node *s);
 
 #endif

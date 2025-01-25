@@ -6,38 +6,38 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/24 20:52:55 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/25 16:47:49 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-int	main(int argc, char **argv, char **env)
-{
-	t_ast_node	*s;
-	int			fd[2];
-
-	(void) argc;
-	(void) argv;
-	s = get_data_structure_2();
-	fd[0] = STDIN_FILENO;
-	fd[1] = STDOUT_FILENO;
-	binary(s, env, fd);
-	free(s);
-	return (0);
-}
-
 // int	main(int argc, char **argv, char **env)
 // {
-// 	t_node	*s;
-// 	int		fd[2];
+// 	t_ast_node	*s;
+// 	int			fd[2];
 
 // 	(void) argc;
 // 	(void) argv;
-// 	s = get_stree3();
+// 	s = get_data_structure_2();
 // 	fd[0] = STDIN_FILENO;
 // 	fd[1] = STDOUT_FILENO;
-// 	process(s, env, fd);
+// 	binary(s, env, fd, 0);
 // 	free(s);
 // 	return (0);
 // }
+
+int	main(int argc, char **argv, char **env)
+{
+	t_node	*s;
+	int		fd[2];
+
+	(void) argc;
+	(void) argv;
+	s = get_tree();
+	fd[0] = STDIN_FILENO;
+	fd[1] = STDOUT_FILENO;
+	process(s->children, env, fd, s->type);
+	free(s);
+	return (0);
+}
