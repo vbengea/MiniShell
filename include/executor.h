@@ -74,6 +74,7 @@ t_node*	get_stree4(void);
 t_ast_node	*get_data_structure_0(void);
 t_ast_node	*get_data_structure_1(void);
 t_ast_node	*get_data_structure_2(void);
+t_ast_node	*get_data_structure_3(void);
 
 void	binary(t_ast_node *s, char **env, int fd[2]);
 void	pipeit(t_ast_node *node, char **env, int files[2], int side);

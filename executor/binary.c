@@ -65,10 +65,14 @@ static	void	bedirect(int fd[2], int files[2], int is_last)
 	close(fd[0]);
 }
 
-static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env, int side)
+static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env, int side, t_node_type type)
 {
 	if (!node)
 		return ;
+	if (type == NODE_AND)
+	{
+		side = 1;
+	}
 	bedirect(fd, files, side);
 	if (node->type == NODE_CMND)
 	{
@@ -77,7 +81,7 @@ static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env, int si
 	}
 	else
 	{
-		pipeit(node, env, files, side);
+		pipeit(node, env, files, 0);
 	}
 }
 
@@ -96,9 +100,9 @@ void	pipeit(t_ast_node *node, char **env, int files[2], int side)
 	if (pid == 0)
 	{
 		if (side)
-			bchild(fd, files, node->right, env, side);
+			bchild(fd, files, node->right, env, side, node->type);
 		else
-			bchild(fd, files, node->left, env, side);
+			bchild(fd, files, node->left, env, side, node->type);
 	}
 	else
 	{
