@@ -61,9 +61,14 @@ void	ennode(t_node *s, enum node_type type, int n)
 		exit(1);
 }
 
-void	binode(t_ast_node *s, t_node_type type)
+void	binode(t_ast_node *s, t_node_type type, int n, char **args)
 {
 	s->type = type;
+	if (args)
+	{
+		node->args = malloc(sizeof(char **) * n);
+		node->args = args;
+	}
 	s->left = malloc(sizeof(t_ast_node));
 	s->right = malloc(sizeof(t_ast_node));
 	s->left->left = NULL;

@@ -113,5 +113,4 @@ void	binary(t_ast_node *s, char **env, int fd[2])
 	{
 		pipeit(s, env, fd, 0);
 	}
-
 }
