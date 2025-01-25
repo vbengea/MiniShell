@@ -77,7 +77,6 @@ static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env, int si
 	}
 	else
 	{
-		files[0] = fd[0];
 		pipeit(node, env, files, side);
 	}
 }
