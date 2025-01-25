@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 13:33:06 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/25 19:30:19 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ void	handle_parens(t_token **head, t_token *new_token, char op, int count);
 void	handle_double_operators(t_token **head, t_token *new_token, char op);
 void	handle_single_operator(t_token **head, t_token *new_token, char op);
 int		count_consecutive_operators(const char *input, int *i, char op);
+t_ast_node	*create_ast_node(t_node_type type, char **cmd_args);
+t_ast_node	*build_ast(t_token *tokens);
 
 #endif

@@ -6,13 +6,13 @@
 #    By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:11:00 by vbengea           #+#    #+#              #
-#    Updated: 2025/01/25 13:33:26 by vbengea          ###   ########.fr        #
+#    Updated: 2025/01/25 19:43:12 by vbengea          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft
+CFLAGS = -Wall -Wextra -Werror -Ilibft -g
 LDFLAGS = -lreadline
 
 LIBFT_DIR = ../libft
@@ -31,7 +31,8 @@ SRC_FILES = tokenize.c \
 			handle_parens.c \
 			handle_double_operators.c \
 			handle_single_operator.c \
-			count_consecutive_operators.c
+			count_consecutive_operators.c \
+			ast_build/test.c
 
 OUTPUT = parser
 

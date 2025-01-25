@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:18:54 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 13:35:29 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/25 20:19:55 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,28 +99,47 @@ void	free_token(t_token *token)
 	}
 }
 
-int main(int argc, char **argv, char **env)
+void print_ast(t_ast_node *node, int level)
 {
-	(void)argc;
-	(void)env;
-	(void)argv;
+	if (!node)
+		return;
+	for (int i = 0; i < level; i++)
+		printf("  ");
+	printf("Node type: %d", node->type);
+	if (node->args)
+	{
+		printf(", args: ");
+		for (int j = 0; node->args[j] != NULL; j++)
+		{
+			printf("%s ", node->args[j]);
+		}
+	}
+	printf("\n");
+	print_ast(node->left, level + 1);
+	print_ast(node->right, level + 1);
+}
+
+
+int main(void)
+{
 	t_token	*token;
-	t_token	*tmp;
+	t_ast_node	*ast;
+	char *input;
 
 	while (true)
 	{
-		char *input = readline("minishell$ ");
+		input = readline("minishell$ ");
 		if (!input)
 			break;
+
 		token = tokenize_input(input);
-		tmp = token;
-		while (tmp)
-		{
-			printf("type: %d, value: %s\n", tmp->type, tmp->value);
-			tmp = tmp->next;
-		}
+		ast = build_ast(token);
+
+		print_ast(ast, 0);
+
 		free(input);
 		free_token(token);
+		// free_ast(ast);
 	}
 	return (0);
 }
