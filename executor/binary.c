@@ -42,6 +42,8 @@ static	void	bparent(int fd[2], int files[2], t_ast_node *node, char **env, int s
 		files[0] = fd[0];
 		pipeit(node, env, files, 1);
 	}
+	else
+		close(fd[0]);
 }
 
 static	void	bedirect(int fd[2], int files[2], int is_last)
@@ -75,7 +77,7 @@ static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env, int si
 	}
 	else
 	{
-		pipeit(node, env, fd, side);
+		pipeit(node, env, files, side);
 	}
 }
 

@@ -63,7 +63,7 @@ int		bexecute(char **comm, char **arvp);
 int		here_doc(char *delimit);
 void	cleanup(char *err);
 void	ennode(t_node *s, enum node_type type, int n);
-void	binode(t_ast_node *s, t_node_type type);
+void	binode(t_ast_node *s, t_node_type type, int n, char **args);
 
 t_node*	get_tree(void);
 t_node*	get_stree(void);
@@ -71,7 +71,9 @@ t_node*	get_stree2(void);
 t_node*	get_stree3(void);
 t_node*	get_stree4(void);
 
+t_ast_node	*get_data_structure_0(void);
 t_ast_node	*get_data_structure_1(void);
+t_ast_node	*get_data_structure_2(void);
 
 void	binary(t_ast_node *s, char **env, int fd[2]);
 void	pipeit(t_ast_node *node, char **env, int files[2], int side);
