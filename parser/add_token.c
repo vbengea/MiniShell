@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:08:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/24 19:09:38 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/26 19:46:01 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ void	add_token(t_token **head, t_token *new_token)
 
 	if (!head || !new_token)
 		return ;
-	tmp = *head;
-	if (!tmp)
+	new_token->next = NULL;
+	if (!*head)
 	{
 		*head = new_token;
 		return ;
 	}
+	tmp = *head;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new_token;
