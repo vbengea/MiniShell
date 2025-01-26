@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:07:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/26 13:26:41 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/26 19:46:36 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void print_ast(t_ast_node *node, int level)
 
 int main(void)
 {
-	t_token	*token;
-	t_ast_node	*ast;
+	t_token *token;
+	t_ast_node *ast;
 	char *input;
 
 	while (true)
@@ -49,10 +49,14 @@ int main(void)
 			break;
 
 		token = tokenize_input(input);
-		printf("Input tokenized!\n");
-
+		//printf("Input tokenized!\n");
+		// while (token)
+		// {
+		// 	printf("Token type: %d, value: %s\n", token->type, token->value);
+		// 	token = token->next;
+		// }
 		ast = build_ast(token);
-		printf("AST built!\n");
+		// printf("AST built!\n");
 
 		print_ast(ast, 0);
 
