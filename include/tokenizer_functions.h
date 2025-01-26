@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 19:30:19 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/26 12:15:27 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,33 @@ void	handle_single_operator(t_token **head, t_token *new_token, char op);
 int		count_consecutive_operators(const char *input, int *i, char op);
 t_ast_node	*create_ast_node(t_node_type type, char **cmd_args);
 t_ast_node	*build_ast(t_token *tokens);
+
+t_ast_node	*create_ast_node(t_node_type type, char **cmd_args);
+
+t_ast_node	*handle_parentheses(t_token *tokens, t_token *end);
+t_token	*findt_matching_paren(t_token *tokens);
+t_token	*find_split_point(t_token *tokens);
+
+t_token	*update_split_point(t_token *current, int *min_precedence, \
+			t_token *split_point);
+
+t_ast_node	*build_command_node(t_token *tokens);
+
+t_ast_node	*build_operator_node(t_token *split_point, \
+				t_ast_node *left, t_ast_node *right);
+t_ast_node	*create_redirect_node(t_token *split_point);
+t_ast_node	*build_ast(t_token *tokens);
+t_ast_node *build_ast_with_inner(t_ast_node *inner, t_token *rest);
+
+
+/* TOKENIZE */
+void	skip_whitespace(const char *input, int *i);
+bool	is_operator(char c);
+bool	is_quote(char c);
+void dispatch_operator(t_token **head, t_token *new_token, char op, int count);
+void handle_operator(t_token **head, t_token *new_token, const char *input, int *i);
+t_token *tokenize(const char *input, int *i);
+t_token	*tokenize_input(const char *input);
+void	free_token(t_token *token);
 
 #endif

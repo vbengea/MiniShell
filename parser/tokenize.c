@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:18:54 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 20:19:55 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/26 12:09:59 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,47 +99,4 @@ void	free_token(t_token *token)
 	}
 }
 
-void print_ast(t_ast_node *node, int level)
-{
-	if (!node)
-		return;
-	for (int i = 0; i < level; i++)
-		printf("  ");
-	printf("Node type: %d", node->type);
-	if (node->args)
-	{
-		printf(", args: ");
-		for (int j = 0; node->args[j] != NULL; j++)
-		{
-			printf("%s ", node->args[j]);
-		}
-	}
-	printf("\n");
-	print_ast(node->left, level + 1);
-	print_ast(node->right, level + 1);
-}
 
-
-int main(void)
-{
-	t_token	*token;
-	t_ast_node	*ast;
-	char *input;
-
-	while (true)
-	{
-		input = readline("minishell$ ");
-		if (!input)
-			break;
-
-		token = tokenize_input(input);
-		ast = build_ast(token);
-
-		print_ast(ast, 0);
-
-		free(input);
-		free_token(token);
-		// free_ast(ast);
-	}
-	return (0);
-}
