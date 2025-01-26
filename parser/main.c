@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:07:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/26 13:08:54 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/26 13:26:41 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void print_ast(t_ast_node *node, int level)
 		{
 			printf("%s ", node->args[j]);
 		}
+	}
+	if (node->file)
+	{
+		printf(", file: %s", node->file);
 	}
 	printf("\n");
 	print_ast(node->left, level + 1);

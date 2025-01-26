@@ -6,13 +6,13 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:25:03 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/26 11:28:35 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/26 13:43:51 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-t_token	*findt_matching_paren(t_token *tokens)
+t_token	*find_matching_paren(t_token *tokens)
 {
 	int		paren_count;
 	t_token	*end;

@@ -6,7 +6,7 @@
 #    By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:11:00 by vbengea           #+#    #+#              #
-#    Updated: 2025/01/26 13:02:27 by vbengea          ###   ########.fr        #
+#    Updated: 2025/01/26 13:24:01 by vbengea          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,7 @@ SRC_FILES = tokenize.c \
 			handle_double_operators.c \
 			handle_single_operator.c \
 			count_consecutive_operators.c \
-			ast_build/create_ast_node.c \
-			ast_build/build_ast_with_inner.c \
-			ast_build/test.c \
+			ast_build/*.c \
 			main.c
 
 OUTPUT = parser

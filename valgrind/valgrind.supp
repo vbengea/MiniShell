@@ -1,0 +1,7 @@
+{
+   <suppress_readline>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:*
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}

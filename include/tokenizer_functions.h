@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/26 12:15:27 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/26 13:43:04 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_ast_node	*build_ast(t_token *tokens);
 t_ast_node	*create_ast_node(t_node_type type, char **cmd_args);
 
 t_ast_node	*handle_parentheses(t_token *tokens, t_token *end);
-t_token	*findt_matching_paren(t_token *tokens);
+t_token	*find_matching_paren(t_token *tokens);
 t_token	*find_split_point(t_token *tokens);
 
 t_token	*update_split_point(t_token *current, int *min_precedence, \
