@@ -48,23 +48,3 @@ void	redirect_stdout(int fd[2], struct s_node **children, t_node_type_u type)
 		STDOUT_FILENO) == -1))
 		cleanup("Error redirecting");
 }
-
-void	get_tree_helper(t_node *s)
-{
-	t_node	*t;
-
-	ennode(s->children[0]->children[0], PIPE, 2);
-	t = s->children[0]->children[0]->children[0];
-	if (t)
-	{
-		ennode(t, PIPE, 3);
-		t->children[0]->type = EXEC;
-		t->children[0]->value = "echo 1";
-		t->children[1]->type = EXEC;
-		t->children[1]->value = "cat -e";
-		t->children[2]->type = EXEC;
-		t->children[2]->value = "echo 2";
-	}
-	s->children[0]->children[0]->children[1]->type = EXEC;
-	s->children[0]->children[0]->children[1]->value = "cat -e";
-}

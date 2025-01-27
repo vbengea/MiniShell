@@ -85,7 +85,7 @@ int	doexec(char *path, char **comm, char **arvp, int is_free)
 	return (-1);
 }
 
-int	bexecute(char **comm, char **arvp)
+int	execute(char **comm, char **arvp)
 {
 	char	*path;
 	char	*env;
@@ -102,35 +102,6 @@ int	bexecute(char **comm, char **arvp)
 			if (env)
 			{
 				path = find_path(comm[0], env);
-				is_free = 1;
-			}
-			else
-				path = NULL;
-		}
-		return (doexec(path, comm, arvp, is_free));
-	}
-	return (0);
-}
-
-int	execute(char *cmd, char **arvp)
-{
-	char	**comm;
-	char	*path;
-	char	*env;
-	int		is_free;
-
-	comm = ft_split(cmd, ' ');
-	is_free = 0;
-	if (comm)
-	{
-		if (ft_strchr(comm[0], '/') != NULL)
-			path = comm[0];
-		else
-		{
-			env = environment("PATH", arvp);
-			if (env)
-			{
-				path = find_path(cmd, env);
 				is_free = 1;
 			}
 			else

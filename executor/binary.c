@@ -12,7 +12,7 @@
 
 #include "../include/headers.h"
 
-static	void	baitit(t_node_type type)
+static	void	waitit(t_node_type type)
 {
 	int		status;
 
@@ -31,11 +31,11 @@ static	void	baitit(t_node_type type)
 	}
 }
 
-static	void	bparent(int fd[2], int files[2], t_ast_node *node, char **env)
+static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
 {
 	if (!node)
 		return ;
-	baitit(node->type);
+	waitit(node->type);
 	close(fd[1]);
 	if (node->side == 0)
 	{
@@ -46,7 +46,7 @@ static	void	bparent(int fd[2], int files[2], t_ast_node *node, char **env)
 		close(fd[0]);
 }
 
-static	void	bedirect(int fd[2], int files[2], int is_last)
+static	void	redirect(int fd[2], int files[2], int is_last)
 {
 	if (files[0] == -1)
 	{
@@ -65,16 +65,16 @@ static	void	bedirect(int fd[2], int files[2], int is_last)
 	close(fd[0]);
 }
 
-static	void	bchild(int fd[2], int files[2], t_ast_node *node, char **env)
+static	void	child(int fd[2], int files[2], t_ast_node *node, char **env)
 {
 	if (!node)
 		return ;
 	if (node->parent_type == NODE_AND || node->parent_type == NODE_OR)
 		node->side = 1;
-	bedirect(fd, files, node->side);
+	redirect(fd, files, node->side);
 	if (node->type == NODE_CMND)
 	{
-		if (bexecute(node->args, env) == -1)
+		if (execute(node->args, env) == -1)
 			cleanup("Error executing command");
 	}
 	else
@@ -99,15 +99,15 @@ void	binary(t_ast_node *node, char **env, int files[2], int side)
 	if (pid == 0)
 	{
 		if (side)
-			bchild(fd, files, node->right, env);
+			child(fd, files, node->right, env);
 		else
-			bchild(fd, files, node->left, env);
+			child(fd, files, node->left, env);
 	}
 	else
 	{
 		if (side)
-			bparent(fd, files, node->right, env);
+			parent(fd, files, node->right, env);
 		else
-			bparent(fd, files, node, env);
+			parent(fd, files, node, env);
 	}
 }
