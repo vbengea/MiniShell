@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 19:06:43 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/26 19:17:55 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/27 12:41:40 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,18 @@ t_ast_node	*build_ast(t_token *tokens)
 			end->next = NULL;
 			t_ast_node *inner = build_ast(tokens->next);
 			end->next = next_after_paren;
-			
+
+
+			// NODE_GROUP
+			t_ast_node *group_node = create_ast_node(NODE_GROUP, NULL);
+			group_node->left = inner;
+			group_node->right = NULL;
+
+
 			if (next_after_paren)
 				return build_ast_with_inner(inner, next_after_paren);
-			return inner;
+			//return inner;
+			return group_node;
 		}
 	}
 
