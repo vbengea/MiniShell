@@ -236,3 +236,27 @@ void free_ast(t_ast_node *node)
 	}
 	free(node);
 }
+
+void print_ast(t_ast_node *node, int level)
+{
+	if (!node)
+		return;
+	for (int i = 0; i < level; i++)
+		printf("  ");
+	printf("Node type: %d", node->type);
+	if (node->args)
+	{
+		printf(", args: ");
+		for (int j = 0; node->args[j] != NULL; j++)
+		{
+			printf("%s ", node->args[j]);
+		}
+	}
+	if (node->file)
+	{
+		printf(", file: %s", node->file);
+	}
+	printf("\n");
+	print_ast(node->left, level + 1);
+	print_ast(node->right, level + 1);
+}
