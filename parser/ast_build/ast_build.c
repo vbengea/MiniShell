@@ -210,3 +210,29 @@ t_ast_node	*build_ast(t_token *tokens)
 
 	return (root);
 }
+
+void free_ast(t_ast_node *node)
+{
+	char	**cmd_args;
+	int		i;
+
+	if (!node)
+		return;
+	free_ast(node->left);
+	free_ast(node->right);
+	if (node->type == NODE_CMND || node->type == NODE_REDIRECT)
+	{
+		cmd_args = (char **)node->args;
+		if (cmd_args)
+		{
+			i = 0;
+			while (cmd_args[i])
+			{
+				free(cmd_args[i]);
+				i++;
+			}
+			free(cmd_args);
+		}
+	}
+	free(node);
+}

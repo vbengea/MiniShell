@@ -10,34 +10,49 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/headers.h"
-
-int	main(int argc, char **argv, char **env)
-{
-	t_ast_node	*s;
-	int			fd[2];
-
-	(void) argc;
-	(void) argv;
-	s = get_data_structure_2();
-	fd[0] = STDIN_FILENO;
-	fd[1] = STDOUT_FILENO;
-	binary(s, env, fd, 0);
-	free(s);
-	return (0);
-}
+#include "include/headers.h"
 
 // int	main(int argc, char **argv, char **env)
 // {
-// 	t_node	*s;
-// 	int		fd[2];
+// 	t_ast_node	*s;
+// 	int			fd[2];
 
 // 	(void) argc;
 // 	(void) argv;
-// 	s = get_tree();
+// 	s = get_data_structure_2();
 // 	fd[0] = STDIN_FILENO;
 // 	fd[1] = STDOUT_FILENO;
-// 	process(s->children, env, fd, s->type);
+// 	binary(s, env, fd, 0);
 // 	free(s);
 // 	return (0);
 // }
+
+int main(int argc, char **argv, char **env)
+{
+	t_token *token;
+	t_ast_node *ast;
+	char *input;
+	int	fd[2];
+
+	(void) argc;
+	(void) argv;
+	while (true)
+	{
+		input = readline(GREEN "minishell$ " RESET);
+		if (!input)
+			break;
+
+		token = tokenize_input(input);
+		ast = build_ast(token);
+		// print_ast(ast, 0);
+
+		fd[0] = STDIN_FILENO;
+		fd[1] = STDOUT_FILENO;
+		binary(ast, env, fd, 0);
+
+		// free(input);
+		free_token(token);
+		free_ast(ast);
+	}
+	return (0);
+}

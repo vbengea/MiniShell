@@ -31,6 +31,7 @@ void	handle_single_operator(t_token **head, t_token *new_token, char op);
 int		count_consecutive_operators(const char *input, int *i, char op);
 t_ast_node	*create_ast_node(t_node_type type, char **cmd_args);
 t_ast_node	*build_ast(t_token *tokens);
+void free_ast(t_ast_node *node);
 
 t_ast_node	*create_ast_node(t_node_type type, char **cmd_args);
 

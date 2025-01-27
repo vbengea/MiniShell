@@ -7,14 +7,31 @@ CC			:= 	cc
 CFLAGS		:= 	-Wall -Wextra -Werror
 SFLAGS		:= 	-g3 -fsanitize=address
 LFLAGS		:= 	$(LIBFT)
-
+LDFLAGS 	:=	-lreadline
 EXEC_DIR	:=	executor
-INCLUDE		:= 	include/executor.h
-SRC			:= 	$(EXEC_DIR)/main.c $(EXEC_DIR)/process.c $(EXEC_DIR)/utils.c $(EXEC_DIR)/execute.c \
-				$(EXEC_DIR)/binary.c $(EXEC_DIR)/redirection.c $(EXEC_DIR)/bmock.c $(EXEC_DIR)/mock.c 
+PARSER_DIR	:=  parser
+INCLUDE		:= 	./include/headers.h
+SRC			:= 	$(EXEC_DIR)/process.c $(EXEC_DIR)/utils.c $(EXEC_DIR)/execute.c \
+				$(EXEC_DIR)/binary.c $(EXEC_DIR)/redirection.c $(EXEC_DIR)/bmock.c $(EXEC_DIR)/mock.c \
+				$(PARSER_DIR)/tokenize.c \
+				$(PARSER_DIR)/add_token.c \
+				$(PARSER_DIR)/create_token.c \
+				$(PARSER_DIR)/create_word_token.c \
+				$(PARSER_DIR)/create_quoted_token.c \
+				$(PARSER_DIR)/handle_parens.c \
+				$(PARSER_DIR)/handle_double_operators.c \
+				$(PARSER_DIR)/handle_single_operator.c \
+				$(PARSER_DIR)/count_consecutive_operators.c \
+				$(PARSER_DIR)/ast_build/ast_build.c \
+				$(PARSER_DIR)/ast_build/build_ast_with_inner.c \
+				$(PARSER_DIR)/ast_build/create_ast_node.c \
+				main.c
+
 SRCB		:= 	
 
-OBJ 		:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC))
+OBJ 		:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
+				$(patsubst $(PARSER_DIR)/ast_build/%.c, $(PARSER_DIR)/ast_build/%.o, $(SRC)) \
+				$(patsubst $(PARSER_DIR)/%.c, $(PARSER_DIR)/%.o, $(SRC))
 OBJB 		:= 	$(SRCB:.c=.o)
 
 ARGS		:=	""
@@ -22,11 +39,13 @@ ARGS		:=	""
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(INCLUDE)
-	$(CC) $(CFLAGS) $(SRC) $(LFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(SRC) $(LFLAGS) -o $(NAME) $(LDFLAGS)
 
 clean:
 	make -C $(LIBFT_DIR) clean
 	rm -f $(EXEC_DIR)/*.o
+	rm -f $(PARSER_DIR)/*.o
+	rm -f $(PARSER_DIR)/ast_build/*.o
 	rm -rf *.dSYM
 	rm -f z
 
@@ -45,7 +64,7 @@ bonus: $(LIBFT) $(OBJB) $(INCLUDE)
 $(LIBFT):
 	make -C $(LIBFT_DIR) all
 
-$(EXEC_DIR)/%.o: $(EXEC_DIR)/%.c
+%.o: %.c
 	rm -f bonus
 	$(CC) $(CFLAGS) -c -o $@ $<
 
