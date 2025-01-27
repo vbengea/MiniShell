@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ast_build.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 19:06:43 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/27 15:45:45 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/27 19:15:49 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
 /**
- * @brief cositas chachis
- * @param token hace cosas
- * @warning demasiado chachi
+ * @brief build an abstract syntax tree from a linked list of tokens
+ * @param token linked list of tokens
+ * @warning Mucho que limpiar ...
  */
 t_ast_node	*build_ast(t_token *tokens)
 {
@@ -25,6 +25,7 @@ t_ast_node	*build_ast(t_token *tokens)
 	if (!tokens)
 		return (NULL);
 
+	// Handle parentheses
 	if (tokens->type == TOKEN_OPEN_PAREN)
 	{
 		int paren_count = 1;
@@ -39,7 +40,7 @@ t_ast_node	*build_ast(t_token *tokens)
 			if (paren_count > 0)
 				end = end->next;
 		}
-		
+
 		if (end && paren_count == 0)
 		{
 			t_token *next_after_paren = end->next;
@@ -47,20 +48,48 @@ t_ast_node	*build_ast(t_token *tokens)
 			t_ast_node *inner = build_ast(tokens->next);
 			end->next = next_after_paren;
 
-
-			// NODE_GROUP
+			// Create a group node
 			t_ast_node *group_node = create_ast_node(NODE_GROUP, NULL);
 			group_node->left = inner;
-			group_node->right = build_ast(next_after_paren);
 
-
+			// Continue processing the remaining tokens
 			if (next_after_paren)
-				return build_ast_with_inner(inner, next_after_paren);
-			//return inner;
+			{
+				// Check if the next token is a valid operator
+				if (next_after_paren->type != TOKEN_PIPE &&
+					next_after_paren->type != TOKEN_AND &&
+					next_after_paren->type != TOKEN_OR)
+				{
+					// Invalid syntax: report an error
+					fprintf(stderr, "Syntax error: Expected an operator after ')'\n");
+					return NULL; // Or handle the error as needed
+				}
+
+				// Determine the node type based on the next token
+				t_ast_node *root = NULL;
+				if (next_after_paren->type == TOKEN_PIPE)
+					root = create_ast_node(NODE_PIPE, NULL);
+				else if (next_after_paren->type == TOKEN_AND)
+					root = create_ast_node(NODE_AND, NULL);
+				else if (next_after_paren->type == TOKEN_OR)
+					root = create_ast_node(NODE_OR, NULL);
+				else
+				{
+					// This should never happen due to the check above
+					fprintf(stderr, "Internal error: Unexpected token type after ')'\n");
+					return NULL;
+				}
+
+				// Connect the group node and the remaining AST
+				root->left = group_node;
+				root->right = build_ast(next_after_paren);
+				return root;
+			}
 			return group_node;
 		}
 	}
 
+	// Handle operators and commands
 	t_token *current = tokens;
 	t_token *split_point = NULL;
 	int min_precedence = 100;
@@ -104,6 +133,7 @@ t_ast_node	*build_ast(t_token *tokens)
 		}
 		current = current->next;
 	}
+
 	if (!split_point)
 	{
 		char **cmd_args = NULL;
@@ -180,4 +210,3 @@ t_ast_node	*build_ast(t_token *tokens)
 
 	return (root);
 }
-
