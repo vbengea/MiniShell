@@ -65,6 +65,18 @@ void	binode(t_ast_node *s, t_node_type type, int n, char *args[])
 
 void	populate_node(t_ast_node *node)
 {
+	if (!node->left)
+	{
+		node->left = malloc(sizeof(t_ast_node));
+		node->left->left = NULL;
+		node->left->right = NULL;
+	}
+	if (!node->right)
+	{
+		node->right = malloc(sizeof(t_ast_node));
+		node->right->left = NULL;
+		node->right->right = NULL;
+	}
 	node->right->parent_type = node->type;
 	node->left->parent_type = node->type;
 	node->right->side = 1;

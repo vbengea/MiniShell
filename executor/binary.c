@@ -31,21 +31,6 @@ static	void	waitit(t_node_type type)
 	}
 }
 
-static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
-{
-	if (!node)
-		return ;
-	waitit(node->type);
-	close(fd[1]);
-	if (node->side == 0)
-	{
-		files[0] = fd[0];
-		binary(node, env, files, 1);
-	}
-	else
-		close(fd[0]);
-}
-
 static	void	redirect(int fd[2], int files[2], int is_last)
 {
 	if (files[0] == -1)
@@ -65,11 +50,26 @@ static	void	redirect(int fd[2], int files[2], int is_last)
 	close(fd[0]);
 }
 
+static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
+{
+	if (!node)
+		return ;
+	waitit(node->type);
+	close(fd[1]);
+	if (node->side == 0)
+	{
+		files[0] = fd[0];
+		binary(node, env, files, 1);
+	}
+	else
+		close(fd[0]);
+}
+
 static	void	child(int fd[2], int files[2], t_ast_node *node, char **env)
 {
 	if (!node)
 		return ;
-	if (node->parent_type == NODE_AND || node->parent_type == NODE_OR)
+	if (node->parent_type == NODE_AND || node->parent_type == NODE_OR || node->parent_type == NODE_GROUP)
 		node->side = 1;
 	redirect(fd, files, node->side);
 	if (node->type == NODE_CMND)
