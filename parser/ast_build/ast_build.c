@@ -6,12 +6,17 @@
 /*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 19:06:43 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/27 12:41:40 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/27 15:45:45 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
+/**
+ * @brief cositas chachis
+ * @param token hace cosas
+ * @warning demasiado chachi
+ */
 t_ast_node	*build_ast(t_token *tokens)
 {
 	t_ast_node	*left;
@@ -46,7 +51,7 @@ t_ast_node	*build_ast(t_token *tokens)
 			// NODE_GROUP
 			t_ast_node *group_node = create_ast_node(NODE_GROUP, NULL);
 			group_node->left = inner;
-			group_node->right = NULL;
+			group_node->right = build_ast(next_after_paren);
 
 
 			if (next_after_paren)
