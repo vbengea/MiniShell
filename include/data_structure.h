@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 16:20:53 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:11:27 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ typedef enum e_node_type
 	NODE_PIPE,
 	NODE_REDIRECT,
 	NODE_AND,
-	NODE_OR
+	NODE_OR ,
+	NODE_GROUP
 }	t_node_type;
 
 typedef struct s_ast_node
