@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   headers.h                                          :+:      :+:    :+:   */
+/*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 10:47:03 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/23 11:22:57 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/23 11:24:37 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADERS_H
-# define HEADERS_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-#include "../libft/libft.h"
-#include "data_structure.h"
-#include "executor.h"
-#include "token.h"
-#include "colors.h"
-#include "builtins.h"
-
-#include "tokenizer_functions.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+int		cd(const char *path, char **env);
 
 #endif

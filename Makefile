@@ -14,8 +14,8 @@ INCLUDE			:= 	./include/headers.h
 
 SRC				:= 	$(EXEC_DIR)/utils.c \
 					$(EXEC_DIR)/execute.c \
-					$(EXEC_DIR)/binary.c \
 					$(EXEC_DIR)/redirection.c \
+					$(EXEC_DIR)/selector.c \
 					$(PARSER_DIR)/tokenize.c \
 					$(PARSER_DIR)/add_token.c \
 					$(PARSER_DIR)/create_token.c \

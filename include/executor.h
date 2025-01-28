@@ -50,6 +50,8 @@ typedef struct s_node
 	char			*stdout_value;
 }	t_node;
 
+void		selector(t_ast_node *node, char **env);
+
 void		redirect_stdin(struct s_node **children);
 void		redirect_stdout(int fd[2], struct s_node **children, \
 	t_node_type_u type);
@@ -65,5 +67,6 @@ void		binode(t_ast_node *s, t_node_type type, int n, char *args[]);
 
 void		binary(t_ast_node *node, char **env, int files[2], int side);
 void		populate_node(t_ast_node *node, int side);
+void		forkit(t_ast_node *node, char **env, int files[2], int side);
 
 #endif

@@ -67,7 +67,7 @@ char	*find_path(char *cmd, char *env)
 	return (NULL);
 }
 
-int	doexec(char *path, char **comm, char **arvp, int is_free)
+int	doexec(char *path, char **comm, char **env, int is_free)
 {
 	if (ft_strchr(comm[0], '='))
 	{
@@ -80,7 +80,7 @@ int	doexec(char *path, char **comm, char **arvp, int is_free)
 	}
 	else if ((path && access(path, F_OK | X_OK) == 0))
 	{
-		if (execve(path, comm, arvp) == -1)
+		if (execve(path, comm, env) == -1)
 		{
 			if (is_free)
 				free(path);

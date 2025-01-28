@@ -17,11 +17,9 @@ int main(int argc, char **argv, char **env)
 	t_token *token;
 	t_ast_node *ast;
 	char *input;
-	int	fd[2];
 
 	(void) argc;
 	(void) argv;
-	(void) env;
 	while (true)
 	{
 		input = readline(GREEN "minishell$ " RESET);
@@ -31,12 +29,7 @@ int main(int argc, char **argv, char **env)
 		token = tokenize_input(input);
 		ast = build_ast(token);
 		print_ast(ast, 0);
-
-		fd[0] = STDIN_FILENO;
-		fd[1] = STDOUT_FILENO;
-		int entrance = ast->type == NODE_CMND ? 2 : 0;
-		binary(ast, env, fd, entrance);
-
+		selector(ast, env);
 		// free(input);
 		free_token(token);
 		free_ast(ast);
