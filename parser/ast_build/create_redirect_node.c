@@ -18,6 +18,7 @@ t_ast_node	*create_redirect_node(t_token *token)
 	char	**cmd_args;
 
 	temp = token->next;
+	cmd_args = NULL;
 	if (temp && temp->type == TOKEN_WORD)
 	{
 		cmd_args = malloc(sizeof(char *) * 2);
