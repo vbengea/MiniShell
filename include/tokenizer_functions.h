@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/26 13:43:04 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/28 18:48:54 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,37 @@ void print_ast(t_ast_node *node, int level);
 
 t_ast_node	*create_ast_node(t_node_type type, char **cmd_args);
 
-t_ast_node	*handle_parentheses(t_token *tokens, t_token *end);
+t_ast_node	*handle_parentheses(t_token *tokens);
 t_token	*find_matching_paren(t_token *tokens);
 t_token	*find_split_point(t_token *tokens);
 
-t_token	*update_split_point(t_token *current, int *min_precedence, \
-			t_token *split_point);
 
 t_ast_node	*build_command_node(t_token *tokens);
 
-t_ast_node	*build_operator_node(t_token *split_point, \
-				t_ast_node *left, t_ast_node *right);
-t_ast_node	*create_redirect_node(t_token *split_point);
+t_ast_node	*build_operator_node(t_ast_node *left ,t_token *split_point);
+
+t_ast_node	*create_redirect_node(t_token *token);
 t_ast_node	*build_ast(t_token *tokens);
 t_ast_node *build_ast_with_inner(t_ast_node *inner, t_token *rest);
+
+
+
+
+/* Nuevas */
+void	update_paren_level(int *level, t_token_tpype type);
+void	update_split_point(t_token **split, t_token *current, int *min_prec);
+int	count_word_tokens(t_token *tokens);
+void	disconnect_tokens(t_token *start, t_token *split);
+void	reconnect_tokens(t_token *start, t_token *split);
+int	is_valid_operator(t_token_tpype type);
+int	is_redirect_token(t_token_tpype type);
+
+
+
+void free_ast(t_ast_node *node);
+void print_ast(t_ast_node *node, int level);
+
+
 
 
 /* TOKENIZE */
