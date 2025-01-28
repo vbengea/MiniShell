@@ -24,9 +24,16 @@ SRC				:= 	$(EXEC_DIR)/utils.c \
 					$(PARSER_DIR)/handle_double_operators.c \
 					$(PARSER_DIR)/handle_single_operator.c \
 					$(PARSER_DIR)/count_consecutive_operators.c \
-					$(PARSER_DIR)/ast_build/ast_build.c \
-					$(PARSER_DIR)/ast_build/build_ast_with_inner.c \
+					$(PARSER_DIR)/ast_build/build_ast.c \
 					$(PARSER_DIR)/ast_build/create_ast_node.c \
+					$(PARSER_DIR)/ast_build/print_ast.c \
+					$(PARSER_DIR)/ast_build/free_ast.c \
+					$(PARSER_DIR)/ast_build/handle_parentheses.c \
+					$(PARSER_DIR)/ast_build/build_operator_node.c \
+					$(PARSER_DIR)/ast_build/build_command_node.c \
+					$(PARSER_DIR)/ast_build/create_redirect_node.c \
+					$(PARSER_DIR)/ast_build/find_matching_paren.c \
+					$(PARSER_DIR)/ast_build/find_split_point.c \
 					$(BUILTINS_DIR)/cd.c \
 					$(BUILTINS_DIR)/echo.c \
 					$(BUILTINS_DIR)/env.c \
