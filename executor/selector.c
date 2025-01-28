@@ -31,20 +31,21 @@ void	waiter(t_node_type type)
 	}
 }
 
-static  void    cenv(void)
-{
-
-}
-
 static  void    navigate(t_ast_node *node, char **env, int hold)
 {
 	(void) hold;
-	node->left->parent = node;
-	node->right->parent = node;
-	node->left->side = 0;
-	node->right->side = 1;
-	selector(node->left, env);
-	selector(node->right, env);
+	if (node->left)
+	{
+		node->left->parent = node;
+		node->left->side = 0;
+		selector(node->left, env);
+	}
+	if (node->right)
+	{
+		node->right->parent = node;
+		node->right->side = 1;
+		selector(node->right, env);
+	}
 }
 
 static  void    executor(t_ast_node *node, char **env, int hold)
@@ -61,104 +62,6 @@ static  void    builtin(t_ast_node *node, char **env, int hold)
 		cd(node->args[1], env);
 		if (hold)
 			exit(0);
-	}
-}
-
-static	int	is_last_node(t_ast_node *node)
-{
-	if (node->type == NODE_CMND && node->side == 1)
-	{
-		if ((node->parent && node->parent->type == NODE_PIPE && \
-			node->parent->parent && \
-			node->parent->parent->type != NODE_PIPE) || !node->parent->parent)
-			return (1);
-	}
-	return (0);
-}
-
-static	void	redirect(int fd[2], int files[2], int is_last)
-{
-	(void) is_last;
-	if (files[0] == -1)
-	{
-		perror("Error reading file");
-		exit(1);
-	}
-	if (dup2(files[0], STDIN_FILENO) == -1)
-		perror("Error redirecting");
-	if (is_last)
-	{
-		if (dup2(files[1], STDOUT_FILENO) == -1)
-			perror("Error redirecting");
-	}
-	else if (dup2(fd[1], STDOUT_FILENO) == -1)
-		perror("Error redirectingT");
-	close(fd[0]);
-}
-
-static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
-{
-	if (!node)
-		return ;
-	waiter(node->type);
-	close(fd[1]);
-	if (node->side == 0)
-	{
-		files[0] = fd[0];
-		pipex(node, env, files, 1);
-	}
-	else
-		close(fd[0]);
-}
-
-static	void	child(int fd[2], int files[2], t_ast_node *node, char **env)
-{
-	if (!node)
-	{
-		exit(0);
-		return ;
-	}
-	if (is_last_node(node))
-		node->side = 1;
-	redirect(fd, files, node->side);
-	if (node->type == NODE_CMND)
-	{
-		if (execute(node->args, env) == -1)
-			cleanup("Error executing command..");
-	}
-	else
-	{
-		close(files[0]);
-		pipex(node, env, files, 0);
-	}
-}
-
-void    pipex(t_ast_node *node, char **env, int files[], int side)
-{
-	int	fd[2];
-	int	pid;
-
-	if (!node)
-		return ;
-	if (pipe(fd) == -1)
-		cleanup("Error creating pipe");
-	pid = fork();
-	if (pid == -1)
-		cleanup("Error forking process");
-	populate_node(node, side);
-	if (pid == 0)
-	{
-		if(side == 1)
-			child(fd, files, node->right, env);
-		else
-			child(fd, files, node->left, env);
-	}
-	else
-	{
-		if (side == 1)
-			parent(fd, files, node->right, env);
-		else
-			parent(fd, files, node, env);
 	}
 }
 
@@ -208,11 +111,14 @@ void	selector(t_ast_node *node, char **env)
         }
         else
 		{
-            forker(node, env, executor);
+			if (node->parent)
+				executor(node, env, 1);
+			else
+				forker(node, env, executor);
 		}
     }
     else if (node->type == NODE_AND)
-		navigate(node, env, 0);
+		navigate(node, env, 1);
     else if (node->type == NODE_PIPE)
 	{
 		int files[2];
@@ -221,8 +127,5 @@ void	selector(t_ast_node *node, char **env)
 		pipex(node, env, files, 0);
 	}
     else if (node->type == NODE_GROUP)
-    {
-		(void) cenv;
         forker(node, env, navigate);
-    }
 }
