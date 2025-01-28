@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   build_ast_with_inner.c                             :+:      :+:    :+:   */
+/*   free_ast.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 12:14:40 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/26 12:15:22 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/28 18:47:26 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/28 18:51:39 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-t_ast_node *build_ast_with_inner(t_ast_node *inner, t_token *rest)
+void	free_ast(t_ast_node *node)
 {
-	if (!rest)
-		return inner;
-	
-	t_ast_node *new_tree = build_ast(rest);
-	if (!new_tree)
-		return inner;
+	char	**cmd_args;
+	int		i;
 
-	t_ast_node *leftmost = new_tree;
-	while (leftmost->left)
-		leftmost = leftmost->left;
-	
-	leftmost->left = inner;
-	return new_tree;
+	if (!node)
+		return ;
+	free_ast(node->left);
+	free_ast(node->right);
+	if (node->type == NODE_CMND || node->type == NODE_REDIRECT)
+	{
+		cmd_args = (char **)node->args;
+		if (cmd_args)
+		{
+			i = 0;
+			while (cmd_args[i])
+			{
+				free(cmd_args[i]);
+				i++;
+			}
+			free(cmd_args);
+		}
+	}
+	free(node);
 }

@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 13:32:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 13:32:55 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/28 18:49:41 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ int	count_consecutive_operators(const char *input, int *i, char op)
 		count++;
 		(*i)++;
 	}
-	return count;
+	return (count);
 }

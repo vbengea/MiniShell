@@ -6,90 +6,109 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:00:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/26 13:43:21 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/28 18:52:14 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-// t_ast_node	*build_ast(t_token *tokens)
-// {
-// 	t_token		*prev;
-// 	t_token		*end;
-// 	t_token		*split_point;
-// 	t_ast_node	*left;
-// 	t_ast_node	*right;
-
-// 	if (!tokens)
-// 		return (NULL);
-// 	if (tokens->type == TOKEN_OPEN_PAREN)
-// 	{
-// 		end = findt_matching_paren(tokens);
-// 		if (end)
-// 			return (handle_parentheses(tokens, end));
-// 	}
-// 	split_point = find_split_point(tokens);
-// 	if (!split_point)
-// 		return (build_command_node(tokens));
-// 	left = NULL;
-// 	right = NULL;
-// 	if (split_point != tokens)
-// 	{
-// 		prev = tokens;
-// 		while (prev->next != split_point)
-// 			prev = prev->next;
-// 		prev->next = NULL;
-// 		left = build_ast(tokens);
-// 		prev->next = split_point;
-// 	}
-// 	if (split_point->next)
-// 		right = build_ast(split_point->next);
-// 	return (build_operator_node(split_point, left, right));
-// }
-
-
-static t_ast_node	*build_ast_with_split(t_token *tokens, t_token *split_point)
+void	update_paren_level(int *level, t_token_tpype type)
 {
-	t_ast_node	*left;
-	t_ast_node	*right;
-	t_token		*prev;
-
-	left = NULL;
-	right = NULL;
-	if (split_point != tokens)
-	{
-		prev = tokens;
-		while (prev->next != split_point)
-			prev = prev->next;
-		prev->next = NULL;
-		left = build_ast(tokens);
-		prev->next = split_point;
-	}
-	if (split_point->next)
-		right = build_ast(split_point->next);
-	return (build_operator_node(split_point, left, right));
+	if (type == TOKEN_OPEN_PAREN)
+		(*level)++;
+	else if (type == TOKEN_CLOSE_PAREN)
+		(*level)--;
 }
 
-static t_ast_node	*build_ast_recursive(t_token *tokens)
+void	update_split_point(t_token **split, t_token *current, int *min_prec)
 {
-	t_token	*split_point;
-	t_token	*end;
-
-	if (tokens->type == TOKEN_OPEN_PAREN)
+	if ((current->type == TOKEN_AND
+		|| current->type == TOKEN_OR) && *min_prec >= 1)
 	{
-		end = find_matching_paren(tokens);
-		if (end)
-			return (handle_parentheses(tokens, end));
+		*min_prec = 1;
+		*split = current;
 	}
-	split_point = find_split_point(tokens);
-	if (!split_point)
-		return (build_command_node(tokens));
-	return (build_ast_with_split(tokens, split_point));
+	else if (current->type == TOKEN_PIPE && *min_prec >= 2)
+	{
+		*min_prec = 2;
+		*split = current;
+	}
+	else if (is_redirect_token(current->type) && *min_prec >= 3)
+	{
+		*min_prec = 3;
+		*split = current;
+	}
+}
+
+int	count_word_tokens(t_token *tokens)
+{
+	int		count;
+	t_token	*current;
+
+	count = 0;
+	current = tokens;
+	while (current && current->type == TOKEN_WORD)
+	{
+		count++;
+		current = current->next;
+	}
+	return (count);
+}
+
+void	disconnect_tokens(t_token *start, t_token *split)
+{
+	t_token	*prev;
+
+	prev = start;
+	while (prev->next != split)
+		prev = prev->next;
+	prev->next = NULL;
+}
+
+
+void	reconnect_tokens(t_token *start, t_token *split)
+{
+	t_token	*prev;
+
+	prev = start;
+	while (prev->next != NULL)
+		prev = prev->next;
+	prev->next = split;
+}
+
+int	is_valid_operator(t_token_tpype type)
+{
+	return (type == TOKEN_PIPE ||
+			type == TOKEN_AND ||
+			type == TOKEN_OR);
+}
+
+
+int	is_redirect_token(t_token_tpype type)
+{
+	return (type == TOKEN_REDIRECT_IN ||
+			type == TOKEN_REDIRECT_OUT ||
+			type == TOKEN_APPEND);
 }
 
 t_ast_node	*build_ast(t_token *tokens)
 {
+	t_token		*split_point;
+	t_ast_node	*left;
+
 	if (!tokens)
 		return (NULL);
-	return (build_ast_recursive(tokens));
+	if (tokens->type == TOKEN_OPEN_PAREN)
+		return (handle_parentheses(tokens));
+	split_point = find_split_point(tokens);
+	if (!split_point)
+		return (build_command_node(tokens));
+	left = NULL;
+	if (split_point != tokens)
+	{
+		disconnect_tokens(tokens, split_point);
+		left = build_ast(tokens);
+		reconnect_tokens(tokens, split_point);
+	}
+	return (build_operator_node(left, split_point));
 }

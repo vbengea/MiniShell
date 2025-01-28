@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_redirect_node.c                             :+:      :+:    :+:   */
+/*   print_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 11:57:22 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/28 18:18:50 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/28 18:48:17 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/28 18:51:58 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-t_ast_node	*create_redirect_node(t_token *token)
+void	print_ast(t_ast_node *node, int level)
 {
-	t_token	*temp;
-	char	**cmd_args;
-
-	temp = token->next;
-	if (temp && temp->type == TOKEN_WORD)
+	if (!node)
+		return;
+	for (int i = 0; i < level; i++)
+		printf("  ");
+	printf("Node type: %d", node->type);
+	if (node->args)
 	{
-		cmd_args = malloc(sizeof(char *) * 2);
-		cmd_args[0] = ft_strdup(temp->value);
-		cmd_args[1] = NULL;
+		printf(", args: ");
+		for (int j = 0; node->args[j] != NULL; j++)
+		{
+			printf("%s ", node->args[j]);
+		}
 	}
-	return (create_ast_node(NODE_REDIRECT, cmd_args));
+	if (node->file)
+	{
+		printf(", file: %s", node->file);
+	}
+	printf("\n");
+	print_ast(node->left, level + 1);
+	print_ast(node->right, level + 1);
 }
