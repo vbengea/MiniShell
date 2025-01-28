@@ -19,6 +19,8 @@ int		cd(const char *path, char **env)
 	int		len;
 	char	*str;
 	
+	if (path == NULL)
+		path = getenv("HOME");
 	r = chdir(path);
 	if (r != 0)
 		perror("cd builtin failed");

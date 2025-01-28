@@ -32,6 +32,7 @@ typedef struct s_ast_node
 	int					redirect_type; // ">" (1), "<" (2), ">>" (3).
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
+	struct s_ast_node	*parent;
 	int					side;
 }	t_ast_node;
 

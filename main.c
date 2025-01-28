@@ -25,7 +25,6 @@ int main(int argc, char **argv, char **env)
 		input = readline(GREEN "minishell$ " RESET);
 		if (!input)
 			break;
-
 		token = tokenize_input(input);
 		ast = build_ast(token);
 		print_ast(ast, 0);
