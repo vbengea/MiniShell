@@ -63,7 +63,7 @@ void	binode(t_ast_node *s, t_node_type type, int n, char *args[])
 	s->right->right = NULL;
 }
 
-void	populate_node(t_ast_node *node)
+void	populate_node(t_ast_node *node, int side)
 {
 	if (!node->left)
 	{
@@ -81,5 +81,5 @@ void	populate_node(t_ast_node *node)
 	node->left->parent_type = node->type;
 	node->right->side = 1;
 	node->left->side = 0;
-	node->side = 0;
+	node->side = side;
 }

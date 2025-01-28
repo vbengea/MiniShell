@@ -34,7 +34,8 @@ int main(int argc, char **argv, char **env)
 
 		fd[0] = STDIN_FILENO;
 		fd[1] = STDOUT_FILENO;
-		binary(ast, env, fd, 0);
+		int entrance = ast->type == NODE_CMND ? 2 : 0;
+		binary(ast, env, fd, entrance);
 
 		// free(input);
 		free_token(token);

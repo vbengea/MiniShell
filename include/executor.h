@@ -63,12 +63,7 @@ int			here_doc(char *delimit);
 void		cleanup(char *err);
 void		binode(t_ast_node *s, t_node_type type, int n, char *args[]);
 
-t_ast_node	*get_data_structure_0(void);
-t_ast_node	*get_data_structure_1(void);
-t_ast_node	*get_data_structure_2(void);
-t_ast_node	*get_data_structure_3(void);
-
 void		binary(t_ast_node *node, char **env, int files[2], int side);
-void		populate_node(t_ast_node *node);
+void		populate_node(t_ast_node *node, int side);
 
 #endif

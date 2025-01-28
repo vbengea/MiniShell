@@ -75,7 +75,7 @@ static	void	child(int fd[2], int files[2], t_ast_node *node, char **env)
 	if (node->type == NODE_CMND)
 	{
 		if (execute(node->args, env) == -1)
-			cleanup("Error executing command");
+			cleanup("Error executing command..");
 	}
 	else
 	{
@@ -95,17 +95,26 @@ void	binary(t_ast_node *node, char **env, int files[2], int side)
 	pid = fork();
 	if (pid == -1)
 		cleanup("Error forking process");
-	populate_node(node);
+	populate_node(node, side);
 	if (pid == 0)
 	{
-		if (side)
+		if (side == 2)
+		{
+			child(fd, files, node, env);
+		}
+		else if(side == 1)
 			child(fd, files, node->right, env);
 		else
 			child(fd, files, node->left, env);
 	}
 	else
 	{
-		if (side)
+		if (side == 2)
+		{
+			node->side = 0;
+			parent(fd, files, node, env);
+		}
+		else if (side == 1)
 			parent(fd, files, node->right, env);
 		else
 			parent(fd, files, node, env);
