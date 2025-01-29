@@ -47,7 +47,6 @@ static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
 {
 	if (!node)
 		return ;
-	waiter(node->type);
 	close(fd[1]);
 	if (node->side == 0)
 	{
@@ -56,6 +55,7 @@ static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
 	}
 	else
 		close(fd[0]);
+	waiter(node->type);
 }
 
 static	void	child(int fd[2], int files[2], t_ast_node *node, char **env)
