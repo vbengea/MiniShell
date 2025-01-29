@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:15:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/24 19:34:27 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/29 17:57:01 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum e_token_type
 	TOKEN_CLOSE_PAREN
 }	t_token_tpype;
 
-typedef struct	s_token
+typedef struct s_token
 {
 	t_token_tpype	type;
 	char			*value;
