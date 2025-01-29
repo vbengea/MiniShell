@@ -6,11 +6,11 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 13:25:32 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/25 13:25:56 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/29 18:06:35 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/headers.h"
+#include "../../include/headers.h"
 
 void	handle_double_operators(t_token **head, t_token *new_token, char op)
 {
