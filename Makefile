@@ -16,15 +16,21 @@ SRC				:= 	$(EXEC_DIR)/utils.c \
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
 					$(EXEC_DIR)/pipex.c \
-					$(PARSER_DIR)/tokenize.c \
-					$(PARSER_DIR)/add_token.c \
-					$(PARSER_DIR)/create_token.c \
-					$(PARSER_DIR)/create_word_token.c \
-					$(PARSER_DIR)/create_quoted_token.c \
-					$(PARSER_DIR)/handle_parens.c \
-					$(PARSER_DIR)/handle_double_operators.c \
-					$(PARSER_DIR)/handle_single_operator.c \
-					$(PARSER_DIR)/count_consecutive_operators.c \
+					$(PARSER_DIR)/tokenizer/tokenize.c \
+					$(PARSER_DIR)/tokenizer/add_token.c \
+					$(PARSER_DIR)/tokenizer/create_token.c \
+					$(PARSER_DIR)/tokenizer/create_word_token.c \
+					$(PARSER_DIR)/tokenizer/create_quoted_token.c \
+					$(PARSER_DIR)/tokenizer/handle_parens.c \
+					$(PARSER_DIR)/tokenizer/handle_double_operators.c \
+					$(PARSER_DIR)/tokenizer/handle_single_operator.c \
+					$(PARSER_DIR)/tokenizer/count_consecutive_operators.c \
+					$(PARSER_DIR)/tokenizer/skip_whitespace.c \
+					$(PARSER_DIR)/tokenizer/is_operator.c \
+					$(PARSER_DIR)/tokenizer/is_quote.c \
+					$(PARSER_DIR)/tokenizer/dispatch_operator.c \
+					$(PARSER_DIR)/tokenizer/handle_operator.c \
+					$(PARSER_DIR)/tokenizer/free_token.c \
 					$(PARSER_DIR)/ast_build/build_ast.c \
 					$(PARSER_DIR)/ast_build/create_ast_node.c \
 					$(PARSER_DIR)/ast_build/print_ast.c \

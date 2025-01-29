@@ -6,61 +6,20 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:18:54 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/27 18:30:43 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/29 18:22:15 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/headers.h"
+#include "../../include/headers.h"
 
-void	skip_whitespace(const char *input, int *i)
-{
-	while (input[*i] && ft_isspace(input[*i]))
-		(*i)++;
-}
-
-bool	is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '&' || c == ';' || c == '(' || c == ')');
-}
-
-bool	is_quote(char c)
-{
-	return (c == '\'' || c == '\"');
-}
-
-
-void dispatch_operator(t_token **head, t_token *new_token, char op, int count)
-{
-	if (op == '(' || op == ')')
-		handle_parens(head, new_token, op, count);
-	else if (count == 2)
-		handle_double_operators(head, new_token, op);
-	else if (count == 1)
-		handle_single_operator(head, new_token, op);
-	else
-	{
-		new_token = create_token(TOKEN_INVALID, "Invalid operator");
-		add_token(head, new_token);
-	}
-}
-
-void handle_operator(t_token **head, t_token *new_token, const char *input, int *i)
-{
-	char op = input[*i];
-	int count = count_consecutive_operators(input, i, op);
-	dispatch_operator(head, new_token, op, count);
-
-	//(*i)++;
-}
-
-t_token *tokenize(const char *input, int *i)
+t_token	*tokenize(const char *input, int *i)
 {
 	t_token	*head;
 	t_token	*new_token;
 
 	head = NULL;
 	while (input[*i])
-	{		
+	{
 		skip_whitespace(input, i);
 		if (is_operator(input[*i]))
 		{
@@ -87,18 +46,3 @@ t_token	*tokenize_input(const char *input)
 	i = 0;
 	return (tokenize(input, &i));
 }
-
-void	free_token(t_token *token)
-{
-	t_token	*tmp;
-
-	while (token)
-	{
-		tmp = token;
-		token = token->next;
-		free(tmp->value);
-		free(tmp);
-	}
-}
-
-
