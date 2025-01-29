@@ -1,11 +1,11 @@
-* Problemas
+* Current problems
 
     - cat main.c muestra el archivo pero da error tambien como si tratara de ejecutar "cat" sin argumento.
 
     - El comando "cat -e | ls -l && (cd / && ls -l)" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
 
-* Problemas resueltso
+* Solved issues
 
     - Cuando ejectumos "ls -l | cat -e | cat -e | cat -e" el resultado es el correcto pero se imprimen unos caracteres extra en la línea del prompt.
 
