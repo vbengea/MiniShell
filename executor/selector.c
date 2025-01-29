@@ -126,4 +126,30 @@ void	selector(t_ast_node *node, char **env)
 	}
     else if (node->type == NODE_GROUP)
         forker(node, env, navigate);
+	else if (node->type == NODE_REDIRECT)
+	{
+		if (node->redirect_type == 1)
+		{
+			int f = open(node->file, O_RDONLY | O_CREAT | O_TRUNCATE, 0666);
+			if (dup2(f, STDOUT_FILENO) == -1)
+				perror("Error redirecting");
+		}
+		else if (node->redirect_type == 2)
+		{
+			int f = open(node->file, O_RDONLY);
+			if (dup2(f, STDIN_FILENO) == -1)
+				perror("Error redirecting");
+		}
+		else if (node->redirect_type == 3)
+		{
+			int f = open(node->file, O_RDONLY | O_CREAT | O_APPEND, 0666);
+			if (dup2(f, STDOUT_FILENO) == -1)
+				perror("Error redirecting");
+		}
+		else if (node->redirect_type == 4)
+		{
+			here_doc(node->file);
+		}
+		navigate(node, env, 1);
+	}
 }
