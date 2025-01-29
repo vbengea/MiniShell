@@ -30,7 +30,6 @@ typedef struct s_ast_node
 	char				**args;
 	char				*file;
 	int					redirect_type; // ">" (1), "<" (2), ">>" (3).
-	char				*redirect_value;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 	struct s_ast_node	*parent;
