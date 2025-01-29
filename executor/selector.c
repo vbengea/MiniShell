@@ -122,6 +122,7 @@ void	selector(t_ast_node *node, char **env)
 		files[0] = STDIN_FILENO;
 		files[1] = STDOUT_FILENO;
 		pipex(node, env, files, 0);
+		waiter(node->type);
 	}
     else if (node->type == NODE_GROUP)
         forker(node, env, navigate);

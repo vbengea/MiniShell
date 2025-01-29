@@ -41,6 +41,7 @@ static	void	redirect(int fd[2], int files[2], int is_last)
 	else if (dup2(fd[1], STDOUT_FILENO) == -1)
 		perror("Error redirectingT");
 	close(fd[0]);
+	close(fd[1]);
 }
 
 static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
@@ -53,9 +54,7 @@ static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
 		files[0] = fd[0];
 		pipex(node, env, files, 1);
 	}
-	else
-		close(fd[0]);
-	waiter(node->type);
+	close(fd[0]);
 }
 
 static	void	child(int fd[2], int files[2], t_ast_node *node, char **env)
@@ -77,6 +76,7 @@ static	void	child(int fd[2], int files[2], t_ast_node *node, char **env)
 	{
 		close(files[0]);
 		pipex(node, env, files, 0);
+		close(files[1]);
 	}
 }
 
