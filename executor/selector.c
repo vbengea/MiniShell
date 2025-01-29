@@ -46,6 +46,8 @@ static  void    navigate(t_ast_node *node, char **env, int hold)
 		node->right->side = 1;
 		selector(node->right, env);
 	}
+	if (node->type == NODE_GROUP)
+		exit(0);
 }
 
 static  void    executor(t_ast_node *node, char **env, int hold)
@@ -110,14 +112,9 @@ void	selector(t_ast_node *node, char **env)
                 builtin(node, env, 0);
         }
         else
-		{
-			if (node->parent)
-				executor(node, env, 1);
-			else
-				forker(node, env, executor);
-		}
+			forker(node, env, executor);
     }
-    else if (node->type == NODE_AND)
+    else if (node->type == NODE_AND || node->type == NODE_OR)
 		navigate(node, env, 1);
     else if (node->type == NODE_PIPE)
 	{
