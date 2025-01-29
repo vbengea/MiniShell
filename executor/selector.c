@@ -130,7 +130,7 @@ void	selector(t_ast_node *node, char **env)
 	{
 		if (node->redirect_type == 1)
 		{
-			int f = open(node->file, O_RDONLY | O_CREAT | O_TRUNCATE, 0666);
+			int f = open(node->file, O_RDONLY | O_CREAT | O_TRUNC, 0666);
 			if (dup2(f, STDOUT_FILENO) == -1)
 				perror("Error redirecting");
 		}
