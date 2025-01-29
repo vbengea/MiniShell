@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_token.c                                     :+:      :+:    :+:   */
+/*   add_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 19:08:06 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/24 19:08:39 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/24 19:08:50 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/29 18:05:23 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/headers.h"
+#include "../../include/headers.h"
 
-t_token	*create_token(t_token_tpype type, char *value)
+void	add_token(t_token **head, t_token *new_token)
 {
-	t_token	*token;
+	t_token	*tmp;
 
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->type = type;
-	token->value = ft_strdup(value);
-	token->next = NULL;
-	return (token);
+	if (!head || !new_token)
+		return ;
+	new_token->next = NULL;
+	if (!*head)
+	{
+		*head = new_token;
+		return ;
+	}
+	tmp = *head;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new_token;
 }

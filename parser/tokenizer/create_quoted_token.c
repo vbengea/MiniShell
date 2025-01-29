@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_word_token.c                                :+:      :+:    :+:   */
+/*   create_quoted_token.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 19:07:12 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/24 19:16:34 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/24 19:42:26 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/29 18:21:39 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/headers.h"
+#include "../../include/headers.h"
 
-t_token	*create_word_token(const char *input, int *i)
+t_token	*create_quoted_token(const char *input, int *i)
 {
 	t_token	*new_token;
 	char	*temp;
+	char	quote;
 
+	quote = input[*i];
 	new_token = create_token(TOKEN_WORD, "");
-	while (input[*i] && !is_operator(input[*i]) && !ft_isspace(input[*i]))
+	(*i)++;
+	while (input[*i] && input[*i] != quote)
 	{
 		temp = malloc(ft_strlen(new_token->value) + 2);
 		ft_strcpy(temp, new_token->value);
@@ -28,5 +31,6 @@ t_token	*create_word_token(const char *input, int *i)
 		new_token->value = temp;
 		(*i)++;
 	}
+	(*i)++;
 	return (new_token);
 }

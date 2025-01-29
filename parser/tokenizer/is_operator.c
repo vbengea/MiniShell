@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_consecutive_operators.c                      :+:      :+:    :+:   */
+/*   is_operator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 13:32:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/28 18:49:41 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/29 18:10:31 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/29 18:21:00 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/headers.h"
+#include "../../include/headers.h"
 
-int	count_consecutive_operators(const char *input, int *i, char op)
+bool	is_operator(char c)
 {
-	int	count;
-
-	count = 0;
-	while (input[*i] == op)
-	{
-		count++;
-		(*i)++;
-	}
-	return (count);
+	return (c == '|'
+		|| c == '<'
+		|| c == '>'
+		|| c == '&'
+		|| c == ';'
+		|| c == '('
+		|| c == ')');
 }

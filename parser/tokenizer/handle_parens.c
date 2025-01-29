@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_token.c                                        :+:      :+:    :+:   */
+/*   handle_parens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 19:08:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/26 19:46:01 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/25 13:16:24 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/29 18:06:46 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/headers.h"
+#include "../../include/headers.h"
 
-void	add_token(t_token **head, t_token *new_token)
+void	handle_parens(t_token **head, t_token *new_token, char op, int count)
 {
-	t_token	*tmp;
+	int	i;
 
-	if (!head || !new_token)
-		return ;
-	new_token->next = NULL;
-	if (!*head)
+	i = 0;
+	while (i < count)
 	{
-		*head = new_token;
-		return ;
+		if (op == '(')
+			new_token = create_token(TOKEN_OPEN_PAREN, "(");
+		else
+			new_token = create_token(TOKEN_CLOSE_PAREN, ")");
+		add_token(head, new_token);
+		i++;
 	}
-	tmp = *head;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = new_token;
 }

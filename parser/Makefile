@@ -6,7 +6,7 @@
 #    By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:11:00 by vbengea           #+#    #+#              #
-#    Updated: 2025/01/28 18:28:48 by vbengea          ###   ########.fr        #
+#    Updated: 2025/01/29 18:25:36 by vbengea          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ clean:
 
 fclean: clean
 	rm -f $(LIBFT_LIB) $(OUTPUT)
+	rm tokenizer/*.o
 
 re: fclean clear all
 

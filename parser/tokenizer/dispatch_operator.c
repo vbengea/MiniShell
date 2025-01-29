@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_parens.c                                    :+:      :+:    :+:   */
+/*   dispatch_operator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/25 13:16:24 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/28 18:49:18 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/29 18:13:44 by vbengea           #+#    #+#             */
+/*   Updated: 2025/01/29 18:14:14 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/headers.h"
+#include "../../include/headers.h"
 
-void	handle_parens(t_token **head, t_token *new_token, char op, int count)
+void	dispatch_operator(t_token **head, t_token *new_token, \
+		char op, int count)
 {
-	int	i;
-
-	i = 0;
-	while (i < count)
+	if (op == '(' || op == ')')
+		handle_parens(head, new_token, op, count);
+	else if (count == 2)
+		handle_double_operators(head, new_token, op);
+	else if (count == 1)
+		handle_single_operator(head, new_token, op);
+	else
 	{
-		if (op == '(')
-			new_token = create_token(TOKEN_OPEN_PAREN, "(");
-		else
-			new_token = create_token(TOKEN_CLOSE_PAREN, ")");
+		new_token = create_token(TOKEN_INVALID, "Invalid operator");
 		add_token(head, new_token);
-		i++;
 	}
 }
