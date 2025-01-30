@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/30 18:55:45 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/30 19:01:41 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,3 @@ typedef struct s_ast_node
 }	t_ast_node;
 
 #endif
-
-
-
-
-
-typedef struct s_ast_node
-{
-	t_node_type        type;     // CMND, PIPE, REDIRECT, AND, OR, GROUP
-	char             **args;     // Command arguments
-	t_redirection    *redirs;    // Linked list of redirections
-	struct s_ast_node *left;     // Left child (e.g., for PIPE, AND, OR)
-	struct s_ast_node *right;    // Right child (e.g., for PIPE, AND, OR)
-	struct s_ast_node *parent;   // Parent node
-	int               side;      // Left (0) or Right (1)
-} t_ast_node;
