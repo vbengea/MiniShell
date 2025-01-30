@@ -51,8 +51,7 @@ SRC				:= 	$(EXEC_DIR)/utils.c \
 					main.c
 
 OBJ 			:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
-					$(patsubst $(PARSER_DIR)/ast_build/%.c, $(PARSER_DIR)/ast_build/%.o, $(SRC)) \
-					$(patsubst $(PARSER_DIR)/%.c, $(PARSER_DIR)/%.o, $(SRC)) \
+					$(patsubst $(PARSER_DIR)/*/%.c, $(PARSER_DIR)/*/%.o, $(SRC)) \
 					$(patsubst $(BUILTINS_DIR)/%.c, $(BUILTINS_DIR)/%.o, $(SRC))
 
 all: $(NAME)
@@ -63,8 +62,7 @@ $(NAME): $(LIBFT) $(OBJ) $(INCLUDE)
 clean:
 	make -C $(LIBFT_DIR) clean
 	rm -f $(EXEC_DIR)/*.o
-	rm -f $(PARSER_DIR)/*.o
-	rm -f $(PARSER_DIR)/ast_build/*.o
+	rm -f $(PARSER_DIR)/*/*.o
 	rm -f $(BUILTINS_DIR)/*.o
 	rm -rf *.dSYM
 	rm -f z

@@ -34,28 +34,26 @@ static  void    navigate(t_ast_node *node, char **env, int hold)
 static	void	redirecter(t_ast_node *node, char **env, int hold)
 {
 	(void) hold;
-	if (node->redirect_type == 1)
+	if (node->redirect_type == REDIRECT_OUT)
 	{
 		int f = open(node->file, O_RDONLY | O_CREAT | O_TRUNC, 0666);
 		if (dup2(f, STDOUT_FILENO) == -1)
 			perror("Error redirecting");
 	}
-	else if (node->redirect_type == 2)
+	else if (node->redirect_type == REDIRECT_IN)
 	{
 		int f = open(node->file, O_RDONLY);
 		if (dup2(f, STDIN_FILENO) == -1)
 			perror("Error redirecting");
 	}
-	else if (node->redirect_type == 3)
+	else if (node->redirect_type == REDIRECT_APPEND)
 	{
 		int f = open(node->file, O_RDONLY | O_CREAT | O_APPEND, 0666);
 		if (dup2(f, STDOUT_FILENO) == -1)
 			perror("Error redirecting");
 	}
-	else if (node->redirect_type == 4)
-	{
+	else if (node->redirect_type == REDIRECT_HEREDOC)
 		here_doc(node->file);
-	}
 	navigate(node, env, 1);
 }
 
