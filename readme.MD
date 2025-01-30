@@ -14,3 +14,27 @@
     - Cuando ejectumos "ls -l | cat -e | cat -e | cat -e" el resultado es el correcto pero se imprimen unos caracteres extra en la línea del prompt.
 
     - El comando "(cd / && ls -l) && ls -l" realiza el cambio del directorio pero el cambio se ve desde fuera del paréntesis, lo que significa que o no se está ejecutando en una subshell o ambos se ejecutan en el mismo nivel de proceso.
+
+
+* Probelms:
+
+    - Actual tokenizer doesn't support multiple redirections.
+    - Proposed solution:
+        -Build a re-tokenizer on top of the actual one and update the AST structure.
+
+        - A command like: cat < input.txt | grep "error" >> output.txt && echo "done" would have a structure like:
+
+        NODE_AND
+       /        \
+   NODE_PIPE   NODE_CMND ("echo")
+   /       \          ├── args: ["echo", "done"]
+NODE_CMND  NODE_CMND  └── redirs: NULL
+ ("cat")   ("grep")
+    │          ├── args: ["grep", "error"]
+    │          └── redirs:
+    │              └── REDIRECT_APPEND -> "output.txt"
+    ├── args: ["cat"]
+    └── redirs:
+        └── REDIRECT_IN -> "input.txt"
+
+        - A command node now will have a redirect linked list
