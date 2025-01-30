@@ -100,3 +100,23 @@ void	populate_node(t_ast_node *node, int side)
 	node->left->side = 0;
 	node->side = side;
 }
+
+static	char **	args_helper(char *arg1, char *arg2)
+{
+	char **arr = malloc(sizeof(char *) * 3);
+	arr[0] = ft_strdup(arg1);
+	arr[1] = ft_strdup(arg2);
+	arr[2] = NULL;
+	return (arr);
+}
+
+t_ast_node	*build_redirect_ast(void)
+{
+	t_ast_node	*root = create_ast_node(NODE_PIPE, NULL);
+	root->left = create_ast_node(NODE_REDIRECT, NULL);
+	root->left->redirect_type = REDIRECT_IN;
+	root->left->file = ft_strdup("t1");
+	root->left->left = create_ast_node(NODE_CMND, args_helper("cat", "-e"));
+	root->right = create_ast_node(NODE_CMND,  args_helper("cat", "-e"));
+	return (root);
+}

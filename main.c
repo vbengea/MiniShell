@@ -20,6 +20,7 @@ int main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
+	(void) token;
 	while (true)
 	{
 		input = readline(GREEN "minishell$ " RESET);
@@ -28,7 +29,11 @@ int main(int argc, char **argv, char **env)
 		token = tokenize_input(input);
 		ast = build_ast(token);
 		print_ast(ast, 0);
-		selector(ast, env);
+		int files[3];
+		files[0] = STDIN_FILENO;
+		files[1] = STDOUT_FILENO;
+		files[2] = 0;
+		selector(ast, env, files);
 		// free(input);
 		//free_token(token);
 		//free_ast(ast);

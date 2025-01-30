@@ -24,7 +24,7 @@ static	int	is_last_node(t_ast_node *node)
 	return (0);
 }
 
-static	void	redirect(int fd[2], int files[2], int is_last)
+static	void	redirect(int fd[2], int files[3], int is_last)
 {
 	if (files[0] == -1)
 	{
@@ -44,7 +44,7 @@ static	void	redirect(int fd[2], int files[2], int is_last)
 	close(fd[1]);
 }
 
-static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
+static	void	parent(int fd[2], int files[3], t_ast_node *node, char **env)
 {
 	if (!node)
 		return ;
@@ -57,7 +57,7 @@ static	void	parent(int fd[2], int files[2], t_ast_node *node, char **env)
 	close(fd[0]);
 }
 
-static	void	child(int fd[2], int files[2], t_ast_node *node, char **env)
+static	void	child(int fd[2], int files[3], t_ast_node *node, char **env)
 {
 	if (!node)
 	{
@@ -80,31 +80,39 @@ static	void	child(int fd[2], int files[2], t_ast_node *node, char **env)
 	}
 }
 
-void    pipex(t_ast_node *node, char **env, int files[], int side)
+void    pipex(t_ast_node *node, char **env, int files[3], int side)
 {
 	int	fd[2];
 	int	pid;
 
 	if (!node)
 		return ;
-	if (pipe(fd) == -1)
-		cleanup("Error creating pipe");
-	pid = fork();
-	if (pid == -1)
-		cleanup("Error forking process");
-	populate_node(node, side);
-	if (pid == 0)
+	if (node->type == NODE_PIPE || node->type == NODE_CMND)
 	{
-		if(side == 1)
-			child(fd, files, node->right, env);
+		if (pipe(fd) == -1)
+			cleanup("Error creating pipe");
+		pid = fork();
+		if (pid == -1)
+			cleanup("Error forking process");
+		populate_node(node, side);
+		if (pid == 0)
+		{
+			if(side == 1)
+				child(fd, files, node->right, env);
+			else
+				child(fd, files, node->left, env);
+		}
 		else
-			child(fd, files, node->left, env);
+		{
+			if (side == 1)
+				parent(fd, files, node->right, env);
+			else
+				parent(fd, files, node, env);
+		}
 	}
 	else
 	{
-		if (side == 1)
-			parent(fd, files, node->right, env);
-		else
-			parent(fd, files, node, env);
+		files[2] = side;
+		selector(node, env, files);
 	}
 }

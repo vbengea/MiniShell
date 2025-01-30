@@ -22,8 +22,8 @@
 # include "../libft/libft.h"
 # include "./data_structure.h"
 
-void		selector(t_ast_node *node, char **env);
-void		pipex(t_ast_node *node, char **env, int files[], int side);
+void		selector(t_ast_node *node, char **env, int file[3]);
+void		pipex(t_ast_node *node, char **env, int files[3], int side);
 
 char		*environment(char *name, char **env);
 char		*find_path(char *cmd, char *env);
@@ -31,12 +31,14 @@ int			doexec(char *path, char **comm, char **arvp, int is_free);
 int			execute(char **comm, char **arvp);
 
 void		populate_node(t_ast_node *node, int side);
-void		forkit(t_ast_node *node, char **env, int files[2], int side);
+void		forkit(t_ast_node *node, char **env, int files[3], int side);
 
 void		cleanup(char *err);
 void		waiter(t_node_type type);
 int			is_builtin(t_ast_node *node);
 int			is_pipe_state(t_ast_node *node);
 int			here_doc(char *delimit);
+
+t_ast_node	*build_redirect_ast(void);
 
 #endif

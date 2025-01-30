@@ -12,26 +12,26 @@
 
 #include "../include/headers.h"
 
-static  void    navigate(t_ast_node *node, char **env, int hold)
+static  void    navigate(t_ast_node *node, char **env, int hold, int files[3])
 {
 	(void) hold;
 	if (node->left)
 	{
 		node->left->parent = node;
 		node->left->side = 0;
-		selector(node->left, env);
+		selector(node->left, env, files);
 	}
 	if (node->right)
 	{
 		node->right->parent = node;
 		node->right->side = 1;
-		selector(node->right, env);
+		selector(node->right, env, files);
 	}
 	if (node->type == NODE_GROUP || node->type == NODE_REDIRECT)
 		exit(0);
 }
 
-static	void	redirecter(t_ast_node *node, char **env, int hold)
+static	void	redirecter(t_ast_node *node, char **env, int hold, int files[3])
 {
 	(void) hold;
 	if (node->redirect_type == REDIRECT_OUT)
@@ -54,18 +54,20 @@ static	void	redirecter(t_ast_node *node, char **env, int hold)
 	}
 	else if (node->redirect_type == REDIRECT_HEREDOC)
 		here_doc(node->file);
-	navigate(node, env, 1);
+	navigate(node, env, 1, files);
 }
 
-static  void    executor(t_ast_node *node, char **env, int hold)
+static  void    executor(t_ast_node *node, char **env, int hold, int files[3])
 {
 	(void) hold;
+	(void) files;
 	if (execute(node->args, env) == -1)
 		cleanup("Error executing command..");
 }
 
-static  void    builtin(t_ast_node *node, char **env, int hold)
+static  void    builtin(t_ast_node *node, char **env, int hold, int files[3])
 {
+	(void) files;
 	if (ft_strncmp(node->args[0], "cd", 2) == 0)
 	{
 		cd(node->args[1], env);
@@ -74,7 +76,7 @@ static  void    builtin(t_ast_node *node, char **env, int hold)
 	}
 }
 
-static  void    forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node, char **env, int hold))
+static  void    forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node, char **env, int hold, int files[3]), int files[3])
 {
 	int	pid;
 
@@ -82,37 +84,34 @@ static  void    forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node,
 	if (pid == -1)
 		cleanup("Error forking process");
 	if (pid == 0)
-		f(node, env, 1);
+		f(node, env, 1, files);
 	else
 		waiter(node->parent_type);
 }
 
-void	selector(t_ast_node *node, char **env)
+void	selector(t_ast_node *node, char **env, int files[3])
 {
     if (node->type == NODE_CMND)
     {
         if (is_builtin(node))
         {
             if (is_pipe_state(node))
-                forker(node, env, builtin);
+                forker(node, env, builtin, files);
             else
-                builtin(node, env, 0);
+                builtin(node, env, 0, files);
         }
         else
-			forker(node, env, executor);
+			forker(node, env, executor, files);
     }
     else if (node->type == NODE_AND || node->type == NODE_OR)
-		navigate(node, env, 1);
+		navigate(node, env, 1, files);
     else if (node->type == NODE_PIPE)
 	{
-		int files[2];
-		files[0] = STDIN_FILENO;
-		files[1] = STDOUT_FILENO;
-		pipex(node, env, files, 0);
+		pipex(node, env, files, files[2]);
 		waiter(node->type);
 	}
     else if (node->type == NODE_GROUP)
-        forker(node, env, navigate);
+        forker(node, env, navigate, files);
 	else if (node->type == NODE_REDIRECT)
-		forker(node, env, redirecter);
+		forker(node, env, redirecter, files);
 }
