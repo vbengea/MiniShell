@@ -6,7 +6,7 @@
 /*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/30 09:19:27 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/30 09:31:40 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_ast_node
 	t_redirect_type		redirect_type;
 	char				**args;
 	char				*file;
-	int					redirect_type; // ">" (1), "<" (2), ">>" (3).
+	// int					redirect_type; // ">" (1), "<" (2), ">>" (3).
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 	struct s_ast_node	*parent;
