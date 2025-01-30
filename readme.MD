@@ -1,11 +1,15 @@
-* Current problems
+* Known issues:
 
-    - cat main.c muestra el archivo pero da error tambien como si tratara de ejecutar "cat" sin argumento.
+    - Una vez el proceso llega a pipex, no hay comunicación con el proceso original "selector" lo que hace que si uno de los elementos del pipe es una subshell (e.g (ls -l && echo 1) | ls -l | cat -e), se pierda en el pipeline.
+
+    - El comando "cat main.c" muestra el archivo pero da error tambien como si tratara de ejecutar "cat" sin argumento. Este bug es inconsistente pues al probar en Ubuntu no hay errores.
 
     - El comando "cat -e | ls -l && (cd / && ls -l)" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
 
-* Solved issues
+* Solved issues:
+
+    - Implementamos el nodo NODE_REDIRECT.
 
     - Cuando ejectumos "ls -l | cat -e | cat -e | cat -e" el resultado es el correcto pero se imprimen unos caracteres extra en la línea del prompt.
 

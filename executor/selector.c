@@ -12,25 +12,6 @@
 
 #include "../include/headers.h"
 
-void	waiter(t_node_type type)
-{
-	int		status;
-
-	while (1)
-	{
-		if (waitpid(-1, &status, 0) == -1)
-		{
-			if (access("__tmp__", F_OK) == 0)
-				unlink("__tmp__");
-			if (status != 0 && type == NODE_AND)
-				exit(0);
-			else if (status == 0 && type == NODE_OR)
-				exit(0);
-			break ;
-		}
-	}
-}
-
 static  void    navigate(t_ast_node *node, char **env, int hold)
 {
 	(void) hold;
@@ -46,8 +27,34 @@ static  void    navigate(t_ast_node *node, char **env, int hold)
 		node->right->side = 1;
 		selector(node->right, env);
 	}
-	if (node->type == NODE_GROUP)
+	if (node->type == NODE_GROUP || node->type == NODE_REDIRECT)
 		exit(0);
+}
+
+static	void	redirecter(t_ast_node *node, char **env, int hold)
+{
+	(void) hold;
+	if (node->redirect_type == REDIRECT_OUT)
+	{
+		int f = open(node->file, O_RDONLY | O_CREAT | O_TRUNC, 0666);
+		if (dup2(f, STDOUT_FILENO) == -1)
+			perror("Error redirecting");
+	}
+	else if (node->redirect_type == REDIRECT_IN)
+	{
+		int f = open(node->file, O_RDONLY);
+		if (dup2(f, STDIN_FILENO) == -1)
+			perror("Error redirecting");
+	}
+	else if (node->redirect_type == REDIRECT_APPEND)
+	{
+		int f = open(node->file, O_RDONLY | O_CREAT | O_APPEND, 0666);
+		if (dup2(f, STDOUT_FILENO) == -1)
+			perror("Error redirecting");
+	}
+	else if (node->redirect_type == REDIRECT_HEREDOC)
+		here_doc(node->file);
+	navigate(node, env, 1);
 }
 
 static  void    executor(t_ast_node *node, char **env, int hold)
@@ -80,26 +87,6 @@ static  void    forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node,
 		waiter(node->parent_type);
 }
 
-static  int    is_builtin(t_ast_node *node)
-{
-	char	*b[8] = { "cd", "echo", "env", "exit", "export", "pwd", "unset", NULL };
-	int		i = 0;
-	while (b[i])
-	{
-		if (ft_strncmp(node->args[0], b[i], ft_strlen(b[i])) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static  int    is_pipe_state(t_ast_node *node)
-{
-	if (node->parent_type == NODE_PIPE)
-		return (1);
-	return (0);
-}
-
 void	selector(t_ast_node *node, char **env)
 {
     if (node->type == NODE_CMND)
@@ -127,29 +114,5 @@ void	selector(t_ast_node *node, char **env)
     else if (node->type == NODE_GROUP)
         forker(node, env, navigate);
 	else if (node->type == NODE_REDIRECT)
-	{
-		if (node->redirect_type == 1)
-		{
-			int f = open(node->file, O_RDONLY | O_CREAT | O_TRUNC, 0666);
-			if (dup2(f, STDOUT_FILENO) == -1)
-				perror("Error redirecting");
-		}
-		else if (node->redirect_type == 2)
-		{
-			int f = open(node->file, O_RDONLY);
-			if (dup2(f, STDIN_FILENO) == -1)
-				perror("Error redirecting");
-		}
-		else if (node->redirect_type == 3)
-		{
-			int f = open(node->file, O_RDONLY | O_CREAT | O_APPEND, 0666);
-			if (dup2(f, STDOUT_FILENO) == -1)
-				perror("Error redirecting");
-		}
-		else if (node->redirect_type == 4)
-		{
-			here_doc(node->file);
-		}
-		navigate(node, env, 1);
-	}
+		forker(node, env, redirecter);
 }
