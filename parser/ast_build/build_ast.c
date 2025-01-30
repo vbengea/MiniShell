@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:00:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/28 18:52:14 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/30 09:05:59 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	is_redirect_token(t_token_tpype type)
 {
 	return (type == TOKEN_REDIRECT_IN ||
 			type == TOKEN_REDIRECT_OUT ||
-			type == TOKEN_APPEND);
+			type == TOKEN_APPEND ||
+			type == TOKEN_HEREDOC);
 }
 
 t_ast_node	*build_ast(t_token *tokens)
