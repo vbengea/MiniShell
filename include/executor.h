@@ -24,6 +24,7 @@
 
 void		selector(t_ast_node *node, char **env, int file[3]);
 void		pipex(t_ast_node *node, char **env, int files[3], int side);
+void	    redirecter(t_ast_node *node, char **env, int hold, int files[3]);
 
 char		*environment(char *name, char **env);
 char		*find_path(char *cmd, char *env);
@@ -37,7 +38,7 @@ void		cleanup(char *err);
 void		waiter(t_node_type type);
 int			is_builtin(t_ast_node *node);
 int			is_pipe_state(t_ast_node *node);
-int			here_doc(char *delimit);
+int         here_doc(char *delimit, int stdin);
 
 t_ast_node	*build_redirect_ast(void);
 

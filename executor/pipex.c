@@ -24,22 +24,40 @@ static	int	is_last_node(t_ast_node *node)
 	return (0);
 }
 
-static	void	redirect(int fd[2], int files[3], int is_last)
+static	void	redirect(t_ast_node *node, int fd[2], int files[3], int is_last)
 {
 	if (files[0] == -1)
 	{
 		perror("Error reading file");
 		exit(1);
 	}
-	if (dup2(files[0], STDIN_FILENO) == -1)
-		perror("Error redirecting");
-	if (is_last)
+	if (node->parent->type == NODE_REDIRECT && \
+		(node->parent->redirect_type == REDIRECT_OUT || \
+		node->parent->redirect_type == REDIRECT_APPEND))
 	{
-		if (dup2(files[1], STDOUT_FILENO) == -1)
+		redirecter(node->parent, NULL, 1, files);
+	}
+	else
+	{
+		if (is_last)
+		{
+			if (dup2(files[1], STDOUT_FILENO) == -1)
+				perror("Error redirecting");
+		}
+		else if (dup2(fd[1], STDOUT_FILENO) == -1)
+			perror("Error redirectingT");
+	}
+	if (node->parent->type == NODE_REDIRECT && \
+		(node->parent->redirect_type == REDIRECT_IN || \
+		node->parent->redirect_type == REDIRECT_HEREDOC))
+	{
+		redirecter(node->parent, NULL, 1, files);
+	}
+	else
+	{
+		if (dup2(files[0], STDIN_FILENO) == -1)
 			perror("Error redirecting");
 	}
-	else if (dup2(fd[1], STDOUT_FILENO) == -1)
-		perror("Error redirectingT");
 	close(fd[0]);
 	close(fd[1]);
 }
@@ -66,7 +84,7 @@ static	void	child(int fd[2], int files[3], t_ast_node *node, char **env)
 	}
 	if (is_last_node(node))
 		node->side = 1;
-	redirect(fd, files, node->side);
+	redirect(node, fd, files, node->side);
 	if (node->type == NODE_CMND)
 	{
 		if (execute(node->args, env) == -1)
@@ -98,9 +116,25 @@ void    pipex(t_ast_node *node, char **env, int files[3], int side)
 		if (pid == 0)
 		{
 			if(side == 1)
-				child(fd, files, node->right, env);
+			{
+				if (node->right && node->right->type == NODE_REDIRECT)
+				{
+					populate_node(node->right, side);
+					child(fd, files, node->right->left, env);
+				}
+				else
+					child(fd, files, node->right, env);
+			}
 			else
-				child(fd, files, node->left, env);
+			{
+				if (node->left && node->left->type == NODE_REDIRECT)
+				{
+					populate_node(node->left, side);
+					child(fd, files, node->left->left, env);
+				}
+				else
+					child(fd, files, node->left, env);
+			}
 		}
 		else
 		{

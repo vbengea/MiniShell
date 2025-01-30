@@ -57,20 +57,20 @@ int    is_pipe_state(t_ast_node *node)
 	return (0);
 }
 
-int	here_doc(char *delimit)
+int	here_doc(char *delimit, int stdin)
 {
 	char	*str;
 	int		str_len;
 	int		fd;
 
 	fd = open("__tmp__", O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	str = get_next_line(STDIN_FILENO);
+	str = get_next_line(stdin);
 	str_len = ft_strlen(str);
 	while (ft_strncmp(str, delimit, str_len - 1) != 0)
 	{
 		write(fd, str, ft_strlen(str));
 		free(str);
-		str = get_next_line(STDIN_FILENO);
+		str = get_next_line(stdin);
 		str_len = ft_strlen(str);
 	}
 	free(str);
@@ -112,11 +112,28 @@ static	char **	args_helper(char *arg1, char *arg2)
 
 t_ast_node	*build_redirect_ast(void)
 {
+	// INFILE
 	t_ast_node	*root = create_ast_node(NODE_PIPE, NULL);
 	root->left = create_ast_node(NODE_REDIRECT, NULL);
 	root->left->redirect_type = REDIRECT_IN;
 	root->left->file = ft_strdup("t1");
 	root->left->left = create_ast_node(NODE_CMND, args_helper("cat", "-e"));
 	root->right = create_ast_node(NODE_CMND,  args_helper("cat", "-e"));
+
+	// // HERE_DOC
+	// t_ast_node	*root = create_ast_node(NODE_PIPE, NULL);
+	// root->left = create_ast_node(NODE_REDIRECT, NULL);
+	// root->left->redirect_type = REDIRECT_HEREDOC;
+	// root->left->file = ft_strdup("EOF");
+	// root->left->left = create_ast_node(NODE_CMND, args_helper("cat", "-e"));
+	// root->right = create_ast_node(NODE_CMND,  args_helper("cat", "-e"));
+
+	// OUTFILE
+	// t_ast_node	*root = create_ast_node(NODE_PIPE, NULL);
+	// root->left = create_ast_node(NODE_CMND, args_helper("ls", "-l"));
+	// root->right = create_ast_node(NODE_REDIRECT, NULL);
+	// root->right->redirect_type = REDIRECT_OUT;
+	// root->right->file = ft_strdup("t1");
+	// root->right->left = create_ast_node(NODE_CMND,  args_helper("cat", "-e"));
 	return (root);
 }

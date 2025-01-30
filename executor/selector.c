@@ -31,30 +31,36 @@ static  void    navigate(t_ast_node *node, char **env, int hold, int files[3])
 		exit(0);
 }
 
-static	void	redirecter(t_ast_node *node, char **env, int hold, int files[3])
+void	redirecter(t_ast_node *node, char **env, int hold, int files[3])
 {
 	(void) hold;
+	int	f = 0;
 	if (node->redirect_type == REDIRECT_OUT)
 	{
-		int f = open(node->file, O_RDONLY | O_CREAT | O_TRUNC, 0666);
+		f = open(node->file, O_RDONLY | O_CREAT | O_TRUNC, 0777);
 		if (dup2(f, STDOUT_FILENO) == -1)
 			perror("Error redirecting");
 	}
 	else if (node->redirect_type == REDIRECT_IN)
 	{
-		int f = open(node->file, O_RDONLY);
+		f = open(node->file, O_RDONLY);
 		if (dup2(f, STDIN_FILENO) == -1)
 			perror("Error redirecting");
 	}
 	else if (node->redirect_type == REDIRECT_APPEND)
 	{
-		int f = open(node->file, O_RDONLY | O_CREAT | O_APPEND, 0666);
+		f = open(node->file, O_RDONLY | O_CREAT | O_APPEND, 0666);
 		if (dup2(f, STDOUT_FILENO) == -1)
 			perror("Error redirecting");
 	}
 	else if (node->redirect_type == REDIRECT_HEREDOC)
-		here_doc(node->file);
-	navigate(node, env, 1, files);
+	{
+		f = here_doc(node->file, STDIN_FILENO);
+		if (dup2(f, STDIN_FILENO) == -1)
+			perror("Error redirecting");
+	}
+	if (!node->parent || node->parent->type != NODE_PIPE)
+		navigate(node, env, 1, files);
 }
 
 static  void    executor(t_ast_node *node, char **env, int hold, int files[3])
@@ -107,11 +113,14 @@ void	selector(t_ast_node *node, char **env, int files[3])
 		navigate(node, env, 1, files);
     else if (node->type == NODE_PIPE)
 	{
+		// files[2] = dup(STDOUT_FILENO);
 		pipex(node, env, files, files[2]);
 		waiter(node->type);
 	}
     else if (node->type == NODE_GROUP)
         forker(node, env, navigate, files);
 	else if (node->type == NODE_REDIRECT)
+	{
 		forker(node, env, redirecter, files);
+	}
 }
