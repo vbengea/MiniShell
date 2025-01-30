@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:07:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/28 18:35:35 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/01/30 10:19:16 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int main(void)
 		//printf("Input tokenized!\n");
 		// while (token)
 		// {
-			// printf("Token type: %d, value: %s\n", token->type, token->value);
-			// token = token->next;
+		// 	printf("Token type: %d, value: %s\n", token->type, token->value);
+		// 	token = token->next;
 		// }
 		ast = build_ast(token);
 		// printf("AST built!\n");
