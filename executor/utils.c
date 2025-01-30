@@ -18,6 +18,45 @@ void	cleanup(char *err)
 	exit(1);
 }
 
+void	waiter(t_node_type type)
+{
+	int		status;
+
+	while (1)
+	{
+		if (waitpid(-1, &status, 0) == -1)
+		{
+			if (access("__tmp__", F_OK) == 0)
+				unlink("__tmp__");
+			if (status != 0 && type == NODE_AND)
+				exit(0);
+			else if (status == 0 && type == NODE_OR)
+				exit(0);
+			break ;
+		}
+	}
+}
+
+int    is_builtin(t_ast_node *node)
+{
+	char	*b[8] = { "cd", "echo", "env", "exit", "export", "pwd", "unset", NULL };
+	int		i = 0;
+	while (b[i])
+	{
+		if (ft_strncmp(node->args[0], b[i], ft_strlen(b[i])) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int    is_pipe_state(t_ast_node *node)
+{
+	if (node->parent_type == NODE_PIPE)
+		return (1);
+	return (0);
+}
+
 int	here_doc(char *delimit)
 {
 	char	*str;

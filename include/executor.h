@@ -24,17 +24,19 @@
 
 void		selector(t_ast_node *node, char **env);
 void		pipex(t_ast_node *node, char **env, int files[], int side);
-void		waiter(t_node_type type);
 
 char		*environment(char *name, char **env);
 char		*find_path(char *cmd, char *env);
 int			doexec(char *path, char **comm, char **arvp, int is_free);
 int			execute(char **comm, char **arvp);
 
-int			here_doc(char *delimit);
-void		cleanup(char *err);
-
 void		populate_node(t_ast_node *node, int side);
 void		forkit(t_ast_node *node, char **env, int files[2], int side);
+
+void		cleanup(char *err);
+void		waiter(t_node_type type);
+int			is_builtin(t_ast_node *node);
+int			is_pipe_state(t_ast_node *node);
+int			here_doc(char *delimit);
 
 #endif
