@@ -13,8 +13,6 @@
 		ls -l | (cat -e && cat -e)						[OK]
 		(ls -l | cat -e) | cat -e | cat -e				[OK]
 
-    - Implementamos el nodo NODE_REDIRECT.
-
     - Cuando ejectumos "ls -l | cat -e | cat -e | cat -e" el resultado es el correcto pero se imprimen unos caracteres extra en la línea del prompt.
 
     - El comando "(cd / && ls -l) && ls -l" realiza el cambio del directorio pero el cambio se ve desde fuera del paréntesis, lo que significa que o no se está ejecutando en una subshell o ambos se ejecutan en el mismo nivel de proceso.
