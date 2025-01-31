@@ -21,6 +21,9 @@
 
 			- A command like: cat < input.txt | grep "error" >> output.txt && echo "done" would have a structure like:
 
+				![alt text](https://github.com/juandfloresm/minishare/resources/red.png?raw=true)
+
+
 					NODE_AND
 					/        \
 				NODE_PIPE   NODE_CMND ("echo")
@@ -34,7 +37,7 @@
 				└── redirs:
 					└── REDIRECT_IN -> "input.txt"
 
-					- A command node now will have a redirect linked list
+			- A command node now will have a redirect linked list
 
 
 * Inconsistency issues:
