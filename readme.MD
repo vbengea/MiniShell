@@ -1,13 +1,17 @@
 * Known issues:
 
-    - Una vez el proceso llega a pipex, no hay comunicación con el proceso original "selector" lo que hace que si uno de los elementos del pipe es una subshell (e.g (ls -l && echo 1) | ls -l | cat -e), se pierda en el pipeline.
-
     - El comando "cat main.c" muestra el archivo pero da error tambien como si tratara de ejecutar "cat" sin argumento. Este bug es inconsistente pues al probar en Ubuntu no hay errores.
 
     - El comando "cat -e | ls -l && (cd / && ls -l)" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
 
 * Solved issues:
+
+    - Una vez el proceso llega a pipex, no hay comunicación con el proceso original "selector" lo que hace que si uno de los elementos del pipe es una subshell, se pierda la salida de esta subshell y el proximo elemento del pipeline original se queda esperando la entrada indefinidamente e.g.:
+
+		(ls -l | cat -e) | cat -e						[OK]
+		ls -l | (cat -e && cat -e)						[OK]
+		(ls -l | cat -e) | cat -e | cat -e				[OK]
 
     - Implementamos el nodo NODE_REDIRECT.
 
@@ -16,7 +20,12 @@
     - El comando "(cd / && ls -l) && ls -l" realiza el cambio del directorio pero el cambio se ve desde fuera del paréntesis, lo que significa que o no se está ejecutando en una subshell o ambos se ejecutan en el mismo nivel de proceso.
 
 
-* Probelms:
+* To implement:
+
+    - Implementar redirecciones como listas de nodos. Los redirects pasaran de ser nodos en la estructura a ser atributos de los nodos comandos.
+
+
+* Problems:
 
     - Actual tokenizer doesn't support multiple redirections.
     - Proposed solution:

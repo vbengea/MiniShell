@@ -16,6 +16,7 @@ SRC				:= 	$(EXEC_DIR)/utils.c \
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
 					$(EXEC_DIR)/pipex.c \
+					$(EXEC_DIR)/redirect.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
 					$(PARSER_DIR)/tokenizer/add_token.c \
 					$(PARSER_DIR)/tokenizer/create_token.c \

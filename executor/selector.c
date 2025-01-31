@@ -12,7 +12,7 @@
 
 #include "../include/headers.h"
 
-static  void    navigate(t_ast_node *node, char **env, int hold, int files[3])
+void	navigator(t_ast_node *node, char **env, int hold, int files[3])
 {
 	(void) hold;
 	if (node->left)
@@ -31,39 +31,7 @@ static  void    navigate(t_ast_node *node, char **env, int hold, int files[3])
 		exit(0);
 }
 
-void	redirecter(t_ast_node *node, char **env, int hold, int files[3])
-{
-	(void) hold;
-	int	f = 0;
-	if (node->redirect_type == REDIRECT_OUT)
-	{
-		f = open(node->file, O_RDONLY | O_CREAT | O_TRUNC, 0777);
-		if (dup2(f, STDOUT_FILENO) == -1)
-			perror("Error redirecting");
-	}
-	else if (node->redirect_type == REDIRECT_IN)
-	{
-		f = open(node->file, O_RDONLY);
-		if (dup2(f, STDIN_FILENO) == -1)
-			perror("Error redirecting");
-	}
-	else if (node->redirect_type == REDIRECT_APPEND)
-	{
-		f = open(node->file, O_RDONLY | O_CREAT | O_APPEND, 0666);
-		if (dup2(f, STDOUT_FILENO) == -1)
-			perror("Error redirecting");
-	}
-	else if (node->redirect_type == REDIRECT_HEREDOC)
-	{
-		f = here_doc(node->file, STDIN_FILENO);
-		if (dup2(f, STDIN_FILENO) == -1)
-			perror("Error redirecting");
-	}
-	if (!node->parent || node->parent->type != NODE_PIPE)
-		navigate(node, env, 1, files);
-}
-
-static  void    executor(t_ast_node *node, char **env, int hold, int files[3])
+static	void	executor(t_ast_node *node, char **env, int hold, int files[3])
 {
 	(void) hold;
 	(void) files;
@@ -71,7 +39,7 @@ static  void    executor(t_ast_node *node, char **env, int hold, int files[3])
 		cleanup("Error executing command..");
 }
 
-static  void    builtin(t_ast_node *node, char **env, int hold, int files[3])
+static	void	builtin(t_ast_node *node, char **env, int hold, int files[3])
 {
 	(void) files;
 	if (ft_strncmp(node->args[0], "cd", 2) == 0)
@@ -82,7 +50,7 @@ static  void    builtin(t_ast_node *node, char **env, int hold, int files[3])
 	}
 }
 
-static  void    forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node, char **env, int hold, int files[3]), int files[3])
+static	void	forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node, char **env, int hold, int files[3]), int files[3])
 {
 	int	pid;
 
@@ -97,30 +65,27 @@ static  void    forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node,
 
 void	selector(t_ast_node *node, char **env, int files[3])
 {
-    if (node->type == NODE_CMND)
-    {
-        if (is_builtin(node))
-        {
-            if (is_pipe_state(node))
-                forker(node, env, builtin, files);
-            else
-                builtin(node, env, 0, files);
-        }
-        else
-			forker(node, env, executor, files);
-    }
-    else if (node->type == NODE_AND || node->type == NODE_OR)
-		navigate(node, env, 1, files);
-    else if (node->type == NODE_PIPE)
+	if (node->type == NODE_CMND)
 	{
-		// files[2] = dup(STDOUT_FILENO);
+		if (is_builtin(node))
+		{
+			if (is_pipe_state(node))
+				forker(node, env, builtin, files);
+			else
+				builtin(node, env, 0, files);
+		}
+		else
+			forker(node, env, executor, files);
+	}
+	else if (node->type == NODE_AND || node->type == NODE_OR)
+		navigator(node, env, 1, files);
+	else if (node->type == NODE_PIPE)
+	{
 		pipex(node, env, files, files[2]);
 		waiter(node->type);
 	}
-    else if (node->type == NODE_GROUP)
-        forker(node, env, navigate, files);
+	else if (node->type == NODE_GROUP)
+		forker(node, env, navigator, files);
 	else if (node->type == NODE_REDIRECT)
-	{
 		forker(node, env, redirecter, files);
-	}
 }

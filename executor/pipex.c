@@ -12,56 +12,6 @@
 
 #include "../include/headers.h"
 
-static	int	is_last_node(t_ast_node *node)
-{
-	if (node->type == NODE_CMND && node->side == 1)
-	{
-		if ((node->parent && node->parent->type == NODE_PIPE && \
-			node->parent->parent && \
-			node->parent->parent->type != NODE_PIPE) || !node->parent->parent)
-			return (1);
-	}
-	return (0);
-}
-
-static	void	redirect(t_ast_node *node, int fd[2], int files[3], int is_last)
-{
-	if (files[0] == -1)
-	{
-		perror("Error reading file");
-		exit(1);
-	}
-	if (node->parent->type == NODE_REDIRECT && \
-		(node->parent->redirect_type == REDIRECT_OUT || \
-		node->parent->redirect_type == REDIRECT_APPEND))
-	{
-		redirecter(node->parent, NULL, 1, files);
-	}
-	else
-	{
-		if (is_last)
-		{
-			if (dup2(files[1], STDOUT_FILENO) == -1)
-				perror("Error redirecting");
-		}
-		else if (dup2(fd[1], STDOUT_FILENO) == -1)
-			perror("Error redirectingT");
-	}
-	if (node->parent->type == NODE_REDIRECT && \
-		(node->parent->redirect_type == REDIRECT_IN || \
-		node->parent->redirect_type == REDIRECT_HEREDOC))
-	{
-		redirecter(node->parent, NULL, 1, files);
-	}
-	else
-	{
-		if (dup2(files[0], STDIN_FILENO) == -1)
-			perror("Error redirecting");
-	}
-	close(fd[0]);
-	close(fd[1]);
-}
-
 static	void	parent(int fd[2], int files[3], t_ast_node *node, char **env)
 {
 	if (!node)
@@ -93,12 +43,14 @@ static	void	child(int fd[2], int files[3], t_ast_node *node, char **env)
 	else
 	{
 		close(files[0]);
+		files[0] = fd[1];
 		pipex(node, env, files, 0);
+		close(files[0]);
 		close(files[1]);
 	}
 }
 
-void    pipex(t_ast_node *node, char **env, int files[3], int side)
+void	pipex(t_ast_node *node, char **env, int files[3], int side)
 {
 	int	fd[2];
 	int	pid;
