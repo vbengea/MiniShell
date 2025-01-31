@@ -21,21 +21,7 @@
 
 			- A command like: cat < input.txt | grep "error" >> output.txt && echo "done" would have a structure like:
 
-				![alt text](https://github.com/juandfloresm/minishare/resources/red.png?raw=true)
-
-
-					NODE_AND
-					/        \
-				NODE_PIPE   NODE_CMND ("echo")
-				/       \          ├── args: ["echo", "done"]
-				NODE_CMND  NODE_CMND  └── redirs: NULL
-				("cat")   ("grep")
-				│          ├── args: ["grep", "error"]
-				│          └── redirs:
-				│              └── REDIRECT_APPEND -> "output.txt"
-				├── args: ["cat"]
-				└── redirs:
-					└── REDIRECT_IN -> "input.txt"
+				![alt text](https://github.com/juandfloresm/minishare/blob/d280cd03d52180b5d4134df3951b1f946d357e49/resources/red.png)
 
 			- A command node now will have a redirect linked list
 
