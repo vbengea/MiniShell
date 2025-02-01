@@ -14,5 +14,7 @@
 # define BUILTINS_H
 
 int		cd(const char *path, char **env);
+void	exit_bi(void);
+void	env_bi(char **env);
 
 #endif

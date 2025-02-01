@@ -45,11 +45,13 @@ static	void	builtin(t_ast_node *node, char **env, int hold, int files[3])
 {
 	(void) files;
 	if (ft_strncmp(node->args[0], "cd", 2) == 0)
-	{
 		cd(node->args[1], env);
-		if (hold)
-			exit(0);
-	}
+	else if (ft_strncmp(node->args[0], "exit", 2) == 0)
+		exit_bi();
+	else if (ft_strncmp(node->args[0], "env", 2) == 0)
+		env_bi(env);
+	if (hold)
+		exit(0);
 }
 
 static	void	forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node, char **env, int hold, int files[3]), int files[3])

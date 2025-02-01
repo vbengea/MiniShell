@@ -11,3 +11,12 @@
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+void		env_bi(char **env)
+{
+	int		i;
+
+	i = 0;
+	while (env[i])
+		printf("%s\n", env[i++]);
+}
