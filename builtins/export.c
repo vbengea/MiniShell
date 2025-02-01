@@ -14,9 +14,6 @@
 
 char	**export_bi(const char *key, const char *value, char **env)
 {
-	(void) key;
-	(void) value;
-	(void) env;
 	char	*str;
 	int		len;
 

@@ -14,7 +14,30 @@
 
 char	**unset_bi(const char *key, char **env)
 {
-	(void) key;
-	(void) env;
-	return (env);
+	int		i;
+	int		len;
+	char	*str;
+
+	i = 0;
+	len = ft_strlen(key);
+	str = malloc(len + 1 + 1);
+	ft_strcpy(str, key);
+	str[len] = '=';
+	str[len + 1] = '\0';
+	while (env && env[i])
+	{
+		if (ft_strnstr(env[i], str, len + 1))
+		{
+			free(env[i]);
+			while (env && env[i])
+			{
+				env[i] = env[i + 1];
+				i++;
+			}
+			break ;
+		}
+		i++;
+	}
+	free(str);
+	return (copy_arr_of_strs(env, 0));
 }
