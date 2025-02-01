@@ -11,3 +11,23 @@
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+void	pwd_bi(char **env)
+{
+	int		i;
+	int		len;
+	char	*str;
+
+	i = 0;
+	str = "PWD=";
+	len = 4;
+	while (env && env[i])
+	{
+		if (ft_strnstr(env[i], str, len))
+		{
+			printf("%s\n", (env[i] + len));
+			break ;
+		}
+		i++;
+	}
+}

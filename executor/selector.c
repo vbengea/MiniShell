@@ -48,6 +48,8 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 		cd_bi(node->args[1], *env);
 	else if (ft_strncmp(node->args[0], "exit", 4) == 0)
 		exit_bi();
+	else if (ft_strncmp(node->args[0], "pwd", 3) == 0)
+		pwd_bi(*env);
 	else if (ft_strncmp(node->args[0], "env", 3) == 0)
 		env_bi(*env);
 	else if (ft_strncmp(node->args[0], "export", 6) == 0)
