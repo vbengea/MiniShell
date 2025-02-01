@@ -7,8 +7,6 @@
 
 	- Gestionar variables de entorno 
 
-	- Built-ins
-
 
 * Problems:
 
