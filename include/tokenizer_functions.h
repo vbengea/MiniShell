@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/29 17:56:01 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/01 13:29:19 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "headers.h"
 
 t_token	*create_quoted_token(const char *input, int *i);
-t_token	*create_token(t_token_tpype type, char *value);
+t_token	*create_token(t_token_type type, char *value);
 t_token	*tokenize(const char *input, int *i);
 t_token	*create_word_token(const char *input, int *i);
 t_token	*tokenize_input(const char *input);

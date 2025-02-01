@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   build_ast.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:00:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/30 09:05:59 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/01 13:28:56 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-void	update_paren_level(int *level, t_token_tpype type)
+void	update_paren_level(int *level, t_token_type type)
 {
 	if (type == TOKEN_OPEN_PAREN)
 		(*level)++;
@@ -76,7 +76,7 @@ void	reconnect_tokens(t_token *start, t_token *split)
 	prev->next = split;
 }
 
-int	is_valid_operator(t_token_tpype type)
+int	is_valid_operator(t_token_type type)
 {
 	return (type == TOKEN_PIPE ||
 			type == TOKEN_AND ||
@@ -84,7 +84,7 @@ int	is_valid_operator(t_token_tpype type)
 }
 
 
-int	is_redirect_token(t_token_tpype type)
+int	is_redirect_token(t_token_type type)
 {
 	return (type == TOKEN_REDIRECT_IN ||
 			type == TOKEN_REDIRECT_OUT ||
