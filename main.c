@@ -28,8 +28,9 @@ int main(int argc, char **argv, char **env)
 		input = readline(GREEN "minishell$ " RESET);
 		if (!input)
 			break ;
-		if (input[0] == '\0')
+		else if (input[0] == '\0')
 			continue ;
+		add_history(input);
 		token = tokenize_input(input);
 		ast = build_ast(token);
 		int files[3];
@@ -39,10 +40,10 @@ int main(int argc, char **argv, char **env)
 		SIGNAL = 1;
 		selector(ast, env, files);
 		SIGNAL = -1;
-		//print_ast(ast, 0);
-		//free(input);
+		free(input);
 		//free_token(token);
 		//free_ast(ast);
 	}
+	rl_clear_history();
 	return (0);
 }
