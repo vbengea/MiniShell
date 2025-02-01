@@ -14,6 +14,32 @@
 
 void		echo_bi(char **params, char **env)
 {
-	(void) params;
+	int		i;
+	int		j;
+	char	**s;
+	char	*str;
+
 	(void) env;
+	i = 1;
+	while (params[i])
+	{
+		s = ft_split(params[i], ' ');
+		j = 0;
+		while (s[j])
+		{
+			if (s[j][0] == '$')
+			{
+				str = getenv((s[j] + 1));
+				if (str)
+					printf("%s ", str);
+				else
+					printf("%s ", "");
+			}
+			else
+				printf("%s ", s[j]);
+			j++;
+		}
+		i++;
+	}
+	printf("\n");
 }
