@@ -21,8 +21,6 @@
 # include "builtins.h"
 # include "ast_build.h"
 
-# include "re_token.h"
-
 # include "tokenizer_functions.h"
 # include "signals.h"
 
