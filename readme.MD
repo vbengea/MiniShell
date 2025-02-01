@@ -1,13 +1,13 @@
 
 * To implement:
 
-	- Redirections
+	- Redirecciones
 
-	- Expansions
+	- Gestionar secuencia entrecomillada
 
-	- Promnt history
+	- Gestionar variables de entorno 
 
-	- Signals
+	- Historial de comandos
 
 	- Built-ins
 
@@ -27,6 +27,8 @@
 
 
 * Inconsistency issues:
+
+	- Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
 
 	- El comando "cat main.c" muestra el archivo pero da error tambien como si tratara de ejecutar "cat" sin argumento. Este bug es inconsistente pues al probar en Ubuntu no hay errores.
 

@@ -1,22 +1,26 @@
 NAME			:=	minishell
 
 CC				:= 	cc
-CFLAGS			:= 	-Wall -Wextra -Werror
+CFLAGS			:= 	-Wall -Wextra -Werror #-I/opt/homebrew/opt/readline/include
 SFLAGS			:= 	-g3 -fsanitize=address
-LDFLAGS 		:=	-lreadline
+LOCAL_FLAGS		:=	 
+LDFLAGS 		:=	-lreadline #-L/opt/homebrew/opt/readline/lib
 
 LIBFT_DIR		:= 	./libft
 LIBFT			:= 	$(LIBFT_DIR)/libft.a
 EXEC_DIR		:=	executor
 PARSER_DIR		:=  parser
 BUILTINS_DIR	:=  builtins
+SIGNALS_DIR		:=  signals
 INCLUDE			:= 	./include/headers.h
 
-SRC				:= 	$(EXEC_DIR)/utils.c \
+SRC				:= 	main.c\
+					$(EXEC_DIR)/utils.c \
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
 					$(EXEC_DIR)/pipex.c \
 					$(EXEC_DIR)/redirect.c \
+					$(SIGNALS_DIR)/signals.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
 					$(PARSER_DIR)/tokenizer/add_token.c \
 					$(PARSER_DIR)/tokenizer/create_token.c \
@@ -48,10 +52,10 @@ SRC				:= 	$(EXEC_DIR)/utils.c \
 					$(BUILTINS_DIR)/exit.c \
 					$(BUILTINS_DIR)/export.c \
 					$(BUILTINS_DIR)/pwd.c \
-					$(BUILTINS_DIR)/unset.c \
-					main.c
+					$(BUILTINS_DIR)/unset.c
 
 OBJ 			:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
+					$(patsubst $(SIGNALS_DIR)/%.c, $(SIGNALS_DIR)/%.o, $(SRC)) \
 					$(patsubst $(PARSER_DIR)/*/%.c, $(PARSER_DIR)/*/%.o, $(SRC)) \
 					$(patsubst $(BUILTINS_DIR)/%.c, $(BUILTINS_DIR)/%.o, $(SRC))
 
@@ -65,6 +69,7 @@ clean:
 	rm -f $(EXEC_DIR)/*.o
 	rm -f $(PARSER_DIR)/*/*.o
 	rm -f $(BUILTINS_DIR)/*.o
+	rm -f $(SIGNALS_DIR)/*.o
 	rm -rf *.dSYM
 	rm -f z
 

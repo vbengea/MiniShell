@@ -20,8 +20,8 @@
 # include "colors.h"
 # include "builtins.h"
 # include "ast_build.h"
-
 # include "tokenizer_functions.h"
+# include "signals.h"
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -29,5 +29,6 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <termios.h>
 
 #endif

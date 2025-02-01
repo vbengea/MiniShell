@@ -12,29 +12,35 @@
 
 #include "include/headers.h"
 
+extern int SIGNAL;
+
 int main(int argc, char **argv, char **env)
 {
-	t_token *token;
-	t_ast_node *ast;
-	char *input;
+	t_token		*token;
+	t_ast_node	*ast;
+	char 		*input;
 
 	(void) argc;
 	(void) argv;
-	(void) token;
+	set_tty();
 	while (true)
 	{
 		input = readline(GREEN "minishell$ " RESET);
 		if (!input)
-			break;
+			break ;
+		if (input[0] == '\0')
+			continue ;
 		token = tokenize_input(input);
 		ast = build_ast(token);
-		print_ast(ast, 0);
 		int files[3];
 		files[0] = STDIN_FILENO;
 		files[1] = STDOUT_FILENO;
 		files[2] = 0;
+		SIGNAL = 1;
 		selector(ast, env, files);
-		// free(input);
+		SIGNAL = -1;
+		//print_ast(ast, 0);
+		//free(input);
 		//free_token(token);
 		//free_ast(ast);
 	}

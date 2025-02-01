@@ -12,6 +12,8 @@
 
 #include "../include/headers.h"
 
+extern int SIGNAL;
+
 void	navigator(t_ast_node *node, char **env, int hold, int files[3])
 {
 	(void) hold;
@@ -58,7 +60,9 @@ static	void	forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node, cha
 	if (pid == -1)
 		cleanup("Error forking process");
 	if (pid == 0)
+	{
 		f(node, env, 1, files);
+	}
 	else
 		waiter(node->parent_type);
 }
