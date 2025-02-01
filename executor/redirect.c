@@ -61,7 +61,7 @@ void	redirect(t_ast_node *node, int fd[2], int files[3], int is_last)
 	close(fd[1]);
 }
 
-void	redirecter(t_ast_node *node, char **env, int hold, int files[3])
+void	redirecter(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) hold;
 	int	f = 0;

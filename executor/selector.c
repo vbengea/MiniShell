@@ -14,7 +14,7 @@
 
 extern int SIGNAL;
 
-void	navigator(t_ast_node *node, char **env, int hold, int files[3])
+void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) hold;
 	if (node->left)
@@ -33,28 +33,32 @@ void	navigator(t_ast_node *node, char **env, int hold, int files[3])
 		exit(0);
 }
 
-static	void	executor(t_ast_node *node, char **env, int hold, int files[3])
+static	void	executor(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) hold;
 	(void) files;
-	if (execute(node->args, env) == -1)
+	if (execute(node->args, *env) == -1)
 		cleanup("Error executing command..");
 }
 
-static	void	builtin(t_ast_node *node, char **env, int hold, int files[3])
+static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) files;
 	if (ft_strncmp(node->args[0], "cd", 2) == 0)
-		cd(node->args[1], env);
-	else if (ft_strncmp(node->args[0], "exit", 2) == 0)
+		cd_bi(node->args[1], *env);
+	else if (ft_strncmp(node->args[0], "exit", 4) == 0)
 		exit_bi();
-	else if (ft_strncmp(node->args[0], "env", 2) == 0)
-		env_bi(env);
+	else if (ft_strncmp(node->args[0], "env", 3) == 0)
+		env_bi(*env);
+	else if (ft_strncmp(node->args[0], "export", 6) == 0)
+		*env = export_bi(node->args[1], node->args[2], *env);
+	else if (ft_strncmp(node->args[0], "unset", 5) == 0)
+		*env = unset_bi(node->args[1], *env);
 	if (hold)
 		exit(0);
 }
 
-static	void	forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node, char **env, int hold, int files[3]), int files[3])
+static	void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3]), int files[3])
 {
 	int	pid;
 
@@ -69,7 +73,7 @@ static	void	forker(t_ast_node *node, char **env, void (*f)(t_ast_node *node, cha
 		waiter(node->parent_type);
 }
 
-void	selector(t_ast_node *node, char **env, int files[3])
+void	selector(t_ast_node *node, char ***env, int files[3])
 {
 	if (node->type == NODE_CMND)
 	{

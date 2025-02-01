@@ -43,3 +43,48 @@ void	clear_arr_of_strs(char **sp)
 		free(sp);
 	}
 }
+
+char **copy_arr_of_strs(char **p, int len)
+{
+	int		i;
+	char	**arr;
+
+	if (len == 0)
+	{
+		len = 0;
+		while (p[len])
+			len++;
+	}
+	arr = malloc(sizeof(char *) * (len + 1));
+	if (arr)
+	{
+		i = 0;
+		while (p[i])
+		{
+			arr[i] = ft_strdup(p[i]);
+			if (!arr[i])
+			{
+				clear_arr_of_strs(arr);
+				break ;
+			}
+			i++;
+		}
+		while (i < len)
+			arr[i++] = NULL;
+	}
+	return (arr);
+}
+
+char **add_arr_of_strs(char **p, char *str)
+{
+	int		len;
+	char	**arr;
+
+	len = 0;
+	while (p[len])
+		len++;
+	arr = copy_arr_of_strs(p, len + 1);
+	if (arr)
+		arr[len] = ft_strdup(str);
+	return (arr);
+}

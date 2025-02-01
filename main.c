@@ -23,6 +23,7 @@ int main(int argc, char **argv, char **env)
 	(void) argc;
 	(void) argv;
 	set_tty();
+	env = copy_arr_of_strs(env, 0);
 	while (true)
 	{
 		input = readline(GREEN "minishell$ " RESET);
@@ -38,12 +39,13 @@ int main(int argc, char **argv, char **env)
 		files[1] = STDOUT_FILENO;
 		files[2] = 0;
 		SIGNAL = 1;
-		selector(ast, env, files);
+		selector(ast, &env, files);
 		SIGNAL = -1;
 		free(input);
 		//free_token(token);
 		//free_ast(ast);
 	}
+	clear_arr_of_strs(env);
 	rl_clear_history();
 	return (0);
 }

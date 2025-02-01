@@ -12,7 +12,7 @@
 
 #include "../include/headers.h"
 
-static	void	parent(int fd[2], int files[3], t_ast_node *node, char **env)
+static	void	parent(int fd[2], int files[3], t_ast_node *node, char ***env)
 {
 	if (!node)
 		return ;
@@ -25,7 +25,7 @@ static	void	parent(int fd[2], int files[3], t_ast_node *node, char **env)
 	close(fd[0]);
 }
 
-static	void	child(int fd[2], int files[3], t_ast_node *node, char **env)
+static	void	child(int fd[2], int files[3], t_ast_node *node, char ***env)
 {
 	if (!node)
 	{
@@ -37,7 +37,7 @@ static	void	child(int fd[2], int files[3], t_ast_node *node, char **env)
 	redirect(node, fd, files, node->side);
 	if (node->type == NODE_CMND)
 	{
-		if (execute(node->args, env) == -1)
+		if (execute(node->args, *env) == -1)
 			cleanup("Error executing command..");
 	}
 	else
@@ -50,7 +50,7 @@ static	void	child(int fd[2], int files[3], t_ast_node *node, char **env)
 	}
 }
 
-void	pipex(t_ast_node *node, char **env, int files[3], int side)
+void	pipex(t_ast_node *node, char ***env, int files[3], int side)
 {
 	int	fd[2];
 	int	pid;

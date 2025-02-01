@@ -56,11 +56,12 @@ void			*ft_memset(void *s, int c, size_t n);
 void			ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
 void			*ft_memmove(void *dest, const void *src, size_t n);
-void			clear_arr_of_strs(char **sp);
 bool			ft_isspace(char c);
 char			*ft_strndup(const char *s, size_t n);
 char			*ft_strcpy(char *dst, const char *src);
-
+void			clear_arr_of_strs(char **sp);
+char			**copy_arr_of_strs(char **p, int len);
+char			**add_arr_of_strs(char **p, char *str);
 
 typedef struct splitter
 {

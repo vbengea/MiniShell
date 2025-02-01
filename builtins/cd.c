@@ -12,7 +12,7 @@
 
 #include "../include/headers.h"
 
-int		cd(const char *path, char **env)
+int		cd_bi(const char *path, char **env)
 {
 	int		r;
 	int		i;

@@ -22,12 +22,12 @@
 # include "../libft/libft.h"
 # include "./data_structure.h"
 
-void		selector(t_ast_node *node, char **env, int file[3]);
-void		navigator(t_ast_node *node, char **env, int hold, int files[3]);
-void		pipex(t_ast_node *node, char **env, int files[3], int side);
+void		selector(t_ast_node *node, char ***env, int file[3]);
+void		navigator(t_ast_node *node, char ***env, int hold, int files[3]);
+void		pipex(t_ast_node *node, char ***env, int files[3], int side);
 
 int			is_last_node(t_ast_node *node);
-void		redirecter(t_ast_node *node, char **env, int hold, int files[3]);
+void		redirecter(t_ast_node *node, char ***env, int hold, int files[3]);
 void		redirect(t_ast_node *node, int fd[2], int files[3], int is_last);
 
 char		*environment(char *name, char **env);

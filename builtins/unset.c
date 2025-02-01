@@ -11,3 +11,10 @@
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+char	**unset_bi(const char *key, char **env)
+{
+	(void) key;
+	(void) env;
+	return (env);
+}

@@ -17,6 +17,6 @@ void		env_bi(char **env)
 	int		i;
 
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 		printf("%s\n", env[i++]);
 }
