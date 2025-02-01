@@ -11,3 +11,9 @@
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+void		echo_bi(char **params, char **env)
+{
+	(void) params;
+	(void) env;
+}

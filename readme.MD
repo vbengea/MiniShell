@@ -12,7 +12,7 @@
 
 * Problems:
 
-	- El comando export sin argumentos lista las variables de entorno alfabéticamente y con un formato especifico.
+	- El comando export sin argumentos lista las variables de entorno alfabéticamente y con un formato específico.
 
 	- I don't understand very well when the subject says that we should not include here doc in the history.
 

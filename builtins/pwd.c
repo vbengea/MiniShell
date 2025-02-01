@@ -12,22 +12,11 @@
 
 #include "../include/headers.h"
 
-void	pwd_bi(char **env)
+void	pwd_bi(void)
 {
-	int		i;
-	int		len;
-	char	*str;
+	char	cwd[PATH_MAX];
 
-	i = 0;
-	str = "PWD=";
-	len = 4;
-	while (env && env[i])
-	{
-		if (ft_strnstr(env[i], str, len))
-		{
-			printf("%s\n", (env[i] + len));
-			break ;
-		}
-		i++;
+	if (getcwd(cwd, sizeof(cwd)) != NULL) {
+		printf("%s\n", cwd);
 	}
 }

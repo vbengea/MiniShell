@@ -49,13 +49,15 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 	else if (ft_strncmp(node->args[0], "exit", 4) == 0)
 		exit_bi();
 	else if (ft_strncmp(node->args[0], "pwd", 3) == 0)
-		pwd_bi(*env);
+		pwd_bi();
 	else if (ft_strncmp(node->args[0], "env", 3) == 0)
 		env_bi(*env);
 	else if (ft_strncmp(node->args[0], "export", 6) == 0)
 		*env = export_bi(node->args[1], node->args[2], *env);
 	else if (ft_strncmp(node->args[0], "unset", 5) == 0)
 		*env = unset_bi(node->args[1], *env);
+	else if (ft_strncmp(node->args[0], "echo", 4) == 0)
+		echo_bi(node->args, *env);
 	if (hold)
 		exit(0);
 }
