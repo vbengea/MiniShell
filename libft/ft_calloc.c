@@ -88,3 +88,31 @@ char **add_arr_of_strs(char **p, char *str)
 		arr[len] = ft_strdup(str);
 	return (arr);
 }
+
+static	void swap_str(char **str, int i, int j) {
+	char 	*s;
+
+	s = str[i];
+	str[i] = str[j];
+	str[j] = s;
+}
+
+void sort_arr_of_strs(char **str, int order_type) {
+    int		i;
+	int		j;
+
+	i = 0;
+    while (str[i])
+	{
+        j = 0;
+        while (str[j])
+		{
+            if ((order_type == 1) && (ft_strcmp(str[i], str[j]) < 0)) 
+				swap_str(str, i, j);
+			else if ((order_type == 0) && (ft_strcmp(str[i], str[j]) > 0)) 
+                swap_str(str, i, j);
+            j++;
+        }
+        i++;
+    }
+}

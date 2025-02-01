@@ -17,12 +17,12 @@ char	**export_bi(const char *key, const char *value, char **env)
 	char	*str;
 	int		len;
 
-	if (!key || !value)
+	if (env && (!key || !value))
 	{
-		env_bi(env);
+		env_bi(env, 1);
 		return (env);
 	}
-	if (env)
+	else if (env)
 	{
 		len = ft_strlen(key) + 1 + ft_strlen(value) + 1;
 		str = malloc(len + 1);

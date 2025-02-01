@@ -51,7 +51,7 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 	else if (ft_strncmp(node->args[0], "pwd", 3) == 0)
 		pwd_bi();
 	else if (ft_strncmp(node->args[0], "env", 3) == 0)
-		env_bi(*env);
+		env_bi(*env, 0);
 	else if (ft_strncmp(node->args[0], "export", 6) == 0)
 		*env = export_bi(node->args[1], node->args[2], *env);
 	else if (ft_strncmp(node->args[0], "unset", 5) == 0)
