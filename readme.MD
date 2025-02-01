@@ -10,6 +10,8 @@
 
 * Problems:
 
+	- El comando "minishell" debe estar en el PATH, para que si uno ejecuta "minishell" desde dentro de minishell, haga en una subshell como hace bash. El comando exit saldría a la minishell anterior.
+
 	- El comando export sin argumentos lista las variables de entorno alfabéticamente y con un formato específico.
 
 	- I don't understand very well when the subject says that we should not include here doc in the history.
