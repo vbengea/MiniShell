@@ -19,7 +19,7 @@ char	**export_bi(const char *key, const char *value, char **env)
 
 	if (!key || !value)
 	{
-		write(2, "Key or value error\n", 19);
+		env_bi(env);
 		return (env);
 	}
 	if (env)
