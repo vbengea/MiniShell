@@ -12,6 +12,8 @@
 
 * Problems:
 
+	- El comando export sin argumentos lista las variables de entorno alfabéticamente y con un formato especifico.
+
 	- I don't understand very well when the subject says that we should not include here doc in the history.
 
 	- Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
