@@ -7,6 +7,8 @@
 
 	- Los wildcards * deben funcionar para el directorio actual.
 
+	- Gestionar $?, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
+
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 
 
