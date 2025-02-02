@@ -14,10 +14,11 @@
 
 void		env_bi(char **env, int sorted)
 {
-	int		i;
-	char	**p;
+	int			i;
+	char		**p;
 
 	i = 0;
+	(void) p;
 	if (sorted)
 	{
 		p = copy_arr_of_strs(env, 0);
@@ -25,7 +26,7 @@ void		env_bi(char **env, int sorted)
 		{
 			sort_arr_of_strs(p, 1);
 			while (p && p[i])
-				printf("%s\n", p[i++]);
+				printf("declare -x %s\n", p[i++]);
 			clear_arr_of_strs(p);
 		}
 	}

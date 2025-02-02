@@ -60,7 +60,11 @@ static	void	intercepting_signals(void)
 void	set_tty(void)
 {
 	struct termios t;
+	char		*path;
 
+	path = getenv("PATH");
+	path = ft_strjoin(path, ":.");
+	setenv("PATH", path, 1);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
 	t.c_lflag &= ~ECHOCTL;

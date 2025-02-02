@@ -101,7 +101,7 @@ void	populate_node(t_ast_node *node, int side)
 	node->side = side;
 }
 
-static	char **	args_helper(char *arg1, char *arg2)
+char **	args_helper(char *arg1, char *arg2)
 {
 	char **arr = malloc(sizeof(char *) * 3);
 	arr[0] = ft_strdup(arg1);

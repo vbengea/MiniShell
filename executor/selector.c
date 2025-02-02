@@ -33,7 +33,7 @@ void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 		exit(0);
 }
 
-static	void	executor(t_ast_node *node, char ***env, int hold, int files[3])
+void	executor(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) hold;
 	(void) files;
@@ -62,7 +62,7 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 		exit(0);
 }
 
-static	void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3]), int files[3])
+void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3]), int files[3])
 {
 	int	pid;
 

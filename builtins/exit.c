@@ -14,5 +14,6 @@
 
 void	exit_bi(void)
 {
+	printf("exit\n");
 	exit(0);
 }

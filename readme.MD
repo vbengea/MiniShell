@@ -10,11 +10,7 @@
 
 * Problems:
 
-	- El comando "minishell" debe estar en el PATH, para que si uno ejecuta "minishell" desde dentro de minishell, haga en una subshell como hace bash. El comando exit saldría a la minishell anterior.
-
-	- El comando export sin argumentos lista las variables de entorno alfabéticamente y con un formato específico.
-
-	- I don't understand very well when the subject says that we should not include here doc in the history.
+	- I don't understand very well when the subject says that we should not include heredoc in the history.
 
 	- Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
 
@@ -38,6 +34,10 @@
 
 
 * Solved issues:
+
+	- El comando export sin argumentos lista las variables de entorno alfabéticamente y con un formato específico.
+
+	- El comando "minishell" debe estar en el PATH, para que si uno ejecuta "minishell" desde dentro de minishell, haga en una subshell como hace bash. El comando exit saldría a la minishell anterior.
 
 	- Una vez el proceso llega a pipex, no hay comunicación con el proceso original "selector" lo que hace que si uno de los elementos del pipe es una subshell, se pierda la salida de esta subshell y el proximo elemento del pipeline original se queda esperando la entrada indefinidamente e.g.:
 
