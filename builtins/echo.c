@@ -83,40 +83,60 @@ char	*set_env(char *var, char *value, char **env)
 	return (NULL);
 }
 
+static	char *add_str(char *a, char *b)
+{
+	char	*t;
+
+	t = a;
+	a = ft_strjoin(a, b);
+	free(t);
+	return (a);
+}
+
+char	*interpolation(char *str, char **env)
+{
+	int		j;
+	char	**s;
+	char	*r;
+
+	clean_quotes(str);
+	s = ft_split(str, ' ');
+	r = malloc(1);
+	r[0] = '\0';
+	if (s)
+	{
+		j = 0;
+		while (s[j])
+		{
+			if (s[j][0] == '$')
+			{
+				str = get_env((s[j] + 1), env);
+				if (str)
+					r = add_str(r, str);
+				else
+					r = add_str(r, " ");
+			}
+			else
+				r = add_str(r, s[j]);
+			j++;
+		}
+		clear_arr_of_strs(s);
+	}
+	return (r);
+}
+
 
 void		echo_bi(char **params, char **env)
 {
 	int		i;
-	int		j;
-	char	**s;
 	char	*str;
 
-	(void) env;
 	i = 1;
 	while (params[i])
 	{
-		clean_quotes(params[i]);
-		s = ft_split(params[i], ' ');
-		if (s)
-		{
-			j = 0;
-			while (s[j])
-			{
-				if (s[j][0] == '$')
-				{
-					str = get_env((s[j] + 1), env);
-					if (str)
-						printf("%s", str);
-					else
-						printf("%s ", "");
-				}
-				else
-					printf("%s", s[j]);
-				j++;
-			}
-			printf(" ");
-			clear_arr_of_strs(s);
-		}
+		str = interpolation(params[i], env);
+		printf("%s ", str);
+		free(str);
 		i++;
 	}
 	printf("\n");

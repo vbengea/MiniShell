@@ -22,5 +22,6 @@ char	**unset_bi(const char *key, char **env);
 void	echo_bi(char **params, char **env);
 char	*get_env(char *var, char **env);
 char	*set_env(char *var, char *value, char **env);
+char	*interpolation(char *str, char **env);
 
 #endif

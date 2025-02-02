@@ -5,8 +5,6 @@
 
 	- Gestionar secuencia entrecomillada
 
-	- Gestionar variables de entorno 
-
 
 * Problems:
 
