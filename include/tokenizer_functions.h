@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/02 11:53:08 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/02 19:49:34 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,11 @@ bool	is_operator(char c);
 bool	is_quote(char c);
 
 void	free_token(t_token *token);
+
+
+
+/* Nuevas */
+t_token *create_fd_redirection_token(const char *input, int *i);
+t_token *create_invalid_operator_token(const char *input, int *i);
 
 #endif
