@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:07:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/30 10:19:16 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/01 20:04:28 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 int main(void)
 {
 	t_token *token;
-	t_ast_node *ast;
+	// t_ast_node *ast;
 	char *input;
 
 	while (true)
@@ -29,19 +29,19 @@ int main(void)
 
 		token = tokenize_input(input);
 		//printf("Input tokenized!\n");
-		// while (token)
-		// {
-		// 	printf("Token type: %d, value: %s\n", token->type, token->value);
-		// 	token = token->next;
-		// }
-		ast = build_ast(token);
+		while (token)
+		{
+			printf("Token type: %d, value: %s\n", token->type, token->value);
+			token = token->next;
+		}
+		// ast = build_ast(token);
 		// printf("AST built!\n");
 
-		print_ast(ast, 0);
+		// print_ast(ast, 0);
 
 		//free(input);
 		free_token(token);
-		free_ast(ast);
+		// free_ast(ast);
 	}
 	return (0);
 }

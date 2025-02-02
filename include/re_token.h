@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_operator.c                                      :+:      :+:    :+:   */
+/*   re_token.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 18:10:31 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/02 11:38:18 by vbengea          ###   ########.fr       */
+/*   Created: 2025/01/30 20:20:23 by vbengea           #+#    #+#             */
+/*   Updated: 2025/02/01 13:36:04 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/headers.h"
+#ifndef RE_TOKEN_H
+# define RE_TOKEN_H
 
-bool	is_operator(char c)
+# include "headers.h"
+
+typedef struct s_re_token
 {
-	return (c == '|'
-		|| c == '<'
-		|| c == '>'
-		|| c == '&'
-		|| c == ';'
-		|| c == '('
-		|| c == ')'
-		|| (c >= '0' && c <= '9')); // Recognize file descriptors redirections
-}
+	char				*value;
+	t_token_type		type;
+	struct s_re_token	*prev;
+	struct s_re_token	*next;
+}	t_re_token;
+
+t_re_token	*convert_to_double_linked_list(t_token *tokens);
+
+#endif
