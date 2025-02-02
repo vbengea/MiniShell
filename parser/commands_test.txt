@@ -1,0 +1,178 @@
+echo "This is a test | grep "pattern" | sort -u
+(echo "Hello" && echo "World"
+cat file.txt > | grep "pattern"
+echo Hello, World!
+ls -l -a /home
+cd /home/user
+cat file.txt
+mkdir new_folder
+rm file.txt
+touch new_file.txt
+pwd
+ls --help
+grep -i "pattern" file.txt
+echo "text with spaces"
+./my_program
+./my_program arg1 arg2
+man ls
+ps aux
+kill -9 12345
+cp file.txt new_file.txt
+mv old_name.txt new_name.txt
+echo $HOME
+export VAR=value
+unset VAR
+echo $?
+find . -name "*.txt"
+sort file.txt
+wc -l file.txt
+cat < file.txt
+cat > file.txt
+echo "text" >> file.txt
+ls | grep txt
+cat file.txt | grep "pattern"
+echo "test" && echo "next"
+echo "error" || echo "fallback"
+true && echo "true"
+false || echo "false"
+echo $((5 + 3))
+echo $((3 * 7))
+echo $(date)
+echo $(pwd)
+echo $(ls)
+cat file.txt | grep "word" | sort
+echo $((5 / 0))
+for i in {1..5}; do echo $i; done
+while true; do break; done
+if [ -f file.txt ]; then echo "Exists"; fi
+if test -d folder; then echo "Folder exists"; fi
+ls && echo "Success"
+echo "Hello World" > output.txt
+echo "Hello World" >> output.txt
+echo "Hello" && echo "World"
+grep -v "pattern" file.txt
+find . -name "*.txt" -exec rm {} \;
+echo "Hello" | tr "a-z" "A-Z"
+echo "path/to/file" | sed 's/\/.*$//'
+echo "text" | awk '{print $1}'
+echo "text" | cut -d' ' -f1
+grep -r "text" .
+ls -al /home/user
+ls -l /home/user/ | grep "txt"
+tail -n 10 file.txt
+head -n 10 file.txt
+echo "input" | tee file.txt
+echo "test" | rev
+mkdir -p folder/subfolder
+rm -rf folder
+chmod +x script.sh
+ls -l | awk '{print $1}'
+ls --color=auto
+echo "Hello" | sed 's/Hello/Hi/'
+ls -d */
+ps -ef | grep "process"
+cat file.txt | sed 's/old/new/'
+echo -n "no newline"
+history | grep "command"
+chmod 755 file.txt
+chmod u+x file.sh
+ls | sort
+ls /home/user/ > files.txt
+echo "PATH=$PATH:/new/path" >> ~/.bashrc
+source ~/.bashrc
+bash -c "echo Hello"
+echo $((3 - 2))
+echo "$(ls)" && echo "Done"
+find / -type f
+du -sh *
+tar -czvf archive.tar.gz /home
+zip archive.zip file1.txt file2.txt
+unzip archive.zip
+scp user@host:/path/to/file /local/path
+ssh user@hostname
+curl -O https://example.com/file
+wget https://example.com/file
+echo "Hello World" | cut -d' ' -f1
+echo "test" && echo "next" && echo "done"
+git status
+git pull
+git commit -m "Message"
+git push
+git clone https://repo.url
+git branch
+git log --oneline
+echo "Hello" | grep "H" | awk '{print $1}'
+echo "Hello" | (grep "H" && awk '{print $1}')
+(echo "Hello" && echo "World") || echo "Error"
+cat file.txt | grep "pattern" | sort | uniq
+(ls -l | grep "txt") && echo "Found text files"
+echo "Start" > output.txt; cat output.txt | grep "Start"
+echo "First" | (echo "Second" | echo "Third")
+echo "abc" | grep "a" > output.txt; cat output.txt
+ls -l | grep "txt" && (echo "Found") || echo "Not Found"
+echo "Test" | (grep "T" && cat) > output.txt
+(echo "Hello" | grep "H") && (echo "World")
+ls -al | (grep "bin" || grep "etc") && echo "Done"
+cat file.txt | (grep "pattern" && sort) > result.txt
+(echo "One" | echo "Two") && (echo "Three")
+ls -l | (grep "txt" || grep "log") && echo "Files found"
+echo "Start" && (echo "Middle" | sort) || echo "Error"
+echo "first" && echo "second" | (echo "third" || echo "fourth")
+(echo "test1" && echo "test2") | sort > sorted.txt
+(echo "text" && echo "more text") | tr 'a-z' 'A-Z' > output.txt
+echo "123" > file.txt; cat file.txt | (grep "123" && sort)
+echo "input" | (sed 's/input/output/' | awk '{print $1}')
+ls | (grep "txt" && grep "log") || echo "No files"
+echo "test" && (echo "next" | grep "next") || echo "done"
+echo "A" | (cat | (grep "A" && sort)) > result.txt
+echo "Hello" | (grep "H" && awk '{print $1}') || echo "Error"
+cat file.txt | (grep "pattern" || sort) > output.txt
+(echo "start" | grep "start") && echo "Found"
+echo "Hello" > file.txt; (cat file.txt || echo "No File")
+echo "First" | (echo "Second" && echo "Third") > output.txt
+(ls -l | grep "txt") && echo "Found text files" || echo "Not found"
+echo "Start" > output.txt; cat output.txt | (grep "Start" || echo "Error")
+echo "Hello World" | grep "Hello" && (echo "Match") || echo "No Match"
+(echo "start" && echo "middle" && echo "end") | sort
+echo "First" && (echo "Second" | sort) || echo "Error"
+echo "abc" | (cat || grep "abc") > output.txt
+(ls | grep "log") && echo "Logs found" || echo "No logs"
+echo "start" | (cat | grep "start") && echo "Matched"
+(echo "first" && echo "second") | (grep "first" || echo "fallback")
+echo "Hello" | (grep "H" || echo "No Match") && echo "Success"
+(cat file.txt | (grep "pattern" || sort)) > result.txt
+(echo "One" && echo "Two") | (echo "Three" || echo "Four")
+ls -l | grep "txt" && (echo "Text file found" || echo "No file found")
+echo "A" && (echo "B" | (grep "B" && sort)) || echo "Error"
+echo "start" && (echo "middle" || echo "end") | sort
+ls -l | (grep "txt" && sort) > result.txt || echo "Error"
+echo "cat" > file.txt; (cat file.txt && echo "Read") || echo "Error"
+(echo "first" && echo "second") | (grep "first" || echo "fallback") > output.txt
+echo "file" | (cat || grep "file") && echo "Found"
+echo "start" | (echo "middle" | grep "middle") && echo "end"
+(echo "one" && echo "two") | grep "one" && echo "Found"
+echo "One" | grep "One" && (echo "Match") || (echo "No Match")
+echo "a" | (echo "b" || echo "c") | sort
+ls -l | (grep "log" && echo "Log found") || echo "No logs"
+cat file.txt | (grep "pattern" && sort) > result.txt || echo "Error"
+echo "Hello" | (grep "H" || echo "No Match") && echo "Done"
+echo "Start" && (echo "Middle" | tr 'a-z' 'A-Z') || echo "Error"
+echo "test" && (echo "next" | grep "next") && echo "done"
+echo "start" | (cat | grep "start") > result.txt
+echo "test" | (grep "test" && sort) || echo "Not Found"
+(echo "test" || echo "fallback") | (grep "test" || echo "Error")
+echo "success" && (echo "continue" || echo "exit")
+echo "test" | (grep "test" && (echo "match" || echo "no match"))
+(ls | grep "text") && (echo "Text found") || echo "Not found"
+echo "start" && (echo "middle" && echo "end") | sort
+echo "start" > output.txt; (cat output.txt && echo "done") || echo "error"
+echo "a" && (echo "b" | (grep "b" && sort)) || echo "error"
+cat file.txt | (grep "pattern" && (echo "Found" || echo "Not Found"))
+echo "text" | grep "pattern" && echo "Success" || echo "Failure"
+echo "start" | (grep "start" && echo "success") || echo "error"
+echo "A" | (echo "B" && echo "C") | sort > output.txt
+echo "one" && (echo "two" || echo "three") && echo "done"
+(echo "first" && echo "second") | (echo "third" || echo "fourth")
+cat file.txt | (grep "line" && echo "Found" || echo "Not found")
+ls -l | grep "log" && (echo "Logs found") || echo "No logs"
+(echo "start" | grep "start") && (echo "middle" && echo "end")
