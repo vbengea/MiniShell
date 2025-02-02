@@ -33,6 +33,57 @@ static	void		clean_quotes(char *str)
 	}
 }
 
+char	*get_env(char *var, char **env)
+{
+	int	i;
+	int len;
+
+	i = 0;
+	var = ft_strjoin(var, "=");
+	len = ft_strlen(var);
+	while (var && env[i])
+	{
+		if (ft_strncmp(env[i], var, len) == 0)
+		{
+			free(var);
+			return (env[i] + len);
+		}
+		i++;
+	}
+	free(var);
+	return (NULL);
+}
+
+char	*set_env(char *var, char *value, char **env)
+{
+	int		i;
+	int		len;
+	char	*str;
+
+	i = 0;
+	while (env[i])
+	{
+		var = ft_strjoin(var, "=");
+		if (var)
+		{
+			if (ft_strncmp(env[i], var, ft_strlen(var)) == 0)
+			{
+				free(env[i]);
+				str = ft_strjoin(var, value);
+				len = ft_strlen(str);
+				env[i] = malloc(len + 1);
+				ft_strlcpy(env[i], str, len + 1);
+				env[i][len] = '\0';
+				free(str);
+			}
+			free(var);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+
 void		echo_bi(char **params, char **env)
 {
 	int		i;
@@ -53,7 +104,7 @@ void		echo_bi(char **params, char **env)
 			{
 				if (s[j][0] == '$')
 				{
-					str = getenv((s[j] + 1));
+					str = get_env((s[j] + 1), env);
 					if (str)
 						printf("%s", str);
 					else
