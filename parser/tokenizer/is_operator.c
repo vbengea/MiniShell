@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:10:31 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/02 11:38:18 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/02 19:40:41 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ bool	is_operator(char c)
 		|| c == '&'
 		|| c == ';'
 		|| c == '('
-		|| c == ')'
-		|| (c >= '0' && c <= '9')); // Recognize file descriptors redirections
+		|| c == ')');
 }

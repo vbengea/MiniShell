@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:11:00 by vbengea           #+#    #+#              #
-#    Updated: 2025/01/30 10:17:32 by vbengea          ###   ########.fr        #
+#    Updated: 2025/02/02 12:58:01 by vbengea          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ilibft -g
+CFLAGS = -Wall -Wextra -Werror -Ilibft -lreadline -g
 LDFLAGS = -lreadline
 
 LIBFT_DIR = ../libft

@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_token.c                                        :+:      :+:    :+:   */
+/*   create_invalid_operator_token.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 19:08:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/02 12:50:31 by vbengea          ###   ########.fr       */
+/*   Created: 2025/02/02 19:48:30 by vbengea           #+#    #+#             */
+/*   Updated: 2025/02/02 19:48:59 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-void	add_token(t_token **head, t_token *new_token)
+t_token *create_invalid_operator_token(const char *input, int *i)
 {
-	t_token	*tmp;
+	t_token *new_token;
+	char invalid_op[3]; // Enough space for "<2", ">2", etc.
+	int j = 0;
 
-	if (!head || !new_token)
-		return ;
-	new_token->next = NULL;
-	if (!*head)
-	{
-		*head = new_token;
-		return ;
-	}
-	tmp = *head;
-	while (tmp->next)
-	{
-		tmp = tmp->next;
-	}
-	tmp->next = new_token;
+	// Capture the operator and the following digit
+	invalid_op[j++] = input[(*i)++];
+	invalid_op[j++] = input[(*i)++];
+	invalid_op[j] = '\0';
+
+	// Create an invalid token
+	new_token = create_token(TOKEN_INVALID, strdup(invalid_op));
+	return new_token;
 }
