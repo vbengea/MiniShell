@@ -64,6 +64,7 @@ char			**copy_arr_of_strs(char **p, int len);
 char			**add_arr_of_strs(char **p, char *str);
 void			sort_arr_of_strs(char **str, int order_type);
 int				ft_strcmp(const char *s1, const char *s2);
+bool			ft_isquote(char c);
 
 typedef struct splitter
 {

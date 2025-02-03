@@ -68,25 +68,9 @@ void	pipex(t_ast_node *node, char ***env, int files[3], int side)
 		if (pid == 0)
 		{
 			if(side == 1)
-			{
-				if (node->right && node->right->type == NODE_REDIRECT)
-				{
-					populate_node(node->right, side);
-					child(fd, files, node->right->left, env);
-				}
-				else
-					child(fd, files, node->right, env);
-			}
+				child(fd, files, node->right, env);
 			else
-			{
-				if (node->left && node->left->type == NODE_REDIRECT)
-				{
-					populate_node(node->left, side);
-					child(fd, files, node->left->left, env);
-				}
-				else
-					child(fd, files, node->left, env);
-			}
+				child(fd, files, node->left, env);
 		}
 		else
 		{
