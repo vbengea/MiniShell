@@ -30,7 +30,7 @@
 
 * Inconsistency issues:
 
-	- Probably, when multiple redirections are present in bash, it only takes the last one.
+	- Probably, when multiple redirections are present in bash, it only takes the last one?
 
 	- El comando "cat main.c" muestra el archivo pero da error tambien como si tratara de ejecutar "cat" sin argumento. Este bug es inconsistente pues al probar en Ubuntu no hay errores.
 

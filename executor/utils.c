@@ -18,64 +18,15 @@ void	cleanup(char *err)
 	exit(1);
 }
 
-static	void	redlist_out(t_redirection *lst, char *content)
+int	is_last_node(t_ast_node *node)
 {
-	while (lst)
+	if (node->type == NODE_CMND && node->side == 1)
 	{
-		int tmp = open(lst->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		write(tmp, content, ft_strlen(content));
-		close(tmp);
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
+		if ((node->parent && node->parent->type == NODE_PIPE && \
+			(!node->parent->parent || node->parent->parent->type != NODE_PIPE)) )
+			return (1);
 	}
-}
-
-void	waiter(t_node_type type, t_ast_node *node)
-{
-	int		status;
-
-	while (1)
-	{
-		if (waitpid(-1, &status, 0) == -1)
-		{
-			if (access("__tmp__", F_OK) == 0)
-			{
-				if (type == 0 && status == 0 && node->redirs)
-				{
-					char *str = NULL;
-					char *content = ft_strdup(" ");
-					if (content)
-					{
-						char *clear = NULL;
-						int tmp = open("__tmp__", O_RDONLY);
-						while (1)
-						{
-							str = get_next_line(tmp);
-							if (str)
-							{
-								clear = content;
-								content = ft_strjoin(content, str);
-								free(clear);
-								free(str);
-							}
-							else
-								break ;
-						}
-						close(tmp);
-						redlist_out(node->redirs, content);
-						free(content);
-					}
-				}
-				unlink("__tmp__");
-			}
-			if (status != 0 && node->parent && node->parent->type == NODE_AND)
-				exit(0);
-			else if (status == 0 && node->parent_type == NODE_OR)
-				exit(0);
-			break ;
-		}
-	}
+	return (0);
 }
 
 int    is_builtin(t_ast_node *node)
@@ -96,27 +47,6 @@ int    is_pipe_state(t_ast_node *node)
 	if (node->parent_type == NODE_PIPE)
 		return (1);
 	return (0);
-}
-
-int	here_doc(char *delimit, int stdin)
-{
-	char	*str;
-	int		str_len;
-	int		fd;
-
-	fd = open("__tmp__", O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	str = get_next_line(stdin);
-	str_len = ft_strlen(str);
-	while (ft_strncmp(str, delimit, str_len - 1) != 0)
-	{
-		write(fd, str, ft_strlen(str));
-		free(str);
-		str = get_next_line(stdin);
-		str_len = ft_strlen(str);
-	}
-	free(str);
-	close(fd);
-	return (open("__tmp__", O_RDONLY));
 }
 
 void	populate_node(t_ast_node *node, int side)

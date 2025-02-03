@@ -14,6 +14,33 @@
 
 extern int SIGNAL;
 
+void	waiter(t_node_type type, t_ast_node *node)
+{
+	int		status;
+
+	while (1)
+	{
+		if (waitpid(-1, &status, 0) == -1)
+		{
+			if (access("__tmp__", F_OK) == 0)
+			{
+				if (type == 0 && status == 0 && has_outward_redirection(node->redirs))
+					multiple_output_redirections(node);
+				unlink("__tmp__");
+			}
+			if (access("__HEREDOC__", F_OK) == 0)
+			{
+				unlink("__HEREDOC__");
+			}
+			if (status != 0 && node->parent && node->parent->type == NODE_AND)
+				exit(0);
+			else if (status == 0 && node->parent_type == NODE_OR)
+				exit(0);
+			break ;
+		}
+	}
+}
+
 void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) hold;
@@ -49,12 +76,7 @@ void	executor(t_ast_node *node, char ***env, int hold, int files[3])
 		free(str);
 		i++;
 	}
-	if (node->redirs)
-	{
-		int tmp = open("__tmp__", O_WRONLY | O_CREAT, 0666);
-		if (dup2(tmp, STDOUT_FILENO) == -1)
-			perror("Error redirecting");
-	}
+	detect_file_redirection(node);
 	if (execute(node->args, *env) == -1)
 		cleanup("Error executing command..");
 }

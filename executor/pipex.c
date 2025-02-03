@@ -34,7 +34,7 @@ static	void	child(int fd[2], int files[3], t_ast_node *node, char ***env)
 	}
 	if (is_last_node(node))
 		node->side = 1;
-	redirect(node, fd, files, node->side);
+	pipex_redirect(node, fd, files, node->side);
 	if (node->type == NODE_CMND)
 	{
 		if (execute(node->args, *env) == -1)

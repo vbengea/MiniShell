@@ -144,10 +144,11 @@ static	int	capture_redirection(t_ast_node *ast, char *str)
 	char			*file;
 	t_redirection	*lst;
 
-	if (str[i] != '0' && str[i] != '1' && str[i] != '2')
+	if (str[i] == '0' || str[i] == '1' || str[i] == '2')
+	{
+		prefix = str[i] - '0';
 		i++;
-	else
-		prefix = str[i++] - '0';
+	}
 	if (str[i] == '<')
 	{
 		i++;
@@ -173,8 +174,9 @@ static	int	capture_redirection(t_ast_node *ast, char *str)
 		i++;
 		if (str[i] == '1' || str[i] == '2')
 		{
-			file = ft_strdup("--");
-			suffix = str[i++] - '0';
+			file = ft_strdup(" ");
+			suffix = str[i] - '0';
+			i++;
 		}
 		else
 		{		
@@ -223,13 +225,23 @@ static	char *parse_redirections(t_ast_node *ast, char *str)
 	int		i = 0;
 	int		j = 0;
 	char	*s;
+	char	*p;
 
 	while (str[i])
 	{
 		j = 0;
 		if (str[i] == '<' || str[i] == '>')
 		{
-			j = capture_redirection(ast, (str + i - 1)) - 1;
+			if (i > 0 && (str[i - 1] == '0' || str[i - 1] == '1' || str[i - 1] == '2'))
+			{
+				p = (str + i - 1);
+				j = capture_redirection(ast, p) - 1;
+			}
+			else
+			{
+				p = (str + i);
+				j = capture_redirection(ast, p);
+			}
 			if (j > 0 && (str[i - 1] == '0' || str[i - 1] == '1' || str[i - 1] == '2'))
 				str[i - 1] = ' ';
 			j += i;
@@ -315,7 +327,7 @@ static	t_ast_node	*create_and_list(char *context, char *token, int level)
 			if (ft_strcmp(token, "&&") == 0)
 				child = create_and_list(elements[i], "|", level + 1);
 			else if (ft_strcmp(token, "|") == 0)
-				child = create_and_list(elements[i], "+", level + 1);
+				child = create_and_list(elements[i], "\7", level + 1);
 			if (len == 2)
 				rast = child;
 			else if (ast->right)
