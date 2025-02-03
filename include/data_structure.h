@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/30 19:01:41 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/03 19:24:48 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ typedef struct s_ast_node
 	t_node_type			type;
 	t_node_type			parent_type;
 	t_redirection		*redirs; // Linked list for redirections
-	t_redirect_type		redirect_type; // This will no longer go here
-	char				*file; // This will no longer go here
 	char				**args;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;

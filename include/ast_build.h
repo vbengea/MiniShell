@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/01 13:49:42 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/03 19:25:52 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,16 @@ int			is_redirect_token(t_token_type type);
 
 void		free_ast(t_ast_node *node);
 void		print_ast(t_ast_node *node, int level);
+
+
+
+
+
+
+
+void add_redirection(t_ast_node *node, t_redirect_type type, t_out_redirect_type otype, char *file);
+
+
+
 
 #endif
