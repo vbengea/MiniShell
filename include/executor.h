@@ -29,7 +29,6 @@ void		navigator(t_ast_node *node, char ***env, int hold, int files[3]);
 void		pipex(t_ast_node *node, char ***env, int files[3], int side);
 
 int			is_last_node(t_ast_node *node);
-void		redirecter(t_ast_node *node, char ***env, int hold, int files[3]);
 void		redirect(t_ast_node *node, int fd[2], int files[3], int is_last);
 
 char		*environment(char *name, char **env);
@@ -39,7 +38,7 @@ int			execute(char **comm, char **arvp);
 
 void		populate_node(t_ast_node *node, int side);
 void		cleanup(char *err);
-void		waiter(t_node_type type);
+void		waiter(t_node_type type, t_ast_node *node);
 int			is_builtin(t_ast_node *node);
 int			is_pipe_state(t_ast_node *node);
 int			here_doc(char *delimit, int stdin);

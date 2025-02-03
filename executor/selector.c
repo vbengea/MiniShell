@@ -48,6 +48,12 @@ void	executor(t_ast_node *node, char ***env, int hold, int files[3])
 		free(str);
 		i++;
 	}
+	if (node->redirs)
+	{
+		int tmp = open("__tmp__", O_WRONLY | O_CREAT, 0666);
+		if (dup2(tmp, STDOUT_FILENO) == -1)
+			perror("Error redirecting");
+	}
 	if (execute(node->args, *env) == -1)
 		cleanup("Error executing command..");
 }
@@ -81,11 +87,9 @@ void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***e
 	if (pid == -1)
 		cleanup("Error forking process");
 	if (pid == 0)
-	{
 		f(node, env, 1, files);
-	}
 	else
-		waiter(node->parent_type);
+		waiter(node->parent_type, node);
 }
 
 void	selector(t_ast_node *node, char ***env, int files[3])
@@ -107,7 +111,6 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 	else if (node->type == NODE_PIPE)
 	{
 		pipex(node, env, files, files[2]);
-		waiter(node->type);
 	}
 	else if (node->type == NODE_GROUP)
 		forker(node, env, navigator, files);

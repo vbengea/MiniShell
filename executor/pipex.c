@@ -75,9 +75,15 @@ void	pipex(t_ast_node *node, char ***env, int files[3], int side)
 		else
 		{
 			if (side == 1)
+			{
 				parent(fd, files, node->right, env);
+				waiter(node->right->type, node->right);
+			}
 			else
+			{
 				parent(fd, files, node, env);
+				waiter(node->left->type, node->left);
+			}
 		}
 	}
 	else

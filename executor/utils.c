@@ -18,7 +18,20 @@ void	cleanup(char *err)
 	exit(1);
 }
 
-void	waiter(t_node_type type)
+static	void	redlist_out(t_redirection *lst, char *content)
+{
+	while (lst)
+	{
+		int tmp = open(lst->file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		write(tmp, content, ft_strlen(content));
+		close(tmp);
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
+	}
+}
+
+void	waiter(t_node_type type, t_ast_node *node)
 {
 	int		status;
 
@@ -27,7 +40,35 @@ void	waiter(t_node_type type)
 		if (waitpid(-1, &status, 0) == -1)
 		{
 			if (access("__tmp__", F_OK) == 0)
+			{
+				if (type == 0 && status == 0 && node->redirs)
+				{
+					char *str = NULL;
+					char *content = ft_strdup(" ");
+					if (content)
+					{
+						char *clear = NULL;
+						int tmp = open("__tmp__", O_RDONLY);
+						while (1)
+						{
+							str = get_next_line(tmp);
+							if (str)
+							{
+								clear = content;
+								content = ft_strjoin(content, str);
+								free(clear);
+								free(str);
+							}
+							else
+								break ;
+						}
+						close(tmp);
+						redlist_out(node->redirs, content);
+						free(content);
+					}
+				}
 				unlink("__tmp__");
+			}
 			if (status != 0 && type == NODE_AND)
 				exit(0);
 			else if (status == 0 && type == NODE_OR)

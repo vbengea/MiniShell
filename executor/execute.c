@@ -69,16 +69,7 @@ char	*find_path(char *cmd, char *env)
 
 int	doexec(char *path, char **comm, char **env, int is_free)
 {
-	if (ft_strchr(comm[0], '='))
-	{
-		char *argv[] = {"env", NULL};
-		if (execve("/usr/bin/env", argv, comm) == -1) {
-			if (is_free)
-				free(path);
-			clear_arr_of_strs(comm);
-		}
-	}
-	else if ((path && access(path, F_OK | X_OK) == 0))
+	if ((path && access(path, F_OK | X_OK) == 0))
 	{
 		if (execve(path, comm, env) == -1)
 		{
