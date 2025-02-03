@@ -14,8 +14,6 @@
 
 * Problems:
 
-	- I don't understand very well when the subject says that we should not include heredoc in the history.
-
 	- Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
 
 	- Actual tokenizer doesn't support multiple redirections.
@@ -31,6 +29,8 @@
 
 
 * Inconsistency issues:
+
+	- Probably, when multiple redirections are present in bash, it only takes the last one.
 
 	- El comando "cat main.c" muestra el archivo pero da error tambien como si tratara de ejecutar "cat" sin argumento. Este bug es inconsistente pues al probar en Ubuntu no hay errores.
 

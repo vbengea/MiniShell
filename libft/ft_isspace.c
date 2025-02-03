@@ -18,3 +18,10 @@ bool	ft_isspace(char c)
 		return (true);
 	return (false);
 }
+
+bool	ft_isquote(char c)
+{
+	if (c == 34 || c == 39)
+		return (true);
+	return (false);
+}

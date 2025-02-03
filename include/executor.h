@@ -43,7 +43,7 @@ void		waiter(t_node_type type);
 int			is_builtin(t_ast_node *node);
 int			is_pipe_state(t_ast_node *node);
 int			here_doc(char *delimit, int stdin);
-t_ast_node	*build_redirect_ast(void);
+t_ast_node	*build_redirect_ast(char *context);
 char		**args_helper(char *arg1, char *arg2);
 
 #endif

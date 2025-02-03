@@ -59,7 +59,7 @@ char **copy_arr_of_strs(char **p, int len)
 	if (arr)
 	{
 		i = 0;
-		while (p[i])
+		while (p && p[i])
 		{
 			arr[i] = ft_strdup(p[i]);
 			if (!arr[i])

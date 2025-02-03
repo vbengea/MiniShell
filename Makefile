@@ -1,9 +1,9 @@
 NAME			:=	minishell
 
 CC				:= 	cc
-CFLAGS			:= 	-Wall -Wextra -Werror 
+CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
 SFLAGS			:= 	-g3 -fsanitize=address
-LDFLAGS 		:=	-lreadline 
+LDFLAGS 		:=	-lreadline -L/opt/homebrew/opt/readline/lib
 
 LIBFT_DIR		:= 	./libft
 LIBFT			:= 	$(LIBFT_DIR)/libft.a

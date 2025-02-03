@@ -33,17 +33,21 @@ int main(int argc, char **argv, char **env)
 			continue ;
 		add_history(input);
 		token = tokenize_input(input);
+		print_ast(ast, 0);
 		ast = build_ast(token);
-		int files[3];
-		files[0] = STDIN_FILENO;
-		files[1] = STDOUT_FILENO;
-		files[2] = 0;
-		SIGNAL = 1;
-		selector(ast, &env, files);
-		SIGNAL = -1;
-		free(input);
+		if (ast)
+		{
+			int files[3];
+			files[0] = STDIN_FILENO;
+			files[1] = STDOUT_FILENO;
+			files[2] = 0;
+			SIGNAL = 1;
+			selector(ast, &env, files);
+			SIGNAL = -1;
+			free(input);
+			// free_ast(ast);
+		}
 		//free_token(token);
-		//free_ast(ast);
 	}
 	clear_arr_of_strs(env);
 	rl_clear_history();
