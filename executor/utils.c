@@ -69,9 +69,9 @@ void	waiter(t_node_type type, t_ast_node *node)
 				}
 				unlink("__tmp__");
 			}
-			if (status != 0 && type == NODE_AND)
+			if (status != 0 && node->parent && node->parent->type == NODE_AND)
 				exit(0);
-			else if (status == 0 && type == NODE_OR)
+			else if (status == 0 && node->parent_type == NODE_OR)
 				exit(0);
 			break ;
 		}

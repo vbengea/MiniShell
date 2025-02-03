@@ -29,7 +29,8 @@ void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 		node->right->side = 1;
 		selector(node->right, env, files);
 	}
-	if (node->type == NODE_GROUP)
+	
+	if (node->type == NODE_GROUP || node->type == NODE_AND || node->type == NODE_OR)
 		exit(0);
 }
 
@@ -107,7 +108,7 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 			forker(node, env, executor, files);
 	}
 	else if (node->type == NODE_AND || node->type == NODE_OR)
-		navigator(node, env, 1, files);
+		forker(node, env, navigator, files);
 	else if (node->type == NODE_PIPE)
 	{
 		pipex(node, env, files, files[2]);

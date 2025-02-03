@@ -49,3 +49,35 @@ void	redirect(t_ast_node *node, int fd[2], int files[3], int is_last)
 	close(fd[0]);
 	close(fd[1]);
 }
+
+void	redirecter(t_ast_node *node, char ***env, int hold, int files[3])
+{
+	(void) hold;
+	int	f = 0;
+	if (node->redirect_type == REDIRECT_OUT)
+	{
+		f = open(node->file, O_RDONLY | O_CREAT | O_TRUNC, 0777);
+		if (dup2(f, STDOUT_FILENO) == -1)
+			perror("Error redirecting");
+	}
+	else if (node->redirect_type == REDIRECT_IN)
+	{
+		f = open(node->file, O_RDONLY);
+		if (dup2(f, STDIN_FILENO) == -1)
+			perror("Error redirecting");
+	}
+	else if (node->redirect_type == REDIRECT_APPEND)
+	{
+		f = open(node->file, O_RDONLY | O_CREAT | O_APPEND, 0666);
+		if (dup2(f, STDOUT_FILENO) == -1)
+			perror("Error redirecting");
+	}
+	else if (node->redirect_type == REDIRECT_HEREDOC)
+	{
+		f = here_doc(node->file, STDIN_FILENO);
+		if (dup2(f, STDIN_FILENO) == -1)
+			perror("Error redirecting");
+	}
+	if (!node->parent || node->parent->type != NODE_PIPE)
+		navigator(node, env, 1, files);
+}
