@@ -12,15 +12,6 @@
 
 #include "../include/headers.h"
 
-char **	args_helper(char *arg1, char *arg2)
-{
-	char **arr = malloc(sizeof(char *) * 3);
-	arr[0] = ft_strdup(arg1);
-	arr[1] = ft_strdup(arg2);
-	arr[2] = NULL;
-	return (arr);
-}
-
 static	void	add_segment(char ***elements, char *context, int k, int i)
 {
 	char *str;
@@ -262,14 +253,13 @@ static	t_ast_node	*create_node_command(char *str)
 	char		*args;
 	int			len;
 
-	ast = create_ast_node(NODE_CMND, args_helper(" ", " "));
+	ast = create_ast_node(NODE_CMND, NULL);
 	str = parse_redirections(ast, str);
 	elements = ft_split(str, ' ');
 	cmd = elements[0];
 	len = ft_strlen(cmd);
 	args = ft_strtrim((str + len), " ");
-	ast->args = args_helper(cmd, args);
-	clear_arr_of_strs(elements);
+	ast->args = elements;
 	free(args);
 	return (ast);
 }

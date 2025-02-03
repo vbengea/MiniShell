@@ -63,19 +63,19 @@ void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 
 void	executor(t_ast_node *node, char ***env, int hold, int files[3])
 {	
-	int		i;
-	char	*str;
+	// int		i;
+	// char	*str;
 
 	(void) hold;
 	(void) files;
-	i = 1;
-	while (node->args[i])
-	{
-		str = node->args[i];
-		node->args[i] = interpolation(str, *env);
-		free(str);
-		i++;
-	}
+	// i = 1;
+	// while (node->args[i])
+	// {
+	// 	str = node->args[i];
+	// 	node->args[i] = interpolation(str, *env);
+	// 	free(str);
+	// 	i++;
+	// }
 	detect_file_redirection(node);
 	if (execute(node->args, *env) == -1)
 		cleanup("Error executing command..");
