@@ -34,8 +34,10 @@ char		*find_path(char *cmd, char *env);
 int			doexec(char *path, char **comm, char **arvp, int is_free);
 int			execute(char **comm, char **arvp);
 
-void		detect_file_redirection(t_ast_node *node);
+void		detect_in_redirection(t_ast_node *node);
+void		detect_out_redirection(t_ast_node *node);
 int			has_outward_redirection(t_redirection *lst);
+int			has_inward_redirection(t_redirection *lst);
 void		multiple_output_redirections(t_ast_node *node);
 void		here_doc(char *delimit);
 void		pipex_redirect(t_ast_node *node, int fd[2], int files[3], int is_last);

@@ -36,6 +36,19 @@ int		has_outward_redirection(t_redirection *lst)
 	return (0);
 }
 
+int		has_inward_redirection(t_redirection *lst)
+{
+	while (lst)
+	{
+		if (lst->type == REDIRECT_IN || lst->type == REDIRECT_HEREDOC)
+			return (1);
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
+	}
+	return (0);
+}
+
 static	char	*read_files_content(char **files)
 {
 	int		i;
@@ -69,7 +82,7 @@ static	char	*read_files_content(char **files)
 	return (content);
 }
 
-void	detect_file_redirection(t_ast_node *node)
+void	detect_out_redirection(t_ast_node *node)
 {
 	if (has_outward_redirection(node->redirs))
 	{
@@ -77,7 +90,11 @@ void	detect_file_redirection(t_ast_node *node)
 		if (dup2(tmp, STDOUT_FILENO) == -1)
 			perror("Error redirecting");
 	}
-	else if (node->redirs)
+}
+
+void	detect_in_redirection(t_ast_node *node)
+{
+	if (has_inward_redirection(node->redirs))
 	{
 		t_redirection *lst = node->redirs;
 		char **arr = malloc(sizeof(char *) * 1);
@@ -106,6 +123,36 @@ void	detect_file_redirection(t_ast_node *node)
 				perror("Error INFILE redirecting");
 		}
 	}
+}
+
+void	pipex_redirect(t_ast_node *node, int fd[2], int files[3], int is_last)
+{
+	if (files[0] == -1)
+	{
+		perror("Error reading file");
+		exit(1);
+	}
+
+	if (has_inward_redirection(node->redirs))
+		detect_in_redirection(node);
+	else
+	{
+		if (dup2(files[0], STDIN_FILENO) == -1)
+			perror("Error redirecting");
+	}
+
+	if (has_outward_redirection(node->redirs))
+		detect_out_redirection(node);
+	else if (is_last)
+	{
+		if (dup2(files[1], STDOUT_FILENO) == -1)
+			perror("Error redirecting");
+	}
+	else if (dup2(fd[1], STDOUT_FILENO) == -1)
+		perror("Error redirectingT");
+
+	close(fd[0]);
+	close(fd[1]);
 }
 
 static	void	redlist_out(t_redirection *lst, char *content)
@@ -161,33 +208,6 @@ void	here_doc(char *delimit)
 	}
 	free(str);
 	close(fd);
-}
-
-void	pipex_redirect(t_ast_node *node, int fd[2], int files[3], int is_last)
-{
-	(void) node;
-	if (files[0] == -1)
-	{
-		perror("Error reading file");
-		exit(1);
-	}
-	if (node->redirs)
-	{
-		int tmp = open("__tmp__", O_WRONLY | O_CREAT, 0666);
-		if (dup2(tmp, STDOUT_FILENO) == -1)
-			perror("Error redirecting");
-	}
-	else if (is_last)
-	{
-		if (dup2(files[1], STDOUT_FILENO) == -1)
-			perror("Error redirecting");
-	}
-	else if (dup2(fd[1], STDOUT_FILENO) == -1)
-		perror("Error redirectingT");
-	if (dup2(files[0], STDIN_FILENO) == -1)
-		perror("Error redirecting");
-	close(fd[0]);
-	close(fd[1]);
 }
 
 void	redirecter(t_ast_node *node, char ***env, int hold, int files[3])
