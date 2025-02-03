@@ -6,7 +6,7 @@
 #    By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:11:00 by vbengea           #+#    #+#              #
-#    Updated: 2025/02/02 12:58:01 by vbengea          ###   ########.fr        #
+#    Updated: 2025/02/03 19:18:53 by vbengea          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
 # SRC_DIR = src
 
-SRC_FILES = ast_build/*.c \
+SRC_FILES = AST/*.c \
 			tokenizer/*.c \
 			main.c
 
