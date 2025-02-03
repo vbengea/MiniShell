@@ -29,6 +29,8 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/tokenizer/handle_double_operators.c \
 					$(PARSER_DIR)/tokenizer/handle_single_operator.c \
 					$(PARSER_DIR)/tokenizer/count_consecutive_operators.c \
+					$(PARSER_DIR)/tokenizer/create_fd_redirection_token.c \
+					$(PARSER_DIR)/tokenizer/create_invalid_operator_token.c \
 					$(PARSER_DIR)/tokenizer/skip_whitespace.c \
 					$(PARSER_DIR)/tokenizer/is_operator.c \
 					$(PARSER_DIR)/tokenizer/is_quote.c \
