@@ -345,7 +345,7 @@ static	void	print_redirs(void *content)
 	char *str;
 
 	str = (char *) content;
-	printf("%s, ", str);
+	printf("(%s) ", str);
 }
 
 static	void	ast_printer(t_ast_node *ast, int level)
@@ -356,7 +356,11 @@ static	void	ast_printer(t_ast_node *ast, int level)
 		printf("  ");
 	if (ast->type == NODE_CMND)
 	{
-		printf("Type: %d, args: %s, %s	R: ", ast->type, ast->args[0], ast->args[1]);
+		printf("TYPE: %d\t\tARGS: ", ast->type);
+		i = 0;
+		while (ast->args[i])
+			printf("%s ", ast->args[i++]);
+		printf("\tREDIRS: ");
 		redlist_iter(ast->redirs, print_redirs);
 		printf("\n");
 	}

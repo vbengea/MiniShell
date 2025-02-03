@@ -1,8 +1,6 @@
 
 * To implement:
 
-	- Redirecciones.
-
 	- Gestionar secuencia entrecomillada.
 
 	- Los wildcards * deben funcionar para el directorio actual.
