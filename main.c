@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/29 09:20:33 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/04 14:09:03 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
+	(void) token;
 	set_tty();
 	env = copy_arr_of_strs(env, 0);
 	while (true)
@@ -32,11 +33,12 @@ int main(int argc, char **argv, char **env)
 		else if (input[0] == '\0')
 			continue ;
 		add_history(input);
-		token = tokenize_input(input);
-		print_ast(ast, 0);
-		ast = build_ast(token);
+		// token = tokenize_input(input);
+		// ast = build_ast(token);
+		ast = build_redirect_ast(input);
 		if (ast)
 		{
+			//print_ast(ast, 0);
 			int files[3];
 			files[0] = STDIN_FILENO;
 			files[1] = STDOUT_FILENO;

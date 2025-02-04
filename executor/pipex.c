@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   selector.c                                         :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/25 16:31:33 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:31:39 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static	void	child(int fd[2], int files[3], t_ast_node *node, char ***env)
 	}
 	if (is_last_node(node))
 		node->side = 1;
-	redirect(node, fd, files, node->side);
+	pipex_redirect(node, fd, files, node->side);
 	if (node->type == NODE_CMND)
 	{
 		if (execute(node->args, *env) == -1)
-			cleanup("Error executing command..");
+			cleanup("Error executing command");
 	}
 	else
 	{
@@ -75,9 +75,15 @@ void	pipex(t_ast_node *node, char ***env, int files[3], int side)
 		else
 		{
 			if (side == 1)
+			{
 				parent(fd, files, node->right, env);
+				waiter(node->right->type, node->right, env, files);
+			}
 			else
+			{
 				parent(fd, files, node, env);
+				waiter(node->left->type, node->left, env, files);
+			}
 		}
 	}
 	else

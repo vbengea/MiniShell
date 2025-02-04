@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 09:26:48 by juaflore          #+#    #+#             */
-/*   Updated: 2024/09/28 14:47:38 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:34:32 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ char **copy_arr_of_strs(char **p, int len)
 			i++;
 		}
 		while (i < len)
-			arr[i++] = NULL;
+			arr[i++] = ft_strdup(" ");
+		arr[len] = NULL;
 	}
 	return (arr);
 }
@@ -84,8 +85,9 @@ char **add_arr_of_strs(char **p, char *str)
 	while (p[len])
 		len++;
 	arr = copy_arr_of_strs(p, len + 1);
-	if (arr)
-		arr[len] = ft_strdup(str);
+	str = ft_strdup(str);
+	if (str && arr && arr[len])
+		arr[len] = str;
 	return (arr);
 }
 
