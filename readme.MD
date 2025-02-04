@@ -1,7 +1,17 @@
 
 * To implement:
 
-	- Gestionar secuencia entrecomillada.
+	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
+
+	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
+
+	- false || echo 2
+		make: *** [Makefile:105: runner] Segmentation fault (core dumped)
+
+	- echo no imprime bien:
+		echo "ec$PWD ho"
+
+	- echo no debe expandir variables en comillas simples.
 
 	- Los wildcards * deben funcionar para el directorio actual.
 
@@ -31,10 +41,7 @@
 	- El comando "cat -e | ls -l && (cd / && ls -l)" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
 
-* Solved issues:
-
-	- El comando "cat main.c" muestra el archivo pero da error tambien como si tratara de ejecutar "cat" sin argumento. Este bug es inconsistente pues al probar en Ubuntu no hay errores.
-
+env[i],
 	- Redirections are breaking long pipelines:
 
 		< t1 cat -e | cat -e | cat -e					[OK]

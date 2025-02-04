@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/25 16:49:17 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:22:18 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	set_tty(void)
 	setenv("PATH", path, 1);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
-	t.c_lflag &= ~ECHOCTL;
-	tcsetattr(0, 0, &t);
+	// t.c_lflag &= ~ECHOCTL;
+	// tcsetattr(0, 0, &t);
 	intercepting_signals();
 }

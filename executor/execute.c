@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/25 16:37:00 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:33:56 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*find_path(char *cmd, char *env)
 
 int	doexec(char *path, char **comm, char **env, int is_free)
 {
-	if ((path && access(path, F_OK | X_OK) == 0))
+	if ((path && access(path, X_OK) == 0))
 	{
 		if (execve(path, comm, env) == -1)
 		{
@@ -95,7 +95,7 @@ int	execute(char **comm, char **arvp)
 	if (comm)
 	{
 		if (ft_strchr(comm[0], '/') != NULL)
-			path = comm[0];
+			path = ft_strdup(comm[0]);
 		else
 		{
 			env = environment("PATH", arvp);
