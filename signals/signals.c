@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/04 11:22:18 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:35:05 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	set_tty(void)
 	struct termios t;
 	char		*path;
 
-	path = getenv("PATH");
-	path = ft_strjoin(path, ":.");
+	path = ft_strjoin(getenv("PATH"), ":.");
 	setenv("PATH", path, 1);
+	free(path);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
 	// t.c_lflag &= ~ECHOCTL;

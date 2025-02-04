@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   selector.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 14:06:40 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:34:02 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 			{
 				unlink("__HEREDOC__");
 			}
-			if (status != 0 && node->parent && node->parent->type == NODE_AND)
+			if (status != 0 && node->parent_type == NODE_AND)
 				exit(status);
 			else if (status == 0 && node->parent_type == NODE_OR)
 				exit(0);
@@ -51,12 +51,14 @@ void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 	{
 		node->left->parent = node;
 		node->left->side = 0;
+		node->left->parent_type = node->type;
 		selector(node->left, env, files);
 	}
 	if (node->right)
 	{
 		node->right->parent = node;
 		node->right->side = 1;
+		node->right->parent_type = node->type;
 		selector(node->right, env, files);
 	}
 	
