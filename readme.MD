@@ -1,6 +1,10 @@
 
 * To implement:
 
+	- Gestionar $?, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
+	
+	- Mini parser || no soportado
+	
 	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
 
 	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
@@ -14,8 +18,6 @@
 	- echo no debe expandir variables en comillas simples.
 
 	- Los wildcards * deben funcionar para el directorio actual.
-
-	- Gestionar $?, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
 
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 

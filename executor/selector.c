@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/25 16:31:33 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:36:07 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int SIGNAL;
 
-void	waiter(t_node_type type, t_ast_node *node)
+void	waiter(t_node_type type, t_ast_node *node, char ***env)
 {
 	int		status;
 
@@ -22,6 +22,8 @@ void	waiter(t_node_type type, t_ast_node *node)
 	{
 		if (waitpid(-1, &status, 0) == -1)
 		{
+			char *value = ft_itoa(status);
+			set_env("?", value, *env);
 			if (type == 0 && status == 0 && has_outward_redirection(node->redirs))
 				multiple_output_redirections(node);
 			if (access("__INFILE__", F_OK) == 0)
@@ -33,7 +35,7 @@ void	waiter(t_node_type type, t_ast_node *node)
 				unlink("__HEREDOC__");
 			}
 			if (status != 0 && node->parent && node->parent->type == NODE_AND)
-				exit(0);
+				exit(status);
 			else if (status == 0 && node->parent_type == NODE_OR)
 				exit(0);
 			break ;
@@ -113,7 +115,7 @@ void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***e
 	if (pid == 0)
 		f(node, env, 1, files);
 	else
-		waiter(node->parent_type, node);
+		waiter(node->parent_type, node, env);
 }
 
 void	selector(t_ast_node *node, char ***env, int files[3])

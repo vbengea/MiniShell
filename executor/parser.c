@@ -271,8 +271,6 @@ static	t_ast_node	*get_node_by_token(char *token)
 	ast = NULL;
 	if (ft_strcmp(token, "&&") == 0)
 		ast = create_ast_node(NODE_AND, NULL);
-	else if (ft_strcmp(token, "||") == 0)
-		ast = create_ast_node(NODE_AND, NULL);
 	else if (ft_strcmp(token, "|") == 0)
 		ast = create_ast_node(NODE_PIPE, NULL);
 	else if (ft_strcmp(token, "(") == 0)
@@ -297,7 +295,7 @@ static	t_ast_node	*create_and_list(char *context, char *token, int level)
 	while (elements[len])
 		len++;
 	i = 1;
-	if (ft_strcmp(token, "&&") != 0 && ft_strcmp(token, "||") != 0 && ft_strcmp(token, "|") != 0)
+	if (ft_strcmp(token, "&&") != 0 && ft_strcmp(token, "|") != 0)
 	{
 		if(elements[i][0] == '(')
 		{
@@ -316,7 +314,7 @@ static	t_ast_node	*create_and_list(char *context, char *token, int level)
 		i = len - 1;
 		while (i > 0)
 		{
-			if (ft_strcmp(token, "&&") == 0 || ft_strcmp(token, "||") == 0)
+			if (ft_strcmp(token, "&&") == 0)
 				child = create_and_list(elements[i], "|", level + 1);
 			else if (ft_strcmp(token, "|") == 0)
 				child = create_and_list(elements[i], "\7", level + 1);
