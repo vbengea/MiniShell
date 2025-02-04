@@ -1,10 +1,6 @@
 
 * To implement:
 
-	- Mini parser || no soportado
-		false || echo 2
-		make: *** [Makefile:105: runner] Segmentation fault (core dumped)
-
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 
 		+ echo no imprime bien:
@@ -44,6 +40,10 @@
 
 
 Solved issues
+
+	- Mini parser || no soportado
+		false || echo 2
+		make: *** [Makefile:105: runner] Segmentation fault (core dumped)
 
 	- Redirections are breaking long pipelines:
 
