@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 21:51:16 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:53:06 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 		*env = unset_bi(node->args[1], *env);
 	else if (ft_strncmp(node->args[0], "echo", 4) == 0)
 		echo_bi(node->args, *env);
-	if (hold || node->parent_type == NODE_OR)
+	if (hold || (node->parent_type == NODE_OR))
 		exit(0);
 }
 
