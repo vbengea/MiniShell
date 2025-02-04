@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 12:36:07 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:06:40 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int SIGNAL;
 
-void	waiter(t_node_type type, t_ast_node *node, char ***env)
+void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 {
 	int		status;
 
@@ -22,6 +22,7 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env)
 	{
 		if (waitpid(-1, &status, 0) == -1)
 		{
+			(void)files;
 			char *value = ft_itoa(status);
 			set_env("?", value, *env);
 			if (type == 0 && status == 0 && has_outward_redirection(node->redirs))
@@ -115,7 +116,7 @@ void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***e
 	if (pid == 0)
 		f(node, env, 1, files);
 	else
-		waiter(node->parent_type, node, env);
+		waiter(node->parent_type, node, env, files);
 }
 
 void	selector(t_ast_node *node, char ***env, int files[3])

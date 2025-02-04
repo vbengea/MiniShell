@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 12:30:15 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:31:39 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ void	pipex(t_ast_node *node, char ***env, int files[3], int side)
 			if (side == 1)
 			{
 				parent(fd, files, node->right, env);
-				waiter(node->right->type, node->right, env);
+				waiter(node->right->type, node->right, env, files);
 			}
 			else
 			{
 				parent(fd, files, node, env);
-				waiter(node->left->type, node->left, env);
+				waiter(node->left->type, node->left, env, files);
 			}
 		}
 	}

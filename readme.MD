@@ -1,30 +1,30 @@
 
 * To implement:
 
-	- Gestionar $?, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
-	
 	- Mini parser || no soportado
-	
-	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
-
-	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
-
-	- false || echo 2
+		false || echo 2
 		make: *** [Makefile:105: runner] Segmentation fault (core dumped)
-
-	- echo no imprime bien:
-		echo "ec$PWD ho"
-
-	- echo no debe expandir variables en comillas simples.
-
-	- Los wildcards * deben funcionar para el directorio actual.
 
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 
+		+ echo no imprime bien:
+			echo "ec$PWD ho"
+		+ echo no debe expandir variables en comillas simples.
+
+	- Gestionar $?, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
+
+	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
+
+	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
+
+		+ Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
+
+	- Los wildcards * deben funcionar para el directorio actual.
+
+	- Crear una super estructura para disminuir cantidad de parametros.
+
 
 * Problems:
-
-	- Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
 
 	- Actual tokenizer doesn't support multiple redirections.
 
@@ -40,10 +40,11 @@
 
 * Inconsistency issues:
 
-	- El comando "cat -e | ls -l && (cd / && ls -l)" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
+	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
 
 
-env[i],
+Solved issues
+
 	- Redirections are breaking long pipelines:
 
 		< t1 cat -e | cat -e | cat -e					[OK]

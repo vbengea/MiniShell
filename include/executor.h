@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 12:30:39 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:29:32 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "../libft/libft.h"
 # include "./data_structure.h"
 
-void		waiter(t_node_type type, t_ast_node *node, char ***env);
+void		waiter(t_node_type type, t_ast_node *node, char ***env, int files[3]);
 void		selector(t_ast_node *node, char ***env, int file[3]);
 void		forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3]), int files[3]);
 void		navigator(t_ast_node *node, char ***env, int hold, int files[3]);
