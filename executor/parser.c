@@ -16,19 +16,25 @@ static	t_ast_node	*get_execution_node(char *context, t_mini_token level)
 {
 	t_ast_node	*ast;
 	char		*str;
+	int			i;
 
 	ast = NULL;
 	if (level == AND)
 		ast = create_structure(context, PIPE);
-	if(context[0] == '(')
-	{
-		str = ft_substr(context, 1, ff_subcontext(context) - 2);
-		ast = get_node_by_token(SUBSHELL);
-		ast->left = create_structure(str, AND);
-		free(str);
-	}
 	else
-		ast = create_node_command(context);
+	{
+		i = 0;
+		
+		if(context[0] == '(')
+		{
+			str = ft_substr(context, 1, ff_subcontext(context) - 2);
+			ast = get_node_by_token(SUBSHELL);
+			ast->left = create_structure(str, AND);
+			free(str);
+		}
+		else
+			ast = create_node_command(context);
+	}
 	return (ast);
 }
 
