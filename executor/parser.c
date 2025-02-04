@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/04 21:35:16 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/04 22:03:09 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ static	t_ast_node	*get_execution_node(char *context, t_mini_token level)
 {
 	t_ast_node	*ast;
 	char		*str;
+	int			i;
 
 	ast = NULL;
+	i = 0;
 	if (level == AND)
 		ast = create_structure(context, PIPE);
 	else
 	{
+		while (ft_isspace(context[i]))
+			i++;
+		context = (context + i);
 		if (context[0] == '(')
 		{
 			str = ft_substr(context, 1, ff_subcontext(context) - 2);
