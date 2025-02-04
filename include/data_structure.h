@@ -54,9 +54,18 @@ typedef enum mini_token
 	AND,
 	OR,
 	PIPE,
-	AND_OR,
+	SUBSHELL,
+	COMMAND,
 	OTHER
 }	t_mini_token;
+
+typedef struct s_redirect_params
+{
+	int		ri;
+	int		ro;
+	int		prefix;
+	int		suffix;
+}	t_redirect_params;
 
 /* Update structure.
 	The proposed updates are commented untill they are implemented */

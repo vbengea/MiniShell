@@ -50,10 +50,19 @@ int				is_pipe_state(t_ast_node *node);
 
 t_ast_node		*build_redirect_ast(char *context);
 
+char 			*translate_token(t_mini_token token);
 t_redirection	*redlist_new(void *content);
 void			redlist_add(t_redirection **lst, t_redirection *new);
 void			redlist_iter(t_redirection *lst, void (*f)(void *));
 void			print_redirs(void *content);
 void			ast_printer(t_ast_node *ast, int level);
+
+char			*parse_redirections(t_ast_node *ast, char *str);
+int				ff_subcontext(char *context);
+t_ast_node		*get_node_by_token(t_mini_token token);
+t_ast_node		*create_node_command(char *str);
+t_ast_node		*create_structure(char *context, t_mini_token token);
+int				is_node(char *context, char *term);
+int				is_control_character(char *context);
 
 #endif

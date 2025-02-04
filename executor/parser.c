@@ -12,306 +12,81 @@
 
 #include "../include/headers.h"
 
-static	void	add_segment(char ***elements, char *context, int k, int i)
+static	t_ast_node	*get_execution_node(char *context, t_mini_token level)
 {
-	char *str;
+	t_ast_node	*ast;
+	char		*str;
 
-	while (ft_isspace(context[k]))
-		k++;
-	str = ft_substr(context, k, i - k);
-	*elements = add_arr_of_strs(*elements, str);
-	free(str);
+	ast = NULL;
+	if (level == AND)
+		ast = create_structure(context, PIPE);
+	if(context[0] == '(')
+	{
+		str = ft_substr(context, 1, ff_subcontext(context) - 2);
+		ast = get_node_by_token(SUBSHELL);
+		ast->left = create_structure(str, AND);
+		free(str);
+	}
+	else
+		ast = create_node_command(context);
+	return (ast);
 }
 
-static	int	ff_subcontext(char *context)
+t_ast_node	*create_structure(char *context, t_mini_token level)
 {
+	t_ast_node	*ast;
+	t_ast_node	*nod;
 	int i = 0;
-	int p = 0;
-
-	i = 0;
-	if (context[i] == '(')
-	{
-		while (context[i])
-		{
-			if (context[i] == '(')
-				p++;
-			else if (context[i] == ')')
-				p--;
-			if (p == 0)
-				break ;
-			i++;
-		}
-	}
-	else if (context[i] == 34)
-	{
-		i++;
-		while (context[i] != 34)
-			i++;
-	}
-	else if (context[i] == 39)
-	{
-		i++;
-		while (context[i] != 39)
-			i++;
-	}
-	return (i + 1);
-}
-
-static	char **parse_elements(char *context, char *token)
-{
-	char **elements;
-	int	token_len = ft_strlen(token);
-	int i = 0;
-	int j = 0;
 	int k = 0;
 
-	elements = malloc(sizeof(char *) * 2);
-	elements[0] = ft_strdup(" ");
-	elements[1] = NULL;
-	(void) j;
-	if (elements)
+	ast = NULL;
+	while (context[i])
 	{
-		while (context[i])
+		if (ft_isquote(context[i]) || context[i] == '(')
+			i += ff_subcontext((context + i));
+		else if (is_control_character((context + i)))
 		{
-			if (ft_isquote(context[i]) || context[i] == '(')
-				i += ff_subcontext((context + i));
-			else if (ft_strncmp((context + i), token, token_len) == 0)
+			if (is_node((context + i), "&&"))
+				nod = get_node_by_token(AND);
+			else if (is_node((context + i), "||"))
+				nod = get_node_by_token(OR);
+			else
+				nod = get_node_by_token(PIPE);
+			if (ast == NULL)
 			{
-				add_segment(&elements, context, k, i);
-				j++;
-				i += token_len;
-				k = i;
-				continue ;
+				ast = nod;
+				ast->left = get_execution_node(ft_substr(context, k, i - k), level);
+				nod->left->side = 0;
 			}
 			else
-				i++;
-		}
-		add_segment(&elements, context, k, i);
-	}
-	return (elements);
-}
-
-static	int	capture_redirection(t_ast_node *ast, char *str)
-{
-	int				i = 0;
-	int				j = 0;
-	int				ri = 0;
-	int				ro = 0;
-	int				prefix = -1;
-	int				suffix = -1;
-	char			*file;
-	t_redirection	*lst;
-
-	if (str[i] == '0' || str[i] == '1' || str[i] == '2')
-	{
-		prefix = str[i] - '0';
-		i++;
-	}
-	if (str[i] == '<')
-	{
-		i++;
-		ri++;
-	}
-	else if (str[i] == '>')
-	{
-		i++;
-		ro++;
-	}
-	if (str[i] == '<')
-	{
-		i++;
-		ri++;
-	}
-	else if (str[i] == '>')
-	{
-		i++;
-		ro++;
-	}
-	if (str[i] == '&')
-	{
-		i++;
-		if (str[i] == '1' || str[i] == '2')
-		{
-			file = ft_strdup(" ");
-			suffix = str[i] - '0';
-			i++;
+			{
+				nod->left = ast;
+				nod->left->side = 0;
+				ast->right = get_execution_node(ft_substr(context, k, i - k), level);
+				ast->right->side = 1;
+				ast = nod;
+			}
+			i += 2;
+			k = i;
 		}
 		else
-		{		
-			perror("minishell: syntax error near unexpected token `&'");
-			return (0);
-		}
-	}
-	else
-	{
-		while (str[i] && ft_isspace(str[i]))
 			i++;
-		j = i;
-		while (str[j] && !ft_isspace(str[j]))
-			j++;
-		if ((j - i) == 0)
-			return (0);
-		file = ft_substr(str, i, j - i);
-		if (!file)
-			return (0);
-		i = j;
 	}
-	lst = redlist_new((void *)file);
-	redlist_add(&(ast->redirs), lst);
-	lst->type = REDIRECT_NONE;
-	if (ri == 1)
-		lst->type = REDIRECT_IN;
-	else if (ri == 2)
-		lst->type = REDIRECT_HEREDOC;
-	else if (ro == 1)
-		lst->type = REDIRECT_OUT;
-	else if (ro == 2)
-		lst->type = REDIRECT_APPEND;
-	if (prefix == 1 && suffix == -1)
-		lst->otype = STDOUT_FILE;
-	else if (prefix == 2 && suffix == -1)
-		lst->otype = STDERR_FILE;
-	else if (prefix == 1 && suffix == 2)
-		lst->otype = STDOUT_STDERR;
-	else if (prefix == 2 && suffix == 1)
-		lst->otype = STDERR_STDOUT;
-	return (i);
-}
-
-static	char *parse_redirections(t_ast_node *ast, char *str)
-{
-	int		i = 0;
-	int		j = 0;
-	char	*s;
-	char	*p;
-
-	while (str[i])
-	{
-		j = 0;
-		if (str[i] == '<' || str[i] == '>')
-		{
-			if (i > 0 && (str[i - 1] == '0' || str[i - 1] == '1' || str[i - 1] == '2'))
-			{
-				p = (str + i - 1);
-				j = capture_redirection(ast, p) - 1;
-			}
-			else
-			{
-				p = (str + i);
-				j = capture_redirection(ast, p);
-			}
-			if (j > 0 && (str[i - 1] == '0' || str[i - 1] == '1' || str[i - 1] == '2'))
-				str[i - 1] = ' ';
-			j += i;
-			while (i < j)
-				str[i++] = ' ';
-		}
-		i++;
-	}
-	s = ft_strtrim(str, " ");
-	return (s);
-}
-
-static	t_ast_node	*create_node_command(char *str)
-{
-	t_ast_node	*ast;
-	char		**elements;
-	char		*cmd;
-	char		*args;
-	int			len;
-
-	ast = create_ast_node(NODE_CMND, NULL);
-	str = parse_redirections(ast, str);
-	elements = ft_split(str, ' ');
-	cmd = elements[0];
-	len = ft_strlen(cmd);
-	args = ft_strtrim((str + len), " ");
-	ast->args = elements;
-	free(args);
-	return (ast);
-}
-
-static	t_ast_node	*get_node_by_token(char *token)
-{
-	t_ast_node	*ast;
-
-	ast = NULL;
-	if (ft_strcmp(token, "&&") == 0)
-		ast = create_ast_node(NODE_AND, NULL);
-	else if (ft_strcmp(token, "|") == 0)
-		ast = create_ast_node(NODE_PIPE, NULL);
-	else if (ft_strcmp(token, "(") == 0)
-		ast = create_ast_node(NODE_GROUP, NULL);
-	return (ast);
-}
-
-static	t_ast_node	*create_and_list(char *context, char *token, int level)
-{
-	int			i;
-	char		**elements;
-	char		*str;
-	t_ast_node	*ast;
-	t_ast_node	*rast;
-	t_ast_node	*child;
-	int			len;
-
-	ast = NULL;
-	rast = NULL;
-	elements = parse_elements(context, token);
-	len = 0;
-	while (elements[len])
-		len++;
-	i = 1;
-	if (ft_strcmp(token, "&&") != 0 && ft_strcmp(token, "|") != 0)
-	{
-		if(elements[i][0] == '(')
-		{
-			str = ft_substr(elements[i], 1, ff_subcontext(elements[i]) - 2);
-			rast = get_node_by_token("(");
-			rast->left = create_and_list(str, "&&", level + 1);
-			free(str);
-		}
-		else
-			rast = create_node_command(elements[i]);
-	}
+	if (ast == NULL)
+		ast = get_execution_node(ft_substr(context, k, i - k), level);
 	else
 	{
-		ast = get_node_by_token(token);
-		rast = ast;
-		i = len - 1;
-		while (i > 0)
-		{
-			if (ft_strcmp(token, "&&") == 0)
-				child = create_and_list(elements[i], "|", level + 1);
-			else if (ft_strcmp(token, "|") == 0)
-				child = create_and_list(elements[i], "\7", level + 1);
-			if (len == 2)
-				rast = child;
-			else if (ast->right)
-			{
-				if (i == 1)
-					ast->left = child;
-				else
-				{
-					ast->left = get_node_by_token(token);
-					ast->left->right = child;
-					ast = ast->left;
-				}
-			}
-			else
-				ast->right = child;
-			i--;
-		}
+		ast->right = get_execution_node(ft_substr(context, k, i - k), level);
+		ast->right->side = 1;
 	}
-	clear_arr_of_strs(elements);
-	return (rast);
+	return (ast);
 }
 
 t_ast_node	*build_redirect_ast(char *context)
 {
 	t_ast_node	*ast;
 	
-	ast = create_and_list(context, "&&", 0);
+	ast = create_structure(context, AND);
 	ast_printer(ast, 0);
 	return (ast);
 }

@@ -20,7 +20,8 @@ SRC				:= 	main.c\
 					$(EXEC_DIR)/pipex.c \
 					$(EXEC_DIR)/redirect.c \
 					$(EXEC_DIR)/parser.c \
-					$(EXEC_DIR)/redirect_build.c \
+					$(EXEC_DIR)/parser_redirect.c \
+					$(EXEC_DIR)/parser_utils.c \
 					$(SIGNALS_DIR)/signals.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
 					$(PARSER_DIR)/tokenizer/add_token.c \
