@@ -38,7 +38,7 @@ static	void	child(int fd[2], int files[3], t_ast_node *node, char ***env)
 	if (node->type == NODE_CMND)
 	{
 		if (execute(node->args, *env) == -1)
-			cleanup("Error executing command..");
+			cleanup("Error executing command");
 	}
 	else
 	{

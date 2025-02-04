@@ -41,7 +41,6 @@ int			has_inward_redirection(t_redirection *lst);
 void		multiple_output_redirections(t_ast_node *node);
 void		here_doc(char *delimit);
 void		pipex_redirect(t_ast_node *node, int fd[2], int files[3], int is_last);
-void		redirecter(t_ast_node *node, char ***env, int hold, int files[3]);
 
 void		cleanup(char *err);
 int			is_last_node(t_ast_node *node);

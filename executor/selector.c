@@ -22,11 +22,11 @@ void	waiter(t_node_type type, t_ast_node *node)
 	{
 		if (waitpid(-1, &status, 0) == -1)
 		{
-			if (access("__tmp__", F_OK) == 0)
+			if (type == 0 && status == 0 && has_outward_redirection(node->redirs))
+				multiple_output_redirections(node);
+			if (access("__INFILE__", F_OK) == 0)
 			{
-				if (type == 0 && status == 0 && has_outward_redirection(node->redirs))
-					multiple_output_redirections(node);
-				unlink("__tmp__");
+				unlink("__INFILE__");
 			}
 			if (access("__HEREDOC__", F_OK) == 0)
 			{

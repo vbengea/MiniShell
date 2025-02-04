@@ -365,7 +365,7 @@ static	void	ast_printer(t_ast_node *ast, int level)
 		printf("\n");
 	}
 	else
-		printf("Type: %d\n", ast->type);
+		printf("TYPE: %d\n", ast->type);
 	if (ast->left)
 		ast_printer(ast->left, level + 1);
 	if (ast->right)
