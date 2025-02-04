@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 21:53:06 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/04 23:55:04 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 				unlink("__HEREDOC__");
 			}
 			if (status != 0 && node->parent_type == NODE_AND)
-				exit(status);
+				node->parent->exit = status;
 			else if (status == 0 && node->parent_type == NODE_OR)
-				exit(0);
+				node->parent->exit = status;
 			break ;
 		}
 	}
@@ -47,6 +47,7 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) hold;
+	node->exit = -1;
 	if (node->left)
 	{
 		node->left->parent = node;
@@ -61,8 +62,7 @@ void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 		node->right->parent_type = node->type;
 		selector(node->right, env, files);
 	}
-	
-	if (node->type == NODE_GROUP || node->type == NODE_AND || node->type == NODE_OR)
+	if (node->type == NODE_GROUP)
 		exit(0);
 }
 
@@ -104,8 +104,10 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 		*env = unset_bi(node->args[1], *env);
 	else if (ft_strncmp(node->args[0], "echo", 4) == 0)
 		echo_bi(node->args, *env);
-	if (hold || (node->parent_type == NODE_OR))
+	if (hold)
 		exit(0);
+	if (node->parent)
+		node->parent->exit = 0;
 }
 
 void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3]), int files[3])
@@ -125,6 +127,13 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 {
 	if (node->type == NODE_CMND)
 	{
+		if (node->parent)
+		{
+			if (node->parent->type == NODE_AND && node->parent->exit > 0)
+				return ;
+			if (node->parent->type == NODE_OR && node->parent->exit == 0)
+				return ;
+		}
 		if (is_builtin(node))
 		{
 			if (is_pipe_state(node))
@@ -136,7 +145,7 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 			forker(node, env, executor, files);
 	}
 	else if (node->type == NODE_AND || node->type == NODE_OR)
-		forker(node, env, navigator, files);
+		navigator(node, env, 1, files);
 	else if (node->type == NODE_PIPE)
 	{
 		pipex(node, env, files, files[2]);
