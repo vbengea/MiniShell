@@ -49,6 +49,15 @@ typedef struct s_redirection
 	struct s_redirection	*next;
 }	t_redirection;
 
+typedef enum mini_token
+{
+	AND,
+	OR,
+	PIPE,
+	AND_OR,
+	OTHER
+}	t_mini_token;
+
 /* Update structure.
 	The proposed updates are commented untill they are implemented */
 typedef struct s_ast_node

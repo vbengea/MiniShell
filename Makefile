@@ -1,9 +1,9 @@
 NAME			:=	minishell
 
 CC				:= 	cc
-CFLAGS			:= 	-Wall -Wextra -Werror 
+CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
 SFLAGS			:= 	-g3 -fsanitize=address
-LDFLAGS 		:=	-lreadline 
+LDFLAGS 		:=	-lreadline -L/opt/homebrew/opt/readline/lib
 
 LIBFT_DIR		:= 	./libft
 LIBFT			:= 	$(LIBFT_DIR)/libft.a
@@ -20,6 +20,7 @@ SRC				:= 	main.c\
 					$(EXEC_DIR)/pipex.c \
 					$(EXEC_DIR)/redirect.c \
 					$(EXEC_DIR)/parser.c \
+					$(EXEC_DIR)/redirect_build.c \
 					$(SIGNALS_DIR)/signals.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
 					$(PARSER_DIR)/tokenizer/add_token.c \

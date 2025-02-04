@@ -91,39 +91,6 @@ static	char **parse_elements(char *context, char *token)
 	return (elements);
 }
 
-t_redirection	*redlist_new(void *content)
-{
-	t_redirection	*lst;
-
-	lst = malloc(sizeof(t_redirection));
-	if (lst)
-	{
-		lst->file = content;
-		lst->next = NULL;
-	}
-	return (lst);
-}
-
-void	redlist_add(t_redirection **lst, t_redirection *new)
-{
-	t_redirection	*tmp;
-
-	tmp = *lst;
-	*lst = new;
-	(*lst)->next = tmp;
-}
-
-void	redlist_iter(t_redirection *lst, void (*f)(void *))
-{
-	while (lst)
-	{
-		(*f)(lst->file);
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-}
-
 static	int	capture_redirection(t_ast_node *ast, char *str)
 {
 	int				i = 0;
@@ -338,38 +305,6 @@ static	t_ast_node	*create_and_list(char *context, char *token, int level)
 	}
 	clear_arr_of_strs(elements);
 	return (rast);
-}
-
-static	void	print_redirs(void *content)
-{
-	char *str;
-
-	str = (char *) content;
-	printf("(%s) ", str);
-}
-
-static	void	ast_printer(t_ast_node *ast, int level)
-{
-	int i = 0;
-
-	while (i++ < level)
-		printf("  ");
-	if (ast->type == NODE_CMND)
-	{
-		printf("TYPE: %d\t\tARGS: ", ast->type);
-		i = 0;
-		while (ast->args[i])
-			printf("%s ", ast->args[i++]);
-		printf("\tREDIRS: ");
-		redlist_iter(ast->redirs, print_redirs);
-		printf("\n");
-	}
-	else
-		printf("TYPE: %d\n", ast->type);
-	if (ast->left)
-		ast_printer(ast->left, level + 1);
-	if (ast->right)
-		ast_printer(ast->right, level + 1);
 }
 
 t_ast_node	*build_redirect_ast(char *context)
