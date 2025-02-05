@@ -47,7 +47,7 @@ int main(int argc, char **argv, char **env)
 			selector(ast, &env, files);
 			SIGNAL = -1;
 			free(input);
-			free_redirect_ast(ast);
+			// free_redirect_ast(ast);
 		}
 		//free_token(token);
 	}
