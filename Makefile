@@ -20,7 +20,7 @@ SRC				:= 	main.c\
 					$(EXEC_DIR)/pipex.c \
 					$(EXEC_DIR)/redirect.c \
 					$(EXEC_DIR)/parser.c \
-					$(EXEC_DIR)/parser_redirect.c \
+					$(EXEC_DIR)/parser_redis.c \
 					$(EXEC_DIR)/parser_utils.c \
 					$(SIGNALS_DIR)/signals.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
@@ -105,7 +105,7 @@ git: norm
 
 runner: all
 	./minishell
-	make -C . fclean
+	#make -C . fclean
 
 valgrind: fclean $(LIBFT) $(OBJB) $(INCLUDE)
 	$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o minishell

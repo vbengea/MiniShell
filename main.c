@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 14:09:03 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/05 00:57:07 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ int main(int argc, char **argv, char **env)
 		ast = build_redirect_ast(input);
 		if (ast)
 		{
-			//print_ast(ast, 0);
+			// print_ast(ast, 0);
 			int files[3];
 			files[0] = STDIN_FILENO;
 			files[1] = STDOUT_FILENO;
 			files[2] = 0;
 			SIGNAL = 1;
+			printf("RUNNING...\n");
 			selector(ast, &env, files);
 			SIGNAL = -1;
 			free(input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/25 16:49:17 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/05 01:16:32 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,21 +104,3 @@ int	ff_subcontext(char *context)
 	return (i + 1);
 }
 
-t_ast_node	*create_node_command(char *str)
-{
-	t_ast_node	*ast;
-	char		**elements;
-	char		*cmd;
-	char		*args;
-	int			len;
-
-	ast = create_ast_node(NODE_CMND, NULL);
-	str = parse_redirections(ast, str);
-	elements = ft_split(str, ' ');
-	cmd = elements[0];
-	len = ft_strlen(cmd);
-	args = ft_strtrim((str + len), " ");
-	ast->args = elements;
-	free(args);
-	return (ast);
-}

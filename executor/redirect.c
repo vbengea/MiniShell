@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/01/25 16:31:33 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/05 02:25:10 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static	char	*read_files_content(char **files)
 		while (files[i])
 		{
 			int tmp = open(files[i], O_RDONLY);
-			while (1)
+			while (tmp >= 0)
 			{
 				str = get_next_line(tmp);
 				if (str)
@@ -189,19 +189,29 @@ static	void	redlist_out(t_redirection *lst, char *content)
 
 void	multiple_output_redirections(t_ast_node *node)
 {
-	char **arr = malloc(sizeof(char *) * 2);
-	arr[0] = "__OUTFILE__";
-	arr[1] = NULL;
-	char *content = read_files_content(arr);
-	if (content)
+	char	**arr;
+	char	*content;
+	char	*out;
+
+	arr = malloc(sizeof(char *) * 2);
+	out = ft_strdup("__OUTFILE__");
+	if (arr)
 	{
-		redlist_out(node->redirs, content);
-		free(content);
+		arr[0] = ft_strdup(out);
+		arr[1] = NULL;
+		content = read_files_content(arr);
+		clear_arr_of_strs(arr);
+		if (content)
+		{
+			redlist_out(node->redirs, content);
+			free(content);
+		}
 	}
-	if (access("__OUTFILE__", F_OK) == 0)
+	if (access(out, F_OK) == 0)
 	{
-		unlink("__OUTFILE__");
+		unlink(out);
 	}
+	free(out);
 }
 
 void	here_doc(char *delimit)

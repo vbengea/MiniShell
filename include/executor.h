@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 13:29:32 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/05 02:21:05 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int				is_pipe_state(t_ast_node *node);
 
 t_ast_node		*build_redirect_ast(char *context);
 
-char 			*translate_token(t_mini_token token);
 t_redirection	*redlist_new(void *content);
 void			redlist_add(t_redirection **lst, t_redirection *new);
 void			redlist_iter(t_redirection *lst, void (*f)(void *));
@@ -60,8 +59,8 @@ void			ast_printer(t_ast_node *ast, int level);
 char			*parse_redirections(t_ast_node *ast, char *str);
 int				ff_subcontext(char *context);
 t_ast_node		*get_node_by_token(t_mini_token token);
-t_ast_node		*create_node_command(char *str);
-t_ast_node		*create_structure(char *context, t_mini_token token);
+t_ast_node		*create_node_command(char *str, t_redirection *redirs);
+t_ast_node		*create_structure(char *context, t_mini_token token, t_redirection *redirs);
 int				is_node(char *context, char *term);
 int				is_control_character(char *context);
 

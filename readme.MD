@@ -43,10 +43,10 @@ Solved issues
 
 	- Mini parser || no soportado
 		false || echo 2
+		true || echo 2
 		make: *** [Makefile:105: runner] Segmentation fault (core dumped)
 
 	- Redirections are breaking long pipelines:
-
 		< t1 cat -e | cat -e | cat -e					[OK]
 		<t1 cat -e | cat -e | cat -e > t2				[OK]
 		ls -l | cat -e | cat -e | cat -e > t2
@@ -56,7 +56,6 @@ Solved issues
 	- El comando "minishell" debe estar en el PATH, para que si uno ejecuta "minishell" desde dentro de minishell, haga en una subshell como hace bash. El comando exit saldría a la minishell anterior.
 
 	- Una vez el proceso llega a pipex, no hay comunicación con el proceso original "selector" lo que hace que si uno de los elementos del pipe es una subshell, se pierda la salida de esta subshell y el proximo elemento del pipeline original se queda esperando la entrada indefinidamente e.g.:
-
 		(ls -l | cat -e) | cat -e						[OK]
 		ls -l | (cat -e && cat -e)						[OK]
 		(ls -l | cat -e) | cat -e | cat -e				[OK]

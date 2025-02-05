@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 23:55:04 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/05 00:22:08 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 {
 	int		status;
 
+	(void) type;
+	(void) env;
+	(void) files;
 	while (1)
 	{
 		if (waitpid(-1, &status, 0) == -1)
 		{
-			(void)files;
 			char *value = ft_itoa(status);
 			set_env("?", value, *env);
 			if (type == 0 && status == 0 && has_outward_redirection(node->redirs))
@@ -35,9 +37,9 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 			{
 				unlink("__HEREDOC__");
 			}
-			if (status != 0 && node->parent_type == NODE_AND)
+			if (status != 0 && node->parent && node->parent_type == NODE_AND)
 				node->parent->exit = status;
-			else if (status == 0 && node->parent_type == NODE_OR)
+			else if (status == 0 && node->parent && node->parent_type == NODE_OR)
 				node->parent->exit = status;
 			break ;
 		}
@@ -147,9 +149,7 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 	else if (node->type == NODE_AND || node->type == NODE_OR)
 		navigator(node, env, 1, files);
 	else if (node->type == NODE_PIPE)
-	{
 		pipex(node, env, files, files[2]);
-	}
 	else if (node->type == NODE_GROUP)
 		forker(node, env, navigator, files);
 }
