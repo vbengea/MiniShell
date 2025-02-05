@@ -66,7 +66,7 @@ OBJ 			:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(INCLUDE)
-	$(CC) $(CFLAGS) $(SFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
 
 clean:
 	make -C $(LIBFT_DIR) clean
