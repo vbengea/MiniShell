@@ -35,16 +35,15 @@ int main(int argc, char **argv, char **env)
 		add_history(input);
 		// token = tokenize_input(input);
 		// ast = build_ast(token);
+		// print_ast(ast, 0);
 		ast = build_redirect_ast(input);
 		if (ast)
 		{
-			// print_ast(ast, 0);
 			int files[3];
 			files[0] = STDIN_FILENO;
 			files[1] = STDOUT_FILENO;
 			files[2] = 0;
 			SIGNAL = 1;
-			printf("RUNNING...\n");
 			selector(ast, &env, files);
 			SIGNAL = -1;
 			free(input);
