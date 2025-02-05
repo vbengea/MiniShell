@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/25 16:37:00 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:49:57 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ char	*interpolation(char *str, char **env)
 
 	clean_quotes(str);
 	s = ft_split(str, ' ');
-	r = malloc(1);
-	r[0] = '\0';
+	r = ft_strdup("");
 	if (s)
 	{
 		j = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/03 19:24:48 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/05 08:28:06 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,24 @@ typedef struct s_redirection
 	struct s_redirection	*next;
 }	t_redirection;
 
+typedef enum mini_token
+{
+	AND,
+	OR,
+	PIPE,
+	SUBSHELL,
+	COMMAND,
+	OTHER
+}	t_mini_token;
+
+typedef struct s_redirect_params
+{
+	int		ri;
+	int		ro;
+	int		prefix;
+	int		suffix;
+}	t_redirect_params;
+
 /* Update structure.
 	The proposed updates are commented untill they are implemented */
 typedef struct s_ast_node
@@ -61,6 +79,7 @@ typedef struct s_ast_node
 	struct s_ast_node	*right;
 	struct s_ast_node	*parent;
 	int					side;
+	int					exit;
 }	t_ast_node;
 
 #endif
