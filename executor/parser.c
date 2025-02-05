@@ -22,10 +22,6 @@ t_ast_node	*create_node_command(char *context, t_redirection *redirs)
 
 	ast = create_ast_node(NODE_CMND, NULL);
 	context = parse_redirections(ast, context);
-	if (redirs)
-	{
-		printf("BINGO\n");
-	}
 	if (!ast->redirs && redirs)
 		ast->redirs = redirs;
 	elements = ft_split(context, ' ');
@@ -81,10 +77,6 @@ t_ast_node	*create_group_command(char *context, t_redirection *redirs)
 		i++;
 	}
 	parse_redirections(ast, reds);
-	if (ast->redirs)
-	{
-		printf("BINGO\n");
-	}
 	ast->left = create_structure((pars + 1), AND, ast->redirs);
 	free(reds);
 	free(pars);
