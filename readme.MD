@@ -11,12 +11,10 @@
 
 		+ Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
 
-	- Crear una super estructura para disminuir cantidad de parametros.
-
-	- Los wildcards * deben funcionar para el directorio actual.
-
 
 * Problems:
+
+	- Crear una super estructura para disminuir cantidad de parametros.
 
 	- Actual tokenizer doesn't support multiple redirections.
 
@@ -32,12 +30,17 @@
 
 * Environment differences:
 
+	- In bash the export command has a different format:
+		export <key>=<value>
+
 	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
 	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
 
 
 Solved issues
+
+	- Los wildcards * deben funcionar para el directorio actual.
 
 	- El comando cat hace segfault a veces. Si es el primer comando en ejecutarse despues de compilar, hace segfault.
 		Si se ejecuta otro comando antes, no hace segfault pero lo hace el siguiente comando al ejecutarse.

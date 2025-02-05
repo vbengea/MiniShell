@@ -11,6 +11,7 @@ EXEC_DIR		:=	executor
 PARSER_DIR		:=  parser
 BUILTINS_DIR	:=  builtins
 SIGNALS_DIR		:=  signals
+WILDCARD_DIR	:=  wildcard
 INCLUDE			:= 	./include/headers.h
 
 SRC				:= 	main.c\
@@ -56,12 +57,14 @@ SRC				:= 	main.c\
 					$(BUILTINS_DIR)/exit.c \
 					$(BUILTINS_DIR)/export.c \
 					$(BUILTINS_DIR)/pwd.c \
-					$(BUILTINS_DIR)/unset.c
+					$(BUILTINS_DIR)/unset.c \
+					$(WILDCARD_DIR)/ft_wildcard.c
 
 OBJ 			:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
 					$(patsubst $(SIGNALS_DIR)/%.c, $(SIGNALS_DIR)/%.o, $(SRC)) \
 					$(patsubst $(PARSER_DIR)/*/%.c, $(PARSER_DIR)/*/%.o, $(SRC)) \
-					$(patsubst $(BUILTINS_DIR)/%.c, $(BUILTINS_DIR)/%.o, $(SRC))
+					$(patsubst $(BUILTINS_DIR)/%.c, $(BUILTINS_DIR)/%.o, $(SRC)) \
+					$(patsubst $(WILDCARD_DIR)/%.c, $(WILDCARD_DIR)/%.o, $(SRC))
 
 all: $(NAME)
 
@@ -74,6 +77,7 @@ clean:
 	rm -f $(PARSER_DIR)/*/*.o
 	rm -f $(BUILTINS_DIR)/*.o
 	rm -f $(SIGNALS_DIR)/*.o
+	rm -f $(WILDCARD_DIR)/*.o
 	rm -rf *.dSYM
 	rm -f t1 t2 t3 t4 t5
 

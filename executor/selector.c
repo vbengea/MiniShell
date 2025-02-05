@@ -58,15 +58,20 @@ static	void	preexecute(t_ast_node *node, char ***env)
 {
 	int		i;
 	char	*str;
+	char	**args;
 
 	i = 1;
+	args = ft_split(node->args[0], ' ');
 	while (node->args[i])
 	{
 		str = node->args[i];
 		node->args[i] = interpolation(str, *env);
+		args = expantion(node->args[i], args);
 		free(str);
 		i++;
 	}
+	clear_arr_of_strs(node->args);
+	node->args = args;
 	detect_in_redirection(node);
 	detect_out_redirection(node);
 }

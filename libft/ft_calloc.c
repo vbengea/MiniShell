@@ -82,6 +82,8 @@ char **add_arr_of_strs(char **p, char *str)
 	char	**arr;
 
 	len = 0;
+	if (!p)
+		return (NULL);
 	while (p[len])
 		len++;
 	arr = copy_arr_of_strs(p, len + 1);

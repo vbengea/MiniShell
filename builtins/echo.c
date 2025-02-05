@@ -145,6 +145,36 @@ char	*interpolation(char *str, char **env)
 	return (r);
 }
 
+char	**expantion(char *str, char **args)
+{
+	int		found;
+	t_list	*lst;
+	t_list	*p;
+
+	found = 0;
+	lst = ft_wildcard(str);
+	while (lst)
+	{
+		p = lst;
+		if (lst->content)
+		{
+			args = add_arr_of_strs(args, (char *)lst->content);
+			found = 1;
+			free(lst->content);
+		}
+		if (lst->next == NULL)
+		{
+			free(p);
+			break ;
+		}
+		lst = lst->next;
+		free(p);
+	}
+	if (!found)
+		args = add_arr_of_strs(args, str);
+	return (args);
+}
+
 
 void		echo_bi(t_ast_node *node, char **env)
 {
