@@ -54,33 +54,54 @@ char	*get_env(char *var, char **env)
 	return (NULL);
 }
 
-char	*set_env(char *var, char *value, char **env)
+char	**set_env(char *key, char *value, char **env)
 {
 	int		i;
+	int		found;
 	int		len;
 	char	*str;
+	char	*var;
 
 	i = 0;
-	while (env[i])
+	found = 0;
+	var = key;
+	var = ft_strjoin(var, "=");
+	while (var && env[i])
 	{
-		var = ft_strjoin(var, "=");
-		if (var)
+		if (var && ft_strncmp(env[i], var, ft_strlen(var)) == 0)
 		{
-			if (ft_strncmp(env[i], var, ft_strlen(var)) == 0)
+			str = ft_strjoin(var, value);
+			if (str)
 			{
 				free(env[i]);
-				str = ft_strjoin(var, value);
 				len = ft_strlen(str);
 				env[i] = malloc(len + 1);
-				ft_strlcpy(env[i], str, len + 1);
-				env[i][len] = '\0';
+				if (env[i])
+				{
+					ft_strlcpy(env[i], str, len + 1);
+					env[i][len] = '\0';
+				}
 				free(str);
 			}
-			free(var);
+			found = 1;
+			break ;
 		}
 		i++;
 	}
-	return (NULL);
+	if (!found)
+	{
+		if (var)
+		{
+			str = ft_strjoin(var, value);
+			if (str)
+			{
+				env = add_arr_of_strs(env, str);
+				free(str);
+			}
+		}
+	}
+	free(var);
+	return (env);
 }
 
 static	char *add_str(char *a, char *b)

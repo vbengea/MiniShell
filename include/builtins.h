@@ -21,7 +21,7 @@ char	**export_bi(t_ast_node *node, char **env);
 char	**unset_bi(t_ast_node *node, char **env);
 void	echo_bi(t_ast_node *node, char **env);
 char	*get_env(char *var, char **env);
-char	*set_env(char *var, char *value, char **env);
+char	**set_env(char *var, char *value, char **env);
 char	*interpolation(char *str, char **env);
 
 #endif
