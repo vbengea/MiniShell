@@ -14,6 +14,15 @@
 
 extern int SIGNAL;
 
+void	set_history_status(int status, char ***env)
+{
+	char	*value;
+	
+	value = ft_itoa(status);
+	*env = set_env("?", value, *env);
+	free(value);
+}
+
 void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 {
 	int		status;
@@ -25,8 +34,7 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 	{
 		if (waitpid(-1, &status, 0) == -1)
 		{
-			// char *value = ft_itoa(status);
-			// set_env("?", value, *env);
+			set_history_status(status, env);
 			if ((type == NODE_CMND || type == NODE_AND || type == NODE_OR) && status == 0)
 				multiple_output_redirections(node);
 			if (access("__INFILE__", F_OK) == 0)
@@ -127,6 +135,7 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 	else if (ft_strncmp(node->args[0], "echo", 4) == 0)
 		echo_bi(node, *env);
 	postexecute(node);
+	set_history_status(0, env);
 	if (hold)
 		exit(0);
 	if (node->parent)

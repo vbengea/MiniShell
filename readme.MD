@@ -7,8 +7,6 @@
 			echo "ec$PWD ho"
 		+ echo no debe expandir variables en comillas simples.
 
-	- Gestionar $?, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
-
 	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
 	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
@@ -49,6 +47,8 @@
 
 
 Solved issues
+
+	- Gestionar $?, que deberá expandirse al estado de salida del comando más reciente ejecutado en la pipeline.
 
 	- Mini parser || no soportado
 		false || echo 2
