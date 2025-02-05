@@ -6,11 +6,16 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/05 01:16:32 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/05 15:42:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+void	free_redirect_ast(t_ast_node *ast)
+{
+	(void) ast;
+}
 
 void	ast_printer(t_ast_node *ast, int level)
 {
@@ -34,9 +39,15 @@ void	ast_printer(t_ast_node *ast, int level)
 		else
 			printf("TYPE: %d\n", ast->type);
 		if (ast->left)
+		{
+			ast->side = 0;
 			ast_printer(ast->left, level + 1);
+		}
 		if (ast->right)
+		{
+			ast->side = 1;
 			ast_printer(ast->right, level + 1);
+		}
 	}
 }
 

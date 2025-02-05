@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_redirect.c                                  :+:      :+:    :+:   */
+/*   parser_redis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/25 16:49:17 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:34:23 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,14 @@ static	int	capture_redirection(t_ast_node *ast, char *str)
 
 char *parse_redirections(t_ast_node *ast, char *str)
 {
-	int		i = 0;
-	int		j = 0;
+	int		i;
+	int		j;
 	char	*s;
 	char	*p;
 
-	while (str[i])
+	i = 0;
+	j = 0;
+	while (str && str[i])
 	{
 		j = 0;
 		if (str[i] == '<' || str[i] == '>')
@@ -133,6 +135,7 @@ char *parse_redirections(t_ast_node *ast, char *str)
 			j += i;
 			while (i < j)
 				str[i++] = ' ';
+			continue ;
 		}
 		i++;
 	}

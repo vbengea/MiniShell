@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/05 02:21:05 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/05 15:39:15 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void			redlist_add(t_redirection **lst, t_redirection *new);
 void			redlist_iter(t_redirection *lst, void (*f)(void *));
 void			print_redirs(void *content);
 void			ast_printer(t_ast_node *ast, int level);
+void	        free_redirect_ast(t_ast_node *ast);
 
 char			*parse_redirections(t_ast_node *ast, char *str);
 int				ff_subcontext(char *context);

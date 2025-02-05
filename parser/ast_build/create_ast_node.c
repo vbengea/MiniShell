@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:15:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/30 09:34:15 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/05 15:30:54 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args)
 	node = malloc(sizeof(t_ast_node));
 	if (!node)
 		return (NULL);
+	ft_bzero(node, sizeof(node));
 	node->type = type;
 	node->args = cmd_args;
 	node->file = NULL;
@@ -26,5 +27,7 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args)
 	node->left = NULL;
 	node->right = NULL;
 	node->side = 0;
+	node->parent = NULL;
+	node->redirs = NULL;
 	return (node);
 }
