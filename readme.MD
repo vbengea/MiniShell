@@ -21,6 +21,15 @@
 
 
 * Problems:
+	- El comando cat hace segfault a veces. Si es el primer comando en ejecutarse despues de compilar, hace segfault.
+		Si se ejecuta otro comando antes, no hace segfault pero lo hace el siguiente comando al ejecutarse.
+		./minishell
+		cat Makefile >>> segfault
+
+		./minishell
+		clear
+		cat Makefile
+		clear >>> segfault
 
 	- Actual tokenizer doesn't support multiple redirections.
 
