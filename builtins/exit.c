@@ -12,8 +12,11 @@
 
 #include "../include/headers.h"
 
-void	exit_bi(void)
+void	exit_bi(t_ast_node *node)
 {
-	printf("exit\n");
+	if (node->fd < 0)
+		printf("exit\n");
+	else
+		write(node->fd, "exit\n", 5);
 	exit(0);
 }

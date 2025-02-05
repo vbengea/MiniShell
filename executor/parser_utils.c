@@ -20,13 +20,13 @@ void	ast_printer(t_ast_node *ast, int level)
 	{
 		while (i++ < level)
 			printf("  ");
-		if (ast->type == NODE_CMND)
+		if (ast->type == NODE_CMND || ast->type == NODE_GROUP)
 		{
-			printf("TYPE: %d [%d]\t\tARGS: ", ast->type, ast->side);
+			printf("TYPE: %d [NID:%d] [SIDE:%d] [ARGS]: ", ast->type, ast->nid, ast->side);
 			i = 0;
 			while (ast->args && ast->args[i])
 				printf("%s ", ast->args[i++]);
-			printf("\tREDIRS: ");
+			printf("[REDIRS]: ");
 			if (ast->redirs)
 				redlist_iter(ast->redirs, print_redirs);
 			printf("\n");

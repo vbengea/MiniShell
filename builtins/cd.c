@@ -12,14 +12,16 @@
 
 #include "../include/headers.h"
 
-int		cd_bi(const char *path, char **env)
+int		cd_bi(t_ast_node *node, char **env)
 {
 	int		r;
 	int		i;
 	int		len;
 	char	*str;
 	char	cwd[PATH_MAX];
+	char	*path;
 
+	path = node->args[1];
 	if (path == NULL)
 		path = get_env("HOME", env);
 	r = chdir(path);

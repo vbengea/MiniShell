@@ -82,6 +82,8 @@ typedef struct s_ast_node
 	struct s_ast_node	*parent;
 	int					side;
 	int					exit;
+	int					fd;
+	int					nid;
 }	t_ast_node;
 
 #endif

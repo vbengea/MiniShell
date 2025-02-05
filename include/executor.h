@@ -36,7 +36,7 @@ int				execute(char **comm, char **arvp);
 
 void			detect_in_redirection(t_ast_node *node);
 void			detect_out_redirection(t_ast_node *node);
-int				has_outward_redirection(t_redirection *lst);
+int				has_outward_redirection(t_ast_node *ast);
 int				has_inward_redirection(t_redirection *lst);
 void			multiple_output_redirections(t_ast_node *node);
 void			here_doc(char *delimit);
@@ -59,9 +59,11 @@ void			ast_printer(t_ast_node *ast, int level);
 char			*parse_redirections(t_ast_node *ast, char *str);
 int				ff_subcontext(char *context);
 t_ast_node		*get_node_by_token(t_mini_token token);
-t_ast_node		*create_node_command(char *str, t_redirection *redirs);
-t_ast_node		*create_structure(char *context, t_mini_token token, t_redirection *redirs);
 int				is_node(char *context, char *term);
 int				is_control_character(char *context);
+char			*read_files_content(char **files);
+
+t_ast_node		*create_node_command(char *str, t_redirection *redirs, int *index);
+t_ast_node		*create_structure(char *context, t_mini_token token, t_redirection *redirs, int *index);
 
 #endif

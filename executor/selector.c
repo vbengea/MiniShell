@@ -25,9 +25,9 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 	{
 		if (waitpid(-1, &status, 0) == -1)
 		{
-			char *value = ft_itoa(status);
-			set_env("?", value, *env);
-			if (type == 0 && status == 0 && has_outward_redirection(node->redirs))
+			// char *value = ft_itoa(status);
+			// set_env("?", value, *env);
+			if ((type == NODE_CMND || type == NODE_AND || type == NODE_OR) && status == 0)
 				multiple_output_redirections(node);
 			if (access("__INFILE__", F_OK) == 0)
 			{
@@ -43,6 +43,37 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 				node->parent->exit = status;
 			break ;
 		}
+	}
+}
+
+static	void	preexecute(t_ast_node *node, char ***env)
+{
+	int		i;
+	char	*str;
+
+	i = 1;
+	while (node->args[i])
+	{
+		str = node->args[i];
+		node->args[i] = interpolation(str, *env);
+		free(str);
+		i++;
+	}
+	detect_in_redirection(node);
+	detect_out_redirection(node);
+}
+
+static	void	postexecute(t_ast_node *node)
+{
+	multiple_output_redirections(node);
+	if (access("__INFILE__", F_OK) == 0)
+	{
+		unlink("__INFILE__");
+	}
+	if (node->fd)
+	{
+		close(node->fd);
+		node->fd = -1;
 	}
 }
 
@@ -70,21 +101,9 @@ void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 
 void	executor(t_ast_node *node, char ***env, int hold, int files[3])
 {	
-	int		i;
-	char	*str;
-
 	(void) hold;
 	(void) files;
-	i = 1;
-	while (node->args[i])
-	{
-		str = node->args[i];
-		node->args[i] = interpolation(str, *env);
-		free(str);
-		i++;
-	}
-	detect_in_redirection(node);
-	detect_out_redirection(node);
+	preexecute(node, env);
 	if (execute(node->args, *env) == -1)
 		cleanup("Error executing command..");
 }
@@ -92,20 +111,22 @@ void	executor(t_ast_node *node, char ***env, int hold, int files[3])
 static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) files;
+	preexecute(node, env);
 	if (ft_strncmp(node->args[0], "cd", 2) == 0)
-		cd_bi(node->args[1], *env);
+		cd_bi(node, *env);
 	else if (ft_strncmp(node->args[0], "exit", 4) == 0)
-		exit_bi();
+		exit_bi(node);
 	else if (ft_strncmp(node->args[0], "pwd", 3) == 0)
-		pwd_bi();
+		pwd_bi(node);
 	else if (ft_strncmp(node->args[0], "env", 3) == 0)
-		env_bi(*env, 0);
+		env_bi(node, *env, 0);
 	else if (ft_strncmp(node->args[0], "export", 6) == 0)
-		*env = export_bi(node->args[1], node->args[2], *env);
+		*env = export_bi(node, *env);
 	else if (ft_strncmp(node->args[0], "unset", 5) == 0)
-		*env = unset_bi(node->args[1], *env);
+		*env = unset_bi(node, *env);
 	else if (ft_strncmp(node->args[0], "echo", 4) == 0)
-		echo_bi(node->args, *env);
+		echo_bi(node, *env);
+	postexecute(node);
 	if (hold)
 		exit(0);
 	if (node->parent)

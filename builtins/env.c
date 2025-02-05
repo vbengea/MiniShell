@@ -12,13 +12,15 @@
 
 #include "../include/headers.h"
 
-void		env_bi(char **env, int sorted)
+void		env_bi(t_ast_node *node, char **env, int sorted)
 {
 	int			i;
 	char		**p;
+	char		*str;
 
-	i = 0;
 	(void) p;
+	p = NULL;
+	i = 0;
 	if (sorted)
 	{
 		p = copy_arr_of_strs(env, 0);
@@ -26,11 +28,23 @@ void		env_bi(char **env, int sorted)
 		{
 			sort_arr_of_strs(p, 1);
 			while (p && p[i])
-				printf("declare -x %s\n", p[i++]);
+				if (node->fd < 0)
+					printf("declare -x %s\n", p[i++]);
+				else
+				{
+					str = ft_strjoin("declare -x ", p[i++]);
+					ft_putstrnl_fd(str, node->fd);
+					free(str);
+				}
 			clear_arr_of_strs(p);
 		}
 	}
 	else
 		while (env && env[i])
-			printf("%s\n", env[i++]);
+		{
+			if (node->fd < 0)
+				printf("%s\n", env[i++]);
+			else
+				ft_putstrnl_fd(env[i++], node->fd);
+		}
 }

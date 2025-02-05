@@ -12,12 +12,14 @@
 
 #include "../include/headers.h"
 
-char	**unset_bi(const char *key, char **env)
+char	**unset_bi(t_ast_node *node, char **env)
 {
 	int		i;
 	int		len;
 	char	*str;
+	char	*key;
 
+	key = node->args[1];
 	i = 0;
 	len = ft_strlen(key);
 	str = malloc(len + 1 + 1);

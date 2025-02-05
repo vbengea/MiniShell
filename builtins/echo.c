@@ -125,18 +125,31 @@ char	*interpolation(char *str, char **env)
 }
 
 
-void		echo_bi(char **params, char **env)
+void		echo_bi(t_ast_node *node, char **env)
 {
 	int		i;
 	char	*str;
+	char	*p;
+	char 	**params;
 
+	params = node->args;
 	i = 1;
 	while (params[i])
 	{
 		str = interpolation(params[i], env);
-		printf("%s ", str);
+		if (node->fd < 0)
+			printf("%s ", str);
+		else
+		{
+			p = ft_strjoin(str, " ");
+			ft_putstr_fd(p, node->fd);
+			free(p);
+		}
 		free(str);
 		i++;
 	}
-	printf("\n");
+	if (node->fd < 0)
+		printf("\n");
+	else
+		ft_putchar_fd('\n', node->fd);
 }

@@ -12,14 +12,18 @@
 
 #include "../include/headers.h"
 
-char	**export_bi(const char *key, const char *value, char **env)
+char	**export_bi(t_ast_node *node, char **env)
 {
 	char	*str;
 	int		len;
+	char	*key;
+	char	*value;
 
+	key = node->args[1];
+	value = node->args[2];
 	if (env && (!key || !value))
 	{
-		env_bi(env, 1);
+		env_bi(node, env, 1);
 		return (env);
 	}
 	else if (env)
