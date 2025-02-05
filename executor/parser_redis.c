@@ -130,7 +130,7 @@ char *parse_redirections(t_ast_node *ast, char *str)
 				p = (str + i);
 				j = capture_redirection(ast, p);
 			}
-			if (j > 0 && (str[i - 1] == '0' || str[i - 1] == '1' || str[i - 1] == '2'))
+			if (i > 0 && j > 0 && (str[i - 1] == '0' || str[i - 1] == '1' || str[i - 1] == '2'))
 				str[i - 1] = ' ';
 			j += i;
 			while (i < j)

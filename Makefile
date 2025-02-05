@@ -75,12 +75,13 @@ clean:
 	rm -f $(BUILTINS_DIR)/*.o
 	rm -f $(SIGNALS_DIR)/*.o
 	rm -rf *.dSYM
-	rm -f z
+	rm -f t1 t2 t3 t4 t5
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 	rm -f a.out
+	rm -f $(NAME).dSYM
 
 re: fclean all
 

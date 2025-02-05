@@ -14,7 +14,35 @@
 
 void	free_redirect_ast(t_ast_node *ast)
 {
-	(void) ast;
+	t_redirection	*lst;
+	t_redirection	*p;
+	if (ast)
+	{
+		if (ast->args)
+			clear_arr_of_strs(ast->args);
+		if (ast->redirs)
+		{
+			lst = ast->redirs;
+			while (lst)
+			{
+				if (lst->file)
+					free(lst->file);
+				p = lst;
+				if (lst->next)
+					lst = lst->next;
+				else
+					lst = NULL;
+				free(p);
+			}
+		}
+		if (ast->file)
+			free(ast->file);
+		if (ast->left)
+			free_redirect_ast(ast->left);
+		if (ast->right)
+			free_redirect_ast(ast->right);
+		free(ast);
+	}
 }
 
 void	ast_printer(t_ast_node *ast, int level)
