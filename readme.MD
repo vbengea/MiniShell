@@ -1,8 +1,12 @@
 
 * To implement:
 
+	- Implement subshell redirections (execution time)
+
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 
+		+ In bash the export command has a different format:
+			export <key>=<value>
 		+ echo no imprime bien:
 			echo "ec$PWD ho"
 		+ echo no debe expandir variables en comillas simples.
@@ -29,9 +33,6 @@
 
 
 * Environment differences:
-
-	- In bash the export command has a different format:
-		export <key>=<value>
 
 	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
