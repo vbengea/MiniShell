@@ -71,8 +71,8 @@ char **copy_arr_of_strs(char **p, int len, int purge)
 			}
 			i++;
 		}
-		// while (i < len)
-		// 	arr[i++] = ft_strdup(" ");
+		while (i < len)
+			arr[i++] = ft_strdup(" "); // LEAKS
 		arr[len] = NULL;
 	}
 	if (purge)

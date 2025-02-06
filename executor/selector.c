@@ -66,7 +66,7 @@ static	void	preexecute(t_ast_node *node, char ***env)
 	{
 		str = node->args[i];
 		node->args[i] = interpolation(str, *env);
-		args = expantion(node->args[i], args);
+		args = expantion(str, args);
 		free(str);
 		i++;
 	}
