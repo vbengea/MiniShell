@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/05 15:34:23 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/06 00:41:51 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char *parse_redirections(t_ast_node *ast, char *str)
 {
 	int		i;
 	int		j;
-	char	*s;
+	// char	*s;
 	char	*p;
 
 	i = 0;
@@ -139,8 +139,8 @@ char *parse_redirections(t_ast_node *ast, char *str)
 		}
 		i++;
 	}
-	s = ft_strtrim(str, " ");
-	return (s);
+	// s = ft_strtrim(str, " ");
+	return (str);
 }
 
 t_redirection	*redlist_new(void *content)

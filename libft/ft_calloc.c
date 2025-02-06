@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 09:26:48 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/03 13:34:32 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/06 00:37:21 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	clear_arr_of_strs(char **sp)
 	}
 }
 
-char **copy_arr_of_strs(char **p, int len)
+char **copy_arr_of_strs(char **p, int len, int purge)
 {
 	int		i;
 	char	**arr;
@@ -65,14 +65,18 @@ char **copy_arr_of_strs(char **p, int len)
 			if (!arr[i])
 			{
 				clear_arr_of_strs(arr);
-				break ;
+				if (purge)
+					clear_arr_of_strs(p);
+				return (NULL);
 			}
 			i++;
 		}
-		while (i < len)
-			arr[i++] = ft_strdup(" ");
+		// while (i < len)
+		// 	arr[i++] = ft_strdup(" ");
 		arr[len] = NULL;
 	}
+	if (purge)
+		clear_arr_of_strs(p);
 	return (arr);
 }
 
@@ -86,10 +90,9 @@ char **add_arr_of_strs(char **p, char *str)
 		return (NULL);
 	while (p[len])
 		len++;
-	arr = copy_arr_of_strs(p, len + 1);
-	str = ft_strdup(str);
+	arr = copy_arr_of_strs(p, len + 1, 1);
 	if (str && arr && arr[len])
-		arr[len] = str;
+		arr[len] = ft_strdup(str);
 	return (arr);
 }
 

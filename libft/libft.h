@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:08:22 by juandanielf       #+#    #+#             */
-/*   Updated: 2025/01/24 17:48:08 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/06 00:08:59 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ bool			ft_isspace(char c);
 char			*ft_strndup(const char *s, size_t n);
 char			*ft_strcpy(char *dst, const char *src);
 void			clear_arr_of_strs(char **sp);
-char			**copy_arr_of_strs(char **p, int len);
+char			**copy_arr_of_strs(char **p, int len, int purge);
 char			**add_arr_of_strs(char **p, char *str);
 void			sort_arr_of_strs(char **str, int order_type);
 int				ft_strcmp(const char *s1, const char *s2);

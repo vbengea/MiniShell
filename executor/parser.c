@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/05 15:41:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/06 01:01:32 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_ast_node	*create_node_command(char *context, t_redirection *redirs, int *index
 	ast->nid = *index;
 	*index = *index + 1;
 	free(args);
+	// free(context);
 	return (ast);
 }
 
@@ -118,6 +119,7 @@ static	t_ast_node	*get_execution_node(char *context, t_mini_token level, t_redir
 static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level, t_redirection *redirs, int *index)
 {
 	t_ast_node	*nod;
+	char		*t;
 
 	if (is_node((s + *i), "&&"))
 		nod = get_node_by_token(AND);
@@ -128,13 +130,17 @@ static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level, t_redire
 	if (*ast == NULL)
 	{
 		*ast = nod;
-		(*ast)->left = get_execution_node(ft_substr(s, *k, *i - *k), level, redirs, index);
+		t = ft_substr(s, *k, *i - *k);
+		(*ast)->left = get_execution_node(t, level, redirs, index);
+		free(t);
 	}
 	else
 	{
 		nod->left = *ast;
-		(*ast)->right = get_execution_node(ft_substr(s, *k, *i - *k), level, redirs, index);
+		t = ft_substr(s, *k, *i - *k);
+		(*ast)->right = get_execution_node(t, level, redirs, index);
 		*ast = nod;
+		free(t);
 	}
 	*i += 2;
 	*k = *i;
@@ -145,6 +151,7 @@ t_ast_node	*create_structure(char *context, t_mini_token level, t_redirection *r
 	t_ast_node	*ast;
 	int			i;
 	int			k;
+	char		*s;
 
 	i = 0;
 	k = 0;
@@ -159,11 +166,17 @@ t_ast_node	*create_structure(char *context, t_mini_token level, t_redirection *r
 			i++;
 	}
 	if (ast == NULL)
-		ast = get_execution_node(ft_substr(context, k, i - k), level, redirs, index);
+	{
+		s = ft_substr(context, k, i - k);
+		ast = get_execution_node(s, level, redirs, index);
+		free(s);
+	}
 	else
 	{
-		ast->right = get_execution_node(ft_substr(context, k, i - k), level, redirs, index);
+		s = ft_substr(context, k, i - k);
+		ast->right = get_execution_node(s, level, redirs, index);
 		ast->right->side = 1;
+		free(s);
 	}
 	return (ast);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/25 16:37:00 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/06 00:11:03 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@ char	**unset_bi(t_ast_node *node, char **env)
 		i++;
 	}
 	free(str);
-	return (copy_arr_of_strs(env, 0));
+	return (copy_arr_of_strs(env, 0, 1));
 }
