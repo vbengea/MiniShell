@@ -18,15 +18,14 @@
 	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
 
 		+ Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
-
 		+ With the updated signals we need to handle them at execution level; this means
 		that a child process should execute:
-			- signal(SIGINT, SIG_DFL)
-			- signal(SIGQUIT, SIG_DLF)
+			- `signal(SIGINT, SIG_DFL)`
+			- `signal(SIGQUIT, SIG_DFL)`
 		in order to restore the behavior of the signals. 
 		The parent process must ignore them:
-			- signal(SIGINT, SIG_IGN)
-			- signal(SIGQUIT, SIG_IGN)
+			- `signal(SIGINT, SIG_IGN)`
+			- `signal(SIGQUIT, SIG_IGN)`
 		When running in a subshell, the child becomes the parent so it must replicate the signal handling. 
 
 * Problems:
