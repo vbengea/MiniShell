@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/06 15:42:07 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:50:39 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static	void	intercepting_signals(void)
 void	set_tty(void)
 {
 	struct termios t;
-	char		*path;
 
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
