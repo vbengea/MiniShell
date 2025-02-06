@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 19:16:31 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/03 20:14:58 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/05 09:12:35 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,46 +36,46 @@ void add_redirection(t_ast_node *node, t_redirect_type type, t_out_redirect_type
 	}
 }
 
-void print_ast(t_ast_node *node, int level)
-{
-	if (!node)
-		return;
+// void print_ast(t_ast_node *node, int level)
+// {
+// 	if (!node)
+// 		return;
 
-	// Indent based on the level
-	for (int i = 0; i < level; i++)
-		printf("  ");
+// 	// Indent based on the level
+// 	for (int i = 0; i < level; i++)
+// 		printf("  ");
 
-	// Print the node type
-	printf("Node type: %d", node->type);
+// 	// Print the node type
+// 	printf("Node type: %d", node->type);
 
-	// Print command arguments if they exist
-	if (node->args)
-	{
-		printf(", args: ");
-		for (int j = 0; node->args[j] != NULL; j++)
-		{
-			printf("%s ", node->args[j]);
-		}
-	}
+// 	// Print command arguments if they exist
+// 	if (node->args)
+// 	{
+// 		printf(", args: ");
+// 		for (int j = 0; node->args[j] != NULL; j++)
+// 		{
+// 			printf("%s ", node->args[j]);
+// 		}
+// 	}
 
-	// Print redirections if they exist
-	if (node->redirs)
-	{
-		t_redirection *redir = node->redirs;
-		while (redir)
-		{
-			printf(", Redirect type: %d, File: %s", redir->type, redir->file);
-			redir = redir->next;
-		}
-	}
+// 	// Print redirections if they exist
+// 	if (node->redirs)
+// 	{
+// 		t_redirection *redir = node->redirs;
+// 		while (redir)
+// 		{
+// 			printf(", Redirect type: %d, File: %s", redir->type, redir->file);
+// 			redir = redir->next;
+// 		}
+// 	}
 
-	// End the line
-	printf("\n");
+// 	// End the line
+// 	printf("\n");
 
-	// Recursively print the left and right subtrees
-	print_ast(node->left, level + 1);
-	print_ast(node->right, level + 1);
-}
+// 	// Recursively print the left and right subtrees
+// 	print_ast(node->left, level + 1);
+// 	print_ast(node->right, level + 1);
+// }
 
 void	free_ast(t_ast_node *node)
 {

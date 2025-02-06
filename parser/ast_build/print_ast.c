@@ -6,19 +6,22 @@
 /*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:17 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/30 10:46:24 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/05 11:54:55 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-void	print_ast(t_ast_node *node, int level)
+void print_ast(t_ast_node *node, int level)
 {
 	if (!node)
 		return;
+
 	for (int i = 0; i < level; i++)
 		printf("  ");
+
 	printf("Node type: %d", node->type);
+
 	if (node->args)
 	{
 		printf(", args: ");
@@ -27,15 +30,19 @@ void	print_ast(t_ast_node *node, int level)
 			printf("%s ", node->args[j]);
 		}
 	}
-	if (node->file)
+
+	if (node->type == NODE_CMND && node->redirs)
 	{
-		printf(", file: %s", node->file);
+		t_redirection *redir = node->redirs;
+		while (redir)
+		{
+			printf(", Redirect type: %d, File: %s", redir->type, redir->file);
+			redir = redir->next;
+		}
 	}
 
-	printf("  Redirect type: %d", node->redirect_type);
-
-
 	printf("\n");
+
 	print_ast(node->left, level + 1);
 	print_ast(node->right, level + 1);
 }

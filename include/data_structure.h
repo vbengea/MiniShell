@@ -6,7 +6,7 @@
 /*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/05 08:28:06 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/05 08:36:30 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ typedef enum e_node_type
 {
 	NODE_CMND,
 	NODE_PIPE,
-	NODE_REDIRECT, // This will no longer be a type of node.
 	NODE_AND,
 	NODE_OR ,
 	NODE_GROUP

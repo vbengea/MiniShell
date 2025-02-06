@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+         #
+#    By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:11:00 by vbengea           #+#    #+#              #
-#    Updated: 2025/02/03 19:18:53 by vbengea          ###   ########.fr        #
+#    Updated: 2025/02/05 08:37:07 by vbengea          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
 # SRC_DIR = src
 
-SRC_FILES = AST/*.c \
+SRC_FILES = ast_build/*.c \
 			tokenizer/*.c \
 			main.c
 
