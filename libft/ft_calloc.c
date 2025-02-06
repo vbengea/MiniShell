@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 09:26:48 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/06 00:37:21 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/06 13:16:36 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char **copy_arr_of_strs(char **p, int len, int purge)
 			i++;
 		}
 		while (i < len)
-			arr[i++] = ft_strdup(" "); // LEAKS
+			arr[i++] = ft_strdup(" ");
 		arr[len] = NULL;
 	}
 	if (purge)
@@ -92,7 +92,10 @@ char **add_arr_of_strs(char **p, char *str)
 		len++;
 	arr = copy_arr_of_strs(p, len + 1, 1);
 	if (str && arr && arr[len])
+	{
+		free(arr[len]);
 		arr[len] = ft_strdup(str);
+	}
 	return (arr);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/05 15:39:15 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/06 14:04:35 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void			detect_out_redirection(t_ast_node *node);
 int				has_outward_redirection(t_ast_node *ast);
 int				has_inward_redirection(t_redirection *lst);
 void			multiple_output_redirections(t_ast_node *node);
-void			here_doc(char *delimit);
+void			here_doc(char *delimit, int do_write);
 void			pipex_redirect(t_ast_node *node, int fd[2], int files[3], int is_last);
 
 void			cleanup(char *err);

@@ -3,6 +3,10 @@ NAME			:=	minishell
 CC				:= 	cc
 CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
 SFLAGS			:= 	-g3 -fsanitize=address
+VALGRIND_PATH	:=	/home/juaflore/sgoinfre/minishare/valgrind/valgrind.supp
+VALGRIND_VALE	:=	/home/juaflore/sgoinfre/minishare/valgrind/valgrind.supp
+VALGRIND_JUAF	:=	/home/juaflore/sgoinfre/minishare/valgrind/valgrind.supp
+VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(VALGRIND_PATH)
 LDFLAGS 		:=	-lreadline -L/opt/homebrew/opt/readline/lib
 
 LIBFT_DIR		:= 	./libft
@@ -109,13 +113,11 @@ git: norm
 	git push
 
 runner: all
-	./minishell
+	./$(NAME)
 	#make -C . fclean
 
-valgrind: fclean $(LIBFT) $(OBJB) $(INCLUDE)
-	$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o minishell
-	valgrind -s --tool=memcheck --leak-check=yes ./minishell
-	make -C . fclean
+valgrind: re
+	valgrind $(VFLAGS) ./$(NAME)
 
 sanitizer: fclean $(LIBFT) $(OBJB) $(INCLUDE)
 	$(CC) $(CFLAGS) $(SRC) $(LIBFT) $(SFLAGS) -o minishell

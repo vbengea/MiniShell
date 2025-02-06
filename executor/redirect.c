@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/05 02:25:10 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/06 15:14:18 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,70 @@ void	detect_out_redirection(t_ast_node *node)
 	}
 }
 
+// void	ft_lstred(t_redirection *lst, t_redirection *tmp)
+// {
+// 	tmp = malloc(sizeof(t_redirection));
+
+// 	t_redirection *temp;
+
+// 	temp = lst;
+
+// 	if (lst)
+// 	{
+// 		lst->file = content;
+// 		lst->next = NULL;
+// 	}
+// 	return (lst);
+// }
+
+t_redirection	*ft_lstred(t_redirection *node)
+{
+	t_redirection	*lst;
+
+	lst = malloc(sizeof(t_redirection));
+	if (lst)
+	{
+		lst->file = node->file;
+		lst->type = node->type;
+		lst->otype = node->otype;
+		lst->next = NULL;
+	}
+	return (lst);
+}
+
+void	executer(t_redirection *lst, t_redirection **rev)
+{
+	redlist_add(rev, ft_lstred(lst));
+	if(lst->next)
+		executer(lst->next, rev);
+}
+
 void	detect_in_redirection(t_ast_node *node)
 {
 	if (has_inward_redirection(node->redirs))
 	{
+		bool	is_first_time;
 		t_redirection *lst = node->redirs;
-		char **arr = malloc(sizeof(char *) * 1);
+		t_redirection *rev = NULL;
+		char **arr = malloc(sizeof(char *) * 2);
 		arr[0] = NULL;
-		while (lst)
+		is_first_time = true;
+		executer(lst, &rev);
+		lst = rev;
+		while (lst) //<<T1 cat -e <<T2 <<T3
 		{
 			if (lst->type == REDIRECT_IN)
-				arr = add_arr_of_strs(arr, lst->file);
+			{
+				if (is_first_time)
+					arr = add_arr_of_strs(arr, lst->file);
+				is_first_time = false;
+			}
 			else if (lst->type == REDIRECT_HEREDOC)
 			{
-				here_doc(lst->file);
-				arr = add_arr_of_strs(arr, "__HEREDOC__");
+				here_doc(lst->file, 1);
+				if (is_first_time)
+					arr = add_arr_of_strs(arr, "__HEREDOC__");
+				is_first_time = false;
 			}
 			if (lst->next == NULL)
 				break ;
@@ -69,7 +118,7 @@ void	detect_in_redirection(t_ast_node *node)
 		char *content = read_files_content(arr);
 		if (content)
 		{
-			int tmp = open("__INFILE__", O_RDWR | O_CREAT | O_TRUNC | O_DSYNC, 0666);
+			int tmp = open("__INFILE__", O_RDWR | O_CREAT | O_TRUNC, 0666);
 			write(tmp, content, ft_strlen(content));
 			close(tmp);
 			tmp = open("__INFILE__", O_RDONLY, 0);
@@ -202,6 +251,9 @@ static	void	redlist_out(t_redirection *lst, char *content)
 {
 	int	tmp;
 	int	flags;
+	int	is_first;
+
+	is_first = 1;
 	while (lst)
 	{
 		if (lst->type == REDIRECT_OUT || lst->type == REDIRECT_APPEND)
@@ -211,7 +263,11 @@ static	void	redlist_out(t_redirection *lst, char *content)
 			else
 				flags = O_WRONLY | O_CREAT | O_APPEND;
 			tmp = open(lst->file, flags, 0666);
-			write(tmp, content, ft_strlen(content));
+			if (is_first)
+			{
+				write(tmp, content, ft_strlen(content));
+				is_first = 0;
+			}
 			close(tmp);
 		}
 		if (lst->next == NULL)
@@ -251,7 +307,7 @@ void	multiple_output_redirections(t_ast_node *node)
 	}
 }
 
-void	here_doc(char *delimit)
+void	here_doc(char *delimit, int do_write)
 {
 	char	*str;
 	int		str_len;
@@ -262,7 +318,8 @@ void	here_doc(char *delimit)
 	str_len = ft_strlen(str);
 	while (ft_strncmp(str, delimit, str_len - 1) != 0)
 	{
-		write(fd, str, ft_strlen(str));
+		if (do_write)
+			write(fd, str, ft_strlen(str));
 		free(str);
 		str = get_next_line(STDIN_FILENO);
 		str_len = ft_strlen(str);

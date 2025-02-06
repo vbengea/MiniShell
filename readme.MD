@@ -1,7 +1,9 @@
 
 * To implement:
 
-	- Implement subshell redirections (execution time)
+	- Resolver leaks de memoria con valgrind y santizer.
+
+	- HEREDOC ha dejado de funcionar en el pipeline.
 
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 
@@ -10,6 +12,8 @@
 		+ echo no imprime bien:
 			echo "ec$PWD ho"
 		+ echo no debe expandir variables en comillas simples.
+
+	- Implement subshell redirections (execution time)
 
 	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
 
