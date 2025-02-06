@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/06 00:07:56 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:38:51 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/headers.h"
 
-extern int SIGNAL;
+volatile sig_atomic_t g_running = 1;
 
 int main(int argc, char **argv, char **env)
 {
@@ -29,7 +29,10 @@ int main(int argc, char **argv, char **env)
 	{
 		input = readline(GREEN "minishell$ " RESET);
 		if (!input)
+		{
+			write(1, "exit\n", 5);
 			break ;
+		}
 		else if (input[0] == '\0')
 			continue ;
 		add_history(input);
@@ -43,9 +46,7 @@ int main(int argc, char **argv, char **env)
 			files[0] = STDIN_FILENO;
 			files[1] = STDOUT_FILENO;
 			files[2] = 0;
-			SIGNAL = 1;
 			selector(ast, &env, files);
-			SIGNAL = -1;
 			free(input);
 			free_redirect_ast(ast);
 		}
