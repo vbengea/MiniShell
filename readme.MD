@@ -1,6 +1,11 @@
 
 * To implement:
 
+	- HEREDOC ha dejado de funcionar en el pipeline.
+		<<T1 cat -e | cat -e | cat -e
+		<<T1 cat -e | cat -e | cat -e > t1
+		<<T1 cat -e | cat -e | cat -e > t1 >> t2
+
 	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
 
 		+ Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
@@ -50,12 +55,6 @@
 
 
 Solved issues
-
-	- HEREDOC ha dejado de funcionar en el pipeline.
-		<<T1 cat -e <<T2 <<T3
-		<<T1 cat -e | cat -e | cat -e
-		<<T1 cat -e | cat -e | cat -e > t1
-		<<T1 cat -e | cat -e | cat -e > t1 >> t2
 
 	- Implement subshell redirections (execution time)
 		(((ls) && ls) && ls) > t0
