@@ -20,7 +20,6 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args);
 t_ast_node	*handle_parentheses(t_token *tokens);
 t_ast_node	*build_command_node(t_token *tokens);
 t_ast_node	*build_operator_node(t_ast_node *left, t_token *split_point);
-t_ast_node	*create_redirect_node(t_token *token);
 
 t_token		*find_matching_paren(t_token *tokens);
 t_token		*find_split_point(t_token *tokens);

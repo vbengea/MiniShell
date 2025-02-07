@@ -57,7 +57,6 @@ Solved issues
 		<<T1 cat -e | cat -e | cat -e > t1
 		<<T1 cat -e | cat -e | cat -e > t1 >> t2
 
-
 	- Implement subshell redirections (execution time)
 		(((ls) && ls) && ls) > t0
 		(((ls > t3) && ls) > t2 && ls) > t1

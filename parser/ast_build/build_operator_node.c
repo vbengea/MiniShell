@@ -25,8 +25,6 @@ t_ast_node	*build_operator_node(t_ast_node *left, t_token *split_point)
 		root = create_ast_node(NODE_AND, NULL);
 	else if (split_point->type == TOKEN_OR)
 		root = create_ast_node(NODE_OR, NULL);
-	else if (is_redirect_token(split_point->type))
-		root = create_redirect_node(split_point);
 	if (split_point->next)
 		right = build_ast(split_point->next);
 	if (root)

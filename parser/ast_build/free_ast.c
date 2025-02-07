@@ -21,7 +21,7 @@ void	free_ast(t_ast_node *node)
 		return ;
 	free_ast(node->left);
 	free_ast(node->right);
-	if (node->type == NODE_CMND || node->type == NODE_REDIRECT)
+	if (node->type == NODE_CMND)
 	{
 		cmd_args = (char **)node->args;
 		if (cmd_args)

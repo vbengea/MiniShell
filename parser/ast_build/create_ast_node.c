@@ -22,8 +22,6 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args)
 	ft_bzero(node, sizeof(node));
 	node->type = type;
 	node->args = cmd_args;
-	node->file = NULL;
-	node->redirect_type = REDIRECT_NONE;
 	node->left = NULL;
 	node->right = NULL;
 	node->nid = 0;

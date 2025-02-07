@@ -27,14 +27,6 @@ void	print_ast(t_ast_node *node, int level)
 			printf("%s ", node->args[j]);
 		}
 	}
-	if (node->file)
-	{
-		printf(", file: %s", node->file);
-	}
-
-	printf("  Redirect type: %d", node->redirect_type);
-
-
 	printf("\n");
 	print_ast(node->left, level + 1);
 	print_ast(node->right, level + 1);

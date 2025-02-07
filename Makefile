@@ -54,7 +54,6 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/ast_build/handle_parentheses.c \
 					$(PARSER_DIR)/ast_build/build_operator_node.c \
 					$(PARSER_DIR)/ast_build/build_command_node.c \
-					$(PARSER_DIR)/ast_build/create_redirect_node.c \
 					$(PARSER_DIR)/ast_build/find_matching_paren.c \
 					$(PARSER_DIR)/ast_build/find_split_point.c \
 					$(BUILTINS_DIR)/cd.c \

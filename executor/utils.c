@@ -43,8 +43,6 @@ void	free_redirect_ast(t_ast_node *ast, int find_root)
 				free(p);
 			}
 		}
-		if (ast->file)
-			free(ast->file);
 		free(ast);
 	}
 }
