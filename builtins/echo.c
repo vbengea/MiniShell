@@ -188,19 +188,19 @@ void		echo_bi(t_ast_node *node, char **env)
 	while (params[i])
 	{
 		str = interpolation(params[i], env);
-		if (node->fd < 0)
+		if (node->out_fd < 0)
 			printf("%s ", str);
 		else
 		{
 			p = ft_strjoin(str, " ");
-			ft_putstr_fd(p, node->fd);
+			ft_putstr_fd(p, node->out_fd);
 			free(p);
 		}
 		free(str);
 		i++;
 	}
-	if (node->fd < 0)
+	if (node->out_fd < 0)
 		printf("\n");
 	else
-		ft_putchar_fd('\n', node->fd);
+		ft_putchar_fd('\n', node->out_fd);
 }

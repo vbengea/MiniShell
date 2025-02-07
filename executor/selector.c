@@ -29,6 +29,7 @@ void	set_history_status(int status, char ***env)
 void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 {
 	int		status;
+	char	*file;
 
 	(void) files;
 	status = 0;
@@ -37,15 +38,21 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 		if (waitpid(-1, &status, 0) == -1)
 		{
 			set_history_status(status, env);
-			if ((type == NODE_CMND || type == NODE_AND || type == NODE_OR) && status == 0)
+			if ((type == NODE_CMND || type == NODE_AND || type == NODE_OR || type == NODE_GROUP) && status == 0)
 				multiple_output_redirections(node);
-			if (access("__INFILE__", F_OK) == 0)
+			file = tmp_path(node->nid, REDIRECT_IN);
+			if (file)
 			{
-				unlink("__INFILE__");
+				if (access(file, F_OK) == 0)
+					unlink(file);
+				free(file);
 			}
-			if (access("__HEREDOC__", F_OK) == 0)
+			file = tmp_path(node->nid, REDIRECT_HEREDOC);
+			if (file)
 			{
-				unlink("__HEREDOC__");
+				if (access(file, F_OK) == 0)
+					unlink(file);
+				free(file);
 			}
 			if (status != 0 && node->parent && node->parent_type == NODE_AND)
 				node->parent->exit = status;
@@ -62,40 +69,52 @@ static	void	preexecute(t_ast_node *node, char ***env)
 	char	*str;
 	char	**args;
 
-	i = 1;
-	args = ft_split(node->args[0], ' ');
-	while (node->args[i])
+	if (node->type == NODE_CMND)
 	{
-		str = node->args[i];
-		node->args[i] = interpolation(str, *env);
-		args = expantion(str, args);
-		free(str);
-		i++;
+		i = 1;
+		args = ft_split(node->args[0], ' ');
+		while (node->args[i])
+		{
+			str = node->args[i];
+			node->args[i] = interpolation(str, *env);
+			args = expantion(str, args);
+			free(str);
+			i++;
+		}
+		clear_arr_of_strs(node->args);
+		node->args = args;
 	}
-	clear_arr_of_strs(node->args);
-	node->args = args;
 	detect_in_redirection(node);
 	detect_out_redirection(node);
 }
 
 static	void	postexecute(t_ast_node *node)
 {
+	char	*file;
+
 	multiple_output_redirections(node);
-	if (access("__INFILE__", F_OK) == 0)
+	file = tmp_path(node->nid, REDIRECT_IN);
+	if (file)
 	{
-		unlink("__INFILE__");
+		if (access(file, F_OK) == 0)
+			unlink(file);
+		free(file);
 	}
-	if (node->fd)
+	if (node->in_fd >= 0 && node->has_group_in_fd == 0)
 	{
-		close(node->fd);
-		node->fd = -1;
+		close(node->in_fd);
+		node->in_fd = -1;
+	}
+	if (node->out_fd >= 0 && node->has_group_out_fd == 0)
+	{
+		close(node->out_fd);
+		node->out_fd = -1;
 	}
 }
 
 void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) hold;
-	node->exit = -1;
 	if (node->left)
 	{
 		node->left->parent = node;
@@ -112,6 +131,16 @@ void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 	}
 	if (node->type == NODE_GROUP)
 	{
+		if (node->in_fd >= 0)
+		{
+			close(node->in_fd);
+			node->in_fd = -1;
+		}
+		if (node->out_fd >= 0)
+		{
+			close(node->out_fd);
+			node->out_fd = -1;
+		}
 		free_redirect_ast(node, 1);
 		clear_arr_of_strs(*env);
 		exit(0);
@@ -164,8 +193,8 @@ void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***e
 		f(node, env, 1, files);
 	else
 	{
-		if (node->parent_type != NODE_GROUP)
-			waiter(node->parent_type, node, env, files);
+		//if (node->parent_type != NODE_GROUP)
+		waiter(node->parent_type, node, env, files);
 	}
 }
 
@@ -195,5 +224,8 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 	else if (node->type == NODE_PIPE)
 		pipex(node, env, files, files[2]);
 	else if (node->type == NODE_GROUP)
+	{
+		preexecute(node, env);
 		forker(node, env, navigator, files);
+	}
 }

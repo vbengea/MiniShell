@@ -12,73 +12,54 @@
 
 #include "../include/headers.h"
 
-static	t_redirection	*parent_lookup(t_ast_node *ast)
-{
-	while (ast)
-	{
-		if (ast->parent == NULL)
-			break ;
-		ast = ast->parent;
-		if (ast->type == NODE_GROUP && ast->redirs)
-			return (ast->redirs);
-	}
-	return (NULL);
-}
-
 void	detect_out_redirection(t_ast_node *node)
 {
-	(void) parent_lookup;
+	char	*id;
+	char	*file;
+	int		tmp;
+
 	if (has_outward_redirection(node))
 	{
-		char	*id = ft_itoa(node->nid);
-		char	*file = ft_strjoin("__OUTFILE__", id);
-		int 	tmp = open(file, O_WRONLY | O_CREAT, 0666);
+		id = ft_itoa(node->nid);
+		file = tmp_path(node->nid, REDIRECT_OUT);
+		tmp = open(file, O_WRONLY | O_CREAT | O_TRUNC | O_APPEND, 0666);
 		free(id);
 		free(file);
 		if (tmp < 0)
 			return ;
-		node->fd = tmp;
-		if (!is_builtin(node))
+		node->out_fd = tmp;
+		if (node->type != NODE_GROUP && !is_builtin(node))
 		{
 			if (dup2(tmp, STDOUT_FILENO) == -1)
 				perror("(5) Error redirecting");
 		}
 	}
-}
-
-t_redirection	*ft_lstred(t_redirection *node)
-{
-	t_redirection	*lst;
-
-	lst = malloc(sizeof(t_redirection));
-	if (lst)
+	else if (has_group_redirection(node, 0))
 	{
-		lst->file = node->file;
-		lst->type = node->type;
-		lst->otype = node->otype;
-		lst->next = NULL;
+		if (node->type != NODE_GROUP && !is_builtin(node))
+		{
+			if (dup2(node->out_fd, STDOUT_FILENO) == -1)
+					perror("(6) Error redirecting");
+		}
 	}
-	return (lst);
 }
 
-void	executer(t_redirection *lst, t_redirection **rev)
-{
-	redlist_add(rev, ft_lstred(lst));
-	if(lst->next)
-		executer(lst->next, rev);
-}
-
-void	detect_in_redirection(t_ast_node *node)
+void	detect_in_redirection(t_ast_node *node)	// TODO: reversing the list only works for heredoc
 {
 	if (has_inward_redirection(node->redirs))
 	{
-		bool	is_first_time;
-		t_redirection *lst = node->redirs;
-		t_redirection *rev = NULL;
-		char **arr = malloc(sizeof(char *) * 2);
+		bool			is_first_time;
+		t_redirection	*lst = node->redirs;
+		t_redirection	*rev = NULL;
+		char 			**arr = malloc(sizeof(char *) * 2);
+		char			*file;
+		int				tmp;
+		char			*content;
+
+		arr = malloc(sizeof(char *) * 2);
 		arr[0] = NULL;
 		is_first_time = true;
-		executer(lst, &rev);
+		reverse_redirections(lst, &rev);
 		lst = rev;
 		while (lst)
 		{
@@ -90,103 +71,152 @@ void	detect_in_redirection(t_ast_node *node)
 			}
 			else if (lst->type == REDIRECT_HEREDOC)
 			{
-				here_doc(lst->file, 1);
+				here_doc(node, lst->file, 1);
 				if (is_first_time)
-					arr = add_arr_of_strs(arr, "__HEREDOC__");
+				{
+					file = tmp_path(node->nid, REDIRECT_HEREDOC);
+					if (file)
+					{
+						arr = add_arr_of_strs(arr, file);
+						free(file);
+					}
+				}
 				is_first_time = false;
 			}
 			if (lst->next == NULL)
 				break ;
 			lst = lst->next;
 		}
-		char *content = read_files_content(arr);
+		content = read_files_content(arr);
+		clear_arr_of_strs(arr);
 		if (content)
 		{
-			int tmp = open("__INFILE__", O_RDWR | O_CREAT | O_TRUNC, 0666);
-			write(tmp, content, ft_strlen(content));
-			close(tmp);
-			tmp = open("__INFILE__", O_RDONLY, 0);
-
-			if (is_builtin(node))
-				node->fd = tmp;
-			else
+			printf("%s\n", content);
+			file = tmp_path(node->nid, REDIRECT_IN);
+			if (file)
 			{
-				if (dup2(tmp, STDIN_FILENO) == -1)
-					perror("(4) Error redirecting");
+				tmp = open(file, O_RDWR | O_CREAT | O_TRUNC, 0666);
+				if (tmp >= 0)
+				{
+					write(tmp, content, ft_strlen(content));
+					node->in_fd = tmp;
+					close(tmp);
+					if (node->type != NODE_GROUP && !is_builtin(node))
+					{
+						tmp = open(file, O_RDONLY);
+						node->in_fd = tmp;
+						if (dup2(node->in_fd, STDIN_FILENO) == -1)
+							perror("(4) Error redirecting");
+					}
+				}
+				free(file);
 			}
+			free(content);
+		}
+	}
+	else if (has_group_redirection(node, 1))
+	{
+		if (node->type != NODE_GROUP && !is_builtin(node))
+		{
+			if (dup2(node->in_fd, STDIN_FILENO) == -1)
+				perror("(7) Error redirecting");
 		}
 	}
 }
 
-int		has_outward_redirection(t_ast_node *ast)
+char	*read_fd_content(int tmp)
 {
-	t_redirection	*lst;
+	char	*str;
+	char	*clear;
+	char	*content;
 
-	lst = ast->redirs;
-	while (lst)
+	str = NULL;
+	clear = NULL;
+	content = ft_strdup("");
+	while (tmp >= 0)
 	{
-		if (lst->type == REDIRECT_OUT || lst->type == REDIRECT_APPEND)
-			return (1);
-		if (lst->next == NULL)
+		str = get_next_line(tmp);
+		if (str)
+		{
+			clear = content;
+			content = ft_strjoin(content, str);
+			free(clear);
+			free(str);
+			if (!content)
+				return (NULL);
+		}
+		else
 			break ;
-		lst = lst->next;
 	}
-	return (0);
+	return (content);
 }
 
-int		has_inward_redirection(t_redirection *lst)
+char	*read_path_content(char *path)
 {
-	while (lst)
-	{
-		if (lst->type == REDIRECT_IN || lst->type == REDIRECT_HEREDOC)
-			return (1);
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-	return (0);
-}
+	char	*content;
+	char	*clear;
+	char	*str;
 
-void	ft_rediter(t_redirection *lst, void (*f)(t_redirection *))
-{
-	while (lst)
+	content = NULL;
+	clear = NULL;
+	str = NULL;
+	int tmp = open(path, O_RDONLY);
+	if(tmp >= 0)
 	{
-		(*f)(lst);
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
+		clear = content;
+		str = read_fd_content(tmp);
+		if (str)
+		{
+			if (content)
+			{
+				content = ft_strjoin(content, str);
+				free(clear);
+				free(str);
+			}
+			else
+				content = str;
+			if (!content)
+				return (NULL);
+		}
+		close(tmp);
 	}
+	return (content);
 }
 
 char	*read_files_content(char **files)
 {
 	int		i;
-	char	*clear = NULL;
-	char	*str = NULL;
-	char	*content = ft_strdup("");
+	char	*clear;
+	char	*str;
+	char	*content;
 
 	i = 0;
-	if (content)
+	str = NULL;
+	clear = NULL;
+	content = NULL;
+	while (files[i])
 	{
-		while (files[i])
+		int tmp = open(files[i], O_RDONLY);
+		if(tmp >= 0)
 		{
-			int tmp = open(files[i], O_RDONLY);
-			while (tmp >= 0)
+			clear = content;
+			str = read_fd_content(tmp);
+			if (str)
 			{
-				str = get_next_line(tmp);
-				if (str)
+				if (content)
 				{
-					clear = content;
 					content = ft_strjoin(content, str);
 					free(clear);
 					free(str);
 				}
 				else
-					break ;
+					content = str;
+				if (!content)
+					return (NULL);
 			}
 			close(tmp);
-			i++;
 		}
+		i++;
 	}
 	return (content);
 }
@@ -262,52 +292,70 @@ static	void	redlist_out(t_redirection *lst, char *content)
 
 void	multiple_output_redirections(t_ast_node *node)
 {
-	char	**arr;
 	char	*content;
+	char	*file;
 
-	if (has_outward_redirection(node))
+	if (node->has_group_out_fd == 0)
 	{
-		arr = malloc(sizeof(char *) * 2);
-		char	*id = ft_itoa(node->nid);
-		char	*out = ft_strjoin("__OUTFILE__", id);
-		if (arr)
+		file = tmp_path(node->nid, REDIRECT_OUT);
+		if (file)
 		{
-			arr[0] = ft_strdup(out);
-			arr[1] = NULL;
-			content = read_files_content(arr);
-			clear_arr_of_strs(arr);
+			content = read_path_content(file);
 			if (content)
 			{
 				redlist_out(node->redirs, content);
 				free(content);
 			}
+			if (access(file, F_OK) == 0)
+				unlink(file);
+			free(file);
 		}
-		if (access(out, F_OK) == 0)
-		{
-			unlink(out);
-		}
-		free(out);
-		free(id);
 	}
 }
 
-void	here_doc(char *delimit, int do_write)
+char	*tmp_path(int nid, t_redirect_type type)
+{
+	char	*id;
+	char	*file;
+
+	id = ft_itoa(nid);
+	file = NULL;
+	if (id)
+	{
+		if (type == REDIRECT_OUT || type == REDIRECT_APPEND)
+			file = ft_strjoin("tmp/__OUTFILE__", id);
+		else if (type == REDIRECT_IN)
+			file = ft_strjoin("tmp/__INFILE__", id);
+		else if (type == REDIRECT_HEREDOC)
+			file = ft_strjoin("tmp/__HEREDOC__", id);
+		free(id);
+	}
+	return (file);
+}
+
+void	here_doc(t_ast_node *node, char *delimit, int do_write)
 {
 	char	*str;
+	char	*file;
 	int		str_len;
 	int		fd;
 
-	fd = open("__HEREDOC__", O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	str = get_next_line(STDIN_FILENO);
-	str_len = ft_strlen(str);
-	while (ft_strncmp(str, delimit, str_len - 1) != 0)
+	file = tmp_path(node->nid, REDIRECT_HEREDOC);
+	if (file)
 	{
-		if (do_write)
-			write(fd, str, ft_strlen(str));
-		free(str);
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		free(file);
 		str = get_next_line(STDIN_FILENO);
 		str_len = ft_strlen(str);
+		while (ft_strncmp(str, delimit, str_len - 1) != 0)
+		{
+			if (do_write)
+				write(fd, str, ft_strlen(str));
+			free(str);
+			str = get_next_line(STDIN_FILENO);
+			str_len = ft_strlen(str);
+		}
+		free(str);
+		close(fd);	
 	}
-	free(str);
-	close(fd);
 }

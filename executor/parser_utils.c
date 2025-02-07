@@ -22,7 +22,7 @@ void	ast_printer(t_ast_node *ast, int level)
 			printf("  ");
 		if (ast->type == NODE_CMND || ast->type == NODE_GROUP)
 		{
-			printf("TYPE: %d [NID:%d] [SIDE:%d] [ARGS]: ", ast->type, ast->nid, ast->side);
+			printf("[TYPE:%d] [NID:%d] [SIDE:%d] [ARGS]: ", ast->type, ast->nid, ast->side);
 			i = 0;
 			while (ast->args && ast->args[i])
 				printf("%s ", ast->args[i++]);

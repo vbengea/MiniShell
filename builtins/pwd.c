@@ -18,11 +18,11 @@ void	pwd_bi(t_ast_node *node)
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		if (node->fd < 0)
+		if (node->out_fd < 0)
 			printf("%s\n", cwd);
 		else
 		{
-			ft_putstrnl_fd(cwd, node->fd);
+			ft_putstrnl_fd(cwd, node->out_fd);
 		}
 	}
 }

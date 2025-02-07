@@ -14,10 +14,10 @@
 
 void	exit_bi(t_ast_node *node, char **env)
 {
-	if (node->fd < 0)
+	if (node->out_fd < 0)
 		printf("exit\n");
 	else
-		write(node->fd, "exit\n", 5);
+		write(node->out_fd, "exit\n", 5);
 	while (node->parent)
 		node = node->parent;
 	free_redirect_ast(node, 1);

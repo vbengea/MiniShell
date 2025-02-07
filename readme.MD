@@ -1,18 +1,6 @@
 
 * To implement:
 
-	- Implement subshell redirections (execution time)
-
-	- HEREDOC ha dejado de funcionar en el pipeline.
-
-	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
-
-		+ In bash the export command has a different format:
-			export <key>=<value>
-		+ echo no imprime bien:
-			echo "ec$PWD ho"
-		+ echo no debe expandir variables en comillas simples.
-
 	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
 
 		+ Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
@@ -25,6 +13,15 @@
 			- `signal(SIGINT, SIG_IGN)`
 			- `signal(SIGQUIT, SIG_IGN)`
 		When running in a subshell, the child becomes the parent so it must replicate the signal handling. 
+
+	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
+
+		+ In bash the export command has a different format:
+			export <key>=<value>
+		+ echo no imprime bien:
+			echo "ec$PWD ho"
+		+ echo no debe expandir variables en comillas simples.
+
 
 * Problems:
 
@@ -46,10 +43,25 @@
 
 	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
+		bash-3.2$ ((ls) >t2 | cat -e)
+		bash-3.2$ ((ls) >t2 >t1 >t3 | cat -e)
+
 	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
 
 
 Solved issues
+
+	- HEREDOC ha dejado de funcionar en el pipeline.
+		<<T1 cat -e <<T2 <<T3
+		<<T1 cat -e | cat -e | cat -e
+		<<T1 cat -e | cat -e | cat -e > t1
+		<<T1 cat -e | cat -e | cat -e > t1 >> t2
+
+
+	- Implement subshell redirections (execution time)
+		(((ls) && ls) && ls) > t0
+		(((ls > t3) && ls) > t2 && ls) > t1
+		(((ls > t3) && ls) && ls) > t1
 
 	- Resolver leaks de memoria con valgrind y santizer.
 

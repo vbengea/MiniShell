@@ -4,9 +4,9 @@ CC				:= 	cc
 CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
 SFLAGS			:= 	-g3 -fsanitize=address
 
-VALGRIND_PATH	:=	./suppressions/valgrind.supp
-VALGRIND_VALE	:=	./suppressions/valgrind.supp
-VALGRIND_JUAF	:=	./suppressions/mac.supp
+VALGRIND_PATH	:=	./tmp/suppressions/valgrind.supp
+VALGRIND_VALE	:=	./tmp/suppressions/valgrind.supp
+VALGRIND_JUAF	:=	./tmp/suppressions/mac.supp
 VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(VALGRIND_JUAF)
 LDFLAGS 		:=	-lreadline -L/opt/homebrew/opt/readline/lib
 
@@ -21,6 +21,7 @@ INCLUDE			:= 	./include/headers.h
 
 SRC				:= 	main.c\
 					$(EXEC_DIR)/utils.c \
+					$(EXEC_DIR)/utils_redis.c \
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
 					$(EXEC_DIR)/pipex.c \
@@ -84,7 +85,7 @@ clean:
 	rm -f $(SIGNALS_DIR)/*.o
 	rm -f $(WILDCARD_DIR)/*.o
 	rm -rf *.dSYM
-	rm -f t1 t2 t3 t4 t5
+	rm -f t0 t1 t2 t3 t4 t5 tmp/__*
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean

@@ -70,11 +70,15 @@ int    is_builtin(t_ast_node *node)
 {
 	char	*b[8] = { "cd", "echo", "env", "exit", "export", "pwd", "unset", NULL };
 	int		i = 0;
-	while (b[i])
+
+	if (node->type == NODE_CMND && node->args)
 	{
-		if (ft_strncmp(node->args[0], b[i], ft_strlen(b[i])) == 0)
-			return (1);
-		i++;
+		while (b[i])
+		{
+			if (ft_strncmp(node->args[0], b[i], ft_strlen(b[i])) == 0)
+				return (1);
+			i++;
+		}
 	}
 	return (0);
 }

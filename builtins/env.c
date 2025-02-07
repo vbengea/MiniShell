@@ -28,12 +28,12 @@ void		env_bi(t_ast_node *node, char **env, int sorted)
 		{
 			sort_arr_of_strs(p, 1);
 			while (p && p[i])
-				if (node->fd < 0)
+				if (node->out_fd < 0)
 					printf("declare -x %s\n", p[i++]);
 				else
 				{
 					str = ft_strjoin("declare -x ", p[i++]);
-					ft_putstrnl_fd(str, node->fd);
+					ft_putstrnl_fd(str, node->out_fd);
 					free(str);
 				}
 			clear_arr_of_strs(p);
@@ -42,9 +42,9 @@ void		env_bi(t_ast_node *node, char **env, int sorted)
 	else
 		while (env && env[i])
 		{
-			if (node->fd < 0)
+			if (node->out_fd < 0)
 				printf("%s\n", env[i++]);
 			else
-				ft_putstrnl_fd(env[i++], node->fd);
+				ft_putstrnl_fd(env[i++], node->out_fd);
 		}
 }

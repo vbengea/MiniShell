@@ -39,7 +39,7 @@ void			detect_out_redirection(t_ast_node *node);
 int				has_outward_redirection(t_ast_node *ast);
 int				has_inward_redirection(t_redirection *lst);
 void			multiple_output_redirections(t_ast_node *node);
-void			here_doc(char *delimit, int do_write);
+void			here_doc(t_ast_node *node, char *delimit, int do_write);
 void			pipex_redirect(t_ast_node *node, int fd[2], int files[3], int is_last);
 
 void			cleanup(char *err);
@@ -63,8 +63,14 @@ t_ast_node		*get_node_by_token(t_mini_token token);
 int				is_node(char *context, char *term);
 int				is_control_character(char *context);
 char			*read_files_content(char **files);
+char			*read_fd_content(int tmp);
 
 t_ast_node		*create_node_command(char *str, int *index);
 t_ast_node		*create_structure(char *context, t_mini_token token, int *index);
+
+t_redirection	*ft_lstred(t_redirection *node);
+void			reverse_redirections(t_redirection *lst, t_redirection **rev);
+int				has_group_redirection(t_ast_node *ast, int is_infile);
+char			*tmp_path(int nid, t_redirect_type type);
 
 #endif

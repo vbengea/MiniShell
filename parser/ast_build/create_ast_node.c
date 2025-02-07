@@ -29,7 +29,10 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args)
 	node->nid = 0;
 	node->side = 0;
 	node->exit = 0;
-	node->fd = -1;
+	node->in_fd = -1;
+	node->out_fd = -1;
+	node->has_group_in_fd = 0;
+	node->has_group_out_fd = 0;
 	node->parent = NULL;
 	node->redirs = NULL;
 	return (node);

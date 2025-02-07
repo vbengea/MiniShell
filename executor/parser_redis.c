@@ -110,7 +110,6 @@ char *parse_redirections(t_ast_node *ast, char *str)
 {
 	int		i;
 	int		j;
-	// char	*s;
 	char	*p;
 
 	i = 0;
@@ -139,47 +138,5 @@ char *parse_redirections(t_ast_node *ast, char *str)
 		}
 		i++;
 	}
-	// s = ft_strtrim(str, " ");
 	return (str);
-}
-
-t_redirection	*redlist_new(void *content)
-{
-	t_redirection	*lst;
-
-	lst = malloc(sizeof(t_redirection));
-	if (lst)
-	{
-		lst->file = content;
-		lst->next = NULL;
-	}
-	return (lst);
-}
-
-void	redlist_add(t_redirection **lst, t_redirection *new)
-{
-	t_redirection	*tmp;
-
-	tmp = *lst;
-	*lst = new;
-	(*lst)->next = tmp;
-}
-
-void	redlist_iter(t_redirection *lst, void (*f)(void *))
-{
-	while (lst)
-	{
-		(*f)(lst->file);
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-}
-
-void	print_redirs(void *content)
-{
-	char *str;
-
-	str = (char *) content;
-	printf("(%s) ", str);
 }

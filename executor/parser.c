@@ -33,16 +33,22 @@ t_ast_node	*create_group_command(char *context, int *index)
 	int			j;
 	char		*reds;
 	char		*pars;
+	char		*clear;
 	int			p;
 	int			len;
+	char		c;
+	bool		parse;
 
 	ast = NULL;
 	i = 0;
 	p = 0;
+	parse = false;
 	while (ft_isspace(context[i]))
 		i++;
 	context = (context + i);
 	ast = get_node_by_token(SUBSHELL);
+	ast->nid = *index;
+	*index = *index + 1;
 	reds = ft_strdup(context);
 	len = ft_strlen(reds);
 	pars = malloc(len + 1);
@@ -54,22 +60,39 @@ t_ast_node	*create_group_command(char *context, int *index)
 	j = 0;
 	while (reds[i])
 	{
+		c = reds[i];
 		if (reds[i] == '(')
+		{
+			if (p == 0)
+				reds[i] = ' ';
 			p++;
+		}
 		else if(reds[i] == ')')
 		{
 			p--;
+			if (p == 0)
+			{
+				reds[i] = ' ';
+				parse = false;
+			}
+		}
+		if (p > 0 && parse)
+		{
+			pars[j++] = c;
 			reds[i] = ' ';
 		}
 		if (p > 0)
-		{
-			pars[j++] = reds[i];
-			reds[i] = ' ';
-		}
+			parse = true;
 		i++;
 	}
+	clear = reds;
+	reds = ft_strtrim(reds, " ");
+	free(clear);
+	clear = pars;
+	pars = ft_strtrim(pars, " ");
+	free(clear);
 	parse_redirections(ast, reds);
-	ast->left = create_structure((pars + 1), AND, index);
+	ast->left = create_structure(pars, AND, index);
 	free(reds);
 	free(pars);
 	return (ast);
@@ -145,8 +168,6 @@ t_ast_node	*create_structure(char *context, t_mini_token level, int *index)
 	ast = NULL;
 	while (context[i])
 	{
-		// while (ft_isspace(context[i]))
-		// 	i++;
 		if (ft_isquote(context[i]) || context[i] == '(')
 			i += ff_subcontext(context + i);
 		else 
