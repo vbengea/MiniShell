@@ -125,4 +125,8 @@ sanitizer:
 	make -C . re
 	./$(NAME)
 
+sanitizer: $(LIBFT) $(OBJ) $(INCLUDE)
+	$(CC) $(SFLAGS) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
+	./$(NAME)
+
 .PHONY: all clean fclean re norm git runner valgrind sanitizer
