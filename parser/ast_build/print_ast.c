@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:17 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 13:04:52 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/07 13:39:27 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void print_ast(t_ast_node *node, int level)
 	if (node->parent)
 		printf(", Parent type: %d", node->parent->type);
 
+	if (node->nid)
+		printf(", Node id: %d", node->nid);
 	printf("\n");
 
 	print_ast(node->left, level + 1);

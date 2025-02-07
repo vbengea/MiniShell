@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:49:48 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 13:10:31 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/07 13:32:50 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_ast_node *build_operator_node(t_ast_node *left, t_token *split_point)
 		root->left = left;
 		root->right = right;
 
-		// Set parent pointers
 		if (root->left)
 		{
 			root->left->side = 0;
