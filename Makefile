@@ -111,7 +111,7 @@ git: norm
 	rm -f __tmp__
 	git add -A
 	git commit -am "$(shell date)"
-	git pull
+	git config pull.rebase false
 	# git push
 
 runner: all
