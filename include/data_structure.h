@@ -17,7 +17,6 @@ typedef enum e_node_type
 {
 	NODE_CMND,
 	NODE_PIPE,
-	NODE_REDIRECT, // This will no longer be a type of node.
 	NODE_AND,
 	NODE_OR ,
 	NODE_GROUP
@@ -67,15 +66,11 @@ typedef struct s_redirect_params
 	int		suffix;
 }	t_redirect_params;
 
-/* Update structure.
-	The proposed updates are commented untill they are implemented */
 typedef struct s_ast_node
 {
 	t_node_type			type;
 	t_node_type			parent_type;
-	t_redirection		*redirs; // Linked list for redirections
-	t_redirect_type		redirect_type; // This will no longer go here
-	char				*file; // This will no longer go here
+	t_redirection		*redirs;
 	char				**args;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
