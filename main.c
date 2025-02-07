@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 14:09:03 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/07 10:38:54 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
-	(void) token;
+	// (void) token;
 	set_tty();
 	env = copy_arr_of_strs(env, 0);
 	while (true)
@@ -33,9 +33,9 @@ int main(int argc, char **argv, char **env)
 		else if (input[0] == '\0')
 			continue ;
 		add_history(input);
-		// token = tokenize_input(input);
-		// ast = build_ast(token);
-		ast = build_redirect_ast(input);
+		token = tokenize_input(input);
+		ast = build_ast(token);
+		// ast = build_redirect_ast(input);
 		if (ast)
 		{
 			//print_ast(ast, 0);

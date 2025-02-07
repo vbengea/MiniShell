@@ -6,11 +6,28 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:49:48 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 13:32:50 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/07 19:59:13 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
+
+static void	assign_root(t_ast_node *root, t_ast_node *left, t_ast_node *right)
+{
+	root->left = left;
+	root->right = right;
+
+	if (root->left)
+	{
+		root->left->side = 0;
+		root->left->parent = root;
+	}
+	if (root->right)
+	{
+		root->right->side = 1;
+		root->right->parent = root;
+	}
+}
 
 t_ast_node *build_operator_node(t_ast_node *left, t_token *split_point)
 {
@@ -29,23 +46,9 @@ t_ast_node *build_operator_node(t_ast_node *left, t_token *split_point)
 
 	if (split_point->next)
 		right = build_ast(split_point->next);
-
 	if (root)
-	{
-		root->left = left;
-		root->right = right;
-
-		if (root->left)
-		{
-			root->left->side = 0;
-			root->left->parent = root;
-		}
-		if (root->right)
-		{
-			root->right->side = 1;
-			root->right->parent = root;
-		}
-	}
+		assign_root(root, left, right);
 
 	return (root);
 }
+

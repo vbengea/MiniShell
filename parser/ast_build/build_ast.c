@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:00:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 12:39:21 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/07 18:30:12 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,9 @@ t_ast_node *build_ast(t_token *tokens)
 	if (!tokens)
 		return (NULL);
 
-	// Handle parentheses
 	if (tokens->type == TOKEN_OPEN_PAREN)
 		return (handle_parentheses(tokens));
 
-	// Find the split point (lowest precedence operator)
 	split_point = find_split_point(tokens);
 	if (!split_point)
 	{
@@ -106,7 +104,6 @@ t_ast_node *build_ast(t_token *tokens)
 
 	// printf("Split point found: type=%d, value=%s\n", split_point->type, split_point->value);
 
-	// Build the left subtree
 	left = NULL;
 	if (split_point != tokens)
 	{

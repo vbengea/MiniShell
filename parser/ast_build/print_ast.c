@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:17 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 13:39:27 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/07 20:38:53 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void print_ast(t_ast_node *node, int level)
 		}
 	}
 
-	if (node->type == NODE_CMND && node->redirs)
+	if ((node->type == NODE_CMND || node->type == NODE_GROUP) && node->redirs)
 	{
 		t_redirection *redir = node->redirs;
 		while (redir)

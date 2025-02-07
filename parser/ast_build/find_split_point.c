@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_split_point.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:28:56 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/05 11:58:29 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/07 20:39:31 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@
 // 			}
 // 		}
 
-// 		// Debug print
 // 		// printf("Current token: type=%d, value=%s\n", current->type, current->value);
 // 		// printf("Split point: type=%d, value=%s\n", split_point ? split_point->type : (t_token_type)-1, split_point ? split_point->value : "NULL");
 

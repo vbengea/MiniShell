@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:07:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 13:39:46 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/07 19:23:58 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	assign_ids(t_ast_node *node, int *id)
 	assign_ids(node->left, id);
 	assign_ids(node->right, id);
 	}
-
 /**
  * @warning test
  */
