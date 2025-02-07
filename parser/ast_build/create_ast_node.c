@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:15:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/05 11:58:08 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/07 12:44:38 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,8 @@ t_ast_node *create_ast_node(t_node_type type, char **cmd_args)
 	node->left = NULL;
 	node->right = NULL;
 	node->side = 0;
+	node->parent = NULL;
+	node->exit = -1;
+	node->fd = -1;
 	return (node);
 }
