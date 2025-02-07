@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:15:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/05 15:30:54 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/07 03:13:06 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args)
 	node->redirect_type = REDIRECT_NONE;
 	node->left = NULL;
 	node->right = NULL;
+	node->nid = 0;
 	node->side = 0;
+	node->exit = 0;
+	node->fd = -1;
 	node->parent = NULL;
 	node->redirs = NULL;
 	return (node);

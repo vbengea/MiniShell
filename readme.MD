@@ -1,7 +1,7 @@
 
 * To implement:
 
-	- Resolver leaks de memoria con valgrind y santizer.
+	- Implement subshell redirections (execution time)
 
 	- HEREDOC ha dejado de funcionar en el pipeline.
 
@@ -12,8 +12,6 @@
 		+ echo no imprime bien:
 			echo "ec$PWD ho"
 		+ echo no debe expandir variables en comillas simples.
-
-	- Implement subshell redirections (execution time)
 
 	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
 
@@ -44,6 +42,8 @@
 
 
 Solved issues
+
+	- Resolver leaks de memoria con valgrind y santizer.
 
 	- Los wildcards * deben funcionar para el directorio actual.
 

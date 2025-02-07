@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 13:31:39 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/07 01:25:39 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	pipex(t_ast_node *node, char ***env, int files[3], int side)
 		pid = fork();
 		if (pid == -1)
 			cleanup("Error forking process");
-		populate_node(node, side);
 		if (pid == 0)
 		{
 			if(side == 1)
@@ -77,12 +76,14 @@ void	pipex(t_ast_node *node, char ***env, int files[3], int side)
 			if (side == 1)
 			{
 				parent(fd, files, node->right, env);
-				waiter(node->right->type, node->right, env, files);
+				if (node->right)
+					waiter(node->right->type, node->right, env, files);
 			}
 			else
 			{
 				parent(fd, files, node, env);
-				waiter(node->left->type, node->left, env, files);
+				if (node->left)
+					waiter(node->left->type, node->left, env, files);
 			}
 		}
 	}

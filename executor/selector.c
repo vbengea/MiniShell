@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   selector.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/06 15:05:08 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/07 04:01:30 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,19 @@ void	set_history_status(int status, char ***env)
 	char	*value;
 	
 	value = ft_itoa(status);
-	*env = set_env("?", value, *env);
-	free(value);
+	if (value && env)
+	{
+		*env = set_env("?", value, *env);
+		free(value);
+	}
 }
 
 void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 {
 	int		status;
 
-	(void) type;
-	(void) env;
 	(void) files;
+	status = 0;
 	while (1)
 	{
 		if (waitpid(-1, &status, 0) == -1)
@@ -109,7 +111,11 @@ void	navigator(t_ast_node *node, char ***env, int hold, int files[3])
 		selector(node->right, env, files);
 	}
 	if (node->type == NODE_GROUP)
+	{
+		free_redirect_ast(node, 1);
+		clear_arr_of_strs(*env);
 		exit(0);
+	}
 }
 
 void	executor(t_ast_node *node, char ***env, int hold, int files[3])
@@ -128,7 +134,7 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 	if (ft_strncmp(node->args[0], "cd", 2) == 0)
 		cd_bi(node, *env);
 	else if (ft_strncmp(node->args[0], "exit", 4) == 0)
-		exit_bi(node);
+		exit_bi(node, *env);
 	else if (ft_strncmp(node->args[0], "pwd", 3) == 0)
 		pwd_bi(node);
 	else if (ft_strncmp(node->args[0], "env", 3) == 0)
@@ -157,7 +163,10 @@ void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***e
 	if (pid == 0)
 		f(node, env, 1, files);
 	else
-		waiter(node->parent_type, node, env, files);
+	{
+		if (node->parent_type != NODE_GROUP)
+			waiter(node->parent_type, node, env, files);
+	}
 }
 
 void	selector(t_ast_node *node, char ***env, int files[3])

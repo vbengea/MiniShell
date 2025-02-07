@@ -6,44 +6,11 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/05 15:42:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/07 03:59:50 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
-
-void	free_redirect_ast(t_ast_node *ast)
-{
-	t_redirection	*lst;
-	t_redirection	*p;
-	if (ast)
-	{
-		if (ast->args)
-			clear_arr_of_strs(ast->args);
-		if (ast->redirs)
-		{
-			lst = ast->redirs;
-			while (lst)
-			{
-				if (lst->file)
-					free(lst->file);
-				p = lst;
-				if (lst->next)
-					lst = lst->next;
-				else
-					lst = NULL;
-				free(p);
-			}
-		}
-		if (ast->file)
-			free(ast->file);
-		if (ast->left)
-			free_redirect_ast(ast->left);
-		if (ast->right)
-			free_redirect_ast(ast->right);
-		free(ast);
-	}
-}
 
 void	ast_printer(t_ast_node *ast, int level)
 {
@@ -67,15 +34,9 @@ void	ast_printer(t_ast_node *ast, int level)
 		else
 			printf("TYPE: %d\n", ast->type);
 		if (ast->left)
-		{
-			ast->side = 0;
 			ast_printer(ast->left, level + 1);
-		}
 		if (ast->right)
-		{
-			ast->side = 1;
 			ast_printer(ast->right, level + 1);
-		}
 	}
 }
 
@@ -111,10 +72,11 @@ int	is_control_character(char *context)
 
 int	ff_subcontext(char *context)
 {
-	int i = 0;
-	int p = 0;
+	int	i;
+	int	p;
 
 	i = 0;
+	p = 0;
 	if (context[i] == '(')
 	{
 		while (context[i])
@@ -127,6 +89,8 @@ int	ff_subcontext(char *context)
 				break ;
 			i++;
 		}
+		if (p > 0)
+			return (1);
 	}
 	else if (context[i] == 34)
 	{

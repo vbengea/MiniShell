@@ -3,14 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/25 16:49:17 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/07 03:11:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+void	free_redirect_ast(t_ast_node *ast, int find_root)
+{
+	t_redirection	*lst;
+	t_redirection	*p;
+
+	if (find_root)
+		while (ast->parent)
+			ast = ast->parent;
+	if (ast)
+	{
+		if (ast->left)
+			free_redirect_ast(ast->left, 0);
+		if (ast->right)
+			free_redirect_ast(ast->right, 0);
+		if (ast->args)
+			clear_arr_of_strs(ast->args);
+		if (ast->redirs)
+		{
+			lst = ast->redirs;
+			while (lst)
+			{
+				if (lst->file)
+					free(lst->file);
+				p = lst;
+				if (lst->next)
+					lst = lst->next;
+				else
+					lst = NULL;
+				free(p);
+			}
+		}
+		if (ast->file)
+			free(ast->file);
+		free(ast);
+	}
+}
 
 void	cleanup(char *err)
 {
@@ -20,7 +57,7 @@ void	cleanup(char *err)
 
 int	is_last_node(t_ast_node *node)
 {
-	if (node->type == NODE_CMND && node->side == 1)
+	if (node && node->type == NODE_CMND && node->side == 1)
 	{
 		if ((node->parent && node->parent->type == NODE_PIPE && \
 			(!node->parent->parent || node->parent->parent->type != NODE_PIPE)) )
@@ -47,27 +84,4 @@ int    is_pipe_state(t_ast_node *node)
 	if (node->parent_type == NODE_PIPE)
 		return (1);
 	return (0);
-}
-
-void	populate_node(t_ast_node *node, int side)
-{
-	if (!node->left)
-	{
-		node->left = malloc(sizeof(t_ast_node));
-		node->left->left = NULL;
-		node->left->right = NULL;
-	}
-	if (!node->right)
-	{
-		node->right = malloc(sizeof(t_ast_node));
-		node->right->left = NULL;
-		node->right->right = NULL;
-	}
-	node->left->parent = node;
-	node->right->parent = node;
-	node->right->parent_type = node->type;
-	node->left->parent_type = node->type;
-	node->right->side = 1;
-	node->left->side = 0;
-	node->side = side;
 }

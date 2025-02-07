@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/06 15:14:18 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/07 04:07:43 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,6 @@ void	detect_out_redirection(t_ast_node *node)
 	}
 }
 
-// void	ft_lstred(t_redirection *lst, t_redirection *tmp)
-// {
-// 	tmp = malloc(sizeof(t_redirection));
-
-// 	t_redirection *temp;
-
-// 	temp = lst;
-
-// 	if (lst)
-// 	{
-// 		lst->file = content;
-// 		lst->next = NULL;
-// 	}
-// 	return (lst);
-// }
-
 t_redirection	*ft_lstred(t_redirection *node)
 {
 	t_redirection	*lst;
@@ -96,7 +80,7 @@ void	detect_in_redirection(t_ast_node *node)
 		is_first_time = true;
 		executer(lst, &rev);
 		lst = rev;
-		while (lst) //<<T1 cat -e <<T2 <<T3
+		while (lst)
 		{
 			if (lst->type == REDIRECT_IN)
 			{

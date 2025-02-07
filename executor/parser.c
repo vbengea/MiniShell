@@ -6,39 +6,27 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/06 01:01:32 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/07 04:00:33 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-t_ast_node	*create_node_command(char *context, t_redirection *redirs, int *index)
+t_ast_node	*create_node_command(char *context, int *index)
 {
 	t_ast_node	*ast;
 	char		**elements;
-	char		*cmd;
-	char		*args;
-	int			len;
 
-	(void) redirs;
 	ast = create_ast_node(NODE_CMND, NULL);
-	ast->fd = -1;
 	context = parse_redirections(ast, context);
-	// if (!ast->redirs && redirs)
-	// 	ast->redirs = redirs;
 	elements = ft_split(context, ' ');
-	cmd = elements[0];
-	len = ft_strlen(cmd);
-	args = ft_strtrim((context + len), " ");
 	ast->args = elements;
 	ast->nid = *index;
 	*index = *index + 1;
-	free(args);
-	// free(context);
 	return (ast);
 }
 
-t_ast_node	*create_group_command(char *context, t_redirection *redirs, int *index)
+t_ast_node	*create_group_command(char *context, int *index)
 {
 	t_ast_node	*ast;
 	int			i;
@@ -81,15 +69,13 @@ t_ast_node	*create_group_command(char *context, t_redirection *redirs, int *inde
 		i++;
 	}
 	parse_redirections(ast, reds);
-	if (!ast->redirs && redirs)
-		ast->redirs = redirs;
-	ast->left = create_structure((pars + 1), AND, ast->redirs, index);
+	ast->left = create_structure((pars + 1), AND, index);
 	free(reds);
 	free(pars);
 	return (ast);
 }
 
-static	t_ast_node	*get_execution_node(char *context, t_mini_token level, t_redirection *redirs, int *index)
+static	t_ast_node	*get_execution_node(char *context, t_mini_token level, int *index)
 {
 	t_ast_node	*ast;
 	int			i;
@@ -98,7 +84,7 @@ static	t_ast_node	*get_execution_node(char *context, t_mini_token level, t_redir
 	ast = NULL;
 	i = 0;
 	if (level == AND)
-		ast = create_structure(context, PIPE, redirs, index);
+		ast = create_structure(context, PIPE, index);
 	else
 	{
 		while (ft_isspace(context[i]))
@@ -107,16 +93,16 @@ static	t_ast_node	*get_execution_node(char *context, t_mini_token level, t_redir
 		while (context[j])
 		{
 			if (context[j] == '(')
-				return create_group_command(context, redirs, index);
+				return create_group_command(context, index);
 			j++;
 		}
 		context = (context + i);
-		ast = create_node_command(context, redirs, index);
+		ast = create_node_command(context, index);
 	}
 	return (ast);
 }
 
-static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level, t_redirection *redirs, int *index)
+static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level, int *index)
 {
 	t_ast_node	*nod;
 	char		*t;
@@ -131,14 +117,15 @@ static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level, t_redire
 	{
 		*ast = nod;
 		t = ft_substr(s, *k, *i - *k);
-		(*ast)->left = get_execution_node(t, level, redirs, index);
+		(*ast)->left = get_execution_node(t, level, index);
 		free(t);
 	}
 	else
 	{
 		nod->left = *ast;
 		t = ft_substr(s, *k, *i - *k);
-		(*ast)->right = get_execution_node(t, level, redirs, index);
+		(*ast)->right = get_execution_node(t, level, index);
+		(*ast)->right->side = 1;
 		*ast = nod;
 		free(t);
 	}
@@ -146,7 +133,7 @@ static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level, t_redire
 	*k = *i;
 }
 
-t_ast_node	*create_structure(char *context, t_mini_token level, t_redirection *redirs, int *index)
+t_ast_node	*create_structure(char *context, t_mini_token level, int *index)
 {
 	t_ast_node	*ast;
 	int			i;
@@ -158,23 +145,26 @@ t_ast_node	*create_structure(char *context, t_mini_token level, t_redirection *r
 	ast = NULL;
 	while (context[i])
 	{
+		// while (ft_isspace(context[i]))
+		// 	i++;
 		if (ft_isquote(context[i]) || context[i] == '(')
-			i += ff_subcontext((context + i));
-		else if (is_control_character((context + i)))
-			inner(&ast, context, &i, &k, level, redirs, index);
+			i += ff_subcontext(context + i);
+		else 
+		if (is_control_character(context + i))
+			inner(&ast, context, &i, &k, level, index);
 		else
 			i++;
 	}
 	if (ast == NULL)
 	{
 		s = ft_substr(context, k, i - k);
-		ast = get_execution_node(s, level, redirs, index);
+		ast = get_execution_node(s, level, index);
 		free(s);
 	}
 	else
 	{
 		s = ft_substr(context, k, i - k);
-		ast->right = get_execution_node(s, level, redirs, index);
+		ast->right = get_execution_node(s, level, index);
 		ast->right->side = 1;
 		free(s);
 	}
@@ -187,7 +177,9 @@ t_ast_node	*build_redirect_ast(char *context)
 	int			index;
 
 	index = 1;
-	ast = create_structure(context, AND, NULL, &index);
-	// ast_printer(ast, 0);
+	context = ft_strdup(context);
+	ast = create_structure(context, AND, &index);
+	ast_printer(ast, 0);
+	free(context);
 	return (ast);
 }

@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/06 00:07:56 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/07 04:02:22 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ extern int SIGNAL;
 
 int main(int argc, char **argv, char **env)
 {
-	t_token		*token;
 	t_ast_node	*ast;
 	char 		*input;
+	int			files[3];
 
 	(void) argc;
 	(void) argv;
-	(void) token;
 	set_tty();
 	env = copy_arr_of_strs(env, 0, 0);
 	while (true)
@@ -31,25 +30,23 @@ int main(int argc, char **argv, char **env)
 		if (!input)
 			break ;
 		else if (input[0] == '\0')
+		{
+			free(input);
 			continue ;
+		}
 		add_history(input);
-		// token = tokenize_input(input);
-		// ast = build_ast(token);
-		// print_ast(ast, 0);
 		ast = build_redirect_ast(input);
+		free(input);
 		if (ast)
 		{
-			int files[3];
 			files[0] = STDIN_FILENO;
 			files[1] = STDOUT_FILENO;
 			files[2] = 0;
 			SIGNAL = 1;
 			selector(ast, &env, files);
 			SIGNAL = -1;
-			free(input);
-			free_redirect_ast(ast);
+			free_redirect_ast(ast, 0);
 		}
-		//free_token(token);
 	}
 	clear_arr_of_strs(env);
 	rl_clear_history();

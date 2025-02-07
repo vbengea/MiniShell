@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/06 14:04:35 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/07 02:42:21 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void			redlist_add(t_redirection **lst, t_redirection *new);
 void			redlist_iter(t_redirection *lst, void (*f)(void *));
 void			print_redirs(void *content);
 void			ast_printer(t_ast_node *ast, int level);
-void	        free_redirect_ast(t_ast_node *ast);
+void	        free_redirect_ast(t_ast_node *ast, int find_root);
 
 char			*parse_redirections(t_ast_node *ast, char *str);
 int				ff_subcontext(char *context);
@@ -64,7 +64,7 @@ int				is_node(char *context, char *term);
 int				is_control_character(char *context);
 char			*read_files_content(char **files);
 
-t_ast_node		*create_node_command(char *str, t_redirection *redirs, int *index);
-t_ast_node		*create_structure(char *context, t_mini_token token, t_redirection *redirs, int *index);
+t_ast_node		*create_node_command(char *str, int *index);
+t_ast_node		*create_structure(char *context, t_mini_token token, int *index);
 
 #endif

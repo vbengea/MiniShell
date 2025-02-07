@@ -3,10 +3,11 @@ NAME			:=	minishell
 CC				:= 	cc
 CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
 SFLAGS			:= 	-g3 -fsanitize=address
-VALGRIND_PATH	:=	/home/juaflore/sgoinfre/minishare/valgrind/valgrind.supp
-VALGRIND_VALE	:=	/home/juaflore/sgoinfre/minishare/valgrind/valgrind.supp
-VALGRIND_JUAF	:=	/home/juaflore/sgoinfre/minishare/valgrind/valgrind.supp
-VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(VALGRIND_PATH)
+
+VALGRIND_PATH	:=	./suppressions/valgrind.supp
+VALGRIND_VALE	:=	./suppressions/valgrind.supp
+VALGRIND_JUAF	:=	./suppressions/mac.supp
+VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(VALGRIND_JUAF)
 LDFLAGS 		:=	-lreadline -L/opt/homebrew/opt/readline/lib
 
 LIBFT_DIR		:= 	./libft
@@ -110,7 +111,8 @@ git: norm
 	rm -f __tmp__
 	git add -A
 	git commit -am "$(shell date)"
-	git push
+	git pull
+	# git push
 
 runner: all
 	./$(NAME)
@@ -119,9 +121,8 @@ runner: all
 valgrind: re
 	valgrind $(VFLAGS) ./$(NAME)
 
-sanitizer: fclean $(LIBFT) $(OBJB) $(INCLUDE)
-	$(CC) $(CFLAGS) $(SRC) $(LIBFT) $(SFLAGS) -o minishell
-	./minishell
-	make -C . fclean
+sanitizer:
+	make -C . re
+	./$(NAME)
 
 .PHONY: all clean fclean re norm git runner valgrind sanitizer
