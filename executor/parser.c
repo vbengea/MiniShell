@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/07 04:00:33 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/08 23:59:33 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ t_ast_node	*build_redirect_ast(char *context)
 	index = 1;
 	context = ft_strdup(context);
 	ast = create_structure(context, AND, &index);
-	ast_printer(ast, 0);
+	// ast_printer(ast, 0);
 	free(context);
 	return (ast);
 }
