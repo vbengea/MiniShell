@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:00:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 18:30:12 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 11:49:32 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ t_ast_node *build_ast(t_token *tokens)
 	split_point = find_split_point(tokens);
 	if (!split_point)
 	{
-		// printf("No split point found, building command node\n");
 		return (build_command_node(tokens));
 	}
 

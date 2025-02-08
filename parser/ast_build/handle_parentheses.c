@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:21:42 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 20:38:19 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 11:46:13 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_ast_node *handle_parentheses(t_token *tokens)
 	// Reconnect the tokens
 	end->next = next_after_paren;
 
+	// Create the NODE_GROUP node
 	group_node = create_ast_node(NODE_GROUP, NULL);
 	group_node->left = inner;
 
@@ -43,6 +44,7 @@ t_ast_node *handle_parentheses(t_token *tokens)
 		t_redirect_type redirect_type;
 		t_out_redirect_type otype = STDOUT_FILE; // Default
 
+		// Determine the redirection type
 		if (next_after_paren->type == TOKEN_REDIRECT_IN)
 			redirect_type = REDIRECT_IN;
 		else if (next_after_paren->type == TOKEN_REDIRECT_OUT)
@@ -63,7 +65,6 @@ t_ast_node *handle_parentheses(t_token *tokens)
 		// Add the redirection to the NODE_GROUP's redirs list
 		add_redirection(group_node, redirect_type, otype, ft_strdup(next_after_paren->value));
 
-
 		// Move past the file token
 		next_after_paren = next_after_paren->next;
 	}
@@ -76,4 +77,4 @@ t_ast_node *handle_parentheses(t_token *tokens)
 }
 
 
-
+// (((ls > t3) && ls) > t2 && ls) > t1

@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:43:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 20:00:11 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 11:15:04 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,6 @@ t_ast_node	*build_command_node(t_token *tokens)
 		return (NULL);
 	if (!fill_cmd_args(tokens, cmd_args, node))
 		return (NULL);
+	node->args = cmd_args;
 	return (node);
 }
