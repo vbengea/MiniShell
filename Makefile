@@ -1,13 +1,13 @@
 NAME			:=	minishell
 
 CC				:= 	cc
-CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include -g
 SFLAGS			:= 	-g3 -fsanitize=address
 
 VALGRIND_PATH	:=	./tmp/suppressions/valgrind.supp
-VALGRIND_VALE	:=	./tmp/suppressions/valgrind.supp
+VALGRIND_VALE	:=	./tmp/suppressions/new_suppression.supp
 VALGRIND_JUAF	:=	./tmp/suppressions/mac.supp
-VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(VALGRIND_JUAF)
+VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(VALGRIND_VALE)
 LDFLAGS 		:=	-lreadline -L/opt/homebrew/opt/readline/lib
 
 LIBFT_DIR		:= 	./libft

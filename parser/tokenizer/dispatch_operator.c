@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:13:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/02 11:52:54 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 19:35:02 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	dispatch_operator(t_token **head, t_token *new_token, \
 		handle_single_operator(head, new_token, op);
 	else
 	{
-		new_token = create_token(TOKEN_INVALID, "Invalid operator");
+		new_token = create_token(TOKEN_INVALID, ft_strdup("Invalid operator"));
 		add_token(head, new_token);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:42:26 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/29 18:21:39 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 19:37:10 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*create_quoted_token(const char *input, int *i)
 	char	quote;
 
 	quote = input[*i];
-	new_token = create_token(TOKEN_WORD, "");
+	new_token = create_token(TOKEN_WORD, ft_strdup(""));
 	(*i)++;
 	while (input[*i] && input[*i] != quote)
 	{

@@ -6,11 +6,17 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/08 12:33:06 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 20:37:34 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/headers.h"
+
+
+char *get_hostname();
+char *create_prompt(char **env);
+
+
 
 void	assign_ids(t_ast_node *node, int *id)
 {
@@ -103,8 +109,10 @@ int main(int argc, char **argv, char **env)
 // 			selector(ast, &env, files);
 // 			free_redirect_ast(ast, 0);
 // 		}
+// 		free_token(tokens);
 // 	}
 // 	clear_arr_of_strs(env);
 // 	rl_clear_history();
+// 	free_token(tokens);
 // 	return (0);
 // }
