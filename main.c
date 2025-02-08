@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/08 12:25:25 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 12:33:06 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int main(int argc, char **argv, char **env)
 
 // 	(void) argc;
 // 	(void) argv;
+
+// 	id = 0;
 // 	set_tty();
 // 	env = copy_arr_of_strs(env, 0, 0);
 // 	while (true)
