@@ -37,6 +37,9 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 	{
 		if (waitpid(-1, &status, 0) == -1)
 		{
+			if (node->parent)
+				node->parent->exit = status;
+			node->exit = status;
 			set_history_status(status, env);
 			if ((type == NODE_CMND || type == NODE_AND || type == NODE_OR || type == NODE_GROUP) && status == 0)
 				multiple_output_redirections(node);
@@ -54,16 +57,12 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 					unlink(file);
 				free(file);
 			}
-			if (status != 0 && node->parent && node->parent_type == NODE_AND)
-				node->parent->exit = status;
-			else if (status == 0 && node->parent && node->parent_type == NODE_OR)
-				node->parent->exit = status;
 			break ;
 		}
 	}
 }
 
-static	void	preexecute(t_ast_node *node, char ***env)
+void	parse_command(t_ast_node *node, char ***env)
 {
 	int		i;
 	char	*str;
@@ -84,6 +83,11 @@ static	void	preexecute(t_ast_node *node, char ***env)
 		clear_arr_of_strs(node->args);
 		node->args = args;
 	}
+}
+
+static	void	preexecute(t_ast_node *node, char ***env)
+{
+	parse_command(node, env);
 	detect_in_redirection(node);
 	detect_out_redirection(node);
 }
@@ -176,10 +180,10 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 		echo_bi(node, *env);
 	postexecute(node);
 	set_history_status(0, env);
-	if (hold)
-		exit(0);
 	if (node->parent)
 		node->parent->exit = 0;
+	if (hold)
+		exit(0);
 }
 
 void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3]), int files[3])
@@ -192,14 +196,13 @@ void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***e
 	if (pid == 0)
 		f(node, env, 1, files);
 	else
-	{
-		//if (node->parent_type != NODE_GROUP)
 		waiter(node->parent_type, node, env, files);
-	}
 }
 
 void	selector(t_ast_node *node, char ***env, int files[3])
 {
+	t_ast_node	*parent;
+
 	if (node->type == NODE_CMND)
 	{
 		if (node->parent)
@@ -220,9 +223,26 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 			forker(node, env, executor, files);
 	}
 	else if (node->type == NODE_AND || node->type == NODE_OR)
+	{
 		navigator(node, env, 1, files);
+	}
 	else if (node->type == NODE_PIPE)
-		pipex(node, env, files, files[2]);
+	{
+		files[2] = node->nid;
+		while (node->left != NULL)
+		{
+			parent = node;
+			if (node->right)
+			{
+				node->right->parent = parent;
+				node->right->side = 1;
+			}
+			node->left->parent = parent;
+			node->left->side = 0;
+			node = node->left;
+		}
+		pipex(node, env, files);
+	}
 	else if (node->type == NODE_GROUP)
 	{
 		preexecute(node, env);

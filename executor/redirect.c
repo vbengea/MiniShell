@@ -12,26 +12,29 @@
 
 #include "../include/headers.h"
 
-void	detect_out_redirection(t_ast_node *node)
+int	detect_out_redirection(t_ast_node *node)
 {
 	char	*id;
 	char	*file;
 	int		tmp;
+	int		flags;
 
 	if (has_outward_redirection(node))
 	{
 		id = ft_itoa(node->nid);
 		file = tmp_path(node->nid, REDIRECT_OUT);
-		tmp = open(file, O_WRONLY | O_CREAT | O_TRUNC | O_APPEND, 0666);
+		flags = O_WRONLY | O_CREAT | O_TRUNC | O_APPEND;
+		tmp = open(file, flags, 0666);
 		free(id);
 		free(file);
 		if (tmp < 0)
-			return ;
+			return (0);
 		node->out_fd = tmp;
 		if (node->type != NODE_GROUP && !is_builtin(node))
 		{
 			if (dup2(tmp, STDOUT_FILENO) == -1)
 				perror("(5) Error redirecting");
+			return (1);
 		}
 	}
 	else if (has_group_redirection(node, 0))
@@ -40,11 +43,13 @@ void	detect_out_redirection(t_ast_node *node)
 		{
 			if (dup2(node->out_fd, STDOUT_FILENO) == -1)
 					perror("(6) Error redirecting");
+			return (1);
 		}
 	}
+	return (0);
 }
 
-void	detect_in_redirection(t_ast_node *node)	// TODO: reversing the list only works for heredoc
+int		detect_in_redirection(t_ast_node *node)	// TODO: reversing the list only works for heredoc
 {
 	if (has_inward_redirection(node->redirs))
 	{
@@ -91,7 +96,6 @@ void	detect_in_redirection(t_ast_node *node)	// TODO: reversing the list only wo
 		clear_arr_of_strs(arr);
 		if (content)
 		{
-			printf("%s\n", content);
 			file = tmp_path(node->nid, REDIRECT_IN);
 			if (file)
 			{
@@ -112,6 +116,7 @@ void	detect_in_redirection(t_ast_node *node)	// TODO: reversing the list only wo
 				free(file);
 			}
 			free(content);
+			return (1);
 		}
 	}
 	else if (has_group_redirection(node, 1))
@@ -120,8 +125,10 @@ void	detect_in_redirection(t_ast_node *node)	// TODO: reversing the list only wo
 		{
 			if (dup2(node->in_fd, STDIN_FILENO) == -1)
 				perror("(7) Error redirecting");
+			return (1);
 		}
 	}
+	return (0);
 }
 
 char	*read_fd_content(int tmp)
@@ -221,46 +228,6 @@ char	*read_files_content(char **files)
 	return (content);
 }
 
-void	pipex_redirect(t_ast_node *node, int fd[2], int files[3], int is_last)
-{
-	if (files[0] == -1)
-	{
-		perror("(0) Error reading file");
-		exit(0);
-	}
-
-	if (has_inward_redirection(node->redirs))
-	{
-		detect_in_redirection(node);
-	}
-	else
-	{
-		if (dup2(files[0], STDIN_FILENO) == -1)
-			perror("(1) Error redirecting");
-		close(fd[0]);
-	}
-
-	if (has_outward_redirection(node))
-	{
-		detect_out_redirection(node);
-		close(fd[0]);
-		close(fd[1]);
-	}
-	else if (is_last)
-	{
-		if (dup2(files[1], STDOUT_FILENO) == -1)
-			perror("(2) Error redirecting");
-		close(fd[0]);
-		close(fd[1]);
-	}
-	else if (dup2(fd[1], STDOUT_FILENO) == -1)
-	{
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			perror("(3) Error redirecting");
-		close(fd[0]);
-	}
-}
-
 static	void	redlist_out(t_redirection *lst, char *content)
 {
 	int	tmp;
@@ -357,5 +324,41 @@ void	here_doc(t_ast_node *node, char *delimit, int do_write)
 		}
 		free(str);
 		close(fd);	
+	}
+}
+
+void	pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last)
+{
+	(void) is_last;
+	if (detect_in_redirection(node))
+	{
+
+	}
+	else
+	{
+		close(fd[0]);
+		if (dup2(files[0], STDIN_FILENO) == -1)
+			perror("(1) Error redirecting");
+	}
+}
+
+void	pipex_redirect_out(t_ast_node *node, int fd[2], int files[3], int is_last)
+{
+	(void) files;
+	if (is_last && detect_out_redirection(node))
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
+	else if (is_last)
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
+	else
+	{
+		close(fd[0]);
+		if (dup2(fd[1], STDOUT_FILENO) == -1)
+			perror("(3) Error redirecting");
 	}
 }

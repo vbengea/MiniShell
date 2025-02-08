@@ -53,14 +53,10 @@ void	cleanup(char *err)
 	exit(1);
 }
 
-int	is_last_node(t_ast_node *node)
+int	is_last(t_ast_node *node, int files[3])
 {
-	if (node && node->type == NODE_CMND && node->side == 1)
-	{
-		if ((node->parent && node->parent->type == NODE_PIPE && \
-			(!node->parent->parent || node->parent->parent->type != NODE_PIPE)) )
-			return (1);
-	}
+	if (node->side == 1 && node->parent->nid == files[2])
+		return (1);
 	return (0);
 }
 

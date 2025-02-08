@@ -39,15 +39,12 @@ int main(int argc, char **argv, char **env)
 		}
 		add_history(input);
 		ast = build_redirect_ast(input);
-		free(input);
 		if (ast)
 		{
-			files[0] = STDIN_FILENO;
-			files[1] = STDOUT_FILENO;
-			files[2] = 0;
 			selector(ast, &env, files);
 			free_redirect_ast(ast, 0);
 		}
+		free(input);
 	}
 	clear_arr_of_strs(env);
 	rl_clear_history();

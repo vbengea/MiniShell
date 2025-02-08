@@ -12,6 +12,12 @@
 
 #include "../include/headers.h"
 
+void	nid(t_ast_node *ast, int *index)
+{
+	ast->nid = *index;
+	*index = *index + 1;
+}
+
 t_ast_node	*create_node_command(char *context, int *index)
 {
 	t_ast_node	*ast;
@@ -21,8 +27,7 @@ t_ast_node	*create_node_command(char *context, int *index)
 	context = parse_redirections(ast, context);
 	elements = ft_split(context, ' ');
 	ast->args = elements;
-	ast->nid = *index;
-	*index = *index + 1;
+	nid(ast, index);
 	return (ast);
 }
 
@@ -47,8 +52,7 @@ t_ast_node	*create_group_command(char *context, int *index)
 		i++;
 	context = (context + i);
 	ast = get_node_by_token(SUBSHELL);
-	ast->nid = *index;
-	*index = *index + 1;
+	nid(ast, index);
 	reds = ft_strdup(context);
 	len = ft_strlen(reds);
 	pars = malloc(len + 1);
@@ -93,6 +97,7 @@ t_ast_node	*create_group_command(char *context, int *index)
 	free(clear);
 	parse_redirections(ast, reds);
 	ast->left = create_structure(pars, AND, index);
+	ast->left->parent = ast;
 	free(reds);
 	free(pars);
 	return (ast);
@@ -130,27 +135,36 @@ static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level, int *ind
 	t_ast_node	*nod;
 	char		*t;
 
-	if (is_node((s + *i), "&&"))
+	nod = NULL;
+	if (is_node((s + *i), "&&") && (level == AND || level == OR))
 		nod = get_node_by_token(AND);
-	else if (is_node((s + *i), "||"))
+	else if (is_node((s + *i), "||") && (level == AND || level == OR))
 		nod = get_node_by_token(OR);
-	else
+	else if (level == PIPE)
 		nod = get_node_by_token(PIPE);
-	if (*ast == NULL)
-	{
-		*ast = nod;
-		t = ft_substr(s, *k, *i - *k);
-		(*ast)->left = get_execution_node(t, level, index);
-		free(t);
-	}
 	else
+		perror("Syntax error\n");
+	if (nod)
 	{
-		nod->left = *ast;
-		t = ft_substr(s, *k, *i - *k);
-		(*ast)->right = get_execution_node(t, level, index);
-		(*ast)->right->side = 1;
-		*ast = nod;
-		free(t);
+		nid(nod, index);
+		if (*ast == NULL)
+		{
+			*ast = nod;
+			t = ft_substr(s, *k, *i - *k);
+			(*ast)->left = get_execution_node(t, level, index);
+			(*ast)->left->parent = (*ast);
+			free(t);
+		}
+		else
+		{
+			nod->left = *ast;
+			t = ft_substr(s, *k, *i - *k);
+			(*ast)->right = get_execution_node(t, level, index);
+			(*ast)->right->side = 1;
+			(*ast)->right->parent = (*ast);
+			*ast = nod;
+			free(t);
+		}
 	}
 	*i += 2;
 	*k = *i;
@@ -171,7 +185,7 @@ t_ast_node	*create_structure(char *context, t_mini_token level, int *index)
 		if (ft_isquote(context[i]) || context[i] == '(')
 			i += ff_subcontext(context + i);
 		else 
-		if (is_control_character(context + i))
+		if (is_control_character(context + i, level))
 			inner(&ast, context, &i, &k, level, index);
 		else
 			i++;
@@ -187,6 +201,7 @@ t_ast_node	*create_structure(char *context, t_mini_token level, int *index)
 		s = ft_substr(context, k, i - k);
 		ast->right = get_execution_node(s, level, index);
 		ast->right->side = 1;
+		ast->right->parent = ast;
 		free(s);
 	}
 	return (ast);

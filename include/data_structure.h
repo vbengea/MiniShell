@@ -50,11 +50,11 @@ typedef struct s_redirection
 
 typedef enum mini_token
 {
+	COMMAND,
+	PIPE,
 	AND,
 	OR,
-	PIPE,
 	SUBSHELL,
-	COMMAND,
 	OTHER
 }	t_mini_token;
 

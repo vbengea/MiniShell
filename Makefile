@@ -121,12 +121,9 @@ runner: all
 valgrind: re
 	valgrind $(VFLAGS) ./$(NAME)
 
-sanitizer:
-	make -C . re
-	./$(NAME)
-
 sanitizer: $(LIBFT) $(OBJ) $(INCLUDE)
 	$(CC) $(SFLAGS) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
 	./$(NAME)
+	make -C . fclean
 
 .PHONY: all clean fclean re norm git runner valgrind sanitizer

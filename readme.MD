@@ -1,11 +1,6 @@
 
 * To implement:
 
-	- HEREDOC ha dejado de funcionar en el pipeline.
-		<<T1 cat -e | cat -e | cat -e
-		<<T1 cat -e | cat -e | cat -e > t1
-		<<T1 cat -e | cat -e | cat -e > t1 >> t2
-
 	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
 
 		+ Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
@@ -46,6 +41,9 @@
 
 * Environment differences:
 
+	- When executing a list of commands the output differs from bash: bash lists all of the files and then execute the command:
+		(((ls > t3) && ls) > t2 && ls) > t1
+
 	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
 		bash-3.2$ ((ls) >t2 | cat -e)
@@ -54,7 +52,15 @@
 	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
 
 
-Solved issues
+* Solved issues
+
+	- HEREDOC ha dejado de funcionar en el pipeline.
+		<<T1 cat -e | cat -e | cat -e
+		<<T1 cat -e | cat -e | cat -e > t1
+		<<T1 cat -e | cat -e | cat -e > t1 >> t2
+
+	- Bad tree
+		ls | cat -e && ls | cat -e | cat -e
 
 	- Implement subshell redirections (execution time)
 		(((ls) && ls) && ls) > t0
@@ -95,6 +101,7 @@ Solved issues
 		(ls -l | cat -e) | cat -e						[OK]
 		ls -l | (cat -e && cat -e)						[OK]
 		(ls -l | cat -e) | cat -e | cat -e				[OK]
+		((ls -l) | cat -e) | (cat -e | cat -e)			[OK]		
 
 	- Cuando ejectumos "ls -l | cat -e | cat -e | cat -e" el resultado es el correcto pero se imprimen unos caracteres extra en la línea del prompt.
 

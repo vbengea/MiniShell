@@ -32,7 +32,7 @@ void	ast_printer(t_ast_node *ast, int level)
 			printf("\n");
 		}
 		else
-			printf("TYPE: %d\n", ast->type);
+			printf("[TYPE: %d] [NID:%d] [SIDE:%d] \n", ast->type, ast->nid, ast->side);
 		if (ast->left)
 			ast_printer(ast->left, level + 1);
 		if (ast->right)
@@ -63,11 +63,13 @@ int	is_node(char *context, char *term)
 	return (ft_strncmp(context, term, ft_strlen(term)) == 0);
 }
 
-int	is_control_character(char *context)
+int	is_control_character(char *context, t_mini_token level)
 {
-	return (is_node(context, "&&") || \
-			is_node(context, "||") || \
-			is_node(context, "|"));
+	if ((is_node(context, "&&") ||  is_node(context, "||")) && (level == AND || level == OR))
+		return (1);
+	else if (is_node(context, "|") && level == PIPE)
+		return (1);
+	return (0);
 }
 
 int	ff_subcontext(char *context)

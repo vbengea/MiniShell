@@ -127,17 +127,23 @@ int	has_group_redirection(t_ast_node *ast, int is_infile)
 		ast = ast->parent;
 		if (ast->type == NODE_GROUP && ast->redirs)
 		{
-			if (is_infile && ast->in_fd >= 0)
+			if (is_infile)
 			{
-				node->in_fd = ast->in_fd;
-				node->has_group_in_fd = 1;
-				return (1);
+				if (ast->in_fd >= 0)
+				{
+					node->in_fd = ast->in_fd;
+					node->has_group_in_fd = 1;
+					return (1);
+				}
 			}
-			if (!is_infile && ast->out_fd >= 0)
+			else
 			{
-				node->out_fd = ast->out_fd;
-				node->has_group_out_fd = 1;
-				return (1);
+				if (ast->out_fd >= 0)
+				{
+					node->out_fd = ast->out_fd;
+					node->has_group_out_fd = 1;
+					return (1);
+				}
 			}
 		}
 	}
