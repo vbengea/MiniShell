@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+         #
+#    By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:11:00 by vbengea           #+#    #+#              #
-#    Updated: 2025/02/02 12:58:01 by vbengea          ###   ########.fr        #
+#    Updated: 2025/02/05 08:37:07 by vbengea          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
