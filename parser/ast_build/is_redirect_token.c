@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_ast_node.c                                  :+:      :+:    :+:   */
+/*   is_redirect_token.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 11:15:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/08 12:02:46 by vbengea          ###   ########.fr       */
+/*   Created: 2025/02/03 18:50:15 by vbengea           #+#    #+#             */
+/*   Updated: 2025/02/03 18:51:41 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-t_ast_node *create_ast_node(t_node_type type, char **cmd_args)
+int	is_redirect_token(t_token_type type)
 {
-	t_ast_node *node;
-
-	node = malloc(sizeof(t_ast_node));
-	if (!node)
-		return (NULL);
-	ft_bzero(node, sizeof(node));
-	node->type = type;
-	node->args = cmd_args;
-	node->redirs = NULL;
-	node->left = NULL;
-	node->right = NULL;
-	node->nid = 0;
-	node->side = 0;
-	node->parent = NULL;
-	node->exit = -1;
-	node->fd = -1;
-	return (node);
+	return (type == TOKEN_REDIRECT_IN
+		|| type == TOKEN_REDIRECT_OUT
+		|| type == TOKEN_APPEND
+		|| type == TOKEN_HEREDOC);
 }

@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/01 13:49:42 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/07 20:37:05 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,27 @@ int			is_redirect_token(t_token_type type);
 
 void		free_ast(t_ast_node *node);
 void		print_ast(t_ast_node *node, int level);
+
+
+
+
+
+
+
+void add_redirection(t_ast_node *node, t_redirect_type type, t_out_redirect_type otype, char *file);
+
+
+/* BUILD COMMAND NODE */
+int				count_command_words(t_token *tokens);
+char			**allocate_cmd_args(int count);
+t_redirect_type	get_redirect_type(t_token_type type);
+int				handle_redirection(t_ast_node *node, t_token **current);
+int				fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node);
+t_ast_node		*build_command_node(t_token *tokens);
+
+
+/* HANDLE PARENTHESES */
+
+
 
 #endif
