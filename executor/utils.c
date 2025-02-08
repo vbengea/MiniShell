@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/07 03:11:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/08 11:05:25 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@ void	free_redirect_ast(t_ast_node *ast, int find_root)
 	t_redirection	*p;
 
 	if (find_root)
+	{
 		while (ast->parent)
+		{
 			ast = ast->parent;
+			printf("UP\n");
+		}
+	}
 	if (ast)
 	{
 		if (ast->left)
