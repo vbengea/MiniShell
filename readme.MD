@@ -19,6 +19,8 @@
 
 	- Control de errores.
 
+	- Gestionar que el AST no incluya un argumento vacio al final de los argumentos con comandos como cat o rm;
+
 
 * Environment differences:
 
