@@ -6,17 +6,11 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/08 20:37:34 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 11:29:24 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/headers.h"
-
-
-char *get_hostname();
-char *create_prompt(char **env);
-
-
 
 void	assign_ids(t_ast_node *node, int *id)
 {

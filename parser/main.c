@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:07:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/08 20:30:21 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 11:36:41 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,8 @@ int main(void)
 		// print_ast(ast, 0);
 
 		//free(input);
-		printf("Calling free token\n");
-		free_token(token);
-		free (input);
+		// free_token(token);
+		// free (input);
 		//free_ast(ast);
 	}
 	return (0);

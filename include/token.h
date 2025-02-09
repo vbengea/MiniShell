@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:15:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/02 19:49:16 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 11:35:51 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef enum e_token_type
 	TOKEN_INVALID,
 	TOKEN_INVALID_OP_DIGIT,
 	TOKEN_OPEN_PAREN,
-	TOKEN_CLOSE_PAREN
+	TOKEN_CLOSE_PAREN,
+	TOKEN_ENV_VAR
 }	t_token_type;
 
 typedef struct s_token
