@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:07:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 19:23:58 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 19:20:18 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ int main(void)
 
 		token = tokenize_input(input);
 		//printf("Input tokenized!\n");
-		// while (token)
-		// {
-		// 	printf("Token type: %d, value: %s\n", token->type, token->value);
-		// 	token = token->next;
-		// }
+		while (token)
+		{
+			printf("Token type: %d, value: %s\n", token->type, token->value);
+			token = token->next;
+		}
 		ast = build_ast(token);
 		assign_ids(ast, &id);
 		// printf("AST built!\n");
