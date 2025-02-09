@@ -108,7 +108,6 @@ git: norm
 
 runner: re
 	./$(NAME)
-	#make -C . fclean
 
 valgrind: re
 	valgrind $(VFLAGS) ./$(NAME)

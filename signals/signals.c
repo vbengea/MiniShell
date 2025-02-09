@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/07 21:51:28 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/09 23:31:38 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,25 @@ int	SIGNAL;
 void	cpshell(char **env)
 {
 	char			**args;
+	char			*cmd;
+	char			*tmp;
 	t_ast_node		*node;
 
-	env = copy_arr_of_strs(env, 0, 0);
-	args = ft_split("cp minishell ~/.local/bin/", ' ');
-	node = create_ast_node(NODE_CMND, args);
-	selector(node, &env, NULL);
-	free_redirect_ast(node, 0);
-	clear_arr_of_strs(env);
+	cmd = getenv("HOME");
+	cmd = ft_strjoin(cmd, "/.local/bin/minishell");
+	if (cmd && access(cmd, F_OK | X_OK) != 0)
+	{
+		tmp = cmd;
+		cmd = ft_strjoin("cp minishell ", cmd);
+		free(tmp);
+		args = ft_split(cmd, ' ');
+		env = copy_arr_of_strs(env, 0, 0);
+		node = create_ast_node(NODE_CMND, args);
+		selector(node, &env, NULL);
+		free(cmd);
+		free_redirect_ast(node, 0);
+		clear_arr_of_strs(env);
+	}
 }
 
 void	set_tty(char **env)
