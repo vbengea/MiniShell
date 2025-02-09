@@ -28,16 +28,17 @@ void	handle_sigint(int signal)
 	(void)signal;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	rl_replace_line(" ", 0);
 	rl_redisplay();
 }
 
 void	handle_sigquit(int signal)
 {
 	(void)signal;
-	write(STDOUT_FILENO, "\r", 1);
-	rl_on_new_line();
+	write(STDOUT_FILENO, "\n", 1);
+	rl_replace_line("", 0);
 	rl_redisplay();
+	setup_signal_handlers();
 }
 
 void	setup_signal_handlers(void)
@@ -48,7 +49,17 @@ void	setup_signal_handlers(void)
 	sa.sa_handler = handle_sigint;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
-
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
+}
+
+
+void	setup_signal_handlers_process(void)
+{
+	struct	sigaction sa;
+
+	ft_bzero(&sa, sizeof(sa));
+	sa.sa_handler = handle_sigquit;
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
 }

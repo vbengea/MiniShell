@@ -1,19 +1,6 @@
 
 * To implement:
 
-	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
-
-		+ Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
-		+ With the updated signals we need to handle them at execution level; this means
-		that a child process should execute:
-			- `signal(SIGINT, SIG_DFL)`
-			- `signal(SIGQUIT, SIG_DFL)`
-		in order to restore the behavior of the signals. 
-		The parent process must ignore them:
-			- `signal(SIGINT, SIG_IGN)`
-			- `signal(SIGQUIT, SIG_IGN)`
-		When running in a subshell, the child becomes the parent so it must replicate the signal handling. 
-
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 
 		+ In bash the export command has a different format:
@@ -41,7 +28,7 @@
 
 * Environment differences:
 
-	- When executing a list of commands the output differs from bash: bash lists all of the files and then execute the command:
+	- When executing a list of commands the output differs from bash: bash creates all of the files and then execute the command, therefore, all "ls" will see the three files:
 		(((ls > t3) && ls) > t2 && ls) > t1
 
 	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
@@ -53,6 +40,19 @@
 
 
 * Solved issues
+
+	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
+
+		+ Naive handling of CTRL-C when running a long standing command. When e.g. a "sleep <seconds>" command is executed and interrupted with a CTRL-C, further CTRL-D (in interactive mode), exits adding an additional new line. Signals implementation will be revised.
+		+ With the updated signals we need to handle them at execution level; this means that a child process should execute:
+			- `signal(SIGINT, SIG_DFL)`
+			- `signal(SIGQUIT, SIG_DFL)`
+		in order to restore the behavior of the signals. 
+		
+		The parent process must ignore them:
+			- `signal(SIGINT, SIG_IGN)`
+			- `signal(SIGQUIT, SIG_IGN)`
+		When running in a subshell, the child becomes the parent so it must replicate the signal handling. 
 
 	- HEREDOC ha dejado de funcionar en el pipeline.
 		<<T1 cat -e | cat -e | cat -e

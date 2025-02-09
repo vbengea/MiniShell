@@ -33,6 +33,7 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 
 	(void) files;
 	status = 0;
+	setup_signal_handlers_process();
 	while (1)
 	{
 		if (waitpid(-1, &status, 0) == -1)

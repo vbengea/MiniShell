@@ -18,6 +18,7 @@
 
 void	set_tty(void);
 void	setup_signal_handlers(void);
+void	setup_signal_handlers_process(void);
 void	handle_sigquit(int signal);
 void	handle_sigint(int signal);
 
