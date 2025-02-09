@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/07 03:59:50 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/09 19:47:53 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ast_printer(t_ast_node *ast, int level)
 			printf("[TYPE:%d] [NID:%d] [SIDE:%d] [ARGS]: ", ast->type, ast->nid, ast->side);
 			i = 0;
 			while (ast->args && ast->args[i])
-				printf("%s ", ast->args[i++]);
+				printf("_.%s._,", ast->args[i++]);
 			printf("[REDIRS]: ");
 			if (ast->redirs)
 				redlist_iter(ast->redirs, print_redirs);
