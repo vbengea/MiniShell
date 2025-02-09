@@ -106,7 +106,7 @@ git: norm
 	# git config pull.rebase false
 	git push
 
-runner: all
+runner: re
 	./$(NAME)
 	#make -C . fclean
 

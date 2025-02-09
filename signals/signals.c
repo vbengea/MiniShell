@@ -12,6 +12,8 @@
 
 #include "../include/headers.h"
 
+int	SIGNAL;
+
 void	set_tty(void)
 {
 	struct termios t;
@@ -41,6 +43,19 @@ void	handle_sigquit(int signal)
 	setup_signal_handlers();
 }
 
+void	handle_sigpipe(int signal)
+{
+	(void)signal;
+	kill(SIGNAL-1, SIGPIPE);
+}
+
+void	handle_sigusr(int signal)
+{
+	(void)signal;
+	write(STDOUT_FILENO, "SIGUSR1\n", 9);
+	exit(0);
+}
+
 void	setup_signal_handlers(void)
 {
 	struct	sigaction sa;
@@ -53,7 +68,6 @@ void	setup_signal_handlers(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-
 void	setup_signal_handlers_process(void)
 {
 	struct	sigaction sa;
@@ -62,4 +76,6 @@ void	setup_signal_handlers_process(void)
 	sa.sa_handler = handle_sigquit;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = handle_sigpipe;
+	sigaction(SIGCHLD, &sa, NULL);
 }

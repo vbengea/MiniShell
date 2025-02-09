@@ -12,6 +12,8 @@
 
 #include "../include/headers.h"
 
+extern int SIGNAL;
+
 static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int ppid)
 {
 	t_ast_node	*origin;
@@ -19,6 +21,7 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 	(void) ppid;
 	origin = node;
 	close(fd[1]);
+	SIGNAL = ppid;
 	files[0] = fd[0];
 	if (!node)
 		return ;
