@@ -46,7 +46,7 @@ void	handle_sigquit(int signal)
 void	handle_sigpipe(int signal)
 {
 	(void)signal;
-	kill(SIGNAL-1, SIGPIPE);
+	// kill(SIGNAL-1, SIGPIPE);
 }
 
 void	handle_sigusr(int signal)
