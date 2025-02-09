@@ -14,18 +14,14 @@
 
 static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int ppid)
 {
-	int	pid;
-	int	nid;
+	t_ast_node	*origin;
 
-	(void) pid;
 	(void) ppid;
-	(void) nid;
+	origin = node;
 	close(fd[1]);
 	files[0] = fd[0];
-	// pid = wait(NULL);
 	if (!node)
 		return ;
-	waiter(node->type, node, env, files);
 	if (node->side == 0)
 	{
 		if (node->parent->type == NODE_GROUP)
@@ -39,6 +35,7 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 			node = node->parent;
 		pipex(node->right, env, files);
 	}
+	waiter(origin->type, origin, env, files);
 }
 
 static	void	child(int fd[2], t_ast_node *node, char ***env, int files[3])
