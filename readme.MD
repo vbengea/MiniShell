@@ -1,13 +1,15 @@
 
 * To implement:
  
-	- Al inicar la minishell corremos el comando "cp minishell ~/.local
+	- Al inicar la minishell corremos el comando "cp minishell /home/.local
 
 	- Acutualizar la varable SHLVL. Debe incrementar al ejecutar "minishell" dentro.
 
 	- No expandir variables de entorno cuando el preparseo de ejecucion detecta comillas simples.
 
 	- echo no imprime bien: echo "ec$PWD ho"
+
+	- Al parsear los argumentos muchas veces se hace trim y salen los argumentos sin debida separación.
 
 	- The tree should convert format like "name=value" and also "export name=value" to "export name value".ex
 
