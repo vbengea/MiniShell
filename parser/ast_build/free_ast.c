@@ -6,34 +6,44 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:47:26 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/28 18:51:39 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 19:08:04 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
+static void	free_redirs(t_redirection *redir)
+{
+	t_redirection	*temp;
+
+	while (redir)
+	{
+		temp = redir->next;
+		if (redir->file)
+			free(redir->file);
+		free(redir);
+		redir = temp;
+	}
+}
+
 void	free_ast(t_ast_node *node)
 {
-	char	**cmd_args;
-	int		i;
+	int	i;
 
 	if (!node)
 		return ;
 	free_ast(node->left);
 	free_ast(node->right);
-	if (node->type == NODE_CMND)
+	free_redirs(node->redirs);
+	if (node->args)
 	{
-		cmd_args = (char **)node->args;
-		if (cmd_args)
+		i = 0;
+		while (node->args[i])
 		{
-			i = 0;
-			while (cmd_args[i])
-			{
-				free(cmd_args[i]);
-				i++;
-			}
-			free(cmd_args);
+			free(node->args[i]);
+			i++;
 		}
+		free(node->args);
 	}
 	free(node);
 }

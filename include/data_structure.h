@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/08 12:01:20 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 19:25:24 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ typedef struct s_ast_node
 	int					nid;
 	int					has_group_in_fd;
 	int					has_group_out_fd;
-	int					discovered;
+
+	bool				env_declare;
+	bool				has_env;
 }	t_ast_node;
 
 #endif
