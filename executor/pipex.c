@@ -17,26 +17,51 @@ extern int SIGNAL;
 static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int ppid)
 {
 	t_ast_node	*origin;
+	t_ast_node	*parent;
 
 	(void) ppid;
 	origin = node;
+	parent = NULL;
 	close(fd[1]);
 	SIGNAL = ppid;
 	files[0] = fd[0];
 	if (!node)
 		return ;
-	if (node->side == 0)
+	// printf("NID: %d\n", node->nid);
+	node = node->parent;
+	while (node) //(node->type == NODE_PIPE || node->type == NODE_GROUP)
 	{
-		if (node->parent->type == NODE_GROUP)
-			node = node->parent;
-		pipex(node->parent->right, env, files);
+		if(node->type == NODE_PIPE && node->discovered == 0)
+		{
+			node->discovered = 1;
+			break ;
+		}
+		node = node->parent;
 	}
-	else if (!is_last(node, files))
+	if(node)
 	{
-		node = node->parent->parent;
-		if (node && node->type == NODE_GROUP)
-			node = node->parent;
-		pipex(node->right, env, files);
+		// printf("PID: %d\n", node->nid);
+		node = node->right;
+		while (node && node->left != NULL)
+		{
+			parent = node;
+			if (node->right)
+			{
+				node->right->parent = parent;
+				node->right->side = 1;
+			}
+			node->left->parent = parent;
+			node->left->side = 0;
+			node = node->left;
+		}
+		if (!node)
+		{
+			printf("NO RIGHT?\n");
+		}
+		else
+		{
+			pipex(node, env, files);
+		}
 	}
 	waiter(origin->type, origin, env, files);
 }

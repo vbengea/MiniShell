@@ -55,9 +55,15 @@ void	cleanup(char *err)
 
 int	is_last(t_ast_node *node, int files[3])
 {
-	if (node->side == 1 && node->parent->nid == files[2])
-		return (1);
-	return (0);
+	(void) files;
+	node = node->parent;
+	while (node)
+	{
+		if(node->type == NODE_PIPE && node->discovered == 0)
+			return (0);
+		node = node->parent;
+	}
+	return (1);
 }
 
 int    is_builtin(t_ast_node *node)

@@ -26,6 +26,7 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args)
 	node->right = NULL;
 	node->nid = 0;
 	node->side = 0;
+	node->discovered = 0;
 	node->exit = -1;
 	node->in_fd = -1;
 	node->out_fd = -1;

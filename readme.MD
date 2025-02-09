@@ -100,7 +100,8 @@
 		(ls -l | cat -e) | cat -e						[OK]
 		ls -l | (cat -e && cat -e)						[OK]
 		(ls -l | cat -e) | cat -e | cat -e				[OK]
-		((ls -l) | cat -e) | (cat -e | cat -e)			[OK]		
+		((ls -l) | cat -e) | (cat -e | cat -e)			[OK]
+		(((ls -l) | (cat -e))) | ((cat -e) | (cat -e))	[OK]	
 
 	- Cuando ejectumos "ls -l | cat -e | cat -e | cat -e" el resultado es el correcto pero se imprimen unos caracteres extra en la línea del prompt.
 
