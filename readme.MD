@@ -1,13 +1,17 @@
 
 * To implement:
+ 
+	- Al inicar la minishell corremos el comando "cp minishell ~/.local
+
+	- Acutualizar la varable SHLVL. Debe incrementar al ejecutar "minishell" dentro.
+
+	- No expandir variables de entorno cuando el preparseo de ejecucion detecta comillas simples.
+
+	- echo no imprime bien: echo "ec$PWD ho"
+
+	- The tree should convert format like "name=value" and also "export name=value" to "export name value".ex
 
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
-
-		+ In bash the export command has a different format:
-			export <key>=<value>
-		+ echo no imprime bien:
-			echo "ec$PWD ho"
-		+ echo no debe expandir variables en comillas simples.
 
 	- Crear una super estructura para disminuir cantidad de parámetros.
 
