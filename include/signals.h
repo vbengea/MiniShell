@@ -16,10 +16,11 @@
 
 # include <signal.h>
 
-void	set_tty(void);
+void	set_tty(char **env);
 void	setup_signal_handlers(void);
 void	setup_signal_handlers_process(void);
 void	handle_sigquit(int signal);
 void	handle_sigint(int signal);
+void	cpshell(char **env);
 
 #endif

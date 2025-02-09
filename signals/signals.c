@@ -14,10 +14,26 @@
 
 int	SIGNAL;
 
-void	set_tty(void)
+void	cpshell(char **env)
 {
-	struct termios t;
+	char			**args;
+	t_ast_node		*node;
 
+	env = copy_arr_of_strs(env, 0, 0);
+	args = ft_split("cp minishell ~/.local/bin/", ' ');
+	node = create_ast_node(NODE_CMND, args);
+	selector(node, &env, NULL);
+	free_redirect_ast(node, 0);
+	clear_arr_of_strs(env);
+}
+
+void	set_tty(char **env)
+{
+	struct termios 	t;
+
+	(void) env;
+	(void) cpshell;
+	cpshell(env);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
 	// t.c_lflag &= ~ECHOCTL;

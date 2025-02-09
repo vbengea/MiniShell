@@ -224,9 +224,7 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 			forker(node, env, executor, files);
 	}
 	else if (node->type == NODE_AND || node->type == NODE_OR)
-	{
 		navigator(node, env, 1, files);
-	}
 	else if (node->type == NODE_PIPE)
 	{
 		files[2] = node->nid;

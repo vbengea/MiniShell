@@ -29,7 +29,7 @@ void	assign_ids(t_ast_node *node, int *id)
 
 // 	(void) argc;
 // 	(void) argv;
-// 	set_tty();
+// 	set_tty(env);
 // 	env = copy_arr_of_strs(env, 0, 0);
 // 	while (true)
 // 	{
@@ -71,7 +71,7 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 
 	id = 0;
-	set_tty();
+	set_tty(env);
 	env = copy_arr_of_strs(env, 0, 0);
 	while (true)
 	{
