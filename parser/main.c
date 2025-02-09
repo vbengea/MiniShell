@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:07:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/09 18:10:27 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 18:33:54 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,10 @@ int main(void)
 			break;
 		}
 		token = tokenize_input(input);
-		// t_token *temp = token;
-		// if (check_syntax(temp->next, temp))
-		// 	ast = build_ast(token);
-		ast = build_ast(token);
-
+		if (check_syntax(token, NULL))
+			ast = build_ast(token);
+		else
+			continue ;
 		print_ast(ast, 0);
 
 	}

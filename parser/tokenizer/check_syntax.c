@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:41:36 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/09 18:10:06 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 18:32:15 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ bool	check_syntax(t_token *tokens, t_token *prev)
 		return (true);
 	if (tokens->type == TOKEN_INVALID)
 		return (printf("Syntax error: INVALID TOKEN\n"), false);
-	if (is_valid_pipe(tokens, prev))
+	if (!is_valid_pipe(tokens, prev))
 		return (printf("Syntax error: INVALID PIPE\n"), false);
-	if (is_valid_redirection(tokens, prev))
+	if (!is_valid_redirection(tokens, prev))
 		return (printf("Syntax error: INVALID REDIRECTION\n"), false);
-	return (check_syntax(tokens->next, prev));
+	return (check_syntax(tokens->next, tokens));
 }
