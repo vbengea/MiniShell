@@ -9,21 +9,9 @@
 			echo "ec$PWD ho"
 		+ echo no debe expandir variables en comillas simples.
 
+	- Crear una super estructura para disminuir cantidad de parámetros.
 
-* Problems:
-
-	- Crear una super estructura para disminuir cantidad de parametros.
-
-	- Actual tokenizer doesn't support multiple redirections.
-
-		+ Proposed solution:
-			-Build a re-tokenizer on top of the actual one and update the AST structure.
-
-			- A command like: cat < input.txt | grep "error" >> output.txt && echo "done" would have a structure like:
-
-				![alt text](https://github.com/juandfloresm/minishare/blob/d280cd03d52180b5d4134df3951b1f946d357e49/resources/red.png)
-
-			- A command node now will have a redirect linked list
+	- Control de errores.
 
 
 * Environment differences:
@@ -40,6 +28,17 @@
 
 
 * Solved issues
+
+	- Actual tokenizer doesn't support multiple redirections.
+
+		+ Proposed solution:
+			-Build a re-tokenizer on top of the actual one and update the AST structure.
+
+			- A command like: cat < input.txt | grep "error" >> output.txt && echo "done" would have a structure like:
+
+				![alt text](https://github.com/juandfloresm/minishare/blob/d280cd03d52180b5d4134df3951b1f946d357e49/resources/red.png)
+
+			- A command node now will have a redirect linked list
 
 	- Signal. Esta variable global no puede proporcionar ninguna otra información o datos que el número de una señal recibida.
 
