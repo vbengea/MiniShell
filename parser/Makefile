@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+         #
+#    By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 12:11:00 by vbengea           #+#    #+#              #
-#    Updated: 2025/02/05 08:37:07 by vbengea          ###   ########.fr        #
+#    Updated: 2025/02/08 20:08:03 by vbengea          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,9 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -Ilibft -lreadline -g
 LDFLAGS = -lreadline
+VALGRIND_VALE	:=	/home/vbcvali/Documents/minishell_t/tmp/suppressions/new_suppression.supp
+VFLAGS	:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(VALGRIND_VALE)
+
 
 LIBFT_DIR = ../libft
 
@@ -50,6 +53,9 @@ fclean: clean
 	rm tokenizer/*.o
 
 re: fclean clear all
+
+valgrind: 
+	valgrind $(VFLAGS) ./parser
 
 clear:
 	clear
