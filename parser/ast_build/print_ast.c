@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 18:48:17 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/08 12:00:40 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 12:15:38 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void print_ast(t_ast_node *node, int level)
 		{
 			printf("%s ", node->args[j]);
 		}
+		printf("  ENV FLAG: %d  ", node->has_env);
 	}
 	// printf("Node args pointer: %p", node->args);
 	if ((node->type == NODE_CMND || node->type == NODE_GROUP) && node->redirs)

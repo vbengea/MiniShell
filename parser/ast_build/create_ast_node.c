@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:15:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/08 12:11:00 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 12:11:35 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,7 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args)
 	node->has_group_out_fd = 0;
 	node->parent = NULL;
 	node->redirs = NULL;
+	node->has_env = false;
+	node->env_declare = false;
 	return (node);
 }
