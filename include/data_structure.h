@@ -82,7 +82,7 @@ typedef struct s_ast_node
 	int					nid;
 	int					has_group_in_fd;
 	int					has_group_out_fd;
-
+	int					discovered;
 	bool				env_declare;
 	bool				has_env;
 }	t_ast_node;

@@ -21,44 +21,6 @@ void	assign_ids(t_ast_node *node, int *id)
 	assign_ids(node->right, id);
 }
 
-int main(int argc, char **argv, char **env)
-{
-	t_ast_node	*ast;
-	char 		*input;
-	int			files[3];
-
-	(void) argc;
-	(void) argv;
-	set_tty();
-	env = copy_arr_of_strs(env, 0, 0);
-	while (true)
-	{
-		input = readline(GREEN "minishell$ " RESET);
-		if (!input)
-		{
-			write(1, "exit\n", 5);
-			break ;
-		}
-		else if (input[0] == '\0')
-		{
-			free(input);
-			continue ;
-		}
-		add_history(input);
-		ast = build_redirect_ast(input);
-		if (ast)
-		{
-			files[0] = STDIN_FILENO;
-			selector(ast, &env, files);
-			free_redirect_ast(ast, 0);
-		}
-		free(input);
-	}
-	clear_arr_of_strs(env);
-	rl_clear_history();
-	return (0);
-}
-
 // int main(int argc, char **argv, char **env)
 // {
 // 	t_ast_node	*ast;
@@ -83,21 +45,65 @@ int main(int argc, char **argv, char **env)
 // 			continue ;
 // 		}
 // 		add_history(input);
-// 		tokens = tokenize_input(input);
-// 		ast = build_ast(tokens);
-// 		assign_ids(ast, &id);
-// 		ast_printer(ast, 0);
-// 		free(input);
+// 		ast = build_redirect_ast(input);
 // 		if (ast)
 // 		{
 // 			files[0] = STDIN_FILENO;
-// 			files[1] = STDOUT_FILENO;
-// 			files[2] = 0;
 // 			selector(ast, &env, files);
 // 			free_redirect_ast(ast, 0);
 // 		}
+// 		free(input);
 // 	}
 // 	clear_arr_of_strs(env);
 // 	rl_clear_history();
 // 	return (0);
 // }
+
+int main(int argc, char **argv, char **env)
+{
+	t_ast_node	*ast;
+	char 		*input;
+	int			files[3];
+	t_token		*tokens;
+	int			id;
+
+	(void) argc;
+	(void) argv;
+
+	id = 0;
+	set_tty();
+	env = copy_arr_of_strs(env, 0, 0);
+	while (true)
+	{
+		input = readline(GREEN "minishell$ " RESET);
+		if (!input)
+		{
+			write(1, "exit\n", 5);
+			break ;
+		}
+		else if (input[0] == '\0')
+		{
+			free(input);
+			continue ;
+		}
+		add_history(input);
+		tokens = tokenize_input(input);
+		ast = build_ast(tokens);
+		assign_ids(ast, &id);
+
+		free(input);
+		if (ast)
+		{
+			files[0] = STDIN_FILENO;
+			files[1] = STDOUT_FILENO;
+			files[2] = 0;
+			selector(ast, &env, files);
+			free_redirect_ast(ast, 0);
+		}
+		free_token(tokens);
+	}
+	clear_arr_of_strs(env);
+	rl_clear_history();
+	free_token(tokens);
+	return (0);
+}
