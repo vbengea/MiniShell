@@ -27,9 +27,8 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 	files[0] = fd[0];
 	if (!node)
 		return ;
-	// printf("NID: %d\n", node->nid);
 	node = node->parent;
-	while (node) //(node->type == NODE_PIPE || node->type == NODE_GROUP)
+	while (node)
 	{
 		if(node->type == NODE_PIPE && node->discovered == 0)
 		{
@@ -40,7 +39,6 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 	}
 	if(node)
 	{
-		// printf("PID: %d\n", node->nid);
 		node = node->right;
 		while (node && node->left != NULL)
 		{
@@ -54,14 +52,8 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 			node->left->side = 0;
 			node = node->left;
 		}
-		if (!node)
-		{
-			printf("NO RIGHT?\n");
-		}
-		else
-		{
+		if (node)
 			pipex(node, env, files);
-		}
 	}
 	waiter(origin->type, origin, env, files);
 }

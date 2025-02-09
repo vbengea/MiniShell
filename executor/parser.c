@@ -215,7 +215,7 @@ t_ast_node	*build_redirect_ast(char *context)
 	index = 1;
 	context = ft_strdup(context);
 	ast = create_structure(context, AND, &index);
-	ast_printer(ast, 0);
+	// ast_printer(ast, 0);
 	free(context);
 	return (ast);
 }
