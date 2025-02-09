@@ -91,7 +91,7 @@ int main(int argc, char **argv, char **env)
 // 		tokens = tokenize_input(input);
 // 		ast = build_ast(tokens);
 // 		assign_ids(ast, &id);
-
+// 		ast_printer(ast, 0);
 // 		free(input);
 // 		if (ast)
 // 		{

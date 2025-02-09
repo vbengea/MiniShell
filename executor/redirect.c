@@ -223,6 +223,8 @@ char	*read_files_content(char **files)
 			}
 			close(tmp);
 		}
+		else
+			cleanup(files[i]);
 		i++;
 	}
 	return (content);
