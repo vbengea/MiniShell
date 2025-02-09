@@ -6,38 +6,129 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/04 19:29:35 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/07 04:00:33 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-static	t_ast_node	*get_execution_node(char *context, t_mini_token level)
+t_ast_node	*create_node_command(char *context, int *index)
 {
 	t_ast_node	*ast;
-	char		*str;
+	char		**elements;
+
+	ast = create_ast_node(NODE_CMND, NULL);
+	context = parse_redirections(ast, context);
+	elements = ft_split(context, ' ');
+	ast->args = elements;
+	ast->nid = *index;
+	*index = *index + 1;
+	return (ast);
+}
+
+t_ast_node	*create_group_command(char *context, int *index)
+{
+	t_ast_node	*ast;
+	int			i;
+	int			j;
+	char		*reds;
+	char		*pars;
+	char		*clear;
+	int			p;
+	int			len;
+	char		c;
+	bool		parse;
 
 	ast = NULL;
+	i = 0;
+	p = 0;
+	parse = false;
+	while (ft_isspace(context[i]))
+		i++;
+	context = (context + i);
+	ast = get_node_by_token(SUBSHELL);
+	ast->nid = *index;
+	*index = *index + 1;
+	reds = ft_strdup(context);
+	len = ft_strlen(reds);
+	pars = malloc(len + 1);
+	pars[len] = '\0';
+	i = 0;
+	while (i < len)
+		pars[i++] = ' ';
+	i = 0;
+	j = 0;
+	while (reds[i])
+	{
+		c = reds[i];
+		if (reds[i] == '(')
+		{
+			if (p == 0)
+				reds[i] = ' ';
+			p++;
+		}
+		else if(reds[i] == ')')
+		{
+			p--;
+			if (p == 0)
+			{
+				reds[i] = ' ';
+				parse = false;
+			}
+		}
+		if (p > 0 && parse)
+		{
+			pars[j++] = c;
+			reds[i] = ' ';
+		}
+		if (p > 0)
+			parse = true;
+		i++;
+	}
+	clear = reds;
+	reds = ft_strtrim(reds, " ");
+	free(clear);
+	clear = pars;
+	pars = ft_strtrim(pars, " ");
+	free(clear);
+	parse_redirections(ast, reds);
+	ast->left = create_structure(pars, AND, index);
+	free(reds);
+	free(pars);
+	return (ast);
+}
+
+static	t_ast_node	*get_execution_node(char *context, t_mini_token level, int *index)
+{
+	t_ast_node	*ast;
+	int			i;
+	int			j;
+
+	ast = NULL;
+	i = 0;
 	if (level == AND)
-		ast = create_structure(context, PIPE);
+		ast = create_structure(context, PIPE, index);
 	else
 	{
-		if (context[0] == '(')
+		while (ft_isspace(context[i]))
+			i++;
+		j = i;
+		while (context[j])
 		{
-			str = ft_substr(context, 1, ff_subcontext(context) - 2);
-			ast = get_node_by_token(SUBSHELL);
-			ast->left = create_structure(str, AND);
-			free(str);
+			if (context[j] == '(')
+				return create_group_command(context, index);
+			j++;
 		}
-		else
-			ast = create_node_command(context);
+		context = (context + i);
+		ast = create_node_command(context, index);
 	}
 	return (ast);
 }
 
-static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level)
+static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level, int *index)
 {
 	t_ast_node	*nod;
+	char		*t;
 
 	if (is_node((s + *i), "&&"))
 		nod = get_node_by_token(AND);
@@ -48,23 +139,29 @@ static	void	inner(t_ast_node **ast, char *s, int *i, int *k, int level)
 	if (*ast == NULL)
 	{
 		*ast = nod;
-		(*ast)->left = get_execution_node(ft_substr(s, *k, *i - *k), level);
+		t = ft_substr(s, *k, *i - *k);
+		(*ast)->left = get_execution_node(t, level, index);
+		free(t);
 	}
 	else
 	{
 		nod->left = *ast;
-		(*ast)->right = get_execution_node(ft_substr(s, *k, *i - *k), level);
+		t = ft_substr(s, *k, *i - *k);
+		(*ast)->right = get_execution_node(t, level, index);
+		(*ast)->right->side = 1;
 		*ast = nod;
+		free(t);
 	}
 	*i += 2;
 	*k = *i;
 }
 
-t_ast_node	*create_structure(char *context, t_mini_token level)
+t_ast_node	*create_structure(char *context, t_mini_token level, int *index)
 {
 	t_ast_node	*ast;
 	int			i;
 	int			k;
+	char		*s;
 
 	i = 0;
 	k = 0;
@@ -72,18 +169,25 @@ t_ast_node	*create_structure(char *context, t_mini_token level)
 	while (context[i])
 	{
 		if (ft_isquote(context[i]) || context[i] == '(')
-			i += ff_subcontext((context + i));
-		else if (is_control_character((context + i)))
-			inner(&ast, context, &i, &k, level);
+			i += ff_subcontext(context + i);
+		else 
+		if (is_control_character(context + i))
+			inner(&ast, context, &i, &k, level, index);
 		else
 			i++;
 	}
 	if (ast == NULL)
-		ast = get_execution_node(ft_substr(context, k, i - k), level);
+	{
+		s = ft_substr(context, k, i - k);
+		ast = get_execution_node(s, level, index);
+		free(s);
+	}
 	else
 	{
-		ast->right = get_execution_node(ft_substr(context, k, i - k), level);
+		s = ft_substr(context, k, i - k);
+		ast->right = get_execution_node(s, level, index);
 		ast->right->side = 1;
+		free(s);
 	}
 	return (ast);
 }
@@ -91,8 +195,12 @@ t_ast_node	*create_structure(char *context, t_mini_token level)
 t_ast_node	*build_redirect_ast(char *context)
 {
 	t_ast_node	*ast;
+	int			index;
 
-	ast = create_structure(context, AND);
+	index = 1;
+	context = ft_strdup(context);
+	ast = create_structure(context, AND, &index);
 	ast_printer(ast, 0);
+	free(context);
 	return (ast);
 }

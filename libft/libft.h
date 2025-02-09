@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:08:22 by juandanielf       #+#    #+#             */
-/*   Updated: 2025/01/24 17:48:08 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/06 00:08:59 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *s, int fd);
+void			ft_putstrnl_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			*ft_memset(void *s, int c, size_t n);
 void			ft_bzero(void *s, size_t n);
@@ -60,7 +61,7 @@ bool			ft_isspace(char c);
 char			*ft_strndup(const char *s, size_t n);
 char			*ft_strcpy(char *dst, const char *src);
 void			clear_arr_of_strs(char **sp);
-char			**copy_arr_of_strs(char **p, int len);
+char			**copy_arr_of_strs(char **p, int len, int purge);
 char			**add_arr_of_strs(char **p, char *str);
 void			sort_arr_of_strs(char **str, int order_type);
 int				ft_strcmp(const char *s1, const char *s2);

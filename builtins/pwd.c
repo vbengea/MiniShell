@@ -12,10 +12,17 @@
 
 #include "../include/headers.h"
 
-void	pwd_bi(void)
+void	pwd_bi(t_ast_node *node)
 {
 	char	cwd[PATH_MAX];
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		printf("%s\n", cwd);
+	{
+		if (node->out_fd < 0)
+			printf("%s\n", cwd);
+		else
+		{
+			ft_putstrnl_fd(cwd, node->out_fd);
+		}
+	}
 }

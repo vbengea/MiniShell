@@ -6,12 +6,21 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:07:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/04 20:08:02 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 19:22:50 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
+void	assign_ids(t_ast_node *node, int *id)
+{
+	if (!node)
+		return ;
+	if (node->type == NODE_CMND)
+		node->nid = ++(*id);
+	assign_ids(node->left, id);
+	assign_ids(node->right, id);
+	}
 /**
  * @warning test
  */
@@ -25,23 +34,61 @@ int main(void)
 	{
 		input = readline(GREEN "minishell$ " RESET);
 		if (!input)
-			break;
-
-		token = tokenize_input(input);
-		//printf("Input tokenized!\n");
-		while (token)
 		{
-			printf("Token type: %d, value: %s\n", token->type, token->value);
-			token = token->next;
+			free_token(token);
+			free (input);
+			break;
 		}
-		ast = build_ast(token);
-		// printf("AST built!\n");
 
+		if (input[0] == '\0')
+		{
+			free_token(token);
+			free (input);
+			break;
+		}
+		token = tokenize_input(input);
+		if (check_syntax(token, NULL))
+			ast = build_ast(token);
+		else
+			continue ;
 		print_ast(ast, 0);
 
-		//free(input);
-		free_token(token);
-		free_ast(ast);
 	}
 	return (0);
 }
+
+// int main(void)
+// {
+// 	t_token *token;
+// 	char *input;
+// 	t_token *temp;
+
+// 	while (true)
+// 	{
+// 		input = readline(GREEN "minishell$ " RESET);
+// 		if (!input)
+// 		{
+// 			free_token(token);
+// 			free (input);
+// 			break;
+// 		}
+
+// 		if (input[0] == '\0')
+// 		{
+// 			free_token(token);
+// 			free (input);
+// 			break;
+// 		}
+// 		token = tokenize_input(input);
+
+// 		temp = token;
+// 		while (temp)
+// 		{
+// 			printf("Token type: %d, value: %s", temp->type, temp->value);
+// 			printf("  has_env flag: %d\n", temp->has_env);
+// 			temp = temp->next;
+// 		}
+
+// 	}
+// 	return (0);
+// }

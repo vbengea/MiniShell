@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_redirect_token.c                                :+:      :+:    :+:   */
+/*   wildcard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 09:02:12 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/30 09:03:50 by vbengea          ###   ########.fr       */
+/*   Created: 2025/02/05 18:44:37 by vbengea           #+#    #+#             */
+/*   Updated: 2025/02/05 19:07:05 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/headers.h"
+#ifndef WILDCARD_H
+# define WILDCARD_H
 
-bool	is_redirect_token(t_token_tpype type)
-{
-	return (type == TOKEN_REDIRECT_IN
-			|| type == TOKEN_REDIRECT_OUT
-			|| type == TOKEN_APPEND
-			|| type == TOKEN_HEREDOC);
-}
+# include "../include/headers.h"
+# include <dirent.h>
+# include <stdbool.h>
+
+t_list	*ft_wildcard(char *input);
+
+#endif

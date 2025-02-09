@@ -54,33 +54,54 @@ char	*get_env(char *var, char **env)
 	return (NULL);
 }
 
-char	*set_env(char *var, char *value, char **env)
+char	**set_env(char *key, char *value, char **env)
 {
 	int		i;
+	int		found;
 	int		len;
 	char	*str;
+	char	*var;
 
 	i = 0;
-	while (env[i])
+	found = 0;
+	var = key;
+	var = ft_strjoin(var, "=");
+	while (var && env[i])
 	{
-		var = ft_strjoin(var, "=");
-		if (var)
+		if (var && ft_strncmp(env[i], var, ft_strlen(var)) == 0)
 		{
-			if (ft_strncmp(env[i], var, ft_strlen(var)) == 0)
+			str = ft_strjoin(var, value);
+			if (str)
 			{
 				free(env[i]);
-				str = ft_strjoin(var, value);
 				len = ft_strlen(str);
 				env[i] = malloc(len + 1);
-				ft_strlcpy(env[i], str, len + 1);
-				env[i][len] = '\0';
+				if (env[i])
+				{
+					ft_strlcpy(env[i], str, len + 1);
+					env[i][len] = '\0';
+				}
 				free(str);
 			}
-			free(var);
+			found = 1;
+			break ;
 		}
 		i++;
 	}
-	return (NULL);
+	if (!found)
+	{
+		if (var)
+		{
+			str = ft_strjoin(var, value);
+			if (str)
+			{
+				env = add_arr_of_strs(env, str);
+				free(str);
+			}
+		}
+	}
+	free(var);
+	return (env);
 }
 
 static	char *add_str(char *a, char *b)
@@ -124,19 +145,62 @@ char	*interpolation(char *str, char **env)
 	return (r);
 }
 
+char	**expantion(char *str, char **args)
+{
+	int		found;
+	t_list	*lst;
+	t_list	*p;
 
-void		echo_bi(char **params, char **env)
+	found = 0;
+	lst = ft_wildcard(str);
+	while (lst)
+	{
+		p = lst;
+		if (lst->content)
+		{
+			args = add_arr_of_strs(args, (char *)lst->content);
+			found = 1;
+			free(lst->content);
+		}
+		if (lst->next == NULL)
+		{
+			free(p);
+			break ;
+		}
+		lst = lst->next;
+		free(p);
+	}
+	if (!found)
+		args = add_arr_of_strs(args, str);
+	return (args);
+}
+
+
+void		echo_bi(t_ast_node *node, char **env)
 {
 	int		i;
 	char	*str;
+	char	*p;
+	char 	**params;
 
+	params = node->args;
 	i = 1;
 	while (params[i])
 	{
 		str = interpolation(params[i], env);
-		printf("%s ", str);
+		if (node->out_fd < 0)
+			printf("%s ", str);
+		else
+		{
+			p = ft_strjoin(str, " ");
+			ft_putstr_fd(p, node->out_fd);
+			free(p);
+		}
 		free(str);
 		i++;
 	}
-	printf("\n");
+	if (node->out_fd < 0)
+		printf("\n");
+	else
+		ft_putchar_fd('\n', node->out_fd);
 }

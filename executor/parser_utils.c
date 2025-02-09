@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/25 16:49:17 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/07 03:59:50 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	ast_printer(t_ast_node *ast, int level)
 	{
 		while (i++ < level)
 			printf("  ");
-		if (ast->type == NODE_CMND)
+		if (ast->type == NODE_CMND || ast->type == NODE_GROUP)
 		{
-			printf("TYPE: %d [%d]\t\tARGS: ", ast->type, ast->side);
+			printf("[TYPE:%d] [NID:%d] [SIDE:%d] [ARGS]: ", ast->type, ast->nid, ast->side);
 			i = 0;
 			while (ast->args && ast->args[i])
 				printf("%s ", ast->args[i++]);
-			printf("\tREDIRS: ");
+			printf("[REDIRS]: ");
 			if (ast->redirs)
 				redlist_iter(ast->redirs, print_redirs);
 			printf("\n");
@@ -72,10 +72,11 @@ int	is_control_character(char *context)
 
 int	ff_subcontext(char *context)
 {
-	int i = 0;
-	int p = 0;
+	int	i;
+	int	p;
 
 	i = 0;
+	p = 0;
 	if (context[i] == '(')
 	{
 		while (context[i])
@@ -88,6 +89,8 @@ int	ff_subcontext(char *context)
 				break ;
 			i++;
 		}
+		if (p > 0)
+			return (1);
 	}
 	else if (context[i] == 34)
 	{
@@ -104,21 +107,3 @@ int	ff_subcontext(char *context)
 	return (i + 1);
 }
 
-t_ast_node	*create_node_command(char *str)
-{
-	t_ast_node	*ast;
-	char		**elements;
-	char		*cmd;
-	char		*args;
-	int			len;
-
-	ast = create_ast_node(NODE_CMND, NULL);
-	str = parse_redirections(ast, str);
-	elements = ft_split(str, ' ');
-	cmd = elements[0];
-	len = ft_strlen(cmd);
-	args = ft_strtrim((str + len), " ");
-	ast->args = elements;
-	free(args);
-	return (ast);
-}

@@ -1,8 +1,13 @@
 NAME			:=	minishell
 
 CC				:= 	cc
-CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include -g
 SFLAGS			:= 	-g3 -fsanitize=address
+
+VALGRIND_PATH	:=	./tmp/suppressions/valgrind.supp
+VALGRIND_VALE	:=	./tmp/suppressions/new_suppression.supp
+VALGRIND_JUAF	:=	./tmp/suppressions/mac.supp
+VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(VALGRIND_VALE)
 LDFLAGS 		:=	-lreadline -L/opt/homebrew/opt/readline/lib
 
 LIBFT_DIR		:= 	./libft
@@ -11,16 +16,18 @@ EXEC_DIR		:=	executor
 PARSER_DIR		:=  parser
 BUILTINS_DIR	:=  builtins
 SIGNALS_DIR		:=  signals
+WILDCARD_DIR	:=  wildcard
 INCLUDE			:= 	./include/headers.h
 
 SRC				:= 	main.c\
 					$(EXEC_DIR)/utils.c \
+					$(EXEC_DIR)/utils_redis.c \
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
 					$(EXEC_DIR)/pipex.c \
 					$(EXEC_DIR)/redirect.c \
 					$(EXEC_DIR)/parser.c \
-					$(EXEC_DIR)/parser_redirect.c \
+					$(EXEC_DIR)/parser_redis.c \
 					$(EXEC_DIR)/parser_utils.c \
 					$(SIGNALS_DIR)/signals.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
@@ -40,28 +47,21 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/tokenizer/dispatch_operator.c \
 					$(PARSER_DIR)/tokenizer/handle_operator.c \
 					$(PARSER_DIR)/tokenizer/free_token.c \
-					$(PARSER_DIR)/ast_build/build_ast.c \
-					$(PARSER_DIR)/ast_build/create_ast_node.c \
-					$(PARSER_DIR)/ast_build/print_ast.c \
-					$(PARSER_DIR)/ast_build/free_ast.c \
-					$(PARSER_DIR)/ast_build/handle_parentheses.c \
-					$(PARSER_DIR)/ast_build/build_operator_node.c \
-					$(PARSER_DIR)/ast_build/build_command_node.c \
-					$(PARSER_DIR)/ast_build/create_redirect_node.c \
-					$(PARSER_DIR)/ast_build/find_matching_paren.c \
-					$(PARSER_DIR)/ast_build/find_split_point.c \
+					$(PARSER_DIR)/ast_build/*.c \
 					$(BUILTINS_DIR)/cd.c \
 					$(BUILTINS_DIR)/echo.c \
 					$(BUILTINS_DIR)/env.c \
 					$(BUILTINS_DIR)/exit.c \
 					$(BUILTINS_DIR)/export.c \
 					$(BUILTINS_DIR)/pwd.c \
-					$(BUILTINS_DIR)/unset.c
+					$(BUILTINS_DIR)/unset.c \
+					$(WILDCARD_DIR)/ft_wildcard.c
 
 OBJ 			:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
 					$(patsubst $(SIGNALS_DIR)/%.c, $(SIGNALS_DIR)/%.o, $(SRC)) \
 					$(patsubst $(PARSER_DIR)/*/%.c, $(PARSER_DIR)/*/%.o, $(SRC)) \
-					$(patsubst $(BUILTINS_DIR)/%.c, $(BUILTINS_DIR)/%.o, $(SRC))
+					$(patsubst $(BUILTINS_DIR)/%.c, $(BUILTINS_DIR)/%.o, $(SRC)) \
+					$(patsubst $(WILDCARD_DIR)/%.c, $(WILDCARD_DIR)/%.o, $(SRC))
 
 all: $(NAME)
 
@@ -74,13 +74,15 @@ clean:
 	rm -f $(PARSER_DIR)/*/*.o
 	rm -f $(BUILTINS_DIR)/*.o
 	rm -f $(SIGNALS_DIR)/*.o
+	rm -f $(WILDCARD_DIR)/*.o
 	rm -rf *.dSYM
-	rm -f z
+	rm -f t0 t1 t2 t3 t4 t5 tmp/__*
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 	rm -f a.out
+	rm -f $(NAME).dSYM
 
 re: fclean all
 
@@ -101,20 +103,22 @@ git: norm
 	rm -f __tmp__
 	git add -A
 	git commit -am "$(shell date)"
+	# git config pull.rebase false
 	git push
 
 runner: all
-	./minishell
-	make -C . fclean
+	./$(NAME)
+	#make -C . fclean
 
-valgrind: fclean $(LIBFT) $(OBJB) $(INCLUDE)
-	$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o minishell
-	valgrind -s --tool=memcheck --leak-check=yes ./minishell
-	make -C . fclean
+valgrind: re
+	valgrind $(VFLAGS) ./$(NAME)
 
-sanitizer: fclean $(LIBFT) $(OBJB) $(INCLUDE)
-	$(CC) $(CFLAGS) $(SRC) $(LIBFT) $(SFLAGS) -o minishell
-	./minishell
-	make -C . fclean
+sanitizer:
+	make -C . re
+	./$(NAME)
+
+sanitizer: $(LIBFT) $(OBJ) $(INCLUDE)
+	$(CC) $(SFLAGS) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
+	./$(NAME)
 
 .PHONY: all clean fclean re norm git runner valgrind sanitizer

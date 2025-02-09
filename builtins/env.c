@@ -3,34 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/01/25 16:37:00 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/06 00:10:24 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-void		env_bi(char **env, int sorted)
+void		env_bi(t_ast_node *node, char **env, int sorted)
 {
 	int			i;
 	char		**p;
+	char		*str;
 
-	i = 0;
 	(void) p;
+	p = NULL;
+	i = 0;
 	if (sorted)
 	{
-		p = copy_arr_of_strs(env, 0);
+		p = copy_arr_of_strs(env, 0, 0);
 		if (p)
 		{
 			sort_arr_of_strs(p, 1);
 			while (p && p[i])
-				printf("declare -x %s\n", p[i++]);
+				if (node->out_fd < 0)
+					printf("declare -x %s\n", p[i++]);
+				else
+				{
+					str = ft_strjoin("declare -x ", p[i++]);
+					ft_putstrnl_fd(str, node->out_fd);
+					free(str);
+				}
 			clear_arr_of_strs(p);
 		}
 	}
 	else
 		while (env && env[i])
-			printf("%s\n", env[i++]);
+		{
+			if (node->out_fd < 0)
+				printf("%s\n", env[i++]);
+			else
+				ft_putstrnl_fd(env[i++], node->out_fd);
+		}
 }

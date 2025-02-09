@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/01 13:50:24 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 13:34:12 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # include "tokenizer_functions.h"
 # include "signals.h"
+# include "wildcard.h"
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -31,5 +32,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <termios.h>
+# include <limits.h>
 
 #endif

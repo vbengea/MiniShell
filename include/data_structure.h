@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/03 19:24:48 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/09 11:44:06 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ typedef enum e_node_type
 {
 	NODE_CMND,
 	NODE_PIPE,
-	NODE_REDIRECT, // This will no longer be a type of node.
 	NODE_AND,
 	NODE_OR ,
 	NODE_GROUP
@@ -67,18 +66,25 @@ typedef struct s_redirect_params
 	int		suffix;
 }	t_redirect_params;
 
-/* Update structure.
-	The proposed updates are commented untill they are implemented */
 typedef struct s_ast_node
 {
 	t_node_type			type;
 	t_node_type			parent_type;
-	t_redirection		*redirs; // Linked list for redirections
+	t_redirection		*redirs;
 	char				**args;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
 	struct s_ast_node	*parent;
 	int					side;
+	int					exit;
+	int					in_fd;
+	int					out_fd;
+	int					nid;
+	int					has_group_in_fd;
+	int					has_group_out_fd;
+
+	bool				env_declare;
+	bool				has_env;
 }	t_ast_node;
 
 #endif

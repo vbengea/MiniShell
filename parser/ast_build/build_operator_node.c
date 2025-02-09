@@ -6,33 +6,48 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:49:48 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/28 18:51:18 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 12:02:55 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-t_ast_node	*build_operator_node(t_ast_node *left, t_token *split_point)
+static void	assign_root(t_ast_node *root, t_ast_node *left, t_ast_node *right)
 {
-	t_ast_node	*right;
-	t_ast_node	*root;
+	root->left = left;
+	root->right = right;
+
+	if (root->left)
+	{
+		root->left->side = 0;
+		root->left->parent = root;
+	}
+	if (root->right)
+	{
+		root->right->side = 1;
+		root->right->parent = root;
+	}
+}
+
+t_ast_node *build_operator_node(t_ast_node *left, t_token *split_point)
+{
+	t_ast_node *right;
+	t_ast_node *root;
 
 	root = NULL;
 	right = NULL;
+
 	if (split_point->type == TOKEN_PIPE)
 		root = create_ast_node(NODE_PIPE, NULL);
 	else if (split_point->type == TOKEN_AND)
 		root = create_ast_node(NODE_AND, NULL);
 	else if (split_point->type == TOKEN_OR)
 		root = create_ast_node(NODE_OR, NULL);
-	else if (is_redirect_token(split_point->type))
-		root = create_redirect_node(split_point);
 	if (split_point->next)
 		right = build_ast(split_point->next);
 	if (root)
-	{
-		root->left = left;
-		root->right = right;
-	}
+		assign_root(root, left, right);
+
 	return (root);
 }
+

@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:00:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/01 13:28:56 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/08 11:49:32 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,32 +84,34 @@ int	is_valid_operator(t_token_type type)
 }
 
 
-int	is_redirect_token(t_token_type type)
+t_ast_node *build_ast(t_token *tokens)
 {
-	return (type == TOKEN_REDIRECT_IN ||
-			type == TOKEN_REDIRECT_OUT ||
-			type == TOKEN_APPEND ||
-			type == TOKEN_HEREDOC);
-}
-
-t_ast_node	*build_ast(t_token *tokens)
-{
-	t_token		*split_point;
-	t_ast_node	*left;
+	t_token *split_point;
+	t_ast_node *left;
 
 	if (!tokens)
 		return (NULL);
+
 	if (tokens->type == TOKEN_OPEN_PAREN)
 		return (handle_parentheses(tokens));
+
 	split_point = find_split_point(tokens);
 	if (!split_point)
+	{
 		return (build_command_node(tokens));
+	}
+
+	// printf("Split point found: type=%d, value=%s\n", split_point->type, split_point->value);
+
 	left = NULL;
 	if (split_point != tokens)
 	{
+		// printf("Building left subtree\n");
 		disconnect_tokens(tokens, split_point);
 		left = build_ast(tokens);
 		reconnect_tokens(tokens, split_point);
 	}
+
+	// printf("Building operator node\n");
 	return (build_operator_node(left, split_point));
 }

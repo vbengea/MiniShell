@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/04 13:31:39 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/08 11:11:46 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,51 +44,48 @@ static	void	child(int fd[2], int files[3], t_ast_node *node, char ***env)
 	{
 		close(files[0]);
 		files[0] = fd[1];
-		pipex(node, env, files, 0);
-		close(files[0]);
+		if (node->type == NODE_PIPE)
+			pipex(node, env, files, 0);
+		else
+			navigator(node, env, 1, files);
 		close(files[1]);
 	}
 }
 
 void	pipex(t_ast_node *node, char ***env, int files[3], int side)
 {
-	int	fd[2];
-	int	pid;
+	int			fd[2];
+	int			pid;
+	t_ast_node	*ast;
 
 	if (!node)
 		return ;
-	if (node->type == NODE_PIPE || node->type == NODE_CMND)
+	files[2] = side;
+	if(side == 1)
+		ast = node->right;
+	else
+		ast = node->left;
+	ast->parent = node;
+	if (pipe(fd) == -1)
+		cleanup("Error creating pipe");
+	pid = fork();
+	if (pid == -1)
+		cleanup("Error forking process");
+	if (pid == 0)
+		child(fd, files, ast, env);
+	else
 	{
-		if (pipe(fd) == -1)
-			cleanup("Error creating pipe");
-		pid = fork();
-		if (pid == -1)
-			cleanup("Error forking process");
-		populate_node(node, side);
-		if (pid == 0)
+		if (side == 1)
 		{
-			if(side == 1)
-				child(fd, files, node->right, env);
-			else
-				child(fd, files, node->left, env);
+			parent(fd, files, ast, env);
+			if (ast)
+				waiter(ast->type, ast, env, files);
 		}
 		else
 		{
-			if (side == 1)
-			{
-				parent(fd, files, node->right, env);
-				waiter(node->right->type, node->right, env, files);
-			}
-			else
-			{
-				parent(fd, files, node, env);
-				waiter(node->left->type, node->left, env, files);
-			}
+			parent(fd, files, node, env);
+			if (ast)
+				waiter(ast->type, ast, env, files);
 		}
-	}
-	else
-	{
-		files[2] = side;
-		selector(node, env, files);
 	}
 }

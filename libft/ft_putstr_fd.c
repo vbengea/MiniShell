@@ -17,3 +17,10 @@ void	ft_putstr_fd(char *s, int fd)
 	while (*s)
 		ft_putchar_fd(*s++, fd);
 }
+
+void	ft_putstrnl_fd(char *s, int fd)
+{
+	while (*s)
+		ft_putchar_fd(*s++, fd);
+	ft_putchar_fd('\n', fd);
+}
