@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_command_node.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:43:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/09 13:03:52 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/10 12:37:40 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	count_command_words(t_token *tokens)
 	{
 		if (temp->type == TOKEN_WORD)
 			count++;
+		else if (temp->type == TOKEN_ENV_VAR)
+		{
+			count++; // one for the export word
+			count += 2; // two words for var & value
+		}
 		else if (is_redirect_token(temp->type))
 		{
 			temp = temp->next;
@@ -84,11 +89,34 @@ int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 			node->env_declare = true;
 		if (current->has_env == true)
 			node->has_env  = true;
-		if (current->type == TOKEN_WORD || current->type == TOKEN_ENV_VAR)
+		
+		
+		if ((current->type == TOKEN_WORD || current->type == TOKEN_ENV_VAR)
+			&& current->value && current->value[0] != '\0')
 		{
-			cmd_args[i] = ft_strdup(current->value);
-			i++;
+			if (current->type == TOKEN_ENV_VAR)
+			{
+				cmd_args[i] = ft_strdup("export");
+				i++;
+				char **env_tokens = ft_split(current->value, '=');
+				// check NULL return from split
+				int j = 0;
+				while (env_tokens[j])
+				{
+					cmd_args[i] = ft_strdup(env_tokens[j]);
+					i++;
+					j++;
+				}
+				// free the array returned by split
+			}
+			else
+			{
+				cmd_args[i] = ft_strdup(current->value);
+				i++;
+			}
 		}
+
+
 		else if (is_redirect_token(current->type))
 		{
 			if (!handle_redirection(node, &current))
@@ -99,6 +127,37 @@ int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 	cmd_args[i] = NULL;
 	return (1);
 }
+
+
+// int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
+// {
+// 	t_token	*current;
+// 	int		i;
+
+// 	i = 0;
+// 	current = tokens;
+// 	while (current)
+// 	{
+// 		if (current->type == TOKEN_ENV_VAR)
+// 			node->env_declare = true;
+// 		if (current->has_env == true)
+// 			node->has_env  = true;
+// 		if (current->type == TOKEN_WORD || current->type == TOKEN_ENV_VAR)
+// 		{
+// 			cmd_args[i] = ft_strdup(current->value);
+// 			i++;
+// 		}
+// 		else if (is_redirect_token(current->type))
+// 		{
+// 			if (!handle_redirection(node, &current))
+// 				return (0);
+// 		}
+// 		current = current->next;
+// 	}
+// 	cmd_args[i] = NULL;
+// 	return (1);
+// }
+
 
 t_ast_node	*build_command_node(t_token *tokens)
 {
