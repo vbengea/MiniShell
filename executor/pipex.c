@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/08 11:11:46 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/10 16:22:37 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 	t_ast_node	*origin;
 	t_ast_node	*parent;
 
+	(void) ppid;
+	SIGNAL += 1;
 	origin = node;
 	parent = NULL;
-	SIGNAL = ppid;
 	files[0] = fd[0];
 	node = node->parent;
 	while (node)

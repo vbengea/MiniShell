@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/09 19:51:20 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/10 16:24:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int main(int argc, char **argv, char **env)
 		tokens = tokenize_input(input);
 		ast = build_ast(tokens);
 		assign_ids(ast, &id);
-		ast_printer(ast, 0);
+		// ast_printer(ast, 0);
 		free(input);
 		if (ast)
 		{

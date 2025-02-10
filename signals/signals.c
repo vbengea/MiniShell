@@ -6,13 +6,13 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/09 23:31:38 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/10 16:21:58 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-int	SIGNAL;
+int	SIGNAL = 3;
 
 void	cpshell(char ***env)
 {
@@ -68,7 +68,10 @@ void	handle_sigquit(int signal)
 
 void	handle_sigpipe(int signal)
 {
-	(void)signal;
+	(void) signal;
+	while (SIGNAL >= 3)
+		close(SIGNAL--);
+	SIGNAL = 3;
 }
 
 void	setup_signal_handlers(void)

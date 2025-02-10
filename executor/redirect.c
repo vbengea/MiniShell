@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/07 04:07:43 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/10 16:22:45 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,7 +333,6 @@ void	pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last)
 {
 	(void) is_last;
 	(void) fd;
-
 	if (!detect_in_redirection(node) && files[0] != STDIN_FILENO && dup2(files[0], STDIN_FILENO) == -1)
 		perror("(1) Error redirecting");
 }
