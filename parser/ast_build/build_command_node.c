@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:43:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/10 17:23:00 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/10 19:46:31 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 		if (current->has_env == true)
 			node->has_env = true;
 
-		if (current->type == TOKEN_WORD)
+		if (current->type == TOKEN_WORD && current->value && current->value[0] != '\0')
 		{
 			cmd_args[i] = ft_strdup(current->value);
 			if (ft_strcmp(current->value, "export") == 0)
