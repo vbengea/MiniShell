@@ -47,6 +47,7 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/tokenizer/dispatch_operator.c \
 					$(PARSER_DIR)/tokenizer/handle_operator.c \
 					$(PARSER_DIR)/tokenizer/free_token.c \
+					$(PARSER_DIR)/tokenizer/check_syntax.c \
 					$(PARSER_DIR)/ast_build/*.c \
 					$(BUILTINS_DIR)/cd.c \
 					$(BUILTINS_DIR)/echo.c \

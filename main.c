@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/10 16:24:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/10 17:54:27 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	assign_ids(t_ast_node *node, int *id)
 // 	(void) argc;
 // 	(void) argv;
 // 	env = copy_arr_of_strs(env, 0, 0);
-//	set_tty(&env);
+// 	set_tty(&env);
 // 	while (true)
 // 	{
 // 		input = readline(GREEN "minishell$ " RESET);
@@ -88,9 +88,16 @@ int main(int argc, char **argv, char **env)
 		}
 		add_history(input);
 		tokens = tokenize_input(input);
+		t_token *tmp = tokens;
+		if (!check_syntax(tmp, NULL))
+		{
+			// clean tokens and input
+			// or maybe in reverse order. If true, run the program
+			continue ;
+		}
 		ast = build_ast(tokens);
 		assign_ids(ast, &id);
-		// ast_printer(ast, 0);
+		ast_printer(ast, 0);
 		free(input);
 		if (ast)
 		{
@@ -98,9 +105,9 @@ int main(int argc, char **argv, char **env)
 			files[1] = STDOUT_FILENO;
 			files[2] = 0;
 			selector(ast, &env, files);
-			free_redirect_ast(ast, 0);
+			//free_redirect_ast(ast, 0);
 		}
-		free_token(tokens);
+		//free_token(tokens);
 	}
 	clear_arr_of_strs(env);
 	rl_clear_history();
