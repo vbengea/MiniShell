@@ -1,0 +1,84 @@
+echo Hello World
+echo Hello World > output.txt
+echo Hello World >> output.txt
+cat < input.txt
+cat < input.txt > output.txt
+cat < input.txt >> output.txt
+echo Hello World && echo Done
+cat nonexistentfile.txt || echo File not found
+echo Hello World > output.txt && cat output.txt
+cat < input.txt && echo Success
+echo Hello World >> output.txt || echo Failed
+cat *
+echo Hello World > *
+echo Hello World > output.txt && cat output.txt
+cat < input.txt > output.txt && echo Done
+echo Hello World && cat < input.txt
+echo Hello World || echo This will not run
+cat < input.txt >> output.txt && echo Appended
+echo Hello World > output.txt || echo Failed
+cat < input.txt && echo Success || echo Failure
+echo Hello World > output.txt && cat output.txt || echo Failed
+echo Hello World >
+echo Hello World >>
+cat <
+echo Hello World &&
+echo Hello World ||
+echo Hello World > output.txt &&
+echo Hello World >> output.txt ||
+cat < input.txt >
+cat < input.txt >>
+echo Hello World > *
+echo Hello World > output.txt > output2.txt
+echo Hello World < input.txt
+cat < input.txt < input2.txt
+echo Hello World && > output.txt
+echo Hello World || >> output.txt
+echo Hello World > output.txt && < input.txt
+echo Hello World >> output.txt || > output2.txt
+echo Hello World > output.txt && >> output.txt
+echo Hello World > output.txt || < input.txt
+echo Hello World > output.txt && cat <
+cat <<EOF
+Hello World
+EOF
+cat <<EOF > output.txt
+Hello World
+EOF
+cat <<EOF >> output.txt
+Hello World
+EOF
+cat <<EOF && echo Done
+Hello World
+EOF
+cat <<EOF || echo Failed
+Hello World
+EOF
+cat <<EOF >
+cat <<EOF >>
+cat <<EOF &&
+cat <<EOF ||
+cat <<EOF > output.txt &&
+cat <<EOF >> output.txt ||
+cat <<EOF < input.txt
+cat <<EOF > output.txt > output2.txt
+cat <<EOF >> output.txt >> output2.txt
+cat <<EOF && < input.txt
+cat <<EOF || > output.txt
+echo *
+cat *.txt
+echo Hello World > *.txt
+echo Hello World >> *.txt
+echo * >
+echo * >>
+cat *.txt >
+cat *.txt >>
+echo * > *.txt
+echo * >> *.txt
+echo Hello World > output.txt && echo Done > output.txt
+echo Hello World >> output.txt && echo Done >> output.txt
+cat < input.txt > output.txt && cat < output.txt > input.txt
+echo Hello World > output.txt && cat < output.txt > output.txt
+echo Hello World > output.txt && echo Hello World > output.txt
+echo Hello World >> output.txt && echo Hello World >> output.txt
+echo Hello World > output.txt && cat < output.txt >> output.txt
