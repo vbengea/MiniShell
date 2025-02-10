@@ -1,10 +1,6 @@
 
 * To implement:
  
-	- Al inicar la minishell corremos el comando "cp minishell /home/.local
-
-	- Acutualizar la varable SHLVL. Debe incrementar al ejecutar "minishell" dentro.
-
 	- No expandir variables de entorno cuando el preparseo de ejecucion detecta comillas simples.
 
 	- echo no imprime bien: echo "ec$PWD ho"
@@ -36,6 +32,10 @@
 
 
 * Solved issues
+
+	- Acutualizar la varable SHLVL. Debe incrementar al ejecutar "minishell" dentro.
+
+	- Al inicar la minishell corremos el comando "cp minishell /home/.local
 
 	- Actual tokenizer doesn't support multiple redirections.
 

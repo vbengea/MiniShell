@@ -14,7 +14,7 @@
 
 int	SIGNAL;
 
-void	cpshell(char **env)
+void	cpshell(char ***env)
 {
 	char			**args;
 	char			*cmd;
@@ -29,21 +29,17 @@ void	cpshell(char **env)
 		cmd = ft_strjoin("cp minishell ", cmd);
 		free(tmp);
 		args = ft_split(cmd, ' ');
-		env = copy_arr_of_strs(env, 0, 0);
 		node = create_ast_node(NODE_CMND, args);
-		selector(node, &env, NULL);
+		selector(node, env, NULL);
 		free(cmd);
 		free_redirect_ast(node, 0);
-		clear_arr_of_strs(env);
 	}
 }
 
-void	set_tty(char **env)
+void	set_tty(char ***env)
 {
 	struct termios 	t;
 
-	(void) env;
-	(void) cpshell;
 	cpshell(env);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
@@ -73,14 +69,6 @@ void	handle_sigquit(int signal)
 void	handle_sigpipe(int signal)
 {
 	(void)signal;
-	// kill(SIGNAL-1, SIGPIPE);
-}
-
-void	handle_sigusr(int signal)
-{
-	(void)signal;
-	write(STDOUT_FILENO, "SIGUSR1\n", 9);
-	exit(0);
 }
 
 void	setup_signal_handlers(void)

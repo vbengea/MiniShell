@@ -175,6 +175,20 @@ char	**expantion(char *str, char **args)
 	return (args);
 }
 
+void	check_shlvl(t_ast_node *node, char ***env)
+{
+	int		l;
+	char	*lvl;
+
+	if (ft_strncmp(node->args[0], "minishell", 9) == 0 && ft_strlen(node->args[0]) == 9)
+	{
+		lvl = getenv("SHLVL");
+		l = ft_atoi(lvl) + 1;
+		lvl = ft_itoa(l);
+		*env = set_env("SHLVL", lvl, *env);
+		free(lvl);
+	}
+}
 
 void		echo_bi(t_ast_node *node, char **env)
 {

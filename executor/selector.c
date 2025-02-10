@@ -72,6 +72,7 @@ void	parse_command(t_ast_node *node, char ***env)
 	if (node->type == NODE_CMND)
 	{
 		i = 1;
+		check_shlvl(node, env);
 		args = ft_split(node->args[0], ' ');
 		while (node->args[i])
 		{

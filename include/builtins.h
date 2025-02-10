@@ -24,5 +24,6 @@ char	*get_env(char *var, char **env);
 char	**set_env(char *var, char *value, char **env);
 char	*interpolation(char *str, char **env);
 char	**expantion(char *str, char **args);
+void	check_shlvl(t_ast_node *node, char ***env);
 
 #endif
