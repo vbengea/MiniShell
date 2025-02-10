@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/10 17:54:27 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/10 19:29:51 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	assign_ids(t_ast_node *node, int *id)
 // 	return (0);
 // }
 
+
+
 int main(int argc, char **argv, char **env)
 {
 	t_ast_node	*ast;
@@ -71,8 +73,10 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 
 	id = 0;
+	load_history_from_file(env);
 	env = copy_arr_of_strs(env, 0, 0);
 	set_tty(&env);
+
 	while (true)
 	{
 		input = readline(GREEN "minishell$ " RESET);
@@ -97,7 +101,7 @@ int main(int argc, char **argv, char **env)
 		}
 		ast = build_ast(tokens);
 		assign_ids(ast, &id);
-		ast_printer(ast, 0);
+		// ast_printer(ast, 0);
 		free(input);
 		if (ast)
 		{
@@ -109,6 +113,7 @@ int main(int argc, char **argv, char **env)
 		}
 		//free_token(tokens);
 	}
+	save_history_to_file(env);
 	clear_arr_of_strs(env);
 	rl_clear_history();
 	free_token(tokens);
