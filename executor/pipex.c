@@ -19,14 +19,10 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 	t_ast_node	*origin;
 	t_ast_node	*parent;
 
-	(void) ppid;
 	origin = node;
 	parent = NULL;
-	close(fd[1]);
 	SIGNAL = ppid;
 	files[0] = fd[0];
-	if (!node)
-		return ;
 	node = node->parent;
 	while (node)
 	{
@@ -55,6 +51,7 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 		if (node)
 			pipex(node, env, files);
 	}
+	close(fd[0]);
 	waiter(origin->type, origin, env, files);
 }
 
@@ -84,9 +81,18 @@ void	pipex(t_ast_node *node, char ***env, int files[3])
 		cleanup("Error forking process");
 	if (pid == 0)
 	{
+		close(fd[0]);
 		if (node)
 			child(fd, node, env, files);
+		else
+			close(fd[1]);
 	}
 	else
-		parent(fd, node, env, files, pid);
+	{
+		close(fd[1]);
+		if (node)
+			parent(fd, node, env, files, pid);
+		else
+			close(fd[0]);
+	}
 }

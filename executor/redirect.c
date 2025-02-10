@@ -332,35 +332,19 @@ void	here_doc(t_ast_node *node, char *delimit, int do_write)
 void	pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last)
 {
 	(void) is_last;
-	if (detect_in_redirection(node))
-	{
+	(void) fd;
 
-	}
-	else
-	{
-		close(fd[0]);
-		if (dup2(files[0], STDIN_FILENO) == -1)
-			perror("(1) Error redirecting");
-	}
+	if (!detect_in_redirection(node) && files[0] != STDIN_FILENO && dup2(files[0], STDIN_FILENO) == -1)
+		perror("(1) Error redirecting");
 }
 
 void	pipex_redirect_out(t_ast_node *node, int fd[2], int files[3], int is_last)
 {
 	(void) files;
 	if (is_last && detect_out_redirection(node))
-	{
-		close(fd[0]);
 		close(fd[1]);
-	}
 	else if (is_last)
-	{
-		close(fd[0]);
 		close(fd[1]);
-	}
-	else
-	{
-		close(fd[0]);
-		if (dup2(fd[1], STDOUT_FILENO) == -1)
-			perror("(3) Error redirecting");
-	}
+	else if (dup2(fd[1], STDOUT_FILENO) == -1)
+		perror("(3) Error redirecting");
 }
