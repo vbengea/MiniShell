@@ -1,9 +1,5 @@
 
 * To implement:
- 
-	- No expandir variables de entorno cuando el preparseo de ejecucion detecta comillas simples.
-
-	- echo no imprime bien: echo "ec$PWD ho"
 
 	- Al parsear los argumentos muchas veces se hace trim y salen los argumentos sin debida separación.
 
@@ -32,6 +28,11 @@
 
 
 * Solved issues
+
+	- No expandir variables de entorno cuando el preparseo de ejecucion detecta comillas simples.
+
+	- echo no imprime bien: echo "ec$PWD ho"
+		echo "blah $HOME 'no $HOME se' $HOMEblash"
 
 	- Acutualizar la varable SHLVL. Debe incrementar al ejecutar "minishell" dentro.
 
