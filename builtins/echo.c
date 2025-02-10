@@ -114,9 +114,20 @@ static	char *add_str(char *a, char *b)
 	return (a);
 }
 
-char	*interpolation(char *str, char **env)
+static	char *add_char(char c, char *word)
 {
-	int		j;
+	char	*charstr;
+
+	charstr = malloc(2);
+	charstr[0] = c;
+	charstr[1] = '\0';
+	word = add_str(word, charstr);
+	free(charstr);
+	return (word);
+}
+
+static	char	*interpolate(char *str, char **env)
+{
 	char	**s;
 	char	*r;
 
@@ -125,23 +136,63 @@ char	*interpolation(char *str, char **env)
 	r = ft_strdup("");
 	if (s)
 	{
-		j = 0;
-		while (s[j])
-		{
-			if (s[j][0] == '$')
-			{
-				str = get_env((s[j] + 1), env);
-				if (str)
-					r = add_str(r, str);
-				else
-					r = add_str(r, " ");
-			}
-			else
-				r = add_str(r, s[j]);
-			j++;
-		}
+		str = get_env((s[0] + 1), env);
+		if (str)
+			r = add_str(r, str);
 		clear_arr_of_strs(s);
 	}
+	return (r);
+}
+
+char	*interpolation(char *str, char **env)
+{
+	int		i;
+	int		j;
+	int		sq;
+	char	**words;
+	char	*r;
+	char	*inter;
+	char	*parsed_word;
+
+	words = ft_split(str, ' ');
+	r = ft_strdup("");
+	sq = false;
+	i = 0;
+	while (words && words[i])
+	{
+		parsed_word = malloc(2);
+		parsed_word[0] = ' ';
+		parsed_word[1] = '\0';
+		j = 0;
+		while (words[i] && words[i][j])
+		{
+			if (words[i][j] == '\'' && sq == 0)
+				sq = 1;
+			else if (words[i][j] == '\'' && sq == 1)
+				sq = 0;
+			if (sq == 0)
+			{
+				if (words[i][j] == '$')
+				{
+					inter = interpolate((words[i] + j), env);
+					if (inter)
+					{
+						parsed_word = add_str(parsed_word, inter);
+						free(inter);
+					}
+				}
+				else
+					parsed_word = add_char(words[i][j], parsed_word);
+			}
+			else
+				parsed_word = add_char(words[i][j], parsed_word);
+			j++;
+		}
+		r = add_str(r, parsed_word);
+		free(parsed_word);
+		i++;
+	}
+	clear_arr_of_strs(words);
 	return (r);
 }
 
@@ -175,6 +226,20 @@ char	**expantion(char *str, char **args)
 	return (args);
 }
 
+void	check_shlvl(t_ast_node *node, char ***env)
+{
+	int		l;
+	char	*lvl;
+
+	if (ft_strncmp(node->args[0], "minishell", 9) == 0 && ft_strlen(node->args[0]) == 9)
+	{
+		lvl = getenv("SHLVL");
+		l = ft_atoi(lvl) + 1;
+		lvl = ft_itoa(l);
+		*env = set_env("SHLVL", lvl, *env);
+		free(lvl);
+	}
+}
 
 void		echo_bi(t_ast_node *node, char **env)
 {
