@@ -1,8 +1,6 @@
 
 * To implement:
 
-	- Al parsear los argumentos muchas veces se hace trim y salen los argumentos sin debida separación.
-
 	- The tree should convert format like "name=value" and also "export name=value" to "export name value".ex
 
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
@@ -11,7 +9,7 @@
 
 	- Control de errores.
 
-	- Gestionar que el AST no incluya un argumento vacio al final de los argumentos con comandos como cat o rm;
+	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 
 * Environment differences:
@@ -23,6 +21,10 @@
 
 
 * Solved issues
+
+	- Al parsear los argumentos muchas veces se hace trim y salen los argumentos sin debida separación.
+
+	- Gestionar que el AST no incluya un argumento vacio al final de los argumentos con comandos como cat o rm;
 
 	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
 
