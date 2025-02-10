@@ -19,15 +19,15 @@
 	- When executing a list of commands the output differs from bash: bash creates all of the files and then execute the command, therefore, all "ls" will see the three files:
 		(((ls > t3) && ls) > t2 && ls) > t1
 
-	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
-
-		bash-3.2$ ((ls) >t2 | cat -e)
-		bash-3.2$ ((ls) >t2 >t1 >t3 | cat -e)
-
 	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
 
 
 * Solved issues
+
+	- Cuando se ejecuta cat en una pipeline sin entrada, con solo pulsar ENTER se cierra el stream de entrada. El comando "cat -e | ls -l" tiene un comportamiento no convencionar cuando cat -e espera entrada del standard input. Si se ejecuta "cat | ls -l && (cd / && ls -l)" sin la opcion de cat "-e" funciona de manera standard.
+
+		bash-3.2$ ((ls) >t2 | cat -e)
+		bash-3.2$ ((ls) >t2 >t1 >t3 | cat -e)
 
 	- No expandir variables de entorno cuando el preparseo de ejecucion detecta comillas simples.
 
