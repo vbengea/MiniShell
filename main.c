@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/11 02:49:16 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/11 09:36:54 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,12 @@ int main(int argc, char **argv, char **env)
 	t_token		*tokens;
 	int			id;
 
-	(void) argc;
 	(void) argv;
+	if (argc != 1)
+	{
+		printf("Incorrect number of arguments.");
+		exit(1);
+	}
 	id = 0;
 	load_history_from_file(env);
 	env = copy_arr_of_strs(env, 0, 0);
@@ -50,6 +54,7 @@ int main(int argc, char **argv, char **env)
 		}
 		add_history(input);
 		tokens = tokenize_input(input);
+		free(input);
 		t_token *tmp = tokens;
 		if (!check_syntax(tmp, NULL))
 		{
@@ -58,9 +63,9 @@ int main(int argc, char **argv, char **env)
 			continue ;
 		}
 		ast = build_ast(tokens); 
+		//free_token(tokens);
 		assign_ids(ast, &id);
 		ast_printer(ast, 0);
-		free(input);
 		if (ast)
 		{
 			files[0] = STDIN_FILENO;
@@ -69,7 +74,6 @@ int main(int argc, char **argv, char **env)
 			selector(ast, &env, files);
 			free_redirect_ast(ast, 0);
 		}
-		//free_token(tokens);
 	}
 	save_history_to_file(env);
 	clear_arr_of_strs(env);
