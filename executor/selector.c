@@ -241,6 +241,7 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 			node->left->side = 0;
 			node = node->left;
 		}
+		SIGNAL = 3;
 		pipex(node, env, files);
 	}
 	else if (node->type == NODE_GROUP)

@@ -12,13 +12,13 @@
 
 * Environment differences:
 
-	- When executing a list of commands the output differs from bash: bash creates all of the files and then execute the command, therefore, all "ls" will see the three files:
-		(((ls > t3) && ls) > t2 && ls) > t1
-
 	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
 
 
 * Solved issues
+
+	- When executing a list of commands the output differs from bash: bash creates all of the files and then execute the command, therefore, all "ls" will see the three files:
+		(((ls > t3) && ls) > t2 && ls) > t1
 
 	- The tree should convert format like "name=value" and also "export name=value" to "export name value".ex
 		Now works with simple declaration (TEST=helo) or with export (export TEST=hello)

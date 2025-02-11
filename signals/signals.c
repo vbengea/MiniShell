@@ -12,7 +12,7 @@
 
 #include "../include/headers.h"
 
-int	SIGNAL = 3;
+int	SIGNAL = 2;
 
 void	cpshell(char ***env)
 {
@@ -71,7 +71,7 @@ void	handle_sigpipe(int signal)
 	(void) signal;
 	while (SIGNAL >= 3)
 		close(SIGNAL--);
-	SIGNAL = 3;
+	SIGNAL = 2;
 }
 
 void	setup_signal_handlers(void)

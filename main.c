@@ -35,7 +35,6 @@ int main(int argc, char **argv, char **env)
 	load_history_from_file(env);
 	env = copy_arr_of_strs(env, 0, 0);
 	set_tty(&env);
-
 	while (true)
 	{
 		input = readline(GREEN "minishell$ " RESET);
