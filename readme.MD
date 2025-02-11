@@ -3,8 +3,6 @@
 
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
-	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
-
 	- Crear una super estructura para disminuir cantidad de parámetros.
 
 	- Control de errores.
@@ -14,6 +12,8 @@
 
 * Solved issues
 
+	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
+	
 	- Bash doesn't execute commands with double NODE_GROUP in a row, e.g. (ls) gives an output but ((ls)) doesn't. 
 
 	- Changing the minishell binary route from ~/.local/bin to ~/bin. The previous one doesn't exist in 42 campus.

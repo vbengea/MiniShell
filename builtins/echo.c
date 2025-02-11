@@ -25,9 +25,16 @@ void	echo_bi(t_ast_node *node)
 	int		i;
 	char	*str;
 	char	**params;
+	int		is_n_option;
 
+	is_n_option = true;
 	params = node->args;
 	i = 1;
+	if (ft_strlen(params[i]) == 2 && params[i][0] == '-' && params[i][1] == 'n')
+	{
+		is_n_option = false;
+		i++;
+	}
 	while (params[i])
 	{
 		str = params[i];
@@ -45,5 +52,6 @@ void	echo_bi(t_ast_node *node)
 		}
 		i++;
 	}
-	new_line(node);
+	if (is_n_option)
+		new_line(node);
 }
