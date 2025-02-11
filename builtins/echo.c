@@ -149,11 +149,9 @@ char	*interpolation(char *words, char **env)
 	char	*parsed_word;
 
 	j = 0;
-	parsed_word = malloc(2);
+	parsed_word = ft_strdup(" ");
 	if (parsed_word)
 	{
-		parsed_word[0] = ' ';
-		parsed_word[1] = '\0';
 		while (words && words[j])
 		{
 			if (words[j] == '$')
@@ -161,7 +159,15 @@ char	*interpolation(char *words, char **env)
 				inter = interpolate((words + j), env);
 				if (inter)
 				{
-					parsed_word = add_str(parsed_word, inter);
+					if (j == 0)
+					{
+						parsed_word[0] = inter[0];
+						parsed_word = add_str(parsed_word, (inter + 1));
+					}
+					else
+					{
+						parsed_word = add_str(parsed_word, inter);
+					}
 					while (words[j] && words[j] != 39 && words[j] != ' ')
 						j++;
 					free(inter);
@@ -222,7 +228,6 @@ void		echo_bi(t_ast_node *node)
 {
 	int		i;
 	char	*str;
-	char	*p;
 	char 	**params;
 
 	params = node->args;
@@ -231,12 +236,16 @@ void		echo_bi(t_ast_node *node)
 	{
 		str = params[i];
 		if (node->out_fd < 0)
+		{
 			printf("%s", str);
+			if (params[i + 1])
+				printf(" ");
+		}
 		else
 		{
-			p = ft_strjoin(str, "");
-			ft_putstr_fd(p, node->out_fd);
-			free(p);
+			ft_putstr_fd(str, node->out_fd);
+			if (params[i + 1])
+				ft_putstr_fd(" ", node->out_fd);
 		}
 		i++;
 	}
