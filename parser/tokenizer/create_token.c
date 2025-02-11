@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:08:06 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/11 19:21:09 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/11 21:15:19 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ t_token	*create_token(t_token_type type, char *value)
 	token->value = value;
 	token->next = NULL;
 	token->has_env = false;
+	token->has_space = false;
 	return (token);
 }

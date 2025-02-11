@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_command_node.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:43:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/11 19:28:31 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/11 21:17:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,6 @@ int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 			//0 si no es espacio
 			//1 si es espacio
 		}
-
-		
 		if (current->type == TOKEN_WORD && current->value && current->value[0] != '\0')
 		{
 			// to implement
