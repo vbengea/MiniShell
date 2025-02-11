@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   selector.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/08 10:56:57 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/11 10:05:33 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,11 +240,13 @@ void	selector(t_ast_node *node, char ***env, int files[3])
 			node->left->parent = parent;
 			node->left->side = 0;
 			node = node->left;
+			if (node->type == NODE_GROUP && node->parent->type == NODE_GROUP)
+				return ;
 		}
 		SIGNAL = 3;
 		pipex(node, env, files);
 	}
-	else if (node->type == NODE_GROUP)
+	else if (node->type == NODE_GROUP && (!node->parent || node->parent->type != NODE_GROUP))
 	{
 		preexecute(node, env);
 		forker(node, env, navigator, files);
