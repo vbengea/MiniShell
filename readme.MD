@@ -1,13 +1,13 @@
 
 * To implement:
 
+	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
+
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 
 	- Crear una super estructura para disminuir cantidad de parámetros.
 
 	- Control de errores.
-
-	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 
 * Environment differences:
