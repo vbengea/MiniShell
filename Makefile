@@ -57,6 +57,8 @@ SRC				:= 	main.c\
 					$(BUILTINS_DIR)/export.c \
 					$(BUILTINS_DIR)/pwd.c \
 					$(BUILTINS_DIR)/unset.c \
+					$(BUILTINS_DIR)/utils_1.c \
+					$(BUILTINS_DIR)/utils_2.c \
 					$(WILDCARD_DIR)/ft_wildcard.c \
 					$(HISTORY_DIR)/history.c
 
@@ -111,6 +113,7 @@ git: norm
 
 runner: re
 	./$(NAME)
+	make -C . fclean
 
 valgrind: re
 	valgrind $(VFLAGS) ./$(NAME)

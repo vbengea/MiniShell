@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:22:57 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/11 10:26:51 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/11 18:20:00 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-int		cd_bi(t_ast_node *node, char **env);
+int		cd_bi(t_ast_node *node, char ***env);
 void	exit_bi(t_ast_node *node, char **env);
 void	pwd_bi(t_ast_node *node);
 void	env_bi(t_ast_node *node, char **env, int sorted);

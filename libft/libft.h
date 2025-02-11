@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:08:22 by juandanielf       #+#    #+#             */
-/*   Updated: 2025/02/06 00:08:59 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/11 17:49:52 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char			**add_arr_of_strs(char **p, char *str);
 void			sort_arr_of_strs(char **str, int order_type);
 int				ft_strcmp(const char *s1, const char *s2);
 bool			ft_isquote(char c);
+char			*ft_stradd(char *a, char *b);
+char			*ft_charadd(char c, char *word, int j);
 
 typedef struct splitter
 {

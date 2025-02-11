@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/11 13:56:42 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/11 18:20:11 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 	(void) files;
 	preexecute(node, env);
 	if (ft_strncmp(node->args[0], "cd", 2) == 0)
-		cd_bi(node, *env);
+		cd_bi(node, env);
 	else if (ft_strncmp(node->args[0], "exit", 4) == 0)
 		exit_bi(node, *env);
 	else if (ft_strncmp(node->args[0], "pwd", 3) == 0)

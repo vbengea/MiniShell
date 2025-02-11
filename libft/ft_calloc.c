@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 09:26:48 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/06 13:16:36 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:49:09 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,31 @@ void sort_arr_of_strs(char **str, int order_type) {
         }
         i++;
     }
+}
+
+char *ft_stradd(char *a, char *b)
+{
+	char	*t;
+
+	t = a;
+	a = ft_strjoin(a, b);
+	free(t);
+	return (a);
+}
+
+char *ft_charadd(char c, char *word, int j)
+{
+	char	*charstr;
+
+	if (j == 0)
+		word[0] = c;
+	else
+	{
+		charstr = malloc(2);
+		charstr[0] = c;
+		charstr[1] = '\0';
+		word = ft_stradd(word, charstr);
+		free(charstr);
+	}
+	return (word);
 }
