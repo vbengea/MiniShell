@@ -76,17 +76,17 @@ void	parse_command(t_ast_node *node, char ***env)
 		args = ft_split(" ", ' ');
 		while (node->args[i])
 		{
-			// if (node->expand_flag[i] == 1)
-			// {
-
-			// }
-			// else
-			// {
-
-			// }
-			str = interpolation(node->args[i], *env);
-			args = expantion(str, args);
-			free(str);
+			if (node->expand_flag[i] == 1)
+			{
+				str = interpolation(node->args[i], *env);
+				args = expantion(str, args);
+				free(str);
+			}
+			else
+			{
+				str = node->args[i];
+				args = expantion(str, args);
+			}
 			i++;
 		}
 		clear_arr_of_strs(node->args);
