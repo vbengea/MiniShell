@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:42:26 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/11 21:14:22 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/11 21:36:11 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ t_token	*create_quoted_token(const char *input, int *i)
 
 	quote = input[*i];
 	new_token = create_token(TOKEN_WORD, ft_strdup(""));
+	if (input[*i] == 39)
+		new_token->has_env = false;
 	(*i)++;
 	while (input[*i] && input[*i] != quote)
 	{
-		if (quote == '"' && input[*i] == '$' && input[*i + 1] && (ft_isalpha(input[*i + 1]) || input[*i + 1] == '?'))
-			new_token->has_env = true;
+		// if (quote == '"' && input[*i] == '$' && input[*i + 1] && (ft_isalpha(input[*i + 1]) || input[*i + 1] == '?'))
+		// 	new_token->has_env = true;
 		temp = malloc(ft_strlen(new_token->value) + 2);
 		ft_strcpy(temp, new_token->value);
 		temp[ft_strlen(new_token->value)] = input[*i];
