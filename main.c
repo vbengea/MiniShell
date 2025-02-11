@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/11 09:48:40 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:20:46 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv, char **env)
 	(void) argv;
 	if (argc != 1)
 	{
-		printf("Incorrect number of arguments.");
+		printf("Incorrect number of arguments.\n");
 		exit(1);
 	}
 	id = 0;

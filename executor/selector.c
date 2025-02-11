@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/11 10:05:33 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:26:35 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	parse_command(t_ast_node *node, char ***env)
 	if (node->type == NODE_CMND)
 	{
 		i = 1;
-		check_shlvl(node, env);
 		args = ft_split(node->args[0], ' ');
 		while (node->args[i])
 		{

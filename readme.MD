@@ -109,7 +109,7 @@
 	- Redirections are breaking long pipelines:
 		< t1 cat -e | cat -e | cat -e					[OK]
 		<t1 cat -e | cat -e | cat -e > t2				[OK]
-		ls -l | cat -e | cat -e | cat -e > t2
+		ls -l | cat -e | cat -e | cat -e > t2			[OK]
 
 	- El comando export sin argumentos lista las variables de entorno alfabéticamente y con un formato específico.
 

@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/11 09:37:58 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:33:32 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	cpshell(char ***env)
 
 	cmd = getenv("HOME");
 	cmd = ft_strjoin(cmd, "/bin/minishell");
+	if (cmd && access(cmd, F_OK | X_OK) == 0)
+		unlink(cmd);
 	if (cmd && access(cmd, F_OK | X_OK) != 0)
 	{
 		tmp = cmd;
@@ -40,6 +42,7 @@ void	set_tty(char ***env)
 {
 	struct termios 	t;
 
+	check_shlvl(env);
 	cpshell(env);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
