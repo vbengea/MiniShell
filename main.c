@@ -21,46 +21,6 @@ void	assign_ids(t_ast_node *node, int *id)
 	assign_ids(node->right, id);
 }
 
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_ast_node	*ast;
-// 	char 		*input;
-// 	int			files[3];
-
-// 	(void) argc;
-// 	(void) argv;
-// 	env = copy_arr_of_strs(env, 0, 0);
-// 	set_tty(&env);
-// 	while (true)
-// 	{
-// 		input = readline(GREEN "minishell$ " RESET);
-// 		if (!input)
-// 		{
-// 			write(1, "exit\n", 5);
-// 			break ;
-// 		}
-// 		else if (input[0] == '\0')
-// 		{
-// 			free(input);
-// 			continue ;
-// 		}
-// 		add_history(input);
-// 		ast = build_redirect_ast(input);
-// 		if (ast)
-// 		{
-// 			files[0] = STDIN_FILENO;
-// 			selector(ast, &env, files);
-// 			free_redirect_ast(ast, 0);
-// 		}
-// 		free(input);
-// 	}
-// 	clear_arr_of_strs(env);
-// 	rl_clear_history();
-// 	return (0);
-// }
-
-
-
 int main(int argc, char **argv, char **env)
 {
 	t_ast_node	*ast;
@@ -98,7 +58,8 @@ int main(int argc, char **argv, char **env)
 			// or maybe in reverse order. If true, run the program
 			continue ;
 		}
-		ast = build_ast(tokens);
+		ast = build_ast(tokens); 
+		// free_redirect_ast(ast, 0);
 		assign_ids(ast, &id);
 		ast_printer(ast, 0);
 		free(input);
