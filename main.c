@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/10 19:46:53 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/11 02:49:16 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int main(int argc, char **argv, char **env)
 			continue ;
 		}
 		ast = build_ast(tokens); 
-		// free_redirect_ast(ast, 0);
 		assign_ids(ast, &id);
 		ast_printer(ast, 0);
 		free(input);
@@ -68,7 +67,7 @@ int main(int argc, char **argv, char **env)
 			files[1] = STDOUT_FILENO;
 			files[2] = 0;
 			selector(ast, &env, files);
-			//free_redirect_ast(ast, 0);
+			free_redirect_ast(ast, 0);
 		}
 		//free_token(tokens);
 	}
