@@ -9,9 +9,6 @@
 
 	- Control de errores.
 
-
-* Environment differences:
-
 	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
 
 
