@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/11 10:26:26 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:55:48 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static	char	*interpolate(char *str, char **env)
 	int		i;
 
 	r = NULL;
-	cmp = calloc(1, ft_strlen(str) + 1);
+	cmp = ft_calloc(1, ft_strlen(str) + 1);
 	if (cmp && str)
 	{
 		r = ft_strdup("");
@@ -149,10 +149,11 @@ char	*interpolation(char *words, char **env)
 	char	*parsed_word;
 
 	j = 0;
-	parsed_word = malloc(1);
+	parsed_word = malloc(2);
 	if (parsed_word)
 	{
-		parsed_word[0] = '\0';
+		parsed_word[0] = ' ';
+		parsed_word[1] = '\0';
 		while (words && words[j])
 		{
 			if (words[j] == '$')
