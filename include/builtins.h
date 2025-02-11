@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:22:57 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/06 17:55:49 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/11 10:26:51 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ char	*get_env(char *var, char **env);
 char	**set_env(char *var, char *value, char **env);
 char	*interpolation(char *str, char **env);
 char	**expantion(char *str, char **args);
-void	check_shlvl(t_ast_node *node, char ***env);
+void	check_shlvl(char ***env);
 
 #endif

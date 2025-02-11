@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/04 10:49:57 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:26:26 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,19 +198,16 @@ char	**expantion(char *str, char **args)
 	return (args);
 }
 
-void	check_shlvl(t_ast_node *node, char ***env)
+void	check_shlvl(char ***env)
 {
 	int		l;
 	char	*lvl;
 
-	if (ft_strncmp(node->args[0], "minishell", 9) == 0 && ft_strlen(node->args[0]) == 9)
-	{
-		lvl = getenv("SHLVL");
-		l = ft_atoi(lvl) + 1;
-		lvl = ft_itoa(l);
-		*env = set_env("SHLVL", lvl, *env);
-		free(lvl);
-	}
+	lvl = getenv("SHLVL");
+	l = ft_atoi(lvl) + 1;
+	lvl = ft_itoa(l);
+	*env = set_env("SHLVL", lvl, *env);
+	free(lvl);
 }
 
 void		echo_bi(t_ast_node *node)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/10 16:21:58 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/11 10:33:32 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	cpshell(char ***env)
 	t_ast_node		*node;
 
 	cmd = getenv("HOME");
-	cmd = ft_strjoin(cmd, "/.local/bin/minishell");
+	cmd = ft_strjoin(cmd, "/bin/minishell");
+	if (cmd && access(cmd, F_OK | X_OK) == 0)
+		unlink(cmd);
 	if (cmd && access(cmd, F_OK | X_OK) != 0)
 	{
 		tmp = cmd;
@@ -40,6 +42,7 @@ void	set_tty(char ***env)
 {
 	struct termios 	t;
 
+	check_shlvl(env);
 	cpshell(env);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );

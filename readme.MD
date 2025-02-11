@@ -1,13 +1,13 @@
 
 * To implement:
 
+	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
+
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 
 	- Crear una super estructura para disminuir cantidad de parámetros.
 
 	- Control de errores.
-
-	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 
 * Environment differences:
@@ -16,6 +16,10 @@
 
 
 * Solved issues
+
+	- Bash doesn't execute commands with double NODE_GROUP in a row, e.g. (ls) gives an output but ((ls)) doesn't. 
+
+	- Changing the minishell binary route from ~/.local/bin to ~/bin. The previous one doesn't exist in 42 campus.
 
 	- When executing a list of commands the output differs from bash: bash creates all of the files and then execute the command, therefore, all "ls" will see the three files:
 		(((ls > t3) && ls) > t2 && ls) > t1
@@ -105,7 +109,7 @@
 	- Redirections are breaking long pipelines:
 		< t1 cat -e | cat -e | cat -e					[OK]
 		<t1 cat -e | cat -e | cat -e > t2				[OK]
-		ls -l | cat -e | cat -e | cat -e > t2
+		ls -l | cat -e | cat -e | cat -e > t2			[OK]
 
 	- El comando export sin argumentos lista las variables de entorno alfabéticamente y con un formato específico.
 
