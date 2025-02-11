@@ -25,7 +25,10 @@ void	ast_printer(t_ast_node *ast, int level)
 			printf("[TYPE:%d] [NID:%d] [SIDE:%d] [ARGS]: ", ast->type, ast->nid, ast->side);
 			i = 0;
 			while (ast->args && ast->args[i])
-				printf("_.%s._,", ast->args[i++]);
+			{
+				printf("_%s_(%d, %d),", ast->args[i], ast->expand_flag[i], ast->has_space[i]);
+				i++;
+			}
 			printf("[REDIRS]: ");
 			if (ast->redirs)
 				redlist_iter(ast->redirs, print_redirs);

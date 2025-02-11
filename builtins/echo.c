@@ -34,13 +34,13 @@ void	echo_bi(t_ast_node *node)
 		if (node->out_fd < 0)
 		{
 			printf("%s", str);
-			if (params[i + 1]) // && node->spacer[i]
+			if (params[i + 1] && node->has_space[i])
 				printf(" ");
 		}
 		else
 		{
 			ft_putstr_fd(str, node->out_fd);
-			if (params[i + 1]) // && node->spacer[i]
+			if (params[i + 1] && node->has_space[i])
 				ft_putstr_fd(" ", node->out_fd);
 		}
 		i++;
