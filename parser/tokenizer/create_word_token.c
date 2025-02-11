@@ -23,5 +23,7 @@ t_token	*create_word_token(const char *input, int *i)
 		(*i)++;
 	len = *i - start;
 	new_token = create_token(TOKEN_WORD, ft_strndup(input + start, len));
+	if (ft_isspace(input[*i]))
+		new_token->has_space = true;
 	return (new_token);
 }

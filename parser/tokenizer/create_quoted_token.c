@@ -38,7 +38,7 @@ t_token	*create_quoted_token(const char *input, int *i)
 	else
 	{
 		// ISSPACE
-		if (ft_isspace(input[*i]))
+		if (ft_isspace(input[*i + 1]))
 			new_token->has_space = true;
 		(*i)++;
 	}
