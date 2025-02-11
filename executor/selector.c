@@ -76,15 +76,14 @@ void	parse_command(t_ast_node *node, char ***env)
 		args = ft_split(" ", ' ');
 		while (node->args[i])
 		{
-			// TODO: implement this flag
-			// if (node->env_declare[i] == 1)
-			// {
+			if (node->expand_flag[i] == 1)
+			{
 
-			// }
-			// else
-			// {
+			}
+			else
+			{
 
-			// }
+			}
 			str = interpolation(node->args[i], *env);
 			args = expantion(str, args);
 			free(str);
