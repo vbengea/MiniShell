@@ -19,6 +19,8 @@
 
 	- Bash doesn't execute commands with double NODE_GROUP in a row, e.g. (ls) gives an output but ((ls)) doesn't. 
 
+	- Changing the minishell binary route from ~/.local/bin to ~/bin. The previous one doesn't exist in 42 campus.
+
 	- When executing a list of commands the output differs from bash: bash creates all of the files and then execute the command, therefore, all "ls" will see the three files:
 		(((ls > t3) && ls) > t2 && ls) > t1
 
