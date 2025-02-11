@@ -17,6 +17,7 @@ PARSER_DIR		:=  parser
 BUILTINS_DIR	:=  builtins
 SIGNALS_DIR		:=  signals
 WILDCARD_DIR	:=  wildcard
+HISTORY_DIR		:=  history
 INCLUDE			:= 	./include/headers.h
 
 SRC				:= 	main.c\
@@ -47,6 +48,7 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/tokenizer/dispatch_operator.c \
 					$(PARSER_DIR)/tokenizer/handle_operator.c \
 					$(PARSER_DIR)/tokenizer/free_token.c \
+					$(PARSER_DIR)/tokenizer/check_syntax.c \
 					$(PARSER_DIR)/ast_build/*.c \
 					$(BUILTINS_DIR)/cd.c \
 					$(BUILTINS_DIR)/echo.c \
@@ -55,7 +57,8 @@ SRC				:= 	main.c\
 					$(BUILTINS_DIR)/export.c \
 					$(BUILTINS_DIR)/pwd.c \
 					$(BUILTINS_DIR)/unset.c \
-					$(WILDCARD_DIR)/ft_wildcard.c
+					$(WILDCARD_DIR)/ft_wildcard.c \
+					$(HISTORY_DIR)/history.c
 
 OBJ 			:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
 					$(patsubst $(SIGNALS_DIR)/%.c, $(SIGNALS_DIR)/%.o, $(SRC)) \

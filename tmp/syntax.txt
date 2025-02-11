@@ -1,0 +1,33 @@
+
+
+- Unmatched quotes > check for TOKEN_INVALID > DONE
+
+- Unclosed parentheses > check for the number of tokens TOKEN_OPEN_PAREN and TOKEN_CLOSE_PAREN
+	if its not equal, exit
+
+- Consecutive pipes or redirections > DONE
+
+- Pipes at the start or end of a command > DONE
+
+- Unexpected tokens (&, ; or fd's redirections) > check for the recognized tokens; > DONE
+
+- Check for && and ||, they must have a command before and after them.  > DONE
+
+- Check for redirection at the end of token list (invalid) > DONE
+
+- Check for heredoc at the end of token list. This can be grouped with the previous check > DONE
+
+- Check for empty parentheses ?
+
+
+
+
+
+
+
+- Check builins syntax
+	export
+	unset
+	cd
+
+	They all must have arguments

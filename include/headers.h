@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/08 13:34:12 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/10 19:29:06 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "tokenizer_functions.h"
 # include "signals.h"
 # include "wildcard.h"
+# include "history.h"
 
 # include <stdio.h>
 # include <stdlib.h>
