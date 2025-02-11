@@ -69,7 +69,6 @@ int main(int argc, char **argv, char **env)
 
 	(void) argc;
 	(void) argv;
-
 	id = 0;
 	env = copy_arr_of_strs(env, 0, 0);
 	set_tty(&env);
@@ -90,7 +89,7 @@ int main(int argc, char **argv, char **env)
 		tokens = tokenize_input(input);
 		ast = build_ast(tokens);
 		assign_ids(ast, &id);
-		// ast_printer(ast, 0);
+		ast_printer(ast, 0);
 		free(input);
 		if (ast)
 		{

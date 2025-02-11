@@ -12,27 +12,6 @@
 
 #include "../include/headers.h"
 
-static	void		clean_quotes(char *str)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == 34 || str[i] == 39)
-		{
-			j = 0;
-			while (str[i + j])
-			{
-				str[i + j] = str[i + j + 1];
-				j++;
-			}
-		}
-		i++;
-	}
-}
-
 char	*get_env(char *var, char **env)
 {
 	int	i;
@@ -114,15 +93,23 @@ static	char *add_str(char *a, char *b)
 	return (a);
 }
 
-static	char *add_char(char c, char *word)
+static	char *add_char(char c, char *word, int j)
 {
 	char	*charstr;
 
-	charstr = malloc(2);
-	charstr[0] = c;
-	charstr[1] = '\0';
-	word = add_str(word, charstr);
-	free(charstr);
+	(void) j;
+	if (j == 0)
+	{
+		word[0] = c;
+	}
+	else
+	{
+		charstr = malloc(2);
+		charstr[0] = c;
+		charstr[1] = '\0';
+		word = add_str(word, charstr);
+		free(charstr);
+	}
 	return (word);
 }
 
@@ -130,12 +117,15 @@ static	char	*interpolate(char *str, char **env)
 {
 	char	**s;
 	char	*r;
+	int		len;
 
-	clean_quotes(str);
 	s = ft_split(str, ' ');
 	r = ft_strdup("");
-	if (s)
+	if (s && r)
 	{
+		len = ft_strlen(s[0]);
+		if (s[0][len - 1] == 39)
+			s[0][len - 1] = '\0';
 		str = get_env((s[0] + 1), env);
 		if (str)
 			r = add_str(r, str);
@@ -144,56 +134,38 @@ static	char	*interpolate(char *str, char **env)
 	return (r);
 }
 
-char	*interpolation(char *str, char **env)
+char	*interpolation(char *words, char **env)
 {
-	int		i;
 	int		j;
-	int		sq;
-	char	**words;
-	char	*r;
 	char	*inter;
 	char	*parsed_word;
 
-	words = ft_split(str, ' ');
-	r = ft_strdup("");
-	sq = false;
-	i = 0;
-	while (words && words[i])
+	j = 0;
+	parsed_word = malloc(2);
+	if (parsed_word)
 	{
-		parsed_word = malloc(2);
 		parsed_word[0] = ' ';
 		parsed_word[1] = '\0';
-		j = 0;
-		while (words[i] && words[i][j])
+		while (words && words[j])
 		{
-			if (words[i][j] == '\'' && sq == 0)
-				sq = 1;
-			else if (words[i][j] == '\'' && sq == 1)
-				sq = 0;
-			if (sq == 0)
+			if (words[j] == '$')
 			{
-				if (words[i][j] == '$')
+				inter = interpolate((words + j), env);
+				if (inter)
 				{
-					inter = interpolate((words[i] + j), env);
-					if (inter)
-					{
-						parsed_word = add_str(parsed_word, inter);
-						free(inter);
-					}
+					parsed_word = add_str(parsed_word, inter);
+					while (words[j] && words[j] != ' ')
+						j++;
+					free(inter);
+					continue ;
 				}
-				else
-					parsed_word = add_char(words[i][j], parsed_word);
 			}
 			else
-				parsed_word = add_char(words[i][j], parsed_word);
+				parsed_word = add_char(words[j], parsed_word, j);
 			j++;
 		}
-		r = add_str(r, parsed_word);
-		free(parsed_word);
-		i++;
 	}
-	clear_arr_of_strs(words);
-	return (r);
+	return (parsed_word);
 }
 
 char	**expantion(char *str, char **args)
@@ -241,7 +213,7 @@ void	check_shlvl(t_ast_node *node, char ***env)
 	}
 }
 
-void		echo_bi(t_ast_node *node, char **env)
+void		echo_bi(t_ast_node *node)
 {
 	int		i;
 	char	*str;
@@ -252,7 +224,7 @@ void		echo_bi(t_ast_node *node, char **env)
 	i = 1;
 	while (params[i])
 	{
-		str = interpolation(params[i], env);
+		str = params[i];
 		if (node->out_fd < 0)
 			printf("%s ", str);
 		else
@@ -261,7 +233,6 @@ void		echo_bi(t_ast_node *node, char **env)
 			ft_putstr_fd(p, node->out_fd);
 			free(p);
 		}
-		free(str);
 		i++;
 	}
 	if (node->out_fd < 0)

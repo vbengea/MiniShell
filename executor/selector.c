@@ -32,6 +32,7 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 	char	*file;
 
 	(void) files;
+	(void) type;
 	status = 0;
 	setup_signal_handlers_process();
 	while (1)
@@ -42,7 +43,7 @@ void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3])
 				node->parent->exit = status;
 			node->exit = status;
 			set_history_status(status, env);
-			if ((type == NODE_CMND || type == NODE_AND || type == NODE_OR || type == NODE_GROUP) && status == 0)
+			if (status == 0)
 				multiple_output_redirections(node);
 			file = tmp_path(node->nid, REDIRECT_IN);
 			if (file)
@@ -76,8 +77,7 @@ void	parse_command(t_ast_node *node, char ***env)
 		args = ft_split(node->args[0], ' ');
 		while (node->args[i])
 		{
-			str = node->args[i];
-			node->args[i] = interpolation(str, *env);
+			str = interpolation(node->args[i], *env);
 			args = expantion(str, args);
 			free(str);
 			i++;
@@ -179,7 +179,7 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 	else if (ft_strncmp(node->args[0], "unset", 5) == 0)
 		*env = unset_bi(node, *env);
 	else if (ft_strncmp(node->args[0], "echo", 4) == 0)
-		echo_bi(node, *env);
+		echo_bi(node);
 	postexecute(node);
 	set_history_status(0, env);
 	if (node->parent)

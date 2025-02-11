@@ -32,6 +32,7 @@
 		bash-3.2$ ((ls) >t2 >t1 >t3 | cat -e)
 
 	- No expandir variables de entorno cuando el preparseo de ejecucion detecta comillas simples.
+		echo "ba$PWD '$PWD'  3" 4 5  6 '$PWD'
 
 	- echo no imprime bien: echo "ec$PWD ho"
 		echo "blah $HOME 'no $HOME se' $HOMEblash"

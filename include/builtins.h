@@ -19,7 +19,7 @@ void	pwd_bi(t_ast_node *node);
 void	env_bi(t_ast_node *node, char **env, int sorted);
 char	**export_bi(t_ast_node *node, char **env);
 char	**unset_bi(t_ast_node *node, char **env);
-void	echo_bi(t_ast_node *node, char **env);
+void	echo_bi(t_ast_node *node);
 char	*get_env(char *var, char **env);
 char	**set_env(char *var, char *value, char **env);
 char	*interpolation(char *str, char **env);
