@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/11 11:02:12 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/11 19:26:04 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_ast_node
 	bool				env_declare;
 	bool				has_env;
 	int					expand_flag[200];
+	int					has_space[200];
 }	t_ast_node;
 
 #endif

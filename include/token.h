@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:15:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/09 12:33:01 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/11 19:21:23 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_token
 	t_token_type	type;
 	char			*value;
 	bool			has_env;
+	bool			has_space;
 	struct s_token	*next;
 }	t_token;
 
