@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   build_command_node.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:43:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/10 19:46:31 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/11 11:09:22 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
-
 
 void	free_tab(char **tab)
 {
@@ -113,12 +112,20 @@ int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 	while (current)
 	{
 		if (current->type == TOKEN_ENV_VAR)
+		{
+			// node->expand_flag[i] = 1;
 			node->env_declare = true;
+		}
 		if (current->has_env == true)
+		{
+			node->expand_flag[i] = 1;
 			node->has_env = true;
+		}
 
 		if (current->type == TOKEN_WORD && current->value && current->value[0] != '\0')
 		{
+			// to implement
+			// set_env_flag(current)
 			cmd_args[i] = ft_strdup(current->value);
 			if (ft_strcmp(current->value, "export") == 0)
 				prev_export = true;
