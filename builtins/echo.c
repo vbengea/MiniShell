@@ -115,21 +115,29 @@ static	char *add_char(char c, char *word, int j)
 
 static	char	*interpolate(char *str, char **env)
 {
-	char	**s;
+	char	*cmp;
+	char	*s;
 	char	*r;
-	int		len;
+	int		i;
 
-	s = ft_split(str, ' ');
-	r = ft_strdup("");
-	if (s && r)
+	r = NULL;
+	cmp = calloc(1, ft_strlen(str) + 1);
+	if (cmp && str)
 	{
-		len = ft_strlen(s[0]);
-		if (s[0][len - 1] == 39)
-			s[0][len - 1] = '\0';
-		str = get_env((s[0] + 1), env);
-		if (str)
-			r = add_str(r, str);
-		clear_arr_of_strs(s);
+		r = ft_strdup("");
+		if (r)
+		{
+			i = 0;
+			while (str[i] && str[i] != 39 && str[i] != ' ')
+			{
+				cmp[i] = str[i];
+				i++;
+			}
+			s = get_env((cmp + 1), env);
+			if (s)
+				r = add_str(r, s);
+		}
+		free(cmp);
 	}
 	return (r);
 }
@@ -141,11 +149,10 @@ char	*interpolation(char *words, char **env)
 	char	*parsed_word;
 
 	j = 0;
-	parsed_word = malloc(2);
+	parsed_word = malloc(1);
 	if (parsed_word)
 	{
-		parsed_word[0] = ' ';
-		parsed_word[1] = '\0';
+		parsed_word[0] = '\0';
 		while (words && words[j])
 		{
 			if (words[j] == '$')
@@ -154,7 +161,7 @@ char	*interpolation(char *words, char **env)
 				if (inter)
 				{
 					parsed_word = add_str(parsed_word, inter);
-					while (words[j] && words[j] != ' ')
+					while (words[j] && words[j] != 39 && words[j] != ' ')
 						j++;
 					free(inter);
 					continue ;
@@ -223,10 +230,10 @@ void		echo_bi(t_ast_node *node)
 	{
 		str = params[i];
 		if (node->out_fd < 0)
-			printf("%s ", str);
+			printf("%s", str);
 		else
 		{
-			p = ft_strjoin(str, " ");
+			p = ft_strjoin(str, "");
 			ft_putstr_fd(p, node->out_fd);
 			free(p);
 		}

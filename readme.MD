@@ -40,6 +40,7 @@
 
 	- No expandir variables de entorno cuando el preparseo de ejecucion detecta comillas simples.
 		echo "ba$PWD '$PWD'  3" 4 5  6 '$PWD'
+		echo '$USER':"$USER"
 
 	- echo no imprime bien: echo "ec$PWD ho"
 		echo "blah $HOME 'no $HOME se' $HOMEblash"
