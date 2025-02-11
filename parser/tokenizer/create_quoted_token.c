@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:42:26 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/09 12:45:34 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/11 19:28:57 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@ t_token	*create_quoted_token(const char *input, int *i)
 	if (input[*i] == '\0')
 		new_token->type = TOKEN_INVALID;
 	else
+	{
+		// ISSPACE
+		if (ft_isspace(input[*i]))
+			new_token->has_space = true;
 		(*i)++;
+	}
 	return (new_token);
 }
 
