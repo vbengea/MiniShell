@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/11 18:32:19 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/12 20:56:46 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	**set_env(char *key, char *value, char **env)
 	found = 0;
 	var = key;
 	var = ft_strjoin(var, "=");
+	if (!value)
+		value = "";
 	while (var && env[i])
 	{
 		if (var && ft_strncmp(env[i], var, ft_strlen(var)) == 0)

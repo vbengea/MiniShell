@@ -1,6 +1,23 @@
 
 * To implement:
 
+	- Verificar comportamiendo cuando se borra una carpeta anterior a la actual.
+		Ejemplo: > working directory /home/user/folder1/folder2/folder3
+		Si en ese directorio ejecutamos `rm -f ../../../folder1` y despues tratamos de hacer pwd o cd .., verificar la integridad del programa.
+
+	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
+
+	- Crear una super estructura para disminuir cantidad de parámetros.
+
+	- Control de errores.
+
+	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
+
+	- Some limits.h like PATH_MAX are presenting squiggly in VS.
+
+
+* Solved issues
+
 	- EXPORT > declarar todos los args que contenga el comando `export` incluido el propio export como variables de entorno vacias, sin valor. 
 		En caso de que algun argumento en medio contenga alguna declaracion tipo `NAME=value` 
 		declarar la variable con su valor correspondiente.
@@ -17,23 +34,6 @@
 		[TYPE:0] [NID:12] [SIDE:0] [ARGS]: _export_(1, 1),_hola_(1, 1),_que_(1, 1),_tal_(1, 1),_esto_(1, 1),_es_(1, 1),_una_(1, 1),_export_(1, 1),_prueba_(1, 0),[REDIRS]: 
 		```
 		En caso de encontrar `export` con los flags (1, 1) este debe ser declarado como variable sin valor igual que el resto de argumentos. 
-
-	- Verificar comportamiendo cuando se borra una carpeta anterior a la actual.
-		Ejemplo: > working directory /home/user/folder1/folder2/folder3
-		Si en ese directorio ejecutamos `rm -f ../../../folder1` y despues tratamos de hacer pwd o cd .., verificar la integridad del programa. 
-
-	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
-
-	- Crear una super estructura para disminuir cantidad de parámetros.
-
-	- Control de errores.
-
-	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
-
-	- Some limits.h like PATH_MAX are presenting squiggly in VS.
-
-
-* Solved issues
 
 	- HREDOC dejo de funcionar cuando se ejecutan varios a la vez.
 		Eejemplo: `<< EOF cat -e << END`
