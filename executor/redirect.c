@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/10 16:22:45 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/12 18:38:56 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		detect_in_redirection(t_ast_node *node)	// TODO: reversing the list only wo
 		arr[0] = NULL;
 		is_first_time = true;
 		reverse_redirections(lst, &rev);
-		lst = rev;
+		// lst = rev;
 		while (lst)
 		{
 			if (lst->type == REDIRECT_IN)
