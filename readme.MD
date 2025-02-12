@@ -1,7 +1,6 @@
 
 * To implement:
 
-	- Hay que cambiar la ruta $HOME/bin donde ponemos el binario minishell. Cuando la minishell se ejecuta sin environment esta variable de entorno no esta presente y entonces significa que no ponemos el binario en el PATH.
 	- Verificar comportamiendo cuando se borra una carpeta anterior a la actual.
 		Ejemplo: > working directory /home/user/folder1/folder2/folder3
 		Si en ese directorio ejecutamos `rm -f ../../../folder1` y despues tratamos de hacer pwd o cd .., verificar la integridad del programa.
@@ -18,6 +17,8 @@
 
 
 * Solved issues
+
+	- Hay que cambiar la ruta $HOME/bin donde ponemos el binario minishell. Cuando la minishell se ejecuta sin environment esta variable de entorno no esta presente y entonces significa que no ponemos el binario en el PATH.
 
 	- Gestionar la ejecucucion sin environment (env -i) o sin PATH. Como sin PATH no podemos hacer nada. He copiado las rutas que normalmente son utilizadas por sudo. No se si hay una mejor manera de hacerlo. Tambien he puesto controles para que cuando getenv trata de buscar HOME o SHLVL no haga segmentation fault.
 
