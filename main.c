@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/12 22:29:18 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/12 22:40:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int main(int argc, char **argv, char **env)
 	env = copy_arr_of_strs(env, 0, 0);
 	if (env[0] == NULL)
 		env = set_env(ft_strdup("PATH"), \
-			ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"), \
+			ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:./bin"), \
 				env);
 	load_history_from_file(env);
 	set_tty(&env);

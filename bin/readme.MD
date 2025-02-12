@@ -1,0 +1,1 @@
+Este directorio es utilizado como contingencia cuando la minishell se ejcuta sin environment.

@@ -112,6 +112,10 @@ git: norm
 	git push
 
 runner: re
+	./$(NAME)
+	make -C . fclean
+
+runneri: re
 	env -i ./$(NAME)
 	make -C . fclean
 
@@ -120,7 +124,7 @@ valgrind: re
 
 sanitizer: $(LIBFT) $(OBJ) $(INCLUDE)
 	$(CC) $(SFLAGS) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
-	env -i ./$(NAME)
+	./$(NAME)
 	make -C . fclean
 
 .PHONY: all clean fclean re norm git runner valgrind sanitizer

@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/12 22:20:39 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/12 22:39:16 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	cpshell(char ***env)
 	t_ast_node		*node;
 
 	cmd = getenv("HOME");
+	if (cmd == NULL)
+		cmd = ft_strdup(".");
 	if (cmd)
 	{
 		cmd = ft_strjoin(cmd, "/bin/minishell");
