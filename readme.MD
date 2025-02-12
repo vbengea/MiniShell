@@ -1,6 +1,15 @@
 
 * To implement:
 
+	- HREDOC dejo de funcionar cuando se ejecutan varios a la vez.
+		Eejemplo: `<< EOF cat -e << END`
+		Tambien pasa lo mismo con un comando mas largo como:
+			`ls -l > file1 > file2 > file3 > file4 | << EOF << END` 
+
+	- Verificar comportamiendo cuando se borra una carpeta anterior a la actual.
+		Ejemplo: > working directory /home/user/folder1/folder2/folder3
+		Si en ese directorio ejecutamos `rm -f ../../../folder1` y despues tratamos de hacer pwd o cd .., verificar la integridad del programa. 
+
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 	- Crear una super estructura para disminuir cantidad de parámetros.
