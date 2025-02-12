@@ -37,6 +37,7 @@
 		Eejemplo: `<< EOF cat -e << END`
 		Tambien pasa lo mismo con un comando mas largo como:
 			`ls -l > file1 > file2 > file3 > file4 | << EOF << END` 
+			ls -l > file1 > file2 > file3 > file4 > file5 | << EOF cat -e << END
 
 	- Review how builtins work with/without options. Commands first parse options, then arguments. If there are options, we compare the options we need to support (e.g. echo -n) and the rest should be outputed even tokens that looks like options with a leading "dash" (e.g echo -colores).
 	

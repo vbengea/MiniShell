@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/12 18:38:56 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/12 19:29:33 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	detect_out_redirection(t_ast_node *node)
 	return (0);
 }
 
-int		detect_in_redirection(t_ast_node *node)	// TODO: reversing the list only works for heredoc
+int		detect_in_redirection(t_ast_node *node)
 {
 	if (has_inward_redirection(node->redirs))
 	{
@@ -232,30 +232,34 @@ char	*read_files_content(char **files)
 
 static	void	redlist_out(t_redirection *lst, char *content)
 {
-	int	tmp;
-	int	flags;
-	int	is_first;
+	int				tmp;
+	int				flags;
+	int				is_first;
+	t_redirection	*last;
 
 	is_first = 1;
 	while (lst)
 	{
 		if (lst->type == REDIRECT_OUT || lst->type == REDIRECT_APPEND)
-		{
-			if (lst->type == REDIRECT_OUT)
-				flags = O_WRONLY | O_CREAT | O_TRUNC;
-			else
-				flags = O_WRONLY | O_CREAT | O_APPEND;
-			tmp = open(lst->file, flags, 0666);
-			if (is_first)
-			{
-				write(tmp, content, ft_strlen(content));
-				is_first = 0;
-			}
-			close(tmp);
-		}
+			last = lst;
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;
+	}
+	if (last)
+	{
+		lst = last;
+		if (lst->type == REDIRECT_OUT)
+			flags = O_WRONLY | O_CREAT | O_TRUNC;
+		else
+			flags = O_WRONLY | O_CREAT | O_APPEND;
+		tmp = open(lst->file, flags, 0666);
+		if (is_first)
+		{
+			write(tmp, content, ft_strlen(content));
+			is_first = 0;
+		}
+		close(tmp);
 	}
 }
 
@@ -340,7 +344,7 @@ void	pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last)
 void	pipex_redirect_out(t_ast_node *node, int fd[2], int files[3], int is_last)
 {
 	(void) files;
-	if (is_last && detect_out_redirection(node))
+	if (detect_out_redirection(node))
 		close(fd[1]);
 	else if (is_last)
 		close(fd[1]);

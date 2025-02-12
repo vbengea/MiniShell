@@ -81,7 +81,7 @@ clean:
 	rm -f $(SIGNALS_DIR)/*.o
 	rm -f $(WILDCARD_DIR)/*.o
 	rm -rf *.dSYM
-	rm -f t0 t1 t2 t3 t4 t5 tmp/__*
+	rm -f t0 t1 t2 t3 t4 t5 file1 file2 file3 file4 file5 tmp/__*
 
 fclean: clean
 	make -C $(LIBFT_DIR) fclean
