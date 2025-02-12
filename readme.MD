@@ -30,6 +30,8 @@
 
 	- Los .sh no se ejecutan sino le ponemos shelbang. Esto correcto? Porque en bash se ejecutan sin esta configuracion.
 
+	- Some limits.h like PATH_MAX are presenting squiggly in VS.
+
 
 * Solved issues
 
