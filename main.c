@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/11 10:20:46 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/12 22:29:18 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,12 @@ int main(int argc, char **argv, char **env)
 		exit(1);
 	}
 	id = 0;
-	load_history_from_file(env);
 	env = copy_arr_of_strs(env, 0, 0);
+	if (env[0] == NULL)
+		env = set_env(ft_strdup("PATH"), \
+			ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"), \
+				env);
+	load_history_from_file(env);
 	set_tty(&env);
 	while (true)
 	{

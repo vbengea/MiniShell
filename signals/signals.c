@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/11 13:56:33 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/12 22:20:39 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,22 @@ void	cpshell(char ***env)
 	t_ast_node		*node;
 
 	cmd = getenv("HOME");
-	cmd = ft_strjoin(cmd, "/bin/minishell");
-	if (cmd && access(cmd, F_OK | X_OK) == 0)
-		unlink(cmd);
-	if (cmd && access(cmd, F_OK | X_OK) != 0)
+	if (cmd)
 	{
-		tmp = cmd;
-		cmd = ft_strjoin("cp minishell ", cmd);
-		free(tmp);
-		args = ft_split(cmd, ' ');
-		node = create_ast_node(NODE_CMND, args);
-		selector(node, env, NULL);
-		free(cmd);
-		free_redirect_ast(node, 0);
+		cmd = ft_strjoin(cmd, "/bin/minishell");
+		if (cmd && access(cmd, F_OK | X_OK) == 0)
+			unlink(cmd);
+		if (cmd && access(cmd, F_OK | X_OK) != 0)
+		{
+			tmp = cmd;
+			cmd = ft_strjoin("cp minishell ", cmd);
+			free(tmp);
+			args = ft_split(cmd, ' ');
+			node = create_ast_node(NODE_CMND, args);
+			selector(node, env, NULL);
+			free(cmd);
+			free_redirect_ast(node, 0);
+		}
 	}
 }
 
