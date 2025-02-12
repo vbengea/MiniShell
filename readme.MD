@@ -1,10 +1,6 @@
 
 * To implement:
 
-	- Verificar comportamiendo cuando se borra una carpeta anterior a la actual.
-		Ejemplo: > working directory /home/user/folder1/folder2/folder3
-		Si en ese directorio ejecutamos `rm -f ../../../folder1` y despues tratamos de hacer pwd o cd .., verificar la integridad del programa.
-
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 	- Crear una super estructura para disminuir cantidad de parámetros.
@@ -17,6 +13,10 @@
 
 
 * Solved issues
+
+	- Verificar comportamiendo cuando se borra una carpeta anterior a la actual.
+		Ejemplo: > working directory /home/user/folder1/folder2/folder3
+		Si en ese directorio ejecutamos `rm -f ../../../folder1` y despues tratamos de hacer pwd o cd .., verificar la integridad del programa.
 
 	- Hay que cambiar la ruta $HOME/bin donde ponemos el binario minishell. Cuando la minishell se ejecuta sin environment esta variable de entorno no esta presente y entonces significa que no ponemos el binario en el PATH.
 

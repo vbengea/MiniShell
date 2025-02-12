@@ -84,6 +84,7 @@ clean:
 	rm -f t0 t1 t2 t3 t4 t5 file1 file2 file3 file4 file5 tmp/__*
 
 fclean: clean
+	rm -rf one
 	make -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 	rm -f a.out
@@ -106,12 +107,16 @@ git: norm
 	rm -f infile
 	rm -f outfile
 	rm -f __tmp__
+	rm -rf one
 	git add -A
 	git commit -am "$(shell date)"
 	git config pull.rebase false
 	git push
 
 runner: re
+	# mkdir one
+	# mkdir one/two
+	# mkdir one/two/three
 	./$(NAME)
 	make -C . fclean
 
