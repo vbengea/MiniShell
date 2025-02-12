@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/11 18:20:11 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/12 20:25:31 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,30 +169,89 @@ void	executor(t_ast_node *node, char ***env, int hold, int files[3])
 		cleanup("Error executing command..");
 }
 
+static	int		check_options(t_ast_node *node, char ***env, int hold)
+{
+	int	i;
+
+	i = 1;
+	while (node->args[i])
+	{
+		if (node->args[i][0] == '-')
+		{
+			if (ft_strncmp(node->args[0], "echo", 4) == 0 && node->args[i][1] == 'n' && ft_strlen(node->args[i]) == 2)
+				break ;
+			else
+			{
+				printf("%s: %s: invalid option\n", node->args[0], node->args[i]);
+				set_history_status(0, env);
+				if (node->parent)
+					node->parent->exit = 0;
+				if (hold)
+					exit(1);
+				return (0);
+			}
+		}
+		else
+			break ;
+		i++;
+	}
+	return (1);
+}
+
 static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) files;
-	preexecute(node, env);
-	if (ft_strncmp(node->args[0], "cd", 2) == 0)
-		cd_bi(node, env);
-	else if (ft_strncmp(node->args[0], "exit", 4) == 0)
-		exit_bi(node, *env);
-	else if (ft_strncmp(node->args[0], "pwd", 3) == 0)
-		pwd_bi(node);
-	else if (ft_strncmp(node->args[0], "env", 3) == 0)
-		env_bi(node, *env, 0);
-	else if (ft_strncmp(node->args[0], "export", 6) == 0)
-		*env = export_bi(node, *env);
-	else if (ft_strncmp(node->args[0], "unset", 5) == 0)
-		*env = unset_bi(node, *env);
-	else if (ft_strncmp(node->args[0], "echo", 4) == 0)
-		echo_bi(node);
-	postexecute(node);
-	set_history_status(0, env);
-	if (node->parent)
-		node->parent->exit = 0;
-	if (hold)
-		exit(0);
+	int	i;
+
+	i = 1;
+	if (check_options(node, env, hold))
+	{
+		while (node->args[i])
+		{
+			if (node->args[i][0] == '-')
+			{
+				if (ft_strncmp(node->args[0], "echo", 4) == 0 && node->args[i][1] == 'n' && ft_strlen(node->args[i]) == 2)
+				{
+					break ;
+				}
+				else
+				{
+					printf("%s: %s: invalid option\n", node->args[0], node->args[i]);
+					set_history_status(0, env);
+					if (node->parent)
+						node->parent->exit = 0;
+					if (hold)
+						exit(1);
+					return ;
+				}
+			}
+			else
+				break ;
+			
+			i++;
+		}
+		preexecute(node, env);
+		if (ft_strncmp(node->args[0], "cd", 2) == 0)
+			cd_bi(node, env);
+		else if (ft_strncmp(node->args[0], "exit", 4) == 0)
+			exit_bi(node, *env);
+		else if (ft_strncmp(node->args[0], "pwd", 3) == 0)
+			pwd_bi(node);
+		else if (ft_strncmp(node->args[0], "env", 3) == 0)
+			env_bi(node, *env, 0);
+		else if (ft_strncmp(node->args[0], "export", 6) == 0)
+			*env = export_bi(node, *env);
+		else if (ft_strncmp(node->args[0], "unset", 5) == 0)
+			*env = unset_bi(node, *env);
+		else if (ft_strncmp(node->args[0], "echo", 4) == 0)
+			echo_bi(node);
+		postexecute(node);
+		set_history_status(0, env);
+		if (node->parent)
+			node->parent->exit = 0;
+		if (hold)
+			exit(0);
+	}
 }
 
 void	forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3]), int files[3])
