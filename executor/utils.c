@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/11 14:45:49 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/12 18:47:53 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int    is_builtin(t_ast_node *node)
 	{
 		while (b[i])
 		{
-			if (ft_strncmp(node->args[0], b[i], ft_strlen(b[i])) == 0)
+			if ((ft_strncmp(node->args[0], b[i], ft_strlen(b[i])) == 0)
+				&& (ft_strlen(b[i]) == ft_strlen(node->args[0])))
 				return (1);
 			i++;
 		}
