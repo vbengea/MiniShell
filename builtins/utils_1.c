@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/12 22:19:20 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/12 22:33:16 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ void	check_shlvl(char ***env)
 	{
 		l = ft_atoi(lvl) + 1;
 		lvl = ft_itoa(l);
-		*env = set_env("SHLVL", lvl, *env);
-		free(lvl);
 	}
+	else
+		lvl = ft_strdup("1");
+	*env = set_env("SHLVL", lvl, *env);
+	free(lvl);
 }

@@ -18,7 +18,7 @@
 
 * Solved issues
 
-	- Gestionar la ejecucucion sin environment (env -i) o sin PATH
+	- Gestionar la ejecucucion sin environment (env -i) o sin PATH. Como sin PATH no podemos hacer nada. He copiado las rutas que normalmente son utilizadas por sudo. No se si hay una mejor manera de hacerlo. Tambien he puesto controles para que cuando getenv trata de buscar HOME o SHLVL no haga segmentation fault.
 
 	- EXPORT > declarar todos los args que contenga el comando `export` incluido el propio export como variables de entorno vacias, sin valor. 
 		En caso de que algun argumento en medio contenga alguna declaracion tipo `NAME=value` 
