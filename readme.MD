@@ -18,6 +18,8 @@
 
 * Solved issues
 
+	- Gestionar la ejecucucion sin environment (env -i) o sin PATH
+
 	- EXPORT > declarar todos los args que contenga el comando `export` incluido el propio export como variables de entorno vacias, sin valor. 
 		En caso de que algun argumento en medio contenga alguna declaracion tipo `NAME=value` 
 		declarar la variable con su valor correspondiente.
