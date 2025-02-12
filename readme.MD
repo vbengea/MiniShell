@@ -1,6 +1,23 @@
 
 * To implement:
 
+	- EXPORT > declarar todos los args que contenga el comando `export` incluido el propio export como variables de entorno vacias, sin valor. 
+		En caso de que algun argumento en medio contenga alguna declaracion tipo `NAME=value` 
+		declarar la variable con su valor correspondiente.
+		Ejemplo: `export hola que tal esto es una prueba` Cada palabra debe ser una varibale vacia. En caso de ser `export hola que tal TEST=hola probando`, `TEST=hola` debe ser declarado como `NAME=value`. En este caso, tal como se estan seteando las flags actualmente, ese input crearia un comando como este 
+		```
+		minishell$ export hola que tal TEST=hola probando
+		[TYPE:0] [NID:11] [SIDE:0] [ARGS]: _export_(1, 1),_hola_(1, 1),_que_(1, 1),_tal_(1, 1),_export_(1, 0),_TEST_(0, 0),_hola_(0, 0),_probando_(1, 0),[REDIRS]:
+		```
+		Al encontrar un `export` con el flag (1, 0) en este caso, se debe ignorar el string literal y declarar los siguientes dos args como `NAME=value`
+
+		En el caso de tener un export en medio de los argumentos pero sin declarar nada, el output seria el siguiente:
+		```
+		minishell$ export hola que tal esto es una export prueba
+		[TYPE:0] [NID:12] [SIDE:0] [ARGS]: _export_(1, 1),_hola_(1, 1),_que_(1, 1),_tal_(1, 1),_esto_(1, 1),_es_(1, 1),_una_(1, 1),_export_(1, 1),_prueba_(1, 0),[REDIRS]: 
+		```
+		En caso de encontrar `export` con los flags (1, 1) este debe ser declarado como variable sin valor igual que el resto de argumentos. 
+
 	- HREDOC dejo de funcionar cuando se ejecutan varios a la vez.
 		Eejemplo: `<< EOF cat -e << END`
 		Tambien pasa lo mismo con un comando mas largo como:
