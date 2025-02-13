@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_build.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/07 20:37:05 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:39:45 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		print_ast(t_ast_node *node, int level);
 
 
 
-void add_redirection(t_ast_node *node, t_redirect_type type, t_out_redirect_type otype, char *file);
+void add_redirection(t_ast_node *node, t_redirect_type type, t_out_redirect_type otype, char *file, bool is_quote);
 
 
 /* BUILD COMMAND NODE */

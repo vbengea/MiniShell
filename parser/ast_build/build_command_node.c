@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_command_node.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:43:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 12:12:11 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:40:25 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	handle_redirection(t_ast_node *node, t_token **current)
 	if (!next || next->type != TOKEN_WORD)
 		return (0);
 	*current = next;
-	add_redirection(node, rtype, otype, ft_strdup((*current)->value));
+	add_redirection(node, rtype, otype, ft_strdup((*current)->value), (*current)->is_quoted);
 	return (1);
 }
 

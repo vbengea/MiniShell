@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/11 19:26:04 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:36:06 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ typedef struct s_redirection
 	t_out_redirect_type		otype;
 	char					*file;
 	struct s_redirection	*next;
+
+	//quoted flag
+	bool					is_quote;
 }	t_redirection;
 
 typedef enum mini_token
