@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_wildcard.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:16:58 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/05 19:16:49 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 17:06:54 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ t_list	*ft_wildcard(char *input)
 	}
 	closedir(dir);
 	find_matches(copy_files, input, &matches);
+	free_files(&copy_files);
 	if (!matches)
 		return (NULL);
-	free_files(&copy_files);
 	return (matches);
 }
