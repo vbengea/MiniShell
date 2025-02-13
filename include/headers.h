@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   headers.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 13:04:44 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:30:21 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "signals.h"
 # include "wildcard.h"
 # include "history.h"
+# include "environment.h"
 
 # include <stdio.h>
 # include <stdlib.h>

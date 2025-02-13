@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 16:11:55 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 17:39:53 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ t_terminal	*build_terminal(char **env)
 			if (tty->env)
 			{
 				if (tty->env[0] == NULL)
-					tty->env = set_env(ft_strdup("PATH"), \
-						ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:./bin"), \
-							tty->env);
+					tty->env = set_env(ft_strdup("PATH"), handle_no_env(), tty->env);
 				load_history_from_file(tty->env);
 				set_tty(tty);
 			}
