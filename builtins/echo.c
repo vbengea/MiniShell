@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/11 18:38:34 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 00:14:48 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,10 @@ static	void	new_line(t_ast_node *node)
 		ft_putchar_fd('\n', node->out_fd);
 }
 
-void	echo_bi(t_ast_node *node)
+void	do_export(t_ast_node *node, int i, char **params)
 {
-	int		i;
 	char	*str;
-	char	**params;
-	int		is_n_option;
 
-	is_n_option = true;
-	params = node->args;
-	i = 1;
-	if (ft_strlen(params[i]) == 2 && params[i][0] == '-' && params[i][1] == 'n')
-	{
-		is_n_option = false;
-		i++;
-	}
 	while (params[i])
 	{
 		str = params[i];
@@ -52,6 +41,23 @@ void	echo_bi(t_ast_node *node)
 		}
 		i++;
 	}
+}
+
+void	echo_bi(t_ast_node *node)
+{
+	int		i;
+	char	**params;
+	int		is_n_option;
+
+	is_n_option = true;
+	params = node->args;
+	i = 1;
+	if (ft_strlen(params[i]) == 2 && params[i][0] == '-' && params[i][1] == 'n')
+	{
+		is_n_option = false;
+		i++;
+	}
+	do_export(node, i, params);
 	if (is_n_option)
 		new_line(node);
 }

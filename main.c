@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 21:40:56 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 23:53:19 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	build_terminal(char **env, t_terminal	*tty)
 		if (tty->env)
 		{
 			if (tty->env[0] == NULL)
-				tty->env = set_env(ft_strdup("PATH"), handle_no_env(), tty);
+				set_env(ft_strdup("PATH"), handle_no_env(), tty);
 			// init_local_history(&tty->myhist);
 			// load_history_from_file(&tty->myhist, tty);
 			set_tty(tty);

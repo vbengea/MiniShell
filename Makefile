@@ -58,8 +58,8 @@ SRC				:= 	main.c\
 					$(BUILTINS_DIR)/export.c \
 					$(BUILTINS_DIR)/pwd.c \
 					$(BUILTINS_DIR)/unset.c \
-					$(BUILTINS_DIR)/utils_1.c \
-					$(BUILTINS_DIR)/utils_2.c \
+					$(BUILTINS_DIR)/env_set.c \
+					$(BUILTINS_DIR)/expand.c \
 					$(WILDCARD_DIR)/ft_wildcard.c \
 					$(HISTORY_DIR)/history.c
 
@@ -110,7 +110,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Solving malloc issue with the super structure"
+	git commit -am "Builtins norm"
 	git config pull.rebase false
 	git push
 

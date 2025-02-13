@@ -6,11 +6,21 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/13 18:03:51 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 23:57:25 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+char	*get_env(char *var, t_terminal *tty)
+{
+	int		i;
+
+	i = env_lookup(var, tty);
+	if (i >= 0)
+		return (tty->env[i] + ft_strlen(var) + 1);
+	return (NULL);
+}
 
 static	void	sort_env(t_ast_node *node, t_terminal *tty)
 {

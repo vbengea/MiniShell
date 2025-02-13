@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 20:29:43 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 23:50:09 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ void	handle_sigquit(int signal);
 void	handle_sigint(int signal);
 void	handle_sigexec(int signal);
 void	cpshell(t_terminal *tty);
+void	check_shlvl(t_terminal *tty);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 18:41:17 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 00:34:52 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	set_history_status(int status, t_terminal *tty)
 	value = ft_itoa(status);
 	if (value && tty->env)
 	{
-		tty->env = set_env("?", value, tty);
+		set_env("?", value, tty);
 		free(value);
 	}
 }
@@ -232,9 +232,9 @@ static	void	builtin(t_ast_node *node, int hold, t_terminal *tty)
 		else if (ft_strncmp(node->args[0], "env", 3) == 0)
 			env_bi(node, 0, tty);
 		else if (ft_strncmp(node->args[0], "export", 6) == 0)
-			tty->env = export_bi(node, tty);
+			export_bi(node, tty);
 		else if (ft_strncmp(node->args[0], "unset", 5) == 0)
-			tty->env = unset_bi(node, tty);
+			unset_bi(node, tty);
 		else if (ft_strncmp(node->args[0], "echo", 4) == 0)
 			echo_bi(node);
 		postexecute(node);
