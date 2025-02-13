@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 14:17:16 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:49:09 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int				has_outward_redirection(t_ast_node *ast);
 int				has_inward_redirection(t_redirection *lst);
 void			multiple_output_redirections(t_ast_node *node);
 void			here_doc(t_ast_node *node, t_redirection *lst, int do_write, char **env);
-void			pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last, char **env);
+void			pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last, char **env, t_terminal *tty);
 void			pipex_redirect_out(t_ast_node *node, int fd[2], int files[3], int is_last);
 void			parse_command(t_ast_node *node, char ***env);
 

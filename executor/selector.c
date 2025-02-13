@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   selector.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 14:19:03 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:07:39 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,19 +304,18 @@ void	selector_pipe(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
 
 void	selector(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
 {
-	(void) node;
 	(void) env;
 	(void) files;
-	if (tty->ast->type == NODE_CMND)
-		selector_node(tty->ast, &(tty->env), tty->files, tty);
-	else if (tty->ast->type == NODE_AND || tty->ast->type == NODE_OR)
-		navigator(tty->ast, &(tty->env), 1, tty->files, tty);
-	else if (tty->ast->type == NODE_PIPE)
-		selector_pipe(tty->ast, &(tty->env), tty->files, tty);
-	else if (tty->ast->type == NODE_GROUP && \
-		(!tty->ast->parent || tty->ast->parent->type != NODE_GROUP))
+	if (node->type == NODE_CMND)
+		selector_node(node, &(tty->env), tty->files, tty);
+	else if (node->type == NODE_AND || node->type == NODE_OR)
+		navigator(node, &(tty->env), 1, tty->files, tty);
+	else if (node->type == NODE_PIPE)
+		selector_pipe(node, &(tty->env), tty->files, tty);
+	else if (node->type == NODE_GROUP && \
+		(!node->parent || node->parent->type != NODE_GROUP))
 	{
-		preexecute(tty->ast, &(tty->env));
-		forker(tty->ast, &(tty->env), navigator, tty->files, tty);
+		preexecute(node, &(tty->env));
+		forker(node, &(tty->env), navigator, tty->files, tty);
 	}
 }

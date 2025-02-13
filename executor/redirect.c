@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 14:31:09 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:50:39 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,11 +348,12 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, char **env)
 	}
 }
 
-void	pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last, char **env)
+void	pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last, char **env, t_terminal *tty)
 {
 	(void) is_last;
 	(void) fd;
-	if (!detect_in_redirection(node, env) && files[0] != STDIN_FILENO && dup2(files[0], STDIN_FILENO) == -1)
+	(void) files;
+	if (!detect_in_redirection(node, env) && tty->files[0] != STDIN_FILENO && dup2(tty->files[0], STDIN_FILENO) == -1)
 		perror("(1) Error redirecting");
 }
 

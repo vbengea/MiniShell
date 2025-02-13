@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 13:35:06 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:11:55 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,33 @@ void	assign_ids(t_ast_node *node, int *id)
 
 t_terminal	*build_terminal(char **env)
 {
-	int			files[3];
 	t_terminal	*tty;
 	
 	tty = malloc(sizeof(t_terminal));
 	if (tty)
 	{
-		files[0] = STDIN_FILENO;
-		files[1] = STDOUT_FILENO;
-		files[2] = 0;
-		tty->ast = NULL;
-		tty->env = copy_arr_of_strs(env, 0, 0);
-		if (tty->env)
+		tty->files = malloc(sizeof(int *) * 3);
+		if (tty->files)
 		{
-			tty->files = files;
-			if (tty->env[0] == NULL)
-				tty->env = set_env(ft_strdup("PATH"), \
-					ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:./bin"), \
-						tty->env);
-			load_history_from_file(tty->env);
-			set_tty(tty);
+			tty->files[0] = STDIN_FILENO;
+			tty->files[1] = STDOUT_FILENO;
+			tty->files[2] = 0;
+			tty->ast = NULL;
+			tty->env = copy_arr_of_strs(env, 0, 0);
+			if (tty->env)
+			{
+				if (tty->env[0] == NULL)
+					tty->env = set_env(ft_strdup("PATH"), \
+						ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:./bin"), \
+							tty->env);
+				load_history_from_file(tty->env);
+				set_tty(tty);
+			}
+			else
+			{
+				perror("Error creating terminal");
+				exit(1);
+			}
 		}
 		else
 		{
