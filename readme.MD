@@ -5,8 +5,6 @@
 		a. env es una copia del entorno anterior
 		b. export es 
 
-	- Cuando el environment viene vacio, leer el /etc/environment.
-
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 
@@ -23,6 +21,8 @@
 
 
 * Solved issues
+
+	- Cuando el environment viene vacio, leer el /etc/environment.
 
 	- Con un comando incompleto como "<< EOF" la ejecucion da segmentation fault.
 
