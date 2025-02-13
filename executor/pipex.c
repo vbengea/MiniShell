@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/10 16:22:37 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:53:36 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int SIGNAL;
 
-static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int ppid)
+static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int ppid, t_terminal *tty)
 {
 	t_ast_node	*origin;
 	t_ast_node	*parent;
@@ -23,7 +23,7 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 	SIGNAL += 1;
 	origin = node;
 	parent = NULL;
-	files[0] = fd[0];
+	tty->files[0] = fd[0];
 	node = node->parent;
 	while (node)
 	{
@@ -50,13 +50,13 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 			node = node->left;
 		}
 		if (node)
-			pipex(node, env, files);
+			pipex(node, env, files, tty);
 	}
 	close(fd[0]);
-	waiter(origin->type, origin, env, files);
+	waiter(origin->type, origin, env, files, tty);
 }
 
-static	void	child(int fd[2], t_ast_node *node, char ***env, int files[3])
+static	void	child(int fd[2], t_ast_node *node, char ***env, int files[3], t_terminal *tty)
 {
 	pipex_redirect_in(node, fd, files, is_last(node, files));
 	pipex_redirect_out(node, fd, files, is_last(node, files));
@@ -67,10 +67,10 @@ static	void	child(int fd[2], t_ast_node *node, char ***env, int files[3])
 			cleanup("Error executing command");
 	}
 	else
-		navigator(node, env, 1, files);
+		navigator(node, env, 1, files, tty);
 }
 
-void	pipex(t_ast_node *node, char ***env, int files[3])
+void	pipex(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
 {
 	int			fd[2];
 	int			pid;
@@ -84,7 +84,7 @@ void	pipex(t_ast_node *node, char ***env, int files[3])
 	{
 		close(fd[0]);
 		if (node)
-			child(fd, node, env, files);
+			child(fd, node, env, files, tty);
 		else
 			close(fd[1]);
 	}
@@ -92,7 +92,7 @@ void	pipex(t_ast_node *node, char ***env, int files[3])
 	{
 		close(fd[1]);
 		if (node)
-			parent(fd, node, env, files, pid);
+			parent(fd, node, env, files, pid, tty);
 		else
 			close(fd[0]);
 	}

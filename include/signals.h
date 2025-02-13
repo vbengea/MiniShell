@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/06 20:39:31 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:37:05 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 
 # include <signal.h>
 
-void	set_tty(char ***env);
+void	set_tty(t_terminal *tty);
 void	setup_signal_handlers(void);
 void	setup_signal_handlers_process(void);
 void	handle_sigquit(int signal);
 void	handle_sigint(int signal);
-void	cpshell(char ***env);
+void	cpshell(t_terminal *tty);
 
 #endif

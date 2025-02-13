@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/12 22:39:16 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:45:37 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 int	SIGNAL = 2;
 
-void	cpshell(char ***env)
+void	cpshell(t_terminal *tty)
 {
 	char			**args;
 	char			*cmd;
 	char			*tmp;
-	t_ast_node		*node;
 
 	cmd = getenv("HOME");
 	if (cmd == NULL)
@@ -35,20 +34,21 @@ void	cpshell(char ***env)
 			cmd = ft_strjoin("cp minishell ", cmd);
 			free(tmp);
 			args = ft_split(cmd, ' ');
-			node = create_ast_node(NODE_CMND, args);
-			selector(node, env, NULL);
+			tty->ast = create_ast_node(NODE_CMND, args);
+			if (tty->ast)
+				selector(tty->ast, &(tty->env), NULL, tty);
 			free(cmd);
-			free_redirect_ast(node, 0);
+			free_redirect_ast(tty->ast, 0);
 		}
 	}
 }
 
-void	set_tty(char ***env)
+void	set_tty(t_terminal *tty)
 {
 	struct termios 	t;
 
-	check_shlvl(env);
-	cpshell(env);
+	check_shlvl(tty);
+	cpshell(tty);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
 	// t.c_lflag &= ~ECHOCTL;

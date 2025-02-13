@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/07 02:42:21 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:59:30 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
 # include "../libft/libft.h"
 # include "./data_structure.h"
 
-void			waiter(t_node_type type, t_ast_node *node, char ***env, int files[3]);
-void			selector(t_ast_node *node, char ***env, int file[3]);
-void			forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3]), int files[3]);
-void			navigator(t_ast_node *node, char ***env, int hold, int files[3]);
-void			executor(t_ast_node *node, char ***env, int hold, int files[3]);
-void			pipex(t_ast_node *node, char ***env, int files[3]);
+void			waiter(t_node_type type, t_ast_node *node, char ***env, int files[3], t_terminal *tty);
+void			selector(t_ast_node *node, char ***env, int files[3], t_terminal *tty);
+void			forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty), int files[3], t_terminal *tty);
+void			navigator(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty);
+void			executor(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty);
+void			pipex(t_ast_node *node, char ***env, int files[3], t_terminal *tty);
 
 char			*environment(char *name, char **env);
 char			*find_path(char *cmd, char *env);
@@ -46,7 +46,6 @@ void			parse_command(t_ast_node *node, char ***env);
 
 void			cleanup(char *err);
 int				is_last(t_ast_node *node, int files[3]);
-void			populate_node(t_ast_node *node, int side);
 int				is_builtin(t_ast_node *node);
 int				is_pipe_state(t_ast_node *node);
 
@@ -54,10 +53,10 @@ t_ast_node		*build_redirect_ast(char *context);
 
 t_redirection	*redlist_new(void *content);
 void			redlist_add(t_redirection **lst, t_redirection *new);
-void			redlist_iter(t_redirection *lst, void (*f)(void *));
-void			print_redirs(void *content);
+void			redlist_iter(t_redirection *lst, void (*f)(void *, int));
+void			print_redirs(void *content, int flag);
 void			ast_printer(t_ast_node *ast, int level);
-void	        free_redirect_ast(t_ast_node *ast, int find_root);
+void			free_redirect_ast(t_ast_node *ast, int find_root);
 
 char			*parse_redirections(t_ast_node *ast, char *str);
 int				ff_subcontext(char *context);

@@ -34,11 +34,11 @@ void	redlist_add(t_redirection **lst, t_redirection *new)
 	(*lst)->next = tmp;
 }
 
-void	redlist_iter(t_redirection *lst, void (*f)(void *))
+void	redlist_iter(t_redirection *lst, void (*f)(void *, int x))
 {
 	while (lst)
 	{
-		(*f)(lst->file);
+		(*f)(lst->file, lst->is_quoted);
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;
@@ -67,12 +67,12 @@ void	reverse_redirections(t_redirection *lst, t_redirection **rev)
 		reverse_redirections(lst->next, rev);
 }
 
-void	print_redirs(void *content)
+void	print_redirs(void *content, int flag)
 {
 	char *str;
 
 	str = (char *) content;
-	printf("(%s) ", str);
+	printf("(%s [%d]) ", str, flag);
 }
 
 void	ft_rediter(t_redirection *lst, void (*f)(t_redirection *))

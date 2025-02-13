@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/12 22:33:16 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:39:57 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	**set_env(char *key, char *value, char **env)
 	return (env);
 }
 
-void	check_shlvl(char ***env)
+void	check_shlvl(t_terminal *tty)
 {
 	int		l;
 	char	*lvl;
@@ -98,6 +98,6 @@ void	check_shlvl(char ***env)
 	}
 	else
 		lvl = ft_strdup("1");
-	*env = set_env("SHLVL", lvl, *env);
+	tty->env = set_env("SHLVL", lvl, tty->env);
 	free(lvl);
 }

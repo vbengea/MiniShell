@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:22:57 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 11:27:42 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:40:02 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_env(char *var, char **env);
 char	**set_env(char *var, char *value, char **env);
 char	*interpolation(char *str, char **env);
 char	**expantion(char *str, char **args);
-void	check_shlvl(char ***env);
+void	check_shlvl(t_terminal *tty);
 char	*interpolate(char *str, char **env, int *i);
 
 #endif
