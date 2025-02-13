@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/13 20:40:27 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 21:00:36 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DATA_STRUCTURE_H
 # define DATA_STRUCTURE_H
 
-# include "headers.h"
-
-typedef struct s_history t_history;
-
+# include "history.h"
+typedef struct s_history
+{
+	char	*commands[MAX_HISTORY_LINES];
+	int		count;
+}	t_history;
 typedef enum e_node_type
 {
 	NODE_CMND,
