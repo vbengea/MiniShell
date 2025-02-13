@@ -1,6 +1,12 @@
 
 * To implement:
 
+	- Gestionar entornos diferentes para export y env.
+
+	- Gestionar declaracion de variables de entorno con env
+
+	- Gestionar cuando hay doble HEREDOC sin comando. LLega un nodo NODE_CMND sin argumentos y hace segfault
+
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 	- Crear una super estructura para disminuir cantidad de parámetros.
@@ -35,7 +41,7 @@
 		En el caso de tener un export en medio de los argumentos pero sin declarar nada, el output seria el siguiente:
 		```
 		minishell$ export hola que tal esto es una export prueba
-		[TYPE:0] [NID:12] [SIDE:0] [ARGS]: _export_(1, 1),_hola_(1, 1),_que_(1, 1),_tal_(1, 1),_esto_(1, 1),_es_(1, 1),_una_(1, 1),_export_(1, 1),_prueba_(1, 0),[REDIRS]: 
+		[TYPE:0] [NID:12] [SIDE:0] [ARGS]: _export_(1, 1),_hola_(1, 1),_que_(1, 1),_tal_(1, 1),_esto_(1, 1),_	es_(1, 1),_una_(1, 1),_export_(1, 1),_prueba_(1, 0),[REDIRS]: 
 		```
 		En caso de encontrar `export` con los flags (1, 1) este debe ser declarado como variable sin valor igual que el resto de argumentos. 
 
