@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 18:02:00 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 18:21:12 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "signals.h"
 # include "wildcard.h"
 # include "history.h"
+# include "environment.h"
 
 # include <stdio.h>
 # include <stdlib.h>
