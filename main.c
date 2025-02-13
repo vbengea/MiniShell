@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 18:22:38 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 18:23:18 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ t_terminal	*build_terminal(char **env)
 			if (tty->env)
 			{
 				if (tty->env[0] == NULL)
-					tty->env = set_env(ft_strdup("PATH"), handle_no_env(), tty->env);
-				load_history_from_file(tty->env);
+					tty->env = set_env(ft_strdup("PATH"), handle_no_env(), tty);
+				load_history_from_file(tty);
 				set_tty(tty);
 			}
 			else
