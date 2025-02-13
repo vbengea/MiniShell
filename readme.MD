@@ -7,9 +7,9 @@
 		export
 
 		en principio podemos tener tres listas:
-			1) Global: shells y subshells
-			2) Local: shell
-			3) Ejecucion: comando
+			(1) Global: shells y subshells
+			(2) Local: shell
+			(3) Ejecucion: comando
 
 		GA=1 GE=2 GI=3 GO=4 GU=5 env
 
