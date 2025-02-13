@@ -1,30 +1,33 @@
 
 * URGENT!!:
 
+	- Crear una super estructura para disminuir cantidad de parámetros.
+
 	- Gestionar declaracion de variables en los tres niveles: comando, shell, shell-subshell.
+		a. env es una copia del entorno anterior
+		b. export es 
 
 	- Expandir variables de entorno en el heredoc cuando el delimitador no viene en comillas dobles. La linea que lea el get_next_line tiene que ser interpolada.
+		a. Flag en redireccion cuando el heredoc viene entre comillas dobles.
+
+	- Cuando el environment viene vacio, leer el /etc/environment.
 
 
 * To implement:
 
-	- Cuando el environment viene vacio, leer el /etc/environment.
-
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
-
-	- Crear una super estructura para disminuir cantidad de parámetros.
 
 	- Control de errores.
 
 
 * Nice to have
 
-	- Flag en redireccion cuando el heredoc viene entre comillas dobles.
 
-	- Some limits.h like PATH_MAX are presenting squiggly in VS.
 
 
 * Solved issues
+
+	- Some limits.h like PATH_MAX are presenting squiggly in VS.
 
 	- Gestionar cuando hay doble HEREDOC sin comando. LLega un nodo NODE_CMND sin argumentos y hace segfault
 
