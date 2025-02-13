@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/12 18:47:53 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 09:01:37 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int    is_builtin(t_ast_node *node)
 	char	*b[8] = { "cd", "echo", "env", "exit", "export", "pwd", "unset", NULL };
 	int		i = 0;
 
+	if (node->args[0] == NULL)
+		return (1);
 	if (node->type == NODE_CMND && node->args)
 	{
 		while (b[i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   selector.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/12 20:25:31 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 09:09:04 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	parse_command(t_ast_node *node, char ***env)
 	char	*str;
 	char	**args;
 
-	if (node->type == NODE_CMND)
+	if (node->type == NODE_CMND && node->args[0] != NULL)
 	{
 		i = 0;
 		args = ft_split(" ", ' ');
@@ -169,6 +169,15 @@ void	executor(t_ast_node *node, char ***env, int hold, int files[3])
 		cleanup("Error executing command..");
 }
 
+static	void	builtin_end(t_ast_node *node, char ***env, int hold)
+{
+	set_history_status(0, env);
+	if (node->parent)
+		node->parent->exit = 0;
+	if (hold)
+		exit(1);
+}
+
 static	int		check_options(t_ast_node *node, char ***env, int hold)
 {
 	int	i;
@@ -183,11 +192,7 @@ static	int		check_options(t_ast_node *node, char ***env, int hold)
 			else
 			{
 				printf("%s: %s: invalid option\n", node->args[0], node->args[i]);
-				set_history_status(0, env);
-				if (node->parent)
-					node->parent->exit = 0;
-				if (hold)
-					exit(1);
+				builtin_end(node, env, hold);
 				return (0);
 			}
 		}
@@ -201,37 +206,13 @@ static	int		check_options(t_ast_node *node, char ***env, int hold)
 static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 {
 	(void) files;
-	int	i;
 
-	i = 1;
 	if (check_options(node, env, hold))
 	{
-		while (node->args[i])
-		{
-			if (node->args[i][0] == '-')
-			{
-				if (ft_strncmp(node->args[0], "echo", 4) == 0 && node->args[i][1] == 'n' && ft_strlen(node->args[i]) == 2)
-				{
-					break ;
-				}
-				else
-				{
-					printf("%s: %s: invalid option\n", node->args[0], node->args[i]);
-					set_history_status(0, env);
-					if (node->parent)
-						node->parent->exit = 0;
-					if (hold)
-						exit(1);
-					return ;
-				}
-			}
-			else
-				break ;
-			
-			i++;
-		}
 		preexecute(node, env);
-		if (ft_strncmp(node->args[0], "cd", 2) == 0)
+		if (node->args[0] == NULL)
+			builtin_end(node, env, hold);
+		else if (ft_strncmp(node->args[0], "cd", 2) == 0)
 			cd_bi(node, env);
 		else if (ft_strncmp(node->args[0], "exit", 4) == 0)
 			exit_bi(node, *env);
@@ -246,11 +227,7 @@ static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3])
 		else if (ft_strncmp(node->args[0], "echo", 4) == 0)
 			echo_bi(node);
 		postexecute(node);
-		set_history_status(0, env);
-		if (node->parent)
-			node->parent->exit = 0;
-		if (hold)
-			exit(0);
+		builtin_end(node, env, hold);
 	}
 }
 
