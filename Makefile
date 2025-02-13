@@ -110,7 +110,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "README duplicates"
+	git commit -am "Verificar CTRL-C mientras se ejecuta HEREDOC"
 	git config pull.rebase false
 	git push
 

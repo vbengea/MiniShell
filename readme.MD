@@ -1,10 +1,6 @@
 
 * TODAY!!:
 
-	- Verificar CTRL-C mientras se ejecuta HEREDOC.
-
-	- Implementar 
-
 	- Gestionar declaracion de variables en los tres niveles: comando, shell, shell-subshell.
 		a. env es una copia del entorno anterior
 		b. export es 
@@ -21,10 +17,13 @@
 
 * Nice to have
 
-	- 
+	- Enviar un comando al binario de la minishell:
+		minishell "ls -l | cat -e"
 
 
 * Solved issues
+
+	- Verificar CTRL-C mientras se ejecuta HEREDOC.
 
 	- Cuando el environment viene vacio, leer el /etc/environment.
 

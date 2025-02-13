@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 18:11:42 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 18:41:17 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void	navigator(t_ast_node *node, int hold, t_terminal *tty)
 void	executor(t_ast_node *node, int hold, t_terminal *tty)
 {	
 	(void) hold;
+	setup_signal_handlers_child();
 	preexecute(node, tty);
 	if (execute(node->args, tty) == -1)
 		cleanup("Error executing command..");
