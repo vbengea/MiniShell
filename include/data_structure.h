@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/22 18:34:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 12:42:34 by juaflore         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2025/02/13 14:04:42 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef DATA_STRUCTURE_H
 # define DATA_STRUCTURE_H
@@ -46,6 +47,9 @@ typedef struct s_redirection
 	t_out_redirect_type		otype;
 	char					*file;
 	struct s_redirection	*next;
+
+	//quoted flag
+	bool					is_quote;
 }	t_redirection;
 
 typedef enum mini_token

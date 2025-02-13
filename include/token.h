@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:15:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/11 19:21:23 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 13:25:36 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_token
 	char			*value;
 	bool			has_env;
 	bool			has_space;
+
+	bool			is_quoted;
 	struct s_token	*next;
 }	t_token;
 
