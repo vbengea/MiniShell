@@ -2,8 +2,6 @@
 * TODAY!!:
 
 	- Gestionar declaracion de variables en los tres niveles: comando, shell, shell-subshell.
-		a. env es una copia del entorno anterior
-		b. export es 
 
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
