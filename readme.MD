@@ -2,6 +2,20 @@
 * TODAY!!:
 
 	- Gestionar declaracion de variables en los tres niveles: comando, shell, shell-subshell.
+		GO=5 env
+		GO=5
+		export
+
+		en principio podemos tener tres listas:
+			1) Global: shells y subshells
+			2) Local: shell
+			3) Ejecucion: comando
+
+		GA=1 GE=2 GI=3 GO=4 GU=5 env
+
+		export G1=1 G=2 hola que tal
+
+		GB=B 
 
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
@@ -15,6 +29,9 @@
 
 * Nice to have
 
+	- Support command level environemnt variable
+		GO=5 ls
+	
 	- Enviar un comando al binario de la minishell:
 		minishell "ls -l | cat -e"
 
