@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 16:30:39 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 18:11:55 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,30 @@
 # include "../libft/libft.h"
 # include "./data_structure.h"
 
-void			waiter(t_node_type type, t_ast_node *node, char ***env, int files[3], t_terminal *tty);
-void			selector(t_ast_node *node, char ***env, int files[3], t_terminal *tty);
-void			forker(t_ast_node *node, char ***env, void (*f)(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty), int files[3], t_terminal *tty);
-void			navigator(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty);
-void			executor(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty);
-void			pipex(t_ast_node *node, char ***env, int files[3], t_terminal *tty);
+void			waiter(t_ast_node *node, t_terminal *tty);
+void			selector(t_ast_node *node, t_terminal *tty);
+void			forker(t_ast_node *node, void (*f)(t_ast_node *node, int hold, t_terminal *tty), t_terminal *tty);
+void			navigator(t_ast_node *node, int hold, t_terminal *tty);
+void			executor(t_ast_node *node, int hold, t_terminal *tty);
+void			pipex(t_ast_node *node, t_terminal *tty);
 
-char			*environment(char *name, char **env);
-char			*find_path(char *cmd, char *env);
-int				doexec(char *path, char **comm, char **arvp, int is_free);
-int				execute(char **comm, char **arvp);
+char			*environment(char *name, t_terminal *tty);
+char			*find_path(char *cmd, char *penv);
+int				doexec(char *path, char **comm, int is_free, t_terminal *tty);
+int				execute(char **comm, t_terminal *tty);
 
-int				detect_in_redirection(t_ast_node *node, char **env);
+int				detect_in_redirection(t_ast_node *node, t_terminal *tty);
 int				detect_out_redirection(t_ast_node *node);
 int				has_outward_redirection(t_ast_node *ast);
 int				has_inward_redirection(t_redirection *lst);
 void			multiple_output_redirections(t_ast_node *node);
-void			here_doc(t_ast_node *node, t_redirection *lst, int do_write, char **env);
-void			pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last, char **env, t_terminal *tty);
-void			pipex_redirect_out(t_ast_node *node, int fd[2], int files[3], int is_last);
-void			parse_command(t_ast_node *node, char ***env);
+void			here_doc(t_ast_node *node, t_redirection *lst, int do_write, t_terminal *tty);
+void			pipex_redirect_in(t_ast_node *node, int fd[2], int is_last, t_terminal *tty);
+void			pipex_redirect_out(t_ast_node *node, int fd[2], int is_last, t_terminal *tty);
+void			parse_command(t_ast_node *node, t_terminal *tty);
 
 void			cleanup(char *err);
-int				is_last(t_ast_node *node, int files[3]);
+int				is_last(t_ast_node *node, t_terminal *tty);
 int				is_builtin(t_ast_node *node);
 int				is_pipe_state(t_ast_node *node);
 

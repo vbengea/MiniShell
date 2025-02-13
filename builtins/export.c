@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/13 11:33:55 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:05:42 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-char	**export_bi(t_ast_node *node, char **env)
+char	**export_bi(t_ast_node *node, t_terminal *tty)
 {
 	char	*key;
 	char	*value;
@@ -24,8 +24,8 @@ char	**export_bi(t_ast_node *node, char **env)
 		len++;
 
 	if (len == 1)
-		env_bi(node, env, 1);
-	else if (env)
+		env_bi(node, 1, tty);
+	else if (tty->env)
 	{
 		i = 0;
 		while (i < len && node->args[i])
@@ -36,11 +36,11 @@ char	**export_bi(t_ast_node *node, char **env)
 				key = node->args[i + 1];
 				value = node->args[i + 2];
 				if (key && value)
-					env = set_env(key, value, env);
+					tty->env = set_env(key, value, tty);
 				i += 2;
 			}
 			i++;
 		}
 	}
-	return (env);
+	return (tty->env);
 }

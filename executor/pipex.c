@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 16:13:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 18:12:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int SIGNAL;
 
-static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int ppid, t_terminal *tty)
+static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
 {
 	t_ast_node	*origin;
 	t_ast_node	*parent;
@@ -51,27 +51,27 @@ static	void	parent(int fd[2], t_ast_node *node, char ***env, int files[3], int p
 			node = node->left;
 		}
 		if (node)
-			pipex(node, env, files, tty);
+			pipex(node, tty);
 	}
 	close(fd[0]);
-	waiter(origin->type, origin, env, files, tty);
+	waiter(origin, tty);
 }
 
-static	void	child(int fd[2], t_ast_node *node, char ***env, int files[3], t_terminal *tty)
+static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 {
-	pipex_redirect_in(node, fd, files, is_last(node, files), *env, tty);
-	pipex_redirect_out(node, fd, files, is_last(node, files));
+	pipex_redirect_in(node, fd, is_last(node, tty), tty);
+	pipex_redirect_out(node, fd, is_last(node, tty), tty);
 	if (node->type == NODE_CMND)
 	{
-		parse_command(node, env);
-		if (execute(node->args, *env) == -1)
+		parse_command(node, tty);
+		if (execute(node->args, tty) == -1)
 			cleanup("Error executing command");
 	}
 	else
-		navigator(node, env, 1, files, tty);
+		navigator(node, 1, tty);
 }
 
-void	pipex(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
+void	pipex(t_ast_node *node, t_terminal *tty)
 {
 	int			fd[2];
 	int			pid;
@@ -85,7 +85,7 @@ void	pipex(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
 	{
 		close(fd[0]);
 		if (node)
-			child(fd, node, env, files, tty);
+			child(fd, node, tty);
 		else
 			close(fd[1]);
 	}
@@ -93,7 +93,7 @@ void	pipex(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
 	{
 		close(fd[1]);
 		if (node)
-			parent(fd, node, env, files, pid, tty);
+			parent(fd, node, pid, tty);
 		else
 			close(fd[0]);
 	}

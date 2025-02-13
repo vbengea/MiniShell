@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/04 11:33:56 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:10:46 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-char	*environment(char *name, char **env)
+char	*environment(char *name, t_terminal *tty)
 {
 	int		i;
 	int		j;
@@ -21,16 +21,16 @@ char	*environment(char *name, char **env)
 
 	i = 0;
 	n = ft_strlen(name);
-	while (env[i])
+	while (tty->env[i])
 	{
 		j = 0;
-		while (env[i][j] && env[i][j] != '=')
+		while (tty->env[i][j] && tty->env[i][j] != '=')
 			j++;
-		str = ft_substr(env[i], 0, j);
+		str = ft_substr(tty->env[i], 0, j);
 		if (ft_strncmp(str, name, n) == 0)
 		{
 			free(str);
-			return (env[i] + j + 1);
+			return (tty->env[i] + j + 1);
 		}
 		free(str);
 		i++;
@@ -38,7 +38,7 @@ char	*environment(char *name, char **env)
 	return (NULL);
 }
 
-char	*find_path(char *cmd, char *env)
+char	*find_path(char *cmd, char *penv)
 {
 	int		i;
 	char	**pathenv;
@@ -46,7 +46,7 @@ char	*find_path(char *cmd, char *env)
 	char	*command;
 	char	*segments;
 
-	pathenv = ft_split(env, ':');
+	pathenv = ft_split(penv, ':');
 	tokens = ft_split(cmd, ' ');
 	i = 0;
 	while (pathenv && tokens && pathenv[i])
@@ -67,11 +67,11 @@ char	*find_path(char *cmd, char *env)
 	return (NULL);
 }
 
-int	doexec(char *path, char **comm, char **env, int is_free)
+int	doexec(char *path, char **comm, int is_free, t_terminal *tty)
 {
 	if ((path && access(path, X_OK) == 0))
 	{
-		if (execve(path, comm, env) == -1)
+		if (execve(path, comm, tty->env) == -1)
 		{
 			if (is_free)
 				free(path);
@@ -85,10 +85,10 @@ int	doexec(char *path, char **comm, char **env, int is_free)
 	return (-1);
 }
 
-int	execute(char **comm, char **arvp)
+int	execute(char **comm, t_terminal *tty)
 {
 	char	*path;
-	char	*env;
+	char	*penv;
 	int		is_free;
 
 	is_free = 0;
@@ -98,16 +98,16 @@ int	execute(char **comm, char **arvp)
 			path = ft_strdup(comm[0]);
 		else
 		{
-			env = environment("PATH", arvp);
-			if (env)
+			penv = environment("PATH", tty);
+			if (penv)
 			{
-				path = find_path(comm[0], env);
+				path = find_path(comm[0], penv);
 				is_free = 1;
 			}
 			else
 				path = NULL;
 		}
-		return (doexec(path, comm, arvp, is_free));
+		return (doexec(path, comm, is_free, tty));
 	}
 	return (0);
 }

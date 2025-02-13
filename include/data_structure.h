@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/13 18:43:34 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:21:11 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_terminal
 	char		**env;
 	int			*files;
 	t_history	myhist;
+	int			files[3];
 }	t_terminal;
 
 #endif

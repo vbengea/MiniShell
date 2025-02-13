@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/13 15:44:25 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 19:38:22 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	cpshell(t_terminal *tty)
 			args = ft_split(cmd, ' ');
 			tty->ast = create_ast_node(NODE_CMND, args);
 			if (tty->ast)
-				selector(tty->ast, &(tty->env), NULL, tty);
+				selector(tty->ast, tty);
 			free(cmd);
 			free_redirect_ast(tty->ast, 0);
 		}
@@ -65,13 +65,19 @@ void	handle_sigint(int signal)
 	rl_redisplay();
 }
 
+void	handle_sigexec(int signal)
+{
+	(void)signal;
+	exit(0);
+}
+
 void	handle_sigquit(int signal)
 {
 	(void)signal;
-	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_redisplay();
 	setup_signal_handlers();
+	printf("\n");
 }
 
 void	handle_sigpipe(int signal)
@@ -104,4 +110,14 @@ void	setup_signal_handlers_process(void)
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = handle_sigpipe;
 	sigaction(SIGCHLD, &sa, NULL);
+}
+
+void	setup_signal_handlers_child(void)
+{
+	struct	sigaction sa;
+
+	ft_bzero(&sa, sizeof(sa));
+	sa.sa_handler = handle_sigexec;
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGINT, &sa, NULL);
 }

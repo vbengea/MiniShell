@@ -110,7 +110,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "README duplicates"
+	git commit -am "Solving malloc issue with the super structure"
 	git config pull.rebase false
 	git push
 

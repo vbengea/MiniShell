@@ -6,17 +6,17 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:00:08 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 19:44:26 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:19:41 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-char	*get_history_filepath(char **env)
+char	*get_history_filepath(t_terminal *tty)
 {
 	char	*home;
 
-	home = get_env("HOME", env);
+	home = get_env("HOME", tty);
 	if (!home)
 		return (NULL);
 	return (ft_strjoin(home, HISTORY_FILE));
@@ -65,7 +65,7 @@ void	load_history_from_file(char **env, t_history *myhist)
 	int		fd;
 	size_t	len;
 
-	history_path = get_history_filepath(env);
+	history_path = get_history_filepath(tty);
 	if (!history_path)
 		return ;
 	fd = open(history_path, O_RDONLY);
@@ -95,7 +95,7 @@ void	save_history_to_file(char **env, t_history *myhist)
 	int		fd;
 	int		i;
 
-	history_path = get_history_filepath(env);
+	history_path = get_history_filepath(tty);
 	if (!history_path)
 		return ;
 	fd = open(history_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);

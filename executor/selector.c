@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 16:25:08 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 18:41:17 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 extern int SIGNAL;
 
-void	set_history_status(int status, char ***env)
+void	set_history_status(int status, t_terminal *tty)
 {
 	char	*value;
 	
 	value = ft_itoa(status);
-	if (value && env)
+	if (value && tty->env)
 	{
-		*env = set_env("?", value, *env);
+		tty->env = set_env("?", value, tty);
 		free(value);
 	}
 }
 
-void	waiter_util(t_ast_node *node, char ***env, int status)
+void	waiter_util(t_ast_node *node, int status, t_terminal *tty)
 {
 	char	*file;
 
 	if (node->parent)
 		node->parent->exit = status;
 	node->exit = status;
-	set_history_status(status, env);
+	set_history_status(status, tty);
 	if (status == 0)
 		multiple_output_redirections(node);
 	file = tmp_path(node->nid, REDIRECT_IN);
@@ -52,26 +52,23 @@ void	waiter_util(t_ast_node *node, char ***env, int status)
 	}
 }
 
-void	waiter(t_node_type type, t_ast_node *node, char ***env, int files[3], t_terminal *tty)
+void	waiter(t_ast_node *node, t_terminal *tty)
 {
 	int		status;
 
-	(void) files;
-	(void) type;
-	(void) tty;
 	status = 0;
 	setup_signal_handlers_process();
 	while (1)
 	{
 		if (waitpid(-1, &status, 0) == -1)
 		{
-			waiter_util(node, env, status);
+			waiter_util(node, status, tty);
 			break ;
 		}
 	}
 }
 
-void	parse_command(t_ast_node *node, char ***env)
+void	parse_command(t_ast_node *node, t_terminal *tty)
 {
 	int		i;
 	char	*str;
@@ -85,7 +82,7 @@ void	parse_command(t_ast_node *node, char ***env)
 		{
 			if (node->expand_flag[i] == 1)
 			{
-				str = interpolation(node->args[i++], *env);
+				str = interpolation(node->args[i++], tty);
 				args = expantion(str, args);
 				free(str);
 			}
@@ -100,10 +97,10 @@ void	parse_command(t_ast_node *node, char ***env)
 	}
 }
 
-static	void	preexecute(t_ast_node *node, char ***env)
+static	void	preexecute(t_ast_node *node, t_terminal *tty)
 {
-	parse_command(node, env);
-	detect_in_redirection(node, *env);
+	parse_command(node, tty);
+	detect_in_redirection(node, tty);
 	detect_out_redirection(node);
 }
 
@@ -131,28 +128,28 @@ static	void	postexecute(t_ast_node *node)
 	}
 }
 
-void	navigator_init(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
+void	navigator_init(t_ast_node *node, t_terminal *tty)
 {
 	if (node->left)
 	{
 		node->left->parent = node;
 		node->left->side = 0;
 		node->left->parent_type = node->type;
-		selector(node->left, env, files, tty);
+		selector(node->left, tty);
 	}
 	if (node->right)
 	{
 		node->right->parent = node;
 		node->right->side = 1;
 		node->right->parent_type = node->type;
-		selector(node->right, env, files, tty);
+		selector(node->right, tty);
 	}
 }
 
-void	navigator(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty)
+void	navigator(t_ast_node *node, int hold, t_terminal *tty)
 {
 	(void) hold;
-	navigator_init(node, env, files, tty);
+	navigator_init(node, tty);
 	if (node->type == NODE_GROUP)
 	{
 		if (node->in_fd >= 0)
@@ -166,31 +163,30 @@ void	navigator(t_ast_node *node, char ***env, int hold, int files[3], t_terminal
 			node->out_fd = -1;
 		}
 		free_redirect_ast(node, 1);
-		clear_arr_of_strs(*env);
+		clear_arr_of_strs(tty->env);
 		exit(0);
 	}
 }
 
-void	executor(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty)
+void	executor(t_ast_node *node, int hold, t_terminal *tty)
 {	
 	(void) hold;
-	(void) files;
-	(void) tty;
-	preexecute(node, env);
-	if (execute(node->args, *env) == -1)
+	setup_signal_handlers_child();
+	preexecute(node, tty);
+	if (execute(node->args, tty) == -1)
 		cleanup("Error executing command..");
 }
 
-static	void	builtin_end(t_ast_node *node, char ***env, int hold)
+static	void	builtin_end(t_ast_node *node, int hold, t_terminal *tty)
 {
-	set_history_status(0, env);
+	set_history_status(0, tty);
 	if (node->parent)
 		node->parent->exit = 0;
 	if (hold)
 		exit(1);
 }
 
-static	int		check_options(t_ast_node *node, char ***env, int hold)
+static	int		check_options(t_ast_node *node, int hold, t_terminal *tty)
 {
 	int	i;
 
@@ -208,7 +204,7 @@ static	int		check_options(t_ast_node *node, char ***env, int hold)
 			{
 				printf("%s: %s: invalid option\n", node->args[0], \
 					node->args[i]);
-				builtin_end(node, env, hold);
+				builtin_end(node, hold, tty);
 				return (0);
 			}
 		}
@@ -219,35 +215,34 @@ static	int		check_options(t_ast_node *node, char ***env, int hold)
 	return (1);
 }
 
-static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty)
+static	void	builtin(t_ast_node *node, int hold, t_terminal *tty)
 {
 	(void) tty;
-	if (check_options(node, env, hold))
+	if (check_options(node, hold, tty))
 	{
-		preexecute(node, env);
+		preexecute(node, tty);
 		if (node->args[0] == NULL)
-			(void) files;
+			(void) hold;
 		else if (ft_strncmp(node->args[0], "cd", 2) == 0)
-			cd_bi(node, env);
+			cd_bi(node, tty);
 		else if (ft_strncmp(node->args[0], "exit", 4) == 0)
-			exit_bi(node, *env);
+			exit_bi(node, tty);
 		else if (ft_strncmp(node->args[0], "pwd", 3) == 0)
 			pwd_bi(node);
 		else if (ft_strncmp(node->args[0], "env", 3) == 0)
-			env_bi(node, *env, 0);
+			env_bi(node, 0, tty);
 		else if (ft_strncmp(node->args[0], "export", 6) == 0)
-			*env = export_bi(node, *env);
+			tty->env = export_bi(node, tty);
 		else if (ft_strncmp(node->args[0], "unset", 5) == 0)
-			*env = unset_bi(node, *env);
+			tty->env = unset_bi(node, tty);
 		else if (ft_strncmp(node->args[0], "echo", 4) == 0)
 			echo_bi(node);
 		postexecute(node);
-		builtin_end(node, env, hold);
+		builtin_end(node, hold, tty);
 	}
 }
 
-void	forker(t_ast_node *node, char ***env, \
-void (*f)(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty), int files[3], t_terminal *tty)
+void	forker(t_ast_node *node, void (*f)(t_ast_node *node, int hold, t_terminal *tty), t_terminal *tty)
 {
 	int	pid;
 
@@ -255,12 +250,12 @@ void (*f)(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty
 	if (pid == -1)
 		cleanup("Error forking process");
 	if (pid == 0)
-		f(node, env, 1, files, tty);
+		f(node, 1, tty);
 	else
-		waiter(node->parent_type, node, env, files, tty);
+		waiter(node, tty);
 }
 
-void	selector_node(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
+void	selector_node(t_ast_node *node, t_terminal *tty)
 {
 	if (node->parent)
 	{
@@ -272,19 +267,19 @@ void	selector_node(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
 	if (is_builtin(node))
 	{
 		if (is_pipe_state(node))
-			forker(node, env, builtin, files, tty);
+			forker(node, builtin, tty);
 		else
-			builtin(node, env, 0, files, tty);
+			builtin(node, 0, tty);
 	}
 	else
-		forker(node, env, executor, files, tty);
+		forker(node, executor, tty);
 }
 
-void	selector_pipe(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
+void	selector_pipe(t_ast_node *node, t_terminal *tty)
 {
 	t_ast_node	*parent;
 
-	files[2] = node->nid;
+	tty->files[2] = node->nid;
 	while (node->left != NULL)
 	{
 		parent = node;
@@ -300,23 +295,21 @@ void	selector_pipe(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
 			return ;
 	}
 	SIGNAL = 3;
-	pipex(node, env, files, tty);
+	pipex(node, tty);
 }
 
-void	selector(t_ast_node *node, char ***env, int files[3], t_terminal *tty)
+void	selector(t_ast_node *node, t_terminal *tty)
 {
-	(void) env;
-	(void) files;
 	if (node->type == NODE_CMND)
-		selector_node(node, &(tty->env), tty->files, tty);
+		selector_node(node, tty);
 	else if (node->type == NODE_AND || node->type == NODE_OR)
-		navigator(node, &(tty->env), 1, tty->files, tty);
+		navigator(node, 1, tty);
 	else if (node->type == NODE_PIPE)
-		selector_pipe(node, &(tty->env), tty->files, tty);
+		selector_pipe(node, tty);
 	else if (node->type == NODE_GROUP && \
 		(!node->parent || node->parent->type != NODE_GROUP))
 	{
-		preexecute(node, &(tty->env));
-		forker(node, &(tty->env), navigator, tty->files, tty);
+		preexecute(node, tty);
+		forker(node, navigator, tty);
 	}
 }
