@@ -1,5 +1,5 @@
 
-* URGENT!!:
+* TODAY!!:
 
 	- Crear una super estructura para disminuir cantidad de parámetros.
 
@@ -7,25 +7,26 @@
 		a. env es una copia del entorno anterior
 		b. export es 
 
-	- Expandir variables de entorno en el heredoc cuando el delimitador no viene en comillas dobles. La linea que lea el get_next_line tiene que ser interpolada.
-		a. Flag en redireccion cuando el heredoc viene entre comillas dobles.
-
 	- Cuando el environment viene vacio, leer el /etc/environment.
+
+	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 
 * To implement:
 
-	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 	- Control de errores.
 
 
 * Nice to have
 
-
+	-
 
 
 * Solved issues
+
+	- Expandir variables de entorno en el heredoc cuando el delimitador no viene en comillas dobles. La linea que lea el get_next_line tiene que ser interpolada.
+		a. Flag en redireccion cuando el heredoc viene entre comillas dobles.
 
 	- Some limits.h like PATH_MAX are presenting squiggly in VS.
 

@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 13:51:57 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:19:03 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	parse_command(t_ast_node *node, char ***env)
 static	void	preexecute(t_ast_node *node, char ***env)
 {
 	parse_command(node, env);
-	detect_in_redirection(node);
+	detect_in_redirection(node, *env);
 	detect_out_redirection(node);
 }
 

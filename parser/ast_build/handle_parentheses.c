@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_parentheses.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:21:42 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/08 11:46:13 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 14:08:20 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ t_ast_node *handle_parentheses(t_token *tokens)
 		}
 
 		// Add the redirection to the NODE_GROUP's redirs list
-		add_redirection(group_node, redirect_type, otype, ft_strdup(next_after_paren->value));
+		
+		
+		// HARDCODED flag redirection for now
+		add_redirection(group_node, redirect_type, otype, ft_strdup(next_after_paren->value), 0);
 
 		// Move past the file token
 		next_after_paren = next_after_paren->next;

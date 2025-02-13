@@ -38,7 +38,7 @@ void	redlist_iter(t_redirection *lst, void (*f)(void *, int x))
 {
 	while (lst)
 	{
-		(*f)(lst->file, lst->is_quoted);
+		(*f)(lst->file, lst->is_quote);
 		if (lst->next == NULL)
 			break ;
 		lst = lst->next;

@@ -6,7 +6,7 @@
 /*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 13:59:30 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:17:16 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ char			*find_path(char *cmd, char *env);
 int				doexec(char *path, char **comm, char **arvp, int is_free);
 int				execute(char **comm, char **arvp);
 
-int				detect_in_redirection(t_ast_node *node);
+int				detect_in_redirection(t_ast_node *node, char **env);
 int				detect_out_redirection(t_ast_node *node);
 int				has_outward_redirection(t_ast_node *ast);
 int				has_inward_redirection(t_redirection *lst);
 void			multiple_output_redirections(t_ast_node *node);
-void			here_doc(t_ast_node *node, char *delimit, int do_write);
-void			pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last);
+void			here_doc(t_ast_node *node, t_redirection *lst, int do_write, char **env);
+void			pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last, char **env);
 void			pipex_redirect_out(t_ast_node *node, int fd[2], int files[3], int is_last);
 void			parse_command(t_ast_node *node, char ***env);
 
