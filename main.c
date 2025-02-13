@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 20:19:58 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:46:27 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	build_terminal(char **env, t_terminal	*tty)
 		{
 			if (tty->env[0] == NULL)
 				tty->env = set_env(ft_strdup("PATH"), handle_no_env(), tty);
-			load_history_from_file(tty);
+			load_history_from_file(tty->myhist, tty);
 			set_tty(tty);
 		}
 		else
@@ -52,7 +52,7 @@ void	build_terminal(char **env, t_terminal	*tty)
 
 static	void	destroy_terminal(t_terminal *tty)
 {
-	save_history_to_file(tty);
+	save_history_to_file(tty->myhist, tty);
 	clear_arr_of_strs(tty->env);
 	rl_clear_history();
 }
@@ -84,7 +84,7 @@ int main(int argc, char **argv, char **env)
 			free(input);
 			continue ;
 		}
-		add_to_both_histories(&tty->myhist, input);
+		add_to_both_histories(tty.myhist, input);
 		tokens = tokenize_input(input);
 		free(input);
 		t_token *tmp = tokens;

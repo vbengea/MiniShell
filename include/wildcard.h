@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 18:44:37 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/05 19:07:05 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:30:10 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WILDCARD_H
 # define WILDCARD_H
 
-# include "../include/headers.h"
-# include <dirent.h>
-# include <stdbool.h>
+# include "headers.h"
 
 t_list	*ft_wildcard(char *input);
 

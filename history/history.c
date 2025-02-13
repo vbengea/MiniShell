@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:00:08 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 20:19:41 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:25:56 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void add_to_both_histories(t_history *myhist, const char *line)
 	}
 }
 
-void	load_history_from_file(char **env, t_history *myhist)
+void	load_history_from_file(t_history *myhist, t_terminal *tty)
 {
 	char	*history_path;
 	char	*line;
@@ -89,7 +89,7 @@ void	load_history_from_file(char **env, t_history *myhist)
 	free(history_path);
 }
 
-void	save_history_to_file(char **env, t_history *myhist)
+void	save_history_to_file(t_history *myhist, t_terminal *tty)
 {
 	char	*history_path;
 	int		fd;

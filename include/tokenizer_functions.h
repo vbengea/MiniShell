@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_functions.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/09 18:10:01 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:29:53 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ t_token *create_invalid_operator_token(const char *input, int *i);
 
 
 bool	check_syntax(t_token *tokens, t_token *prev);
-
 
 
 #endif

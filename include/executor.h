@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 18:11:55 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:29:22 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 # define EXECUTOR_H
 
-# include <stdio.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <unistd.h>
-
-# include "../libft/libft.h"
-# include "./data_structure.h"
+# include "headers.h"
 
 void			waiter(t_ast_node *node, t_terminal *tty);
 void			selector(t_ast_node *node, t_terminal *tty);

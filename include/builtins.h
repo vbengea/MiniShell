@@ -6,12 +6,14 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:22:57 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 17:24:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:28:43 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
+
+# include "headers.h"
 
 int		cd_bi(t_ast_node *node, t_terminal *tty);
 void	exit_bi(t_ast_node *node, t_terminal *tty);

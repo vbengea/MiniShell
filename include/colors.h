@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:22:57 by vbengea           #+#    #+#             */
-/*   Updated: 2025/01/23 11:24:37 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:28:53 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLORS_H
 # define COLORS_H
+
+# include "headers.h"
 
 # define BLACK "\033[1;30m"
 # define RED "\033[1;31m"

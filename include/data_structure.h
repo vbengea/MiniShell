@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/13 20:21:11 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:40:27 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef DATA_STRUCTURE_H
 # define DATA_STRUCTURE_H
 
-# include "history.h"
+# include "headers.h"
+
+typedef struct s_history t_history;
+
 typedef enum e_node_type
 {
 	NODE_CMND,
@@ -94,14 +96,11 @@ typedef struct s_ast_node
 	int					has_space[200];
 }	t_ast_node;
 
-
-
 typedef struct s_terminal
 {
 	t_ast_node	*ast;
 	char		**env;
-	int			*files;
-	t_history	myhist;
+	t_history	*myhist;
 	int			files[3];
 }	t_terminal;
 

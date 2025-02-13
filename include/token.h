@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:15:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 13:25:36 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 20:29:46 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define TOKEN_H
 
 # include "headers.h"
+
 typedef enum e_token_type
 {
 	TOKEN_WORD,
