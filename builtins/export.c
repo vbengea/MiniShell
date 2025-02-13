@@ -18,10 +18,8 @@ char	**export_bi(t_ast_node *node, char **env)
 	char	*value;
 	int		len;
 	int		i;
-	int		j;
 
 	len = 0;
-	j = 0;
 	while (node->args[len])
 		len++;
 

@@ -58,6 +58,14 @@ t_terminal	*build_terminal(char **env)
 	return (tty);
 }
 
+static	void	destroy_terminal(t_terminal *tty)
+{
+	save_history_to_file(tty->env);
+	clear_arr_of_strs(tty->env);
+	rl_clear_history();
+	free(tty);
+}
+
 int main(int argc, char **argv, char **env)
 {
 	char 		*input;
@@ -109,10 +117,6 @@ int main(int argc, char **argv, char **env)
 			free_redirect_ast(tty->ast, 0);
 		}
 	}
-	save_history_to_file(tty->env);
-	clear_arr_of_strs(tty->env);
-	rl_clear_history();
-	free_token(tokens);
-	free(tty);
+	destroy_terminal(tty);
 	return (0);
 }

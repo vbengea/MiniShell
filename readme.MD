@@ -1,7 +1,6 @@
 
 * TODAY!!:
 
-	- Crear una super estructura para disminuir cantidad de parámetros.
 
 	- Gestionar declaracion de variables en los tres niveles: comando, shell, shell-subshell.
 		a. env es una copia del entorno anterior
@@ -24,6 +23,8 @@
 
 
 * Solved issues
+
+	- Crear una super estructura para disminuir cantidad de parámetros.
 
 	- Expandir variables de entorno en el heredoc cuando el delimitador no viene en comillas dobles. La linea que lea el get_next_line tiene que ser interpolada.
 		a. Flag en redireccion cuando el heredoc viene entre comillas dobles.
