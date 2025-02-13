@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 18:23:18 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 19:49:28 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,21 @@ void	assign_ids(t_ast_node *node, int *id)
 	assign_ids(node->right, id);
 }
 
-t_terminal	*build_terminal(char **env)
+void	build_terminal(char **env, t_terminal	*tty)
 {
-	t_terminal	*tty;
-	
-	tty = malloc(sizeof(t_terminal));
 	if (tty)
 	{
-		tty->files = malloc(sizeof(int *) * 3);
-		if (tty->files)
+		tty->files[0] = STDIN_FILENO;
+		tty->files[1] = STDOUT_FILENO;
+		tty->files[2] = 0;
+		tty->ast = NULL;
+		tty->env = copy_arr_of_strs(env, 0, 0);
+		if (tty->env)
 		{
-			tty->files[0] = STDIN_FILENO;
-			tty->files[1] = STDOUT_FILENO;
-			tty->files[2] = 0;
-			tty->ast = NULL;
-			tty->env = copy_arr_of_strs(env, 0, 0);
-			if (tty->env)
-			{
-				if (tty->env[0] == NULL)
-					tty->env = set_env(ft_strdup("PATH"), handle_no_env(), tty);
-				load_history_from_file(tty);
-				set_tty(tty);
-			}
-			else
-			{
-				perror("Error creating terminal");
-				exit(1);
-			}
+			if (tty->env[0] == NULL)
+				tty->env = set_env(ft_strdup("PATH"), handle_no_env(), tty);
+			load_history_from_file(tty);
+			set_tty(tty);
 		}
 		else
 		{
@@ -60,7 +48,6 @@ t_terminal	*build_terminal(char **env)
 		perror("Error creating terminal");
 		exit(1);
 	}
-	return (tty);
 }
 
 static	void	destroy_terminal(t_terminal *tty)
@@ -68,7 +55,6 @@ static	void	destroy_terminal(t_terminal *tty)
 	save_history_to_file(tty);
 	clear_arr_of_strs(tty->env);
 	rl_clear_history();
-	free(tty);
 }
 
 int main(int argc, char **argv, char **env)
@@ -76,7 +62,7 @@ int main(int argc, char **argv, char **env)
 	char 		*input;
 	t_token		*tokens;
 	int			id;
-	t_terminal	*tty;
+	t_terminal	tty;
 
 	(void) argv;
 	if (argc != 1)
@@ -84,7 +70,7 @@ int main(int argc, char **argv, char **env)
 		printf("Incorrect number of arguments.\n");
 		exit(1);
 	}
-	tty = build_terminal(env);
+	build_terminal(env, &tty);
 	while (true)
 	{
 		input = readline(GREEN "minishell$ " RESET);
@@ -108,20 +94,20 @@ int main(int argc, char **argv, char **env)
 			// or maybe in reverse order. If true, run the program
 			continue ;
 		}
-		tty->ast = build_ast(tokens); 
+		tty.ast = build_ast(tokens); 
 		//free_token(tokens);
-		if (tty->ast)
+		if (tty.ast)
 		{
 			id = 0;
-			assign_ids(tty->ast, &id);
-			ast_printer(tty->ast, 0);
-			tty->files[0] = STDIN_FILENO;
-			tty->files[1] = STDOUT_FILENO;
-			tty->files[2] = 0;
-			selector(tty->ast, tty);
-			free_redirect_ast(tty->ast, 0);
+			assign_ids(tty.ast, &id);
+			ast_printer(tty.ast, 0);
+			tty.files[0] = STDIN_FILENO;
+			tty.files[1] = STDOUT_FILENO;
+			tty.files[2] = 0;
+			selector(tty.ast, &tty);
+			free_redirect_ast(tty.ast, 0);
 		}
 	}
-	destroy_terminal(tty);
+	destroy_terminal(&tty);
 	return (0);
 }

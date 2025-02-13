@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/13 14:04:42 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:29:29 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_terminal
 {
 	t_ast_node	*ast;
 	char		**env;
-	int			*files;
+	int			files[3];
 }	t_terminal;
 
 #endif
