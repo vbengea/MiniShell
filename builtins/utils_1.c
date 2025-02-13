@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/13 13:39:57 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:18:41 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**set_env(char *key, char *value, char **env)
 	var = key;
 	var = ft_strjoin(var, "=");
 	if (!value)
-		value = "";
+		value = ft_strdup("");
 	while (var && env[i])
 	{
 		if (var && ft_strncmp(env[i], var, ft_strlen(var)) == 0)
@@ -79,9 +79,9 @@ char	**set_env(char *key, char *value, char **env)
 				env = add_arr_of_strs(env, str);
 				free(str);
 			}
-			free(var);
 		}
 	}
+	free(var);
 	return (env);
 }
 

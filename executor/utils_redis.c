@@ -60,13 +60,6 @@ t_redirection	*ft_lstred(t_redirection *node)
 	return (lst);
 }
 
-void	reverse_redirections(t_redirection *lst, t_redirection **rev)
-{
-	redlist_add(rev, ft_lstred(lst));
-	if(lst->next)
-		reverse_redirections(lst->next, rev);
-}
-
 void	print_redirs(void *content, int flag)
 {
 	char *str;

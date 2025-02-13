@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 16:07:39 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:25:08 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,8 @@ static	int		check_options(t_ast_node *node, char ***env, int hold)
 	int	i;
 
 	i = 1;
+	if (node->args[0] == NULL)
+		return (1);
 	while (node->args[i])
 	{
 		if (node->args[i][0] == '-')
@@ -219,13 +221,12 @@ static	int		check_options(t_ast_node *node, char ***env, int hold)
 
 static	void	builtin(t_ast_node *node, char ***env, int hold, int files[3], t_terminal *tty)
 {
-	(void) files;
 	(void) tty;
 	if (check_options(node, env, hold))
 	{
 		preexecute(node, env);
 		if (node->args[0] == NULL)
-			builtin_end(node, env, hold);
+			(void) files;
 		else if (ft_strncmp(node->args[0], "cd", 2) == 0)
 			cd_bi(node, env);
 		else if (ft_strncmp(node->args[0], "exit", 4) == 0)

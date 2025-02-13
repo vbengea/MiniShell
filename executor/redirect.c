@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 15:50:39 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:33:08 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int		detect_in_redirection(t_ast_node *node, char **env)
 	{
 		bool			is_first_time;
 		t_redirection	*lst = node->redirs;
-		t_redirection	*rev = NULL;
-		char 			**arr = malloc(sizeof(char *) * 2);
+		char 			**arr;
 		char			*file;
 		int				tmp;
 		char			*content;
@@ -64,8 +63,6 @@ int		detect_in_redirection(t_ast_node *node, char **env)
 		arr = malloc(sizeof(char *) * 2);
 		arr[0] = NULL;
 		is_first_time = true;
-		reverse_redirections(lst, &rev);
-		// lst = rev;
 		while (lst)
 		{
 			if (lst->type == REDIRECT_IN)

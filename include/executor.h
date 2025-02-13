@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 15:49:09 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:30:39 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_ast_node		*create_node_command(char *str, int *index);
 t_ast_node		*create_structure(char *context, t_mini_token token, int *index);
 
 t_redirection	*ft_lstred(t_redirection *node);
-void			reverse_redirections(t_redirection *lst, t_redirection **rev);
 int				has_group_redirection(t_ast_node *ast, int is_infile);
 char			*tmp_path(int nid, t_redirect_type type);
 

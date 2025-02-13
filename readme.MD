@@ -1,7 +1,6 @@
 
 * TODAY!!:
 
-
 	- Gestionar declaracion de variables en los tres niveles: comando, shell, shell-subshell.
 		a. env es una copia del entorno anterior
 		b. export es 
@@ -13,16 +12,19 @@
 
 * To implement:
 
-
 	- Control de errores.
+
+	- Memory Leaks. Context errors. File descriptor leaks.
 
 
 * Nice to have
 
-	-
+	- 
 
 
 * Solved issues
+
+	- Con un comando incompleto como "<< EOF" la ejecucion da segmentation fault.
 
 	- Crear una super estructura para disminuir cantidad de parámetros.
 

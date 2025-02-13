@@ -109,7 +109,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Fixing pipe error and segmentation fault"
+	git commit -am "Some memory leaks"
 	git config pull.rebase false
 	git push
 
