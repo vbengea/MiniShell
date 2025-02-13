@@ -5,8 +5,6 @@
 
 	- Gestionar declaracion de variables de entorno con env
 
-	- Gestionar cuando hay doble HEREDOC sin comando. LLega un nodo NODE_CMND sin argumentos y hace segfault
-
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 	- Crear una super estructura para disminuir cantidad de parámetros.
@@ -19,6 +17,8 @@
 
 
 * Solved issues
+
+	- Gestionar cuando hay doble HEREDOC sin comando. LLega un nodo NODE_CMND sin argumentos y hace segfault
 
 	- Verificar comportamiendo cuando se borra una carpeta anterior a la actual.
 		Ejemplo: > working directory /home/user/folder1/folder2/folder3
