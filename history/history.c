@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:00:08 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/10 20:12:57 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 19:44:26 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,48 @@ char	*get_history_filepath(char **env)
 	return (ft_strjoin(home, HISTORY_FILE));
 }
 
-void	load_history_from_file(char **env)
+void	init_local_history(t_history *myhist)
+{
+	int	i;
+
+	myhist->count = 0;
+	i = 0;
+	while (i < MAX_HISTORY_LINES)
+	{
+		myhist->commands[i] = NULL;
+		i++;
+	}
+}
+
+void add_to_both_histories(t_history *myhist, const char *line)
+{
+	int	i;
+
+	add_history(line);
+	if (myhist->count < MAX_HISTORY_LINES)
+	{
+		myhist->commands[myhist->count] = ft_strdup(line);
+		myhist->count++;
+	}
+	else
+	{
+		free(myhist->commands[0]);
+		i = 1;
+		while (i < MAX_HISTORY_LINES)
+		{
+			myhist->commands[i - 1] = myhist->commands[i];
+			i++;
+		}
+		myhist->commands[MAX_HISTORY_LINES - 1] = ft_strdup(line);
+	}
+}
+
+void	load_history_from_file(char **env, t_history *myhist)
 {
 	char	*history_path;
 	char	*line;
 	int		fd;
 	size_t	len;
-	int		count;
 
 	history_path = get_history_filepath(env);
 	if (!history_path)
@@ -39,29 +74,26 @@ void	load_history_from_file(char **env)
 		free(history_path);
 		return ;
 	}
-	count = 0;
+	myhist->count = 0;
 	line = get_next_line(fd);
-	while (line && count < MAX_HISTORY_LINES)
+	while (line && myhist->count < MAX_HISTORY_LINES)
 	{
 		len = ft_strlen(line);
 		if (len > 0 && line[len - 1] == '\n')
 			line[len - 1] = '\0';
-		add_history(line);
+		add_to_both_histories(myhist, line);
 		free(line);
 		line = get_next_line(fd);
-		count++;
 	}
 	close(fd);
 	free(history_path);
 }
 
-void	save_history_to_file(char **env)
+void	save_history_to_file(char **env, t_history *myhist)
 {
-	char		*history_path;
-	int			fd;
-	HIST_ENTRY	**history;
-	int			i;
-	int			start;
+	char	*history_path;
+	int		fd;
+	int		i;
 
 	history_path = get_history_filepath(env);
 	if (!history_path)
@@ -72,23 +104,16 @@ void	save_history_to_file(char **env)
 		free(history_path);
 		return ;
 	}
-	history = history_list();
-	if (history)
+	i = 0;
+	while (i < myhist->count)
 	{
-		i = 0;
-		while (history[i])
-			i++;
-
-		if (i > MAX_HISTORY_LINES)
-			start = i - MAX_HISTORY_LINES;
-		else
-			start = 0;
-		while (start < i)
+		if (myhist->commands[i])
 		{
-			ft_putstr_fd(history[start]->line, fd);
+			ft_putstr_fd(myhist->commands[i], fd);
 			ft_putchar_fd('\n', fd);
-			start++;
+			free (myhist->commands[i]);
 		}
+		i++;
 	}
 	close(fd);
 	free(history_path);
