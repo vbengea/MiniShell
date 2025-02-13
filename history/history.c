@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:00:08 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/10 20:12:57 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/13 18:16:25 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-char	*get_history_filepath(char **env)
+char	*get_history_filepath(t_terminal *tty)
 {
 	char	*home;
 
-	home = get_env("HOME", env);
+	home = get_env("HOME", tty);
 	if (!home)
 		return (NULL);
 	return (ft_strjoin(home, HISTORY_FILE));
 }
 
-void	load_history_from_file(char **env)
+void	load_history_from_file(t_terminal *tty)
 {
 	char	*history_path;
 	char	*line;
@@ -30,7 +30,7 @@ void	load_history_from_file(char **env)
 	size_t	len;
 	int		count;
 
-	history_path = get_history_filepath(env);
+	history_path = get_history_filepath(tty);
 	if (!history_path)
 		return ;
 	fd = open(history_path, O_RDONLY);
@@ -55,7 +55,7 @@ void	load_history_from_file(char **env)
 	free(history_path);
 }
 
-void	save_history_to_file(char **env)
+void	save_history_to_file(t_terminal *tty)
 {
 	char		*history_path;
 	int			fd;
@@ -63,7 +63,7 @@ void	save_history_to_file(char **env)
 	int			i;
 	int			start;
 
-	history_path = get_history_filepath(env);
+	history_path = get_history_filepath(tty);
 	if (!history_path)
 		return ;
 	fd = open(history_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);

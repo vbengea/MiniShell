@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 16:33:08 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 17:54:12 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	detect_out_redirection(t_ast_node *node)
 	return (0);
 }
 
-int		detect_in_redirection(t_ast_node *node, char **env)
+int		detect_in_redirection(t_ast_node *node, t_terminal *tty)
 {
 	if (has_inward_redirection(node->redirs))
 	{
@@ -73,7 +73,7 @@ int		detect_in_redirection(t_ast_node *node, char **env)
 			}
 			else if (lst->type == REDIRECT_HEREDOC)
 			{
-				here_doc(node, lst, 1, env);
+				here_doc(node, lst, 1, tty);
 				if (is_first_time)
 				{
 					file = tmp_path(node->nid, REDIRECT_HEREDOC);
@@ -303,7 +303,7 @@ char	*tmp_path(int nid, t_redirect_type type)
 	return (file);
 }
 
-void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, char **env)
+void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, t_terminal *tty)
 {
 	char	*str;
 	char	*file;
@@ -326,7 +326,7 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, char **env)
 			{
 				if (lst->is_quote)
 				{
-					tmp = interpolation(str, env);
+					tmp = interpolation(str, tty);
 					if  (tmp)
 					{
 						write(fd, tmp, ft_strlen(tmp));
@@ -345,18 +345,17 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, char **env)
 	}
 }
 
-void	pipex_redirect_in(t_ast_node *node, int fd[2], int files[3], int is_last, char **env, t_terminal *tty)
+void	pipex_redirect_in(t_ast_node *node, int fd[2], int is_last, t_terminal *tty)
 {
 	(void) is_last;
 	(void) fd;
-	(void) files;
-	if (!detect_in_redirection(node, env) && tty->files[0] != STDIN_FILENO && dup2(tty->files[0], STDIN_FILENO) == -1)
+	if (!detect_in_redirection(node, tty) && tty->files[0] != STDIN_FILENO && dup2(tty->files[0], STDIN_FILENO) == -1)
 		perror("(1) Error redirecting");
 }
 
-void	pipex_redirect_out(t_ast_node *node, int fd[2], int files[3], int is_last)
+void	pipex_redirect_out(t_ast_node *node, int fd[2], int is_last, t_terminal *tty)
 {
-	(void) files;
+	(void) tty;
 	if (detect_out_redirection(node))
 		close(fd[1]);
 	else if (is_last)

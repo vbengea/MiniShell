@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/13 11:26:26 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:13:40 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static	int	is_identifier(char c)
 		return (0);
 }
 
-char	*interpolate(char *str, char **env, int *i)
+char	*interpolate(char *str, int *i, t_terminal *tty)
 {
 	char	*cmp;
 	char	*s;
@@ -39,7 +39,7 @@ char	*interpolate(char *str, char **env, int *i)
 				cmp[*i] = str[*i];
 				(*i)++;
 			}
-			s = get_env((cmp + 1), env);
+			s = get_env((cmp + 1), tty);
 			if (s)
 				r = ft_stradd(r, s);
 		}
@@ -48,7 +48,7 @@ char	*interpolate(char *str, char **env, int *i)
 	return (r);
 }
 
-char	*interpolation(char *words, char **env)
+char	*interpolation(char *words, t_terminal *tty)
 {
 	int		j;
 	int		i;
@@ -63,7 +63,7 @@ char	*interpolation(char *words, char **env)
 		{
 			if (words[j] == '$')
 			{
-				inter = interpolate((words + j), env, &i);
+				inter = interpolate((words + j), &i, tty);
 				if (inter)
 				{
 					if (j == 0 && *inter)

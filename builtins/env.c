@@ -6,19 +6,19 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/11 14:56:43 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 18:03:51 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-static	void	sort_env(t_ast_node *node, char **env)
+static	void	sort_env(t_ast_node *node, t_terminal *tty)
 {
 	int			i;
 	char		*str;
 	char		**p;
 
-	p = copy_arr_of_strs(env, 0, 0);
+	p = copy_arr_of_strs(tty->env, 0, 0);
 	if (p)
 	{
 		sort_arr_of_strs(p, 1);
@@ -38,21 +38,21 @@ static	void	sort_env(t_ast_node *node, char **env)
 	}
 }
 
-void	env_bi(t_ast_node *node, char **env, int sorted)
+void	env_bi(t_ast_node *node, int sorted, t_terminal *tty)
 {
 	int			i;
 
 	if (sorted)
-		sort_env(node, env);
+		sort_env(node, tty);
 	else
 	{
 		i = 0;
-		while (env && env[i])
+		while (tty->env && tty->env[i])
 		{
 			if (node->out_fd < 0)
-				printf("%s\n", env[i]);
+				printf("%s\n", tty->env[i]);
 			else
-				ft_putstrnl_fd(env[i], node->out_fd);
+				ft_putstrnl_fd(tty->env[i], node->out_fd);
 			i++;
 		}
 	}

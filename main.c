@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 16:11:55 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 18:17:06 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ t_terminal	*build_terminal(char **env)
 				if (tty->env[0] == NULL)
 					tty->env = set_env(ft_strdup("PATH"), \
 						ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:./bin"), \
-							tty->env);
-				load_history_from_file(tty->env);
+							tty);
+				load_history_from_file(tty);
 				set_tty(tty);
 			}
 			else
@@ -67,7 +67,7 @@ t_terminal	*build_terminal(char **env)
 
 static	void	destroy_terminal(t_terminal *tty)
 {
-	save_history_to_file(tty->env);
+	save_history_to_file(tty);
 	clear_arr_of_strs(tty->env);
 	rl_clear_history();
 	free(tty);
@@ -120,7 +120,7 @@ int main(int argc, char **argv, char **env)
 			tty->files[0] = STDIN_FILENO;
 			tty->files[1] = STDOUT_FILENO;
 			tty->files[2] = 0;
-			selector(tty->ast, &(tty->env), tty->files, tty);
+			selector(tty->ast, tty);
 			free_redirect_ast(tty->ast, 0);
 		}
 	}

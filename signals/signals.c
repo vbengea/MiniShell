@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/13 15:44:25 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 17:21:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	cpshell(t_terminal *tty)
 			args = ft_split(cmd, ' ');
 			tty->ast = create_ast_node(NODE_CMND, args);
 			if (tty->ast)
-				selector(tty->ast, &(tty->env), NULL, tty);
+				selector(tty->ast, tty);
 			free(cmd);
 			free_redirect_ast(tty->ast, 0);
 		}

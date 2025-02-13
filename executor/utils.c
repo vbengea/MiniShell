@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/13 09:01:37 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:46:51 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void	cleanup(char *err)
 	exit(1);
 }
 
-int	is_last(t_ast_node *node, int files[3])
+int	is_last(t_ast_node *node, t_terminal *tty)
 {
-	(void) files;
+	(void) tty;
 	node = node->parent;
 	while (node)
 	{

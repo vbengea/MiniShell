@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   headers.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 13:04:44 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:02:00 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@
 # include <readline/history.h>
 # include <termios.h>
 # include <limits.h>
-// # include <linux/limits.h> TEMPORARILY DISABLED BECAUSE OF MAC
+# include <linux/limits.h>
 
 #endif

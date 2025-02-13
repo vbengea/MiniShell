@@ -1,6 +1,10 @@
 
 * TODAY!!:
 
+	- Verificar CTRL-C mientras se ejecuta HEREDOC.
+
+	- Implementar 
+
 	- Gestionar declaracion de variables en los tres niveles: comando, shell, shell-subshell.
 		a. env es una copia del entorno anterior
 		b. export es 
