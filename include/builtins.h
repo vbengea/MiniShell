@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:22:57 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/11 18:20:00 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 11:27:42 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ char	**set_env(char *var, char *value, char **env);
 char	*interpolation(char *str, char **env);
 char	**expantion(char *str, char **args);
 void	check_shlvl(char ***env);
+char	*interpolate(char *str, char **env, int *i);
 
 #endif

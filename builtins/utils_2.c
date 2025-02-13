@@ -3,21 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/11 18:43:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 11:26:26 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-static	char	*interpolate(char *str, char **env)
+static	int	is_identifier(char c)
+{
+	if (c && c != 39 && (ft_isalnum(c) || c == '_'))
+		return (1);
+	else
+		return (0);
+}
+
+char	*interpolate(char *str, char **env, int *i)
 {
 	char	*cmp;
 	char	*s;
 	char	*r;
-	int		i;
 
 	r = NULL;
 	cmp = ft_calloc(1, ft_strlen(str) + 1);
@@ -26,11 +33,11 @@ static	char	*interpolate(char *str, char **env)
 		r = ft_strdup("");
 		if (r)
 		{
-			i = 0;
-			while (str[i] && str[i] != 39 && str[i] != ' ')
+			*i = 1;
+			while (is_identifier(str[*i]))
 			{
-				cmp[i] = str[i];
-				i++;
+				cmp[*i] = str[*i];
+				(*i)++;
 			}
 			s = get_env((cmp + 1), env);
 			if (s)
@@ -44,6 +51,7 @@ static	char	*interpolate(char *str, char **env)
 char	*interpolation(char *words, char **env)
 {
 	int		j;
+	int		i;
 	char	*inter;
 	char	*parsed_word;
 
@@ -55,7 +63,7 @@ char	*interpolation(char *words, char **env)
 		{
 			if (words[j] == '$')
 			{
-				inter = interpolate((words + j), env);
+				inter = interpolate((words + j), env, &i);
 				if (inter)
 				{
 					if (j == 0 && *inter)
@@ -65,8 +73,7 @@ char	*interpolation(char *words, char **env)
 					}
 					else
 						parsed_word = ft_stradd(parsed_word, inter);
-					while (words[j] && words[j] != 39 && words[j] != ' ')
-						j++;
+					j += i;
 					free(inter);
 					continue ;
 				}

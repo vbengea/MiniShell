@@ -5,10 +5,6 @@
 
 	- Expandir variables de entorno en el heredoc cuando el delimitador no viene en comillas dobles. La linea que lea el get_next_line tiene que ser interpolada.
 
-	- 
-
-
-
 
 * To implement:
 
@@ -29,8 +25,6 @@
 
 
 * Solved issues
-
-	- Gestionar entornos diferentes para export y env.
 
 	- Gestionar cuando hay doble HEREDOC sin comando. LLega un nodo NODE_CMND sin argumentos y hace segfault
 
@@ -349,3 +343,4 @@ n running in a subshell, the child becomes the parent so it must replicate the s
 	- Cuando ejectumos "ls -l | cat -e | cat -e | cat -e" el resultado es el correcto pero se imprimen unos caracteres extra en la línea del prompt.
 
 	- El comando "(cd / && ls -l) && ls -l" realiza el cambio del directorio pero el cambio se ve desde fuera del paréntesis, lo que significa que o no se está ejecutando en una subshell o ambos se ejecutan en el mismo nivel de proceso.
+J

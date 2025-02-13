@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_command_node.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:43:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/11 21:17:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/13 12:12:11 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,31 +111,17 @@ int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 	current = tokens;
 	while (current)
 	{
-		if (current->type == TOKEN_ENV_VAR)
-		{
-			// node->expand_flag[i] = 1;
-			node->env_declare = true;
-		}
-		if (current->has_env == true)
-		{
-			node->expand_flag[i] = 1;
-			node->has_env = true;
-		}
-		if (current->has_space)
-		{
-			node->has_space[i] = 1;
-			//0 si no es espacio
-			//1 si es espacio
-		}
 		if (current->type == TOKEN_WORD && current->value && current->value[0] != '\0')
-		{
-			// to implement
-			// set_env_flag(current)
+		{			
 			cmd_args[i] = ft_strdup(current->value);
 			if (ft_strcmp(current->value, "export") == 0)
 				prev_export = true;
 			else
 				prev_export = false;
+			if (current->type == TOKEN_ENV_VAR || current->has_env == true)
+				node->expand_flag[i] = 1;
+			if (current->has_space)
+				node->has_space[i] = 1;
 			i++;
 		}
 		else if (current->type == TOKEN_ENV_VAR && current->value && current->value[0] != '\0')
@@ -149,6 +135,9 @@ int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 			int j = 0;
 			while (env_tokens[j])
 			{
+				node->expand_flag[i] = 1;
+				if (current->has_space)
+					node->has_space[i] = 1;
 				cmd_args[i++] = ft_strdup(env_tokens[j]);
 				j++;
 			}
