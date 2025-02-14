@@ -21,7 +21,8 @@ HISTORY_DIR		:=  history
 INCLUDE			:= 	./include/headers.h
 
 SRC				:= 	main.c\
-					$(EXEC_DIR)/utils.c \
+					$(EXEC_DIR)/utils_1.c \
+					$(EXEC_DIR)/utils_2.c \
 					$(EXEC_DIR)/utils_redis.c \
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
@@ -110,7 +111,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Organizing pending itesm"
+	git commit -am "Norm utils_*.c"
 	git config pull.rebase false
 	git push
 

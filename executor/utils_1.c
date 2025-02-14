@@ -1,22 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/13 17:46:51 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 22:50:35 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-void	free_redirect_ast(t_ast_node *ast, int find_root)
+void	free_redirections(t_redirection *lst)
 {
-	t_redirection	*lst;
 	t_redirection	*p;
 
+	while (lst)
+	{
+		if (lst->file)
+			free(lst->file);
+		p = lst;
+		if (lst->next)
+			lst = lst->next;
+		else
+			lst = NULL;
+		free(p);
+	}
+}
+
+void	free_redirect_ast(t_ast_node *ast, int find_root)
+{
 	if (find_root)
 		while (ast->parent)
 			ast = ast->parent;
@@ -29,20 +43,7 @@ void	free_redirect_ast(t_ast_node *ast, int find_root)
 		if (ast->args)
 			clear_arr_of_strs(ast->args);
 		if (ast->redirs)
-		{
-			lst = ast->redirs;
-			while (lst)
-			{
-				if (lst->file)
-					free(lst->file);
-				p = lst;
-				if (lst->next)
-					lst = lst->next;
-				else
-					lst = NULL;
-				free(p);
-			}
-		}
+			free_redirections(ast->redirs);
 		free(ast);
 	}
 }
@@ -59,35 +60,36 @@ int	is_last(t_ast_node *node, t_terminal *tty)
 	node = node->parent;
 	while (node)
 	{
-		if(node->type == NODE_PIPE && node->discovered == 0)
+		if (node->type == NODE_PIPE && node->discovered == 0)
 			return (0);
 		node = node->parent;
 	}
 	return (1);
 }
 
-int    is_builtin(t_ast_node *node)
+int	is_builtin(t_ast_node *node)
 {
-	char	*b[8] = { "cd", "echo", "env", "exit", "export", "pwd", "unset", NULL };
-	int		i = 0;
+	char	**b;
+	int		i;
+	int		r;
 
-	if (node->args[0] == NULL)
-		return (1);
-	if (node->type == NODE_CMND && node->args)
+	r = 0;
+	b = ft_split("cd echo env exit export pwd unset", ' ');
+	if (b)
 	{
-		while (b[i])
+		if (node->args[0] == NULL)
+			r = 1;
+		if (node->type == NODE_CMND && node->args)
 		{
-			if (ft_cmpexact(node->args[0], b[i]))
-				return (1);
-			i++;
+			i = 0;
+			while (r == 0 && b[i])
+			{
+				if (ft_cmpexact(node->args[0], b[i]))
+					r = 1;
+				i++;
+			}
 		}
+		clear_arr_of_strs(b);
 	}
-	return (0);
-}
-
-int    is_pipe_state(t_ast_node *node)
-{
-	if (node->parent_type == NODE_PIPE)
-		return (1);
-	return (0);
+	return (r);
 }

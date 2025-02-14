@@ -1,7 +1,6 @@
 
 * TODAY!!:
 
-
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 
