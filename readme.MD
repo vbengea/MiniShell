@@ -1,7 +1,6 @@
 
 * TODAY!!:
 
-	- El primer argumento de echo tiene un espacio cuando se interpolan variables.
 
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
@@ -24,6 +23,8 @@
 
 
 * Solved issues
+
+	- El primer argumento de echo tiene un espacio cuando se interpolan variables.
 
 	- execve can execute binaries in the same directory if the first argument is just the name of the binary.
 
