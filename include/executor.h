@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 20:29:22 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 01:00:52 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 
 void			waiter(t_ast_node *node, t_terminal *tty);
 void			selector(t_ast_node *node, t_terminal *tty);
-void			forker(t_ast_node *node, void (*f)(t_ast_node *node, int hold, t_terminal *tty), t_terminal *tty);
+void			forker(t_ast_node *node, void (*f)(t_ast_node *node, \
+				int hold, t_terminal *tty), t_terminal *tty);
 void			navigator(t_ast_node *node, int hold, t_terminal *tty);
 void			executor(t_ast_node *node, int hold, t_terminal *tty);
 void			pipex(t_ast_node *node, t_terminal *tty);
@@ -33,9 +34,12 @@ int				detect_out_redirection(t_ast_node *node);
 int				has_outward_redirection(t_ast_node *ast);
 int				has_inward_redirection(t_redirection *lst);
 void			multiple_output_redirections(t_ast_node *node);
-void			here_doc(t_ast_node *node, t_redirection *lst, int do_write, t_terminal *tty);
-void			pipex_redirect_in(t_ast_node *node, int fd[2], int is_last, t_terminal *tty);
-void			pipex_redirect_out(t_ast_node *node, int fd[2], int is_last, t_terminal *tty);
+void			here_doc(t_ast_node *node, t_redirection *lst, \
+				int do_write, t_terminal *tty);
+void			pipex_redirect_in(t_ast_node *node, int fd[2], \
+				int is_last, t_terminal *tty);
+void			pipex_redirect_out(t_ast_node *node, int fd[2], \
+				int is_last, t_terminal *tty);
 void			parse_command(t_ast_node *node, t_terminal *tty);
 
 void			cleanup(char *err);
@@ -61,7 +65,8 @@ char			*read_files_content(char **files);
 char			*read_fd_content(int tmp);
 
 t_ast_node		*create_node_command(char *str, int *index);
-t_ast_node		*create_structure(char *context, t_mini_token token, int *index);
+t_ast_node		*create_structure(char *context, t_mini_token token, \
+				int *index);
 
 t_redirection	*ft_lstred(t_redirection *node);
 int				has_group_redirection(t_ast_node *ast, int is_infile);

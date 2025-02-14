@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2025/02/13 21:12:58 by vbengea          ###   ########.fr       */
+/*   Created: 2025/02/14 00:59:17 by jflores           #+#    #+#             */
+/*   Updated: 2025/02/14 00:59:49 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DATA_STRUCTURE_H
+
 # define DATA_STRUCTURE_H
 
 # include "history.h"
+
 typedef struct s_history
 {
 	char	*commands[MAX_HISTORY_LINES];
