@@ -12,12 +12,12 @@
 
 #include "../include/headers.h"
 
-char	*get_env(t_ast_node *node, char *key, t_terminal *tty)
+char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
 {
 	int		i;
 
 	(void) node;
-	i = env_lookup(key, tty);
+	i = env_lookup(key, arg_index, tty);
 	if (i >= 0)
 		return (tty->env[i] + ft_strlen(key) + 1);
 	return (NULL);
@@ -27,25 +27,31 @@ static	void	print_env(t_ast_node *node, int sorted, char **p)
 {
 	int			i;
 	char		*str;
+	char		**key_value;
 
 	i = 0;
 	while (p && p[i])
 	{
-		if (node->out_fd < 0)
+		key_value = ft_split(p[i], '=');
+		if (key_value)
 		{
-			if (sorted)
-				printf("declare -x %s\n", p[i]);
-			else
-				printf("%s\n", p[i]);
+			if (node->out_fd < 0)
+			{
+				if (sorted)
+					printf("declare -x %s\n", p[i]);
+				else if (key_value[1])
+					printf("%s\n", p[i]);
+			}
+			else if (sorted)
+			{
+				str = ft_strjoin("declare -x ", p[i]);
+				ft_putstrnl_fd(str, node->out_fd);
+				free(str);
+			}
+			else if (key_value[1])
+				ft_putstrnl_fd(p[i], node->out_fd);
+			clear_arr_of_strs(key_value);
 		}
-		else if (sorted)
-		{
-			str = ft_strjoin("declare -x ", p[i]);
-			ft_putstrnl_fd(str, node->out_fd);
-			free(str);
-		}
-		else
-			ft_putstrnl_fd(p[i], node->out_fd);
 		i++;
 	}
 }

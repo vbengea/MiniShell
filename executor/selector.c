@@ -82,15 +82,16 @@ void	parse_command(t_ast_node *node, t_terminal *tty)
 		{
 			if (node->expand_flag[i] == 1)
 			{
-				str = interpolation(node->args[i++], tty);
+				str = interpolation(node->args[i], i, tty);
 				args = expantion(str, args);
 				free(str);
 			}
 			else
 			{
-				str = node->args[i++];
+				str = node->args[i];
 				args = expantion(str, args);
 			}
+			i++;
 		}
 		clear_arr_of_strs(node->args);
 		node->args = args;

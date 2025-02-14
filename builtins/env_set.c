@@ -12,11 +12,12 @@
 
 #include "../include/headers.h"
 
-int	env_lookup(char *key, t_terminal *tty)
+int	env_lookup(char *key, int arg_index, t_terminal *tty)
 {
 	int		i;
 	char	*var;
 
+	(void) arg_index;
 	i = 0;
 	var = key;
 	var = ft_strjoin(var, "=");
@@ -59,15 +60,17 @@ char	*get_entry(char *key, char *value)
 	return (str);
 }
 
-void	append_entry(char *entry, t_terminal *tty)
+static	void	append_entry(char *entry, int arg_index, t_terminal *tty)
 {
+	(void) arg_index;
 	tty->env = add_arr_of_strs(tty->env, entry);
 }
 
-void	update_entry(char *entry, int i, t_terminal *tty)
+static	void	update_entry(char *entry, int arg_index, int i, t_terminal *tty)
 {
 	int	len;
 
+	(void) arg_index;
 	free(tty->env[i]);
 	len = ft_strlen(entry);
 	tty->env[i] = malloc(len + 1);
@@ -84,16 +87,26 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 {
 	char	*str;
 	int		i;
+	int		arg_index;
 
-	(void) node;
+	if (node != NULL)
+	{
+		arg_index = 0;
+		while (node->args[arg_index])
+		{
+			if (ft_cmpexact(node->args[arg_index], key))
+				printf("arg_index: %d\n", arg_index);
+			arg_index++;
+		}
+	}
 	str = get_entry(key, value);
 	if (str)
 	{
-		i = env_lookup(key, tty);
+		i = env_lookup(key, arg_index, tty);
 		if (i < 0)
-			append_entry(str, tty);
+			append_entry(str, arg_index, tty);
 		else
-			update_entry(str, i, tty);
+			update_entry(str, arg_index, i, tty);
 		free(str);
 	}
 }

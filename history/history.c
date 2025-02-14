@@ -16,7 +16,7 @@ char	*get_history_filepath(t_terminal *tty)
 {
 	char	*home;
 
-	home = get_env(NULL, "HOME", tty);
+	home = get_env(NULL, -1, "HOME", tty);
 	if (!home)
 		return (NULL);
 	return (ft_strjoin(home, HISTORY_FILE));

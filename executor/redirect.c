@@ -326,7 +326,7 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, t_terminal *tt
 			{
 				if (lst->is_quote)
 				{
-					tmp = interpolation(str, tty);
+					tmp = interpolation(str, -1, tty);
 					if  (tmp)
 					{
 						write(fd, tmp, ft_strlen(tmp));

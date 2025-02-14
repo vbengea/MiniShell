@@ -22,7 +22,7 @@ int	cd_bi(t_ast_node *node, t_terminal *tty)
 		return (printf("VJ.SH: cd: too many arguments\n"), -1);
 	path = node->args[1];
 	if (path == NULL)
-		path = get_env(node, "HOME", tty);
+		path = get_env(node, -1, "HOME", tty);
 	r = chdir(path);
 	if (r != 0)
 		perror("VJ.SH: cd");

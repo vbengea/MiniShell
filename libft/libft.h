@@ -68,6 +68,7 @@ int				ft_strcmp(const char *s1, const char *s2);
 bool			ft_isquote(char c);
 char			*ft_stradd(char *a, char *b);
 char			*ft_charadd(char c, char *word, int j);
+int				ft_cmpexact(const char *s1, const char *s2);
 
 typedef struct splitter
 {
