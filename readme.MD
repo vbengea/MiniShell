@@ -1,6 +1,8 @@
 
 * TODAY!!:
 
+	- El primer argumento de echo tiene un espacio.
+
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 

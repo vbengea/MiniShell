@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/13 23:57:25 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 18:37:41 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
 		if (p)
 		{
 			value = ft_strdup(p[i] + ft_strlen(key) + 1);
-			free(p);
+			clear_arr_of_strs(p);
 			return (value);
 		}
 	}
