@@ -64,8 +64,9 @@ void	set_tty(t_terminal *tty)
 {
 	struct termios 	t;
 
+	(void) cpshell;
 	check_shlvl(tty);
-	cpshell(tty);
+	// cpshell(tty);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
 	// t.c_lflag &= ~ECHOCTL;

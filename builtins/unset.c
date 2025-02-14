@@ -12,24 +12,42 @@
 
 #include "../include/headers.h"
 
-void	unset_bi(t_ast_node *node, t_terminal *tty)
+void	unset_one(t_ast_node *node, char *key, int j, t_terminal *tty)
 {
 	int		i;
+	char	**env;
+	int		len;
+
+	len = 0;
+	while (tty->env[len])
+		len++;
+	i = env_lookup(node, key, j, tty);
+	if (i >= 0)
+	{
+		if (i < len)
+			env = tty->env;
+		else
+		{
+			i = i - len;
+			env = tty->env_local;
+		}
+		free(env[i]);
+		while (env[i])
+		{
+			env[i] = env[i + 1];
+			i++;
+		}
+	}
+}
+
+void	unset_bi(t_ast_node *node, t_terminal *tty)
+{
 	int		j;
 
 	j = 1;
 	while (node->args[j])
 	{
-		i = env_lookup(node, node->args[j], j, tty);
-		if (i >= 0)
-		{
-			free(tty->env[i]);
-			while (tty->env[i])
-			{
-				tty->env[i] = tty->env[i + 1];
-				i++;
-			}
-		}
+		unset_one(node, node->args[j], j, tty);
 		j++;
 	}
 }

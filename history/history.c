@@ -15,11 +15,15 @@
 char	*get_history_filepath(t_terminal *tty)
 {
 	char	*home;
+	char	*tmp;
 
 	home = get_env(NULL, -1, "HOME", tty);
 	if (!home)
 		return (NULL);
-	return (ft_strjoin(home, HISTORY_FILE));
+	tmp = home;
+	home = ft_strjoin(home, HISTORY_FILE);
+	free(tmp);
+	return (home);
 }
 
 void	init_local_history(t_history *myhist)

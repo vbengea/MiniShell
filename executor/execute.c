@@ -76,6 +76,8 @@ int	doexec(char *path, char **comm, int is_free, t_terminal *tty)
 			if (is_free)
 				free(path);
 			clear_arr_of_strs(comm);
+			cleanup("Error executing command");
+			return (-1);
 		}
 	}
 	if (path && is_free)
@@ -90,12 +92,19 @@ int	execute(char **comm, t_terminal *tty)
 	char	*path;
 	char	*penv;
 	int		is_free;
+	int		i;
 
 	is_free = 0;
+	i = 0;
 	if (comm)
 	{
-		if (ft_strchr(comm[0], '/') != NULL)
+		if (ft_strchr(comm[0], '/') != NULL || \
+			ft_strchr(comm[0], '.') != NULL || ft_cmpexact(comm[0], "minishell"))
+		{
 			path = ft_strdup(comm[0]);
+			if (ft_strncmp(path, "./", 2) == 0)
+				i = 2;
+		}
 		else
 		{
 			penv = environment("PATH", tty);
@@ -107,7 +116,7 @@ int	execute(char **comm, t_terminal *tty)
 			else
 				path = NULL;
 		}
-		return (doexec(path, comm, is_free, tty));
+		return (doexec(path + i, comm, is_free, tty));
 	}
 	return (0);
 }

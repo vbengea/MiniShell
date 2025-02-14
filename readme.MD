@@ -1,20 +1,6 @@
 
 * TODAY!!:
 
-	- Gestionar declaracion de variables en dos niveles: global y local.
-		GO=5
-		export G=5
-
-		en principio podemos tener tres listas:
-			(1) Global: shells y subshells
-			(2) Local: shell
-			(3) Comando: comando
-
-		export G1=1 G=2 hola que tal
-		GB=B 
-
-	- Use $TMPDIR to store the minishell binary and IO files.
-
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 
@@ -26,6 +12,20 @@
 
 
 * Nice to have
+
+	- execve can execute binaries in the same directory if the first argument is just the name of the binary.
+
+	- Gestionar declaracion de variables en dos niveles: global y local.
+		GO=5
+		export G=5
+
+		en principio podemos tener tres listas:
+			(1) Global: shells y subshells
+			(2) Local: shell
+			(3) Comando: comando
+
+		export G1=1 G=2 hola que tal
+		GB=B 
 
 	- Support command level environemnt variable
 		GO=5 env

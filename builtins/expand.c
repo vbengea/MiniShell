@@ -41,7 +41,10 @@ char	*extract_variable(char *str, int *i, t_terminal *tty)
 			}
 			s = get_env(NULL, -1, (cmp + 1), tty);
 			if (s)
+			{
 				r = ft_stradd(r, s);
+				free(s);
+			}
 		}
 		free(cmp);
 	}

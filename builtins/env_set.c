@@ -12,25 +12,45 @@
 
 #include "../include/headers.h"
 
+char	**env_resolution(t_terminal *tty)
+{
+	char		**p;
+	int			i;
+
+	p = copy_arr_of_strs(tty->env, 0, 0);
+	if (p)
+	{
+		i = 0;
+		while (p && tty->env_local[i])
+			p = add_arr_of_strs(p, tty->env_local[i++]);
+		i = 0;
+		while (p && tty->env_cmd[i])
+			p = add_arr_of_strs(p, tty->env_cmd[i++]);
+	}
+	return (p);
+}
+
 int	env_lookup(t_ast_node *node, char *key, int arg_index, t_terminal *tty)
 {
+	char	**p;
 	int		i;
 	char	*var;
-	char	**env;
 
-	if (arg_index < 0 || (arg_index >= 0 && node->expand_flag[arg_index]))
-		env = tty->env;
-	else
-		env = tty->env_local;
+	(void) node;
+	(void) arg_index;
+	p = env_resolution(tty);
+	if (!p)
+		cleanup("Memory error on environment variable lookup");
 	i = 0;
 	var = key;
 	var = ft_strjoin(var, "=");
 	if (var)
 	{
-		while (env[i])
+		while (p[i])
 		{
-			if (ft_strncmp(env[i], var, ft_strlen(var)) == 0)
+			if (ft_strncmp(p[i], var, ft_strlen(var)) == 0)
 			{
+				clear_arr_of_strs(p);
 				free(var);
 				return (i);
 			}
@@ -38,6 +58,7 @@ int	env_lookup(t_ast_node *node, char *key, int arg_index, t_terminal *tty)
 		}
 		free(var);
 	}
+	clear_arr_of_strs(p);
 	return (-1);
 }
 
@@ -53,11 +74,6 @@ char	*get_entry(char *key, char *value)
 	{
 		if (!value)
 			value = "";
-		if (!value)
-		{
-			free(var);
-			cleanup("Error processing env variable\n");
-		}
 		str = ft_strjoin(var, value);
 		free(var);
 	}
@@ -72,30 +88,9 @@ static	void	append_entry(t_ast_node *node, char *entry, int arg_index, t_termina
 		tty->env_local = add_arr_of_strs(tty->env_local, entry);
 }
 
-static	void	update_entry(t_ast_node *node, char *entry, int arg_index, int i, t_terminal *tty)
-{
-	int		len;
-	char	**env;
-
-	env = tty->env;
-	(void) arg_index;
-	(void) node;
-	free(env[i]);
-	len = ft_strlen(entry);
-	env[i] = malloc(len + 1);
-	if (env[i])
-	{
-		ft_strlcpy(env[i], entry, len + 1);
-		env[i][len] = '\0';
-	}
-	else
-		cleanup("Error allocating memory");
-}
-
 void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 {
 	char	*str;
-	int		i;
 	int		j;
 	int		arg_index;
 
@@ -116,11 +111,8 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 	str = get_entry(key, value);
 	if (str)
 	{
-		i = env_lookup(node, key, arg_index, tty);
-		if (i < 0)
-			append_entry(node, str, arg_index, tty);
-		else
-			update_entry(node, str, arg_index, i, tty);
+		unset_one(node, key, arg_index, tty);
+		append_entry(node, str, arg_index, tty);
 		free(str);
 	}
 }

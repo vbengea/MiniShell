@@ -15,11 +15,20 @@
 char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
 {
 	int		i;
+	char	**p;
+	char	*value;
 
-	(void) node;
 	i = env_lookup(node, key, arg_index, tty);
 	if (i >= 0)
-		return (tty->env[i] + ft_strlen(key) + 1);
+	{
+		p = env_resolution(tty);
+		if (p)
+		{
+			value = ft_strdup(p[i] + ft_strlen(key) + 1);
+			free(p);
+			return (value);
+		}
+	}
 	return (NULL);
 }
 
