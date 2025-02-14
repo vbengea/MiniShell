@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 23:27:05 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/15 00:35:17 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,12 @@ char	*find_path(char *cmd, char *penv)
 
 int	doexec(char *path, char **comm, int is_free, t_terminal *tty)
 {
+	char	**p;
+
 	if ((path && access(path, X_OK) == 0))
 	{
-		if (execve(path, comm, tty->env) == -1)
+		p = env_resolution(tty);
+		if (p && execve(path, comm, p) == -1)
 		{
 			if (is_free)
 				free(path);
