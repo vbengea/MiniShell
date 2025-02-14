@@ -31,42 +31,11 @@ void	check_shlvl(t_terminal *tty)
 	free(lvl);
 }
 
-void	cpshell(t_terminal *tty)
-{
-	char			**args;
-	char			*cmd;
-	char			*tmp;
-
-	cmd = getenv("HOME");
-	if (cmd == NULL)
-		cmd = ft_strdup(".");
-	if (cmd)
-	{
-		cmd = ft_strjoin(cmd, "/bin/minishell");
-		if (cmd && access(cmd, F_OK | X_OK) == 0)
-			unlink(cmd);
-		if (cmd && access(cmd, F_OK | X_OK) != 0)
-		{
-			tmp = cmd;
-			cmd = ft_strjoin("cp minishell ", cmd);
-			free(tmp);
-			args = ft_split(cmd, ' ');
-			tty->ast = create_ast_node(NODE_CMND, args);
-			if (tty->ast)
-				selector(tty->ast, tty);
-			free(cmd);
-			free_redirect_ast(tty->ast, 0);
-		}
-	}
-}
-
 void	set_tty(t_terminal *tty)
 {
 	struct termios 	t;
 
-	(void) cpshell;
 	check_shlvl(tty);
-	// cpshell(tty);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t );
 	// t.c_lflag &= ~ECHOCTL;

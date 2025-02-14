@@ -23,7 +23,6 @@ void	setup_signal_handlers_child(void);
 void	handle_sigquit(int signal);
 void	handle_sigint(int signal);
 void	handle_sigexec(int signal);
-void	cpshell(t_terminal *tty);
 void	check_shlvl(t_terminal *tty);
 
 #endif
