@@ -23,11 +23,14 @@ INCLUDE			:= 	./include/headers.h
 SRC				:= 	main.c\
 					$(EXEC_DIR)/utils_1.c \
 					$(EXEC_DIR)/utils_2.c \
-					$(EXEC_DIR)/utils_redis.c \
+					$(EXEC_DIR)/redirect_1.c \
+					$(EXEC_DIR)/redirect_2.c \
+					$(EXEC_DIR)/redirect_3.c \
+					$(EXEC_DIR)/redirect_4.c \
+					$(EXEC_DIR)/redirect_5.c \
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
 					$(EXEC_DIR)/pipex.c \
-					$(EXEC_DIR)/redirect.c \
 					$(EXEC_DIR)/parser.c \
 					$(EXEC_DIR)/parser_redis.c \
 					$(EXEC_DIR)/parser_utils.c \
@@ -111,7 +114,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Norm utils_*.c"
+	git commit -am "Initial separation of redirection files"
 	git config pull.rebase false
 	git push
 

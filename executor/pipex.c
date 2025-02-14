@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 18:12:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 23:15:12 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 		else
 		{
 			if (execute(node->args, tty) == -1)
-				cleanup("Error executing command");
+				cleanup("Error executing command 3");
 		}
 	}
 	else
