@@ -12,43 +12,24 @@
 
 #include "../include/headers.h"
 
-char	*unset_str(char *key, int len)
-{
-	char	*str;
-
-	str = malloc(len + 1 + 1);
-	if (str)
-	{
-		ft_strcpy(str, key);
-		str[len] = '=';
-		str[len + 1] = '\0';
-	}
-	return (str);
-}
-
 void	unset_bi(t_ast_node *node, t_terminal *tty)
 {
 	int		i;
-	int		len;
-	char	*str;
+	int		j;
 
-	len = ft_strlen(node->args[1]);
-	str = unset_str(node->args[1], len);
-	i = 0;
-	while (tty->env && tty->env[i])
+	j = 1;
+	while (node->args[j])
 	{
-		if (ft_strnstr(tty->env[i], str, len + 1))
+		i = env_lookup(node->args[j], tty);
+		if (i >= 0)
 		{
 			free(tty->env[i]);
-			while (tty->env && tty->env[i])
+			while (tty->env[i])
 			{
 				tty->env[i] = tty->env[i + 1];
 				i++;
 			}
-			break ;
 		}
-		i++;
+		j++;
 	}
-	free(str);
-	tty->env = copy_arr_of_strs(tty->env, 0, 1);
 }
