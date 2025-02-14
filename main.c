@@ -37,7 +37,7 @@ void	build_terminal(char **env, t_terminal	*tty)
 		if (tty->env)
 		{
 			if (tty->env[0] == NULL)
-				set_env(ft_strdup("PATH"), handle_no_env(), tty);
+				set_env(NULL, ft_strdup("PATH"), handle_no_env(), tty);
 			// init_local_history(&tty->myhist);
 			// load_history_from_file(&tty->myhist, tty);
 			set_tty(tty);

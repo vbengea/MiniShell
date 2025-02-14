@@ -21,7 +21,7 @@ void	set_history_status(int status, t_terminal *tty)
 	value = ft_itoa(status);
 	if (value && tty->env)
 	{
-		set_env("?", value, tty);
+		set_env(NULL, "?", value, tty);
 		free(value);
 	}
 }

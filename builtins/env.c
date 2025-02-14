@@ -12,13 +12,14 @@
 
 #include "../include/headers.h"
 
-char	*get_env(char *var, t_terminal *tty)
+char	*get_env(t_ast_node *node, char *key, t_terminal *tty)
 {
 	int		i;
 
-	i = env_lookup(var, tty);
+	(void) node;
+	i = env_lookup(key, tty);
 	if (i >= 0)
-		return (tty->env[i] + ft_strlen(var) + 1);
+		return (tty->env[i] + ft_strlen(key) + 1);
 	return (NULL);
 }
 

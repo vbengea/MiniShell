@@ -27,7 +27,7 @@ void	check_shlvl(t_terminal *tty)
 	}
 	else
 		lvl = ft_strdup("1");
-	set_env("SHLVL", lvl, tty);
+	set_env(NULL, "SHLVL", lvl, tty);
 	free(lvl);
 }
 

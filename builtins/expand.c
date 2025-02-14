@@ -39,7 +39,7 @@ char	*extract_variable(char *str, int *i, t_terminal *tty)
 				cmp[*i] = str[*i];
 				(*i)++;
 			}
-			s = get_env((cmp + 1), tty);
+			s = get_env(NULL, (cmp + 1), tty);
 			if (s)
 				r = ft_stradd(r, s);
 		}

@@ -80,11 +80,12 @@ void	update_entry(char *entry, int i, t_terminal *tty)
 		cleanup("Error allocating memory");
 }
 
-void	set_env(char *key, char *value, t_terminal *tty)
+void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 {
 	char	*str;
 	int		i;
 
+	(void) node;
 	str = get_entry(key, value);
 	if (str)
 	{
