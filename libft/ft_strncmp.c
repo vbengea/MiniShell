@@ -36,6 +36,14 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
+int	ft_cmpexact(const char *s1, const char *s2)
+{
+	if (ft_strcmp(s1, s2) == 0 && ft_strlen(s1) == ft_strlen(s2))
+		return (1);
+	else
+		return (0);
+}
+
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

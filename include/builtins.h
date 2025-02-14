@@ -22,11 +22,11 @@ void	env_bi(t_ast_node *node, int sorted, t_terminal *tty);
 void	export_bi(t_ast_node *node, t_terminal *tty);
 void	unset_bi(t_ast_node *node, t_terminal *tty);
 void	echo_bi(t_ast_node *node);
-char	*get_env(t_ast_node *node, char *key, t_terminal *tty);
+char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty);
 void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty);
-char	*interpolation(char *str, t_terminal *tty);
+char	*interpolation(char *str, int arg_index, t_terminal *tty);
 char	**expantion(char *str, char **args);
 char	*get_entry(char *key, char *value);
-int		env_lookup(char *key, t_terminal *tty);
+int		env_lookup(char *key, int arg_index, t_terminal *tty);
 
 #endif

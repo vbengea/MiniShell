@@ -22,11 +22,12 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 	while (i < len && node->args[i])
 	{
 		key = node->args[i];
-		if (ft_strncmp(key, "export", 6) == 0 && ft_strlen(key) == 6)
+		if (ft_cmpexact(key, "export"))
 		{
 			key = node->args[i + 1];
 			value = node->args[i + 2];
-			if (key && value)
+			printf("PRINTER: %s=%s\n", key, value);
+			if (key)
 				set_env(node, key, value, tty);
 			i += 2;
 		}

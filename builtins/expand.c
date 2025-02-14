@@ -39,7 +39,7 @@ char	*extract_variable(char *str, int *i, t_terminal *tty)
 				cmp[*i] = str[*i];
 				(*i)++;
 			}
-			s = get_env(NULL, (cmp + 1), tty);
+			s = get_env(NULL, -1, (cmp + 1), tty);
 			if (s)
 				r = ft_stradd(r, s);
 		}
@@ -71,12 +71,13 @@ char	*expand_variable(char *words, int *j, char *parsed_word, \
 	return (parsed_word);
 }
 
-char	*interpolation(char *words, t_terminal *tty)
+char	*interpolation(char *words, int arg_index, t_terminal *tty)
 {
 	int		j;
 	char	*parsed_word;
 
 	j = 0;
+	(void) arg_index;
 	parsed_word = ft_strdup(" ");
 	if (parsed_word)
 	{
