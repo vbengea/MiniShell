@@ -26,7 +26,6 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 		{
 			key = node->args[i + 1];
 			value = node->args[i + 2];
-			printf("PRINTER: %s=%s\n", key, value);
 			if (key)
 				set_env(node, key, value, tty);
 			i += 2;
