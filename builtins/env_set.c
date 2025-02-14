@@ -12,20 +12,24 @@
 
 #include "../include/headers.h"
 
-int	env_lookup(char *key, int arg_index, t_terminal *tty)
+int	env_lookup(t_ast_node *node, char *key, int arg_index, t_terminal *tty)
 {
 	int		i;
 	char	*var;
+	char	**env;
 
-	(void) arg_index;
+	if (arg_index < 0 || (arg_index >= 0 && node->expand_flag[arg_index]))
+		env = tty->env;
+	else
+		env = tty->env_local;
 	i = 0;
 	var = key;
 	var = ft_strjoin(var, "=");
 	if (var)
 	{
-		while (tty->env[i])
+		while (env[i])
 		{
-			if (ft_strncmp(tty->env[i], var, ft_strlen(var)) == 0)
+			if (ft_strncmp(env[i], var, ft_strlen(var)) == 0)
 			{
 				free(var);
 				return (i);
@@ -60,24 +64,29 @@ char	*get_entry(char *key, char *value)
 	return (str);
 }
 
-static	void	append_entry(char *entry, int arg_index, t_terminal *tty)
+static	void	append_entry(t_ast_node *node, char *entry, int arg_index, t_terminal *tty)
 {
-	(void) arg_index;
-	tty->env = add_arr_of_strs(tty->env, entry);
+	if (arg_index < 0 || (arg_index >= 0 && node->expand_flag[arg_index]))
+		tty->env = add_arr_of_strs(tty->env, entry);
+	else
+		tty->env_local = add_arr_of_strs(tty->env_local, entry);
 }
 
-static	void	update_entry(char *entry, int arg_index, int i, t_terminal *tty)
+static	void	update_entry(t_ast_node *node, char *entry, int arg_index, int i, t_terminal *tty)
 {
-	int	len;
+	int		len;
+	char	**env;
 
+	env = tty->env;
 	(void) arg_index;
-	free(tty->env[i]);
+	(void) node;
+	free(env[i]);
 	len = ft_strlen(entry);
-	tty->env[i] = malloc(len + 1);
-	if (tty->env[i])
+	env[i] = malloc(len + 1);
+	if (env[i])
 	{
-		ft_strlcpy(tty->env[i], entry, len + 1);
-		tty->env[i][len] = '\0';
+		ft_strlcpy(env[i], entry, len + 1);
+		env[i][len] = '\0';
 	}
 	else
 		cleanup("Error allocating memory");
@@ -87,28 +96,31 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 {
 	char	*str;
 	int		i;
+	int		j;
 	int		arg_index;
 
+	arg_index = -1;
 	if (node != NULL)
 	{
-		arg_index = 0;
-		while (node->args[arg_index])
+		j = 0;
+		while (node->args[j])
 		{
-			if (ft_cmpexact(node->args[arg_index], key))
+			if (ft_cmpexact(node->args[j], key))
 			{
-				
+				arg_index = j - 1;
+				break ;
 			}
-			arg_index++;
+			j++;
 		}
 	}
 	str = get_entry(key, value);
 	if (str)
 	{
-		i = env_lookup(key, arg_index, tty);
+		i = env_lookup(node, key, arg_index, tty);
 		if (i < 0)
-			append_entry(str, arg_index, tty);
+			append_entry(node, str, arg_index, tty);
 		else
-			update_entry(str, arg_index, i, tty);
+			update_entry(node, str, arg_index, i, tty);
 		free(str);
 	}
 }

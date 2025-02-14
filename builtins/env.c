@@ -17,7 +17,7 @@ char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
 	int		i;
 
 	(void) node;
-	i = env_lookup(key, arg_index, tty);
+	i = env_lookup(node, key, arg_index, tty);
 	if (i >= 0)
 		return (tty->env[i] + ft_strlen(key) + 1);
 	return (NULL);
@@ -62,13 +62,20 @@ static	void	print_env(t_ast_node *node, int sorted, char **p)
 static	void	sort_env(t_ast_node *node, t_terminal *tty)
 {
 	char		**p;
+	int			i;
 
+	i = 0;
 	p = copy_arr_of_strs(tty->env, 0, 0);
 	if (p)
 	{
-		sort_arr_of_strs(p, 1);
-		print_env(node, 1, p);
-		clear_arr_of_strs(p);
+		while (p && tty->env_local[i])
+			p = add_arr_of_strs(p, tty->env_local[i++]);
+		if (p)
+		{
+			sort_arr_of_strs(p, 1);
+			print_env(node, 1, p);
+			clear_arr_of_strs(p);
+		}
 	}
 }
 

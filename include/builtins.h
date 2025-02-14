@@ -27,6 +27,6 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty);
 char	*interpolation(char *str, int arg_index, t_terminal *tty);
 char	**expantion(char *str, char **args);
 char	*get_entry(char *key, char *value);
-int		env_lookup(char *key, int arg_index, t_terminal *tty);
+int		env_lookup(t_ast_node *node, char *key, int arg_index, t_terminal *tty);
 
 #endif

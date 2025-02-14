@@ -20,7 +20,7 @@ void	unset_bi(t_ast_node *node, t_terminal *tty)
 	j = 1;
 	while (node->args[j])
 	{
-		i = env_lookup(node->args[j], j, tty);
+		i = env_lookup(node, node->args[j], j, tty);
 		if (i >= 0)
 		{
 			free(tty->env[i]);
