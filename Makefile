@@ -110,7 +110,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Removing extra space on interpolation"
+	git commit -am "Norminette on builtins folder"
 	git config pull.rebase false
 	git push
 

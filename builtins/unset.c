@@ -6,11 +6,33 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 00:35:55 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 19:25:19 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
+{
+	int		i;
+	char	**p;
+	char	*value;
+
+	(void) node;
+	(void) arg_index;
+	i = env_lookup(key, tty);
+	if (i >= 0)
+	{
+		p = env_resolution(tty);
+		if (p)
+		{
+			value = ft_strdup(p[i] + ft_strlen(key) + 1);
+			clear_arr_of_strs(p);
+			return (value);
+		}
+	}
+	return (NULL);
+}
 
 void	unset_one(t_ast_node *node, char *key, int j, t_terminal *tty)
 {
@@ -18,10 +40,12 @@ void	unset_one(t_ast_node *node, char *key, int j, t_terminal *tty)
 	char	**env;
 	int		len;
 
+	(void) node;
+	(void) j;
 	len = 0;
 	while (tty->env[len])
 		len++;
-	i = env_lookup(node, key, j, tty);
+	i = env_lookup(key, tty);
 	if (i >= 0)
 	{
 		if (i < len)

@@ -6,36 +6,37 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 18:37:41 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 19:23:09 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
+static	void	print_fd(int sorted, char *p, char *value)
 {
-	int		i;
-	char	**p;
-	char	*value;
+	if (sorted)
+		printf("declare -x %s\n", p);
+	else if (value != NULL)
+		printf("%s\n", p);
+}
 
-	i = env_lookup(node, key, arg_index, tty);
-	if (i >= 0)
+static	void	print_nfd(t_ast_node *node, int sorted, char *p, char *value)
+{
+	char		*str;
+
+	if (sorted)
 	{
-		p = env_resolution(tty);
-		if (p)
-		{
-			value = ft_strdup(p[i] + ft_strlen(key) + 1);
-			clear_arr_of_strs(p);
-			return (value);
-		}
+		str = ft_strjoin("declare -x ", p);
+		ft_putstrnl_fd(str, node->out_fd);
+		free(str);
 	}
-	return (NULL);
+	else if (value != NULL)
+		ft_putstrnl_fd(p, node->out_fd);
 }
 
 static	void	print_env(t_ast_node *node, int sorted, char **p)
 {
 	int			i;
-	char		*str;
 	char		**key_value;
 
 	i = 0;
@@ -45,23 +46,9 @@ static	void	print_env(t_ast_node *node, int sorted, char **p)
 		if (key_value)
 		{
 			if (node->out_fd < 0)
-			{
-				if (sorted)
-					printf("declare -x %s\n", p[i]);
-				else if (key_value[1] != NULL)
-					printf("%s\n", p[i]);
-			}
+				print_fd(sorted, p[i], key_value[1]);
 			else
-			{
-				if (sorted)
-				{
-					str = ft_strjoin("declare -x ", p[i]);
-					ft_putstrnl_fd(str, node->out_fd);
-					free(str);
-				}
-				else if (key_value[1] != NULL)
-					ft_putstrnl_fd(p[i], node->out_fd);
-			}
+				print_nfd(node, sorted, p[i], key_value[1]);
 			clear_arr_of_strs(key_value);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 18:58:26 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 19:14:19 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ char	*extract_variable(char *str, int *i, t_terminal *tty)
 	char	*s;
 	char	*r;
 
-	r = NULL;
+	r = ft_strdup("");
 	cmp = ft_calloc(1, ft_strlen(str) + 1);
-	if (cmp && str)
+	if (cmp)
 	{
-		r = ft_strdup("");
 		if (r)
 		{
-			*i = 1;
 			while (is_identifier(str[*i]))
 			{
 				cmp[*i] = str[*i];
@@ -57,7 +55,9 @@ char	*expand_variable(char *words, int *j, char *parsed_word, \
 	int		i;
 	char	*inter;
 
-	i = 0;
+	i = 1;
+	if (words == NULL)
+		return (parsed_word);
 	inter = extract_variable((words + *j), &i, tty);
 	if (inter)
 	{
