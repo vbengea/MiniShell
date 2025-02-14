@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 18:32:55 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 18:49:00 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	do_export(t_ast_node *node, int i, char **params)
 		{
 			printf("%s", str);
 			if (params[i + 1] && node->has_space[i])
+			{
+				printf("1\n");
 				printf(" ");
+			}
 		}
 		else
 		{

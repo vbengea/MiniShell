@@ -1,7 +1,7 @@
 
 * TODAY!!:
 
-	- El primer argumento de echo tiene un espacio.
+	- El primer argumento de echo tiene un espacio cuando se interpolan variables.
 
 	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
@@ -14,6 +14,16 @@
 
 
 * Nice to have
+
+	- Support command level environemnt variable
+		GO=5 env
+		GA=1 GE=2 GI=3 GO=4 GU=5 env
+	
+	- Enviar un comando al binario de la minishell:
+		minishell "ls -l | cat -e"
+
+
+* Solved issues
 
 	- execve can execute binaries in the same directory if the first argument is just the name of the binary.
 
@@ -29,15 +39,6 @@
 		export G1=1 G=2 hola que tal
 		GB=B 
 
-	- Support command level environemnt variable
-		GO=5 env
-		GA=1 GE=2 GI=3 GO=4 GU=5 env
-	
-	- Enviar un comando al binario de la minishell:
-		minishell "ls -l | cat -e"
-
-
-* Solved issues
 
 	- Verificar CTRL-C mientras se ejecuta HEREDOC.
 
