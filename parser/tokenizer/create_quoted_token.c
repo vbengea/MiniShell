@@ -6,47 +6,79 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:42:26 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/14 13:09:30 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/14 14:05:45 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-t_token	*create_quoted_token(const char *input, int *i)
+static int	get_quoted_length(const char *input)
 {
-	t_token	*new_token;
-	char	*temp;
+	int		len;
 	char	quote;
 
-	quote = input[*i];
-	new_token = create_token(TOKEN_WORD, ft_strdup(""));
-	if (input[*i] == 39)
-		new_token->has_env = false;
-	(*i)++;
-	while (input[*i] && input[*i] != quote)
+	quote = input[0];
+	len = 0;
+	input++;
+	while (input[len] && input[len] != quote)
+		len++;
+	return (len);
+}
+
+static t_token	*init_quoted_token(int len)
+{
+	t_token	*new_token;
+
+	new_token = create_token(TOKEN_WORD, NULL);
+	if (!new_token)
+		return (NULL);
+	new_token->value = malloc(len + 1);
+	if (!new_token->value)
 	{
-		// if (quote == '"' && input[*i] == '$' && input[*i + 1] && (ft_isalpha(input[*i + 1]) || input[*i + 1] == '?'))
-		// 	new_token->has_env = true;
-		temp = malloc(ft_strlen(new_token->value) + 2);
-		ft_strcpy(temp, new_token->value);
-		temp[ft_strlen(new_token->value)] = input[*i];
-		temp[ft_strlen(new_token->value) + 1] = '\0';
-		free(new_token->value);
-		new_token->value = temp;
-		(*i)++;
+		free (new_token);
+		return (NULL);
 	}
-	if (input[*i] == '\0')
-		new_token->type = TOKEN_INVALID;
-	else
-	{
-		if (ft_isspace(input[*i + 1]))
-			new_token->has_space = true;
-		(*i)++;
-	}
-	new_token->is_quoted = true;
 	return (new_token);
 }
 
+static void	fill_token_content(t_token *token, const char *input, \
+	int *i, char quote)
+{
+	int	j;
 
-// Check later this function for possible memory leaks
-// Maybe here happens an invalid free
+	j = 0;
+	(*i)++;
+	while (input[*i] && input[*i] != quote)
+		token->value[j++] = input[(*i)++];
+	token->value[j] = '\0';
+}
+
+static void	set_token_attributes(t_token *token, const char *input, \
+	int *i, char quote)
+{
+	token->is_quoted = true;
+	token->has_env = (quote != '\'');
+	if (input[*i] == '\0')
+		token->type = TOKEN_INVALID;
+	else
+	{
+		token->has_space = ft_isspace(input[*i + 1]);
+		(*i)++;
+	}
+}
+
+t_token	*create_quoted_token(const char *input, int *i)
+{
+	t_token	*new_token;
+	char	quote;
+	int		len;
+
+	quote = input[*i];
+	len = get_quoted_length(input + *i);
+	new_token = init_quoted_token(len);
+	if (!new_token)
+		return (NULL);
+	fill_token_content(new_token, input, i, quote);
+	set_token_attributes(new_token, input, i, quote);
+	return (new_token);
+}
