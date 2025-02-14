@@ -30,6 +30,10 @@ void	build_terminal(char **env, t_terminal	*tty)
 		tty->files[2] = 0;
 		tty->ast = NULL;
 		tty->env = copy_arr_of_strs(env, 0, 0);
+		tty->env_local = malloc(sizeof(char *) * 1);
+		tty->env_cmd = malloc(sizeof(char *) * 1);
+		tty->env_local[0] = NULL;
+		tty->env_cmd[0] = NULL;
 		if (tty->env)
 		{
 			if (tty->env[0] == NULL)
@@ -55,6 +59,8 @@ static	void	destroy_terminal(t_terminal *tty)
 {
 	// save_history_to_file(&tty->myhist, tty);
 	clear_arr_of_strs(tty->env);
+	clear_arr_of_strs(tty->env_local);
+	clear_arr_of_strs(tty->env_cmd);
 	rl_clear_history();
 }
 

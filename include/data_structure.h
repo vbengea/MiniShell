@@ -104,6 +104,8 @@ typedef struct s_terminal
 {
 	t_ast_node	*ast;
 	char		**env;
+	char		**env_local;
+	char		**env_cmd;
 	t_history	myhist;
 	int			files[3];
 }	t_terminal;
