@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 00:40:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/14 18:58:26 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*interpolation(char *words, int arg_index, t_terminal *tty)
 
 	j = 0;
 	(void) arg_index;
-	parsed_word = ft_strdup(" ");
+	parsed_word = ft_strdup("");
 	if (parsed_word)
 	{
 		while (words && words[j])

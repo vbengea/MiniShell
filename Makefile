@@ -110,7 +110,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Removing printf"
+	git commit -am "Removing extra space on interpolation"
 	git config pull.rebase false
 	git push
 
