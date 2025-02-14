@@ -25,6 +25,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <dirent.h>
+# include <signal.h>
 
 # include "../libft/libft.h"
 # include "data_structure.h"
