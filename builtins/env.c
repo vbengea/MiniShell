@@ -39,17 +39,20 @@ static	void	print_env(t_ast_node *node, int sorted, char **p)
 			{
 				if (sorted)
 					printf("declare -x %s\n", p[i]);
-				else if (key_value[1])
+				else if (key_value[1] != NULL)
 					printf("%s\n", p[i]);
 			}
-			else if (sorted)
+			else
 			{
-				str = ft_strjoin("declare -x ", p[i]);
-				ft_putstrnl_fd(str, node->out_fd);
-				free(str);
+				if (sorted)
+				{
+					str = ft_strjoin("declare -x ", p[i]);
+					ft_putstrnl_fd(str, node->out_fd);
+					free(str);
+				}
+				else if (key_value[1] != NULL)
+					ft_putstrnl_fd(p[i], node->out_fd);
 			}
-			else if (key_value[1])
-				ft_putstrnl_fd(p[i], node->out_fd);
 			clear_arr_of_strs(key_value);
 		}
 		i++;

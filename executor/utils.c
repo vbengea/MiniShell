@@ -77,8 +77,7 @@ int    is_builtin(t_ast_node *node)
 	{
 		while (b[i])
 		{
-			if ((ft_strncmp(node->args[0], b[i], ft_strlen(b[i])) == 0)
-				&& (ft_strlen(b[i]) == ft_strlen(node->args[0])))
+			if (ft_cmpexact(node->args[0], b[i]))
 				return (1);
 			i++;
 		}

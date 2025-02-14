@@ -71,5 +71,7 @@ t_ast_node		*create_structure(char *context, t_mini_token token, \
 t_redirection	*ft_lstred(t_redirection *node);
 int				has_group_redirection(t_ast_node *ast, int is_infile);
 char			*tmp_path(int nid, t_redirect_type type);
+void			builtin_selector(t_ast_node *node, int should_exit, \
+				t_terminal *tty);
 
 #endif

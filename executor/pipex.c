@@ -64,8 +64,15 @@ static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 	if (node->type == NODE_CMND)
 	{
 		parse_command(node, tty);
-		if (execute(node->args, tty) == -1)
-			cleanup("Error executing command");
+		if (is_builtin(node))
+		{
+			builtin_selector(node, 1, tty);
+		}
+		else
+		{
+			if (execute(node->args, tty) == -1)
+				cleanup("Error executing command");
+		}
 	}
 	else
 		navigator(node, 1, tty);

@@ -95,7 +95,9 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 		while (node->args[arg_index])
 		{
 			if (ft_cmpexact(node->args[arg_index], key))
-				printf("arg_index: %d\n", arg_index);
+			{
+				
+			}
 			arg_index++;
 		}
 	}

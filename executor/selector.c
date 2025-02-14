@@ -198,7 +198,7 @@ static	int		check_options(t_ast_node *node, int hold, t_terminal *tty)
 	{
 		if (node->args[i][0] == '-')
 		{
-			if (ft_strncmp(node->args[0], "echo", 4) == 0 && \
+			if (ft_cmpexact(node->args[i], "echo") && \
 				node->args[i][1] == 'n' && ft_strlen(node->args[i]) == 2)
 				break ;
 			else
@@ -216,28 +216,35 @@ static	int		check_options(t_ast_node *node, int hold, t_terminal *tty)
 	return (1);
 }
 
+void	builtin_selector(t_ast_node *node, int should_exit, t_terminal *tty)
+{
+	if (node->args[0] == NULL)
+		(void) node;
+	else if (ft_cmpexact(node->args[0], "cd"))
+		cd_bi(node, tty);
+	else if (ft_cmpexact(node->args[0], "exit"))
+		exit_bi(node, tty);
+	else if (ft_cmpexact(node->args[0], "pwd"))
+		pwd_bi(node);
+	else if (ft_cmpexact(node->args[0], "env"))
+		env_bi(node, 0, tty);
+	else if (ft_cmpexact(node->args[0], "export"))
+		export_bi(node, tty);
+	else if (ft_cmpexact(node->args[0], "unset"))
+		unset_bi(node, tty);
+	else if (ft_cmpexact(node->args[0], "echo"))
+		echo_bi(node);
+	if (should_exit)
+		exit(0);
+}
+
 static	void	builtin(t_ast_node *node, int hold, t_terminal *tty)
 {
 	(void) tty;
 	if (check_options(node, hold, tty))
 	{
 		preexecute(node, tty);
-		if (node->args[0] == NULL)
-			(void) hold;
-		else if (ft_strncmp(node->args[0], "cd", 2) == 0)
-			cd_bi(node, tty);
-		else if (ft_strncmp(node->args[0], "exit", 4) == 0)
-			exit_bi(node, tty);
-		else if (ft_strncmp(node->args[0], "pwd", 3) == 0)
-			pwd_bi(node);
-		else if (ft_strncmp(node->args[0], "env", 3) == 0)
-			env_bi(node, 0, tty);
-		else if (ft_strncmp(node->args[0], "export", 6) == 0)
-			export_bi(node, tty);
-		else if (ft_strncmp(node->args[0], "unset", 5) == 0)
-			unset_bi(node, tty);
-		else if (ft_strncmp(node->args[0], "echo", 4) == 0)
-			echo_bi(node);
+		builtin_selector(node, 0, tty);
 		postexecute(node);
 		builtin_end(node, hold, tty);
 	}
