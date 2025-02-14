@@ -6,15 +6,15 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:18:25 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/08 20:33:24 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/14 13:10:46 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-void free_token(t_token *token)
+void	free_token(t_token *token)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	while (token)
 	{

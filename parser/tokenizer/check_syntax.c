@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:41:36 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/10 18:09:34 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/14 13:06:01 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static bool	has_empty_parentheses(t_token *token)
 {
 	while (token && token->next)
 	{
-		if (token->type == TOKEN_OPEN_PAREN && token->next->type == TOKEN_CLOSE_PAREN)
+		if (token->type == TOKEN_OPEN_PAREN
+			&& token->next->type == TOKEN_CLOSE_PAREN)
 			return (true);
 		token = token->next;
 	}
@@ -25,9 +26,9 @@ static bool	has_empty_parentheses(t_token *token)
 
 static bool	even_parentheses(t_token *token)
 {
-	t_token *current;
-	int	balance;
-	
+	t_token	*current;
+	int		balance;
+
 	balance = 0;
 	current = token;
 	while (current)
@@ -42,11 +43,10 @@ static bool	even_parentheses(t_token *token)
 		}
 		current = current->next;
 	}
-
 	return (balance == 0);
 }
 
-static bool is_valid_pipe(t_token *token, t_token *prev)
+static bool	is_valid_pipe(t_token *token, t_token *prev)
 {
 	if (!token)
 		return (true);
@@ -54,7 +54,8 @@ static bool is_valid_pipe(t_token *token, t_token *prev)
 		return (false);
 	if (token->type == TOKEN_PIPE && !token->next)
 		return (false);
-	if (token->type == TOKEN_PIPE && token->next && token->next->type == TOKEN_PIPE)
+	if (token->type == TOKEN_PIPE && token->next
+		&& token->next->type == TOKEN_PIPE)
 		return (false);
 	return (true);
 }
@@ -65,16 +66,18 @@ static bool	is_valid_redirection(t_token *token, t_token *prev)
 		return (true);
 	if (is_redirect_token(token->type) && !token->next)
 		return (false);
-	if (is_redirect_token(token->type) && token->next && is_redirect_token(token->next->type))
+	if (is_redirect_token(token->type) && token->next
+		&& is_redirect_token(token->next->type))
 		return (false);
-	if (is_redirect_token(token->type) && prev && is_redirect_token(prev->type))
+	if (is_redirect_token(token->type) && prev
+		&& is_redirect_token(prev->type))
 		return (false);
 	return (true);
 }
 
-bool check_syntax(t_token *tokens, t_token *prev)
+bool	check_syntax(t_token *tokens, t_token *prev)
 {
-	t_token *current;
+	t_token	*current;
 
 	if (!tokens)
 		return (true);

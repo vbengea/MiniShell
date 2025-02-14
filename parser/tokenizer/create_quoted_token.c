@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_quoted_token.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:42:26 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 13:25:46 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/14 13:09:30 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,10 @@ t_token	*create_quoted_token(const char *input, int *i)
 		new_token->type = TOKEN_INVALID;
 	else
 	{
-		// ISSPACE
 		if (ft_isspace(input[*i + 1]))
 			new_token->has_space = true;
 		(*i)++;
 	}
-
-	// set flag when the token is quoted
 	new_token->is_quoted = true;
 	return (new_token);
 }
