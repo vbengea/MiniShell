@@ -15,7 +15,7 @@ LIBFT			:= 	$(LIBFT_DIR)/libft.a
 EXEC_DIR		:=	executor
 PARSER_DIR		:=  parser
 BUILTINS_DIR	:=  builtins
-SIGNALS_DIR		:=  signals
+SIGNALS_DIR		:=  terminal
 WILDCARD_DIR	:=  wildcard
 HISTORY_DIR		:=  history
 INCLUDE			:= 	./include/headers.h
@@ -35,6 +35,7 @@ SRC				:= 	main.c\
 					$(EXEC_DIR)/parser_redis.c \
 					$(EXEC_DIR)/parser_utils.c \
 					$(SIGNALS_DIR)/signals.c \
+					$(SIGNALS_DIR)/terminal.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
 					$(PARSER_DIR)/tokenizer/add_token.c \
 					$(PARSER_DIR)/tokenizer/create_token.c \
@@ -114,7 +115,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Initial separation of redirection files"
+	git commit -am "Reorganizing main"
 	git config pull.rebase false
 	git push
 

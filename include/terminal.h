@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.h                                          :+:      :+:    :+:   */
+/*   terminal.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/13 23:50:09 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/15 00:21:36 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,8 @@ void	handle_sigquit(int signal);
 void	handle_sigint(int signal);
 void	handle_sigexec(int signal);
 void	check_shlvl(t_terminal *tty);
+void	build_terminal(char **env, t_terminal	*tty);
+void	loop_terminal(t_terminal *tty);
+void	destroy_terminal(t_terminal *tty);
 
 #endif

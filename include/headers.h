@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:20:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 20:42:57 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/15 00:14:28 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # include "ast_build.h"
 
 # include "tokenizer_functions.h"
-# include "signals.h"
+# include "terminal.h"
 # include "wildcard.h"
 # include "environment.h"
 
