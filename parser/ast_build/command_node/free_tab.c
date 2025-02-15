@@ -6,15 +6,15 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:36:53 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:37:06 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:14:33 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/headers.h"
 
-void free_tab(char **tab)
+void	free_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i])

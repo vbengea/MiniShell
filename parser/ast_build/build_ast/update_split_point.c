@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:49:35 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:49:44 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:15:28 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	update_split_point(t_token **split, t_token *current, int *min_prec)
 {
 	if ((current->type == TOKEN_AND
-		|| current->type == TOKEN_OR) && *min_prec >= 1)
+			|| current->type == TOKEN_OR) && *min_prec >= 1)
 	{
 		*min_prec = 1;
 		*split = current;

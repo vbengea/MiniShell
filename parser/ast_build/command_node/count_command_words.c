@@ -6,17 +6,17 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:35:13 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:35:38 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:11:13 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/headers.h"
 
-int count_command_words(t_token *tokens)
+int	count_command_words(t_token *tokens)
 {
-	bool prev_export;
-	t_token *temp;
-	int count;
+	bool	prev_export;
+	t_token	*temp;
+	int		count;
 
 	count = 0;
 	prev_export = false;

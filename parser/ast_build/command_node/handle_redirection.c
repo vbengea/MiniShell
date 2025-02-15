@@ -6,13 +6,13 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:31:38 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:31:59 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:13:41 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/headers.h"
 
-int handle_redirection(t_ast_node *node, t_token **current)
+int	handle_redirection(t_ast_node *node, t_token **current)
 {
 	t_redirection_info	redir_info;
 	t_token				*next;

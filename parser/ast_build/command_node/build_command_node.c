@@ -6,13 +6,13 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:30:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:31:29 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:14:54 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/headers.h"
 
-t_ast_node *build_command_node(t_token *tokens)
+t_ast_node	*build_command_node(t_token *tokens)
 {
 	t_ast_node	*node;
 	char		**cmd_args;

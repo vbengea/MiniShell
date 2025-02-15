@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:47:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:47:45 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:15:58 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_valid_operator(t_token_type type)
 {
-	return (type == TOKEN_PIPE ||
-			type == TOKEN_AND ||
-			type == TOKEN_OR);
+	return (type == TOKEN_PIPE
+		|| type == TOKEN_AND
+		|| type == TOKEN_OR);
 }

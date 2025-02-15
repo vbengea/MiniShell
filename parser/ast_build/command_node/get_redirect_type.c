@@ -6,13 +6,13 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:34:12 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:34:27 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:14:18 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/headers.h"
 
-t_redirect_type get_redirect_type(t_token_type type)
+t_redirect_type	get_redirect_type(t_token_type type)
 {
 	if (type == TOKEN_REDIRECT_IN)
 		return (REDIRECT_IN);

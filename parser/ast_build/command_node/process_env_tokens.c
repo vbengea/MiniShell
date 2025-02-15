@@ -6,15 +6,16 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:33:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:33:55 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:12:09 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/headers.h"
 
-void process_env_tokens(char **env_tokens, char **cmd_args, t_ast_node *node, int *i)
+void	process_env_tokens(char **env_tokens, char **cmd_args, \
+	t_ast_node *node, int *i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (env_tokens[j])

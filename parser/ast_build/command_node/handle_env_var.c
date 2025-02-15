@@ -6,15 +6,16 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:33:04 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:33:12 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:10:57 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../include/headers.h"
 
-void handle_env_var(t_token *current, char **cmd_args, t_ast_node *node, int *i)
+void	handle_env_var(t_token *current, char **cmd_args, \
+	t_ast_node *node, int *i)
 {
-	char **env_tokens;
+	char	**env_tokens;
 
 	cmd_args[*i] = ft_strdup("export");
 	(*i)++;
