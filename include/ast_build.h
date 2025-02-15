@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 18:10:36 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 18:42:28 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 # define AST_BUILD_H
 
 # include "headers.h"
+
+
+typedef struct s_paren_context
+{
+	t_token		*tokens;
+	t_token		*end;
+	t_token		*next_after_paren;
+	t_ast_node	*inner;
+}	t_paren_context;
 
 typedef struct s_cmd_args_context
 {
