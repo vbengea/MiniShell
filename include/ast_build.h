@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 13:49:18 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 18:10:36 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ typedef struct s_cmd_args_context
 	int			*i;
 	bool		*prev_export;
 }	t_cmd_args_context;
+
+typedef struct	s_redirection_info
+{
+	t_redirect_type		type;
+	t_out_redirect_type otype;
+	char				*file;
+	bool				quote_flag;
+}	t_redirection_info;
 
 t_ast_node		*build_ast(t_token *tokens);
 t_ast_node		*create_ast_node(t_node_type type, char **cmd_args);
@@ -45,8 +53,8 @@ int				is_redirect_token(t_token_type type);
 void			free_ast(t_ast_node *node);
 void			print_ast(t_ast_node *node, int level);
 
-void			add_redirection(t_ast_node *node, t_redirect_type type, \
-				t_out_redirect_type otype, char *file, bool is_quote);
+void	add_redirection(t_ast_node *node, t_redirection_info *redir_info);
+
 
 /* BUILD COMMAND NODE */
 int				count_command_words(t_token *tokens);

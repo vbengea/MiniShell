@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_parentheses.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:21:42 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 14:08:20 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:15:14 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_ast_node *handle_parentheses(t_token *tokens)
 	t_token *next_after_paren;
 	t_ast_node *inner;
 	t_ast_node *group_node;
+	t_redirection_info	redir_info;
+
 
 	// Find the matching closing parenthesis
 	end = find_matching_paren(tokens);
@@ -41,18 +43,21 @@ t_ast_node *handle_parentheses(t_token *tokens)
 	// Handle redirections after the closing parenthesis
 	if (next_after_paren && is_redirect_token(next_after_paren->type))
 	{
-		t_redirect_type redirect_type;
-		t_out_redirect_type otype = STDOUT_FILE; // Default
+		// t_redirect_type redirect_type;
+		// t_out_redirect_type otype = STDOUT_FILE; // Default
+		
+		redir_info.otype = STDOUT_FILE; // NEW one
+
 
 		// Determine the redirection type
 		if (next_after_paren->type == TOKEN_REDIRECT_IN)
-			redirect_type = REDIRECT_IN;
+			redir_info.type = REDIRECT_IN;
 		else if (next_after_paren->type == TOKEN_REDIRECT_OUT)
-			redirect_type = REDIRECT_OUT;
+			redir_info.type = REDIRECT_OUT;
 		else if (next_after_paren->type == TOKEN_APPEND)
-			redirect_type = REDIRECT_APPEND;
+			redir_info.type = REDIRECT_APPEND;
 		else
-			redirect_type = REDIRECT_HEREDOC;
+			redir_info.type = REDIRECT_HEREDOC;
 
 		// Move past the redirection operator and get the file token
 		next_after_paren = next_after_paren->next;
@@ -65,8 +70,14 @@ t_ast_node *handle_parentheses(t_token *tokens)
 		// Add the redirection to the NODE_GROUP's redirs list
 		
 		
-		// HARDCODED flag redirection for now
-		add_redirection(group_node, redirect_type, otype, ft_strdup(next_after_paren->value), 0);
+
+
+		// redir_info.otype = otype;
+		// redir_info.type = redirect_type;
+		redir_info.file = ft_strdup(next_after_paren->value);
+		redir_info.quote_flag = 0;
+
+		add_redirection(group_node, &redir_info);
 
 		// Move past the file token
 		next_after_paren = next_after_paren->next;

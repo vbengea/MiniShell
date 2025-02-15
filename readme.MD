@@ -1,6 +1,12 @@
 
 * TODAY!!:
 
+	- La variable `?` no se esta actualizando con el ultimo codigo de error. 
+		al hacer `echo $?` muestra solo `?`,
+
+	- Double free detected `ls -l && (cd .. && ls -l)`
+	- Verificar redireccion `ls -l && (cd .. && ls -l) > output`
+
 
 
 * To implement:

@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:43:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 13:48:01 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 18:11:21 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,17 +187,18 @@ void handle_word(t_token *current, char **cmd_args, t_ast_node *node, int *i)
 
 int handle_redirection(t_ast_node *node, t_token **current)
 {
-	t_redirect_type rtype;
-	t_out_redirect_type otype;
-	t_token *next;
+	t_redirection_info	redir_info;
+	t_token				*next;
 
-	otype = STDOUT_FILE;
-	rtype = get_redirect_type((*current)->type);
+	redir_info.otype = STDOUT_FILE;
+	redir_info.type = get_redirect_type((*current)->type);
 	next = (*current)->next;
 	if (!next || next->type != TOKEN_WORD)
 		return (0);
 	*current = next;
-	add_redirection(node, rtype, otype, ft_strdup((*current)->value), (*current)->is_quoted);
+	redir_info.file = ft_strdup((*current)->value);
+	redir_info.quote_flag = (*current)->is_quoted;
+	add_redirection(node, &redir_info);
 	return (1);
 }
 
