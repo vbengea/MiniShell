@@ -6,13 +6,11 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/14 23:15:12 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 00:31:19 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
-
-extern int SIGNAL;
 
 static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
 {
@@ -20,8 +18,6 @@ static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
 	t_ast_node	*parent;
 
 	(void) ppid;
-	(void) origin;
-	SIGNAL += 1;
 	origin = node;
 	parent = NULL;
 	tty->files[0] = fd[0];

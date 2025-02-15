@@ -117,7 +117,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Double free detected `ls -l && (cd .. && ls -l)`"
+	git commit -am "VERIFICAR cat | ls. Al final era una tonteria"
 	git config pull.rebase false
 	git push
 

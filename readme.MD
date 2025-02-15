@@ -1,12 +1,5 @@
 * To implement:
 
-	- VERIFICAR (por el momento ha dejado de pasar)
-		- A parte de still reachable leaks he observado que al ejecutar el comando
-			`ls -l | cat -e | echo hola > output && echo $PATH` funciona perfectamente pero si 
-			ejecutamos otro comando usando el mismo archivo como output, por ejemplo, `ls -l > output`
-			el archivo se actualiza con el nuevo contenido y al volver a ejecutar el comando original ya no se ecribe correctamente el output. 
-			El alrchivo deberia haberse actualizado y contener `hola` pero se queda vacio. 
-
 	- Control de errores.
 
 	- Memory Leaks. Context errors. File descriptor leaks.
@@ -23,6 +16,13 @@
 
 
 * Solved issues
+
+	- VERIFICAR (por el momento ha dejado de pasar)
+		- A parte de still reachable leaks he observado que al ejecutar el comando
+			`ls -l | cat -e | echo hola > output && echo $PATH` funciona perfectamente pero si 
+			ejecutamos otro comando usando el mismo archivo como output, por ejemplo, `ls -l > output`
+			el archivo se actualiza con el nuevo contenido y al volver a ejecutar el comando original ya no se ecribe correctamente el output. 
+			El alrchivo deberia haberse actualizado y contener `hola` pero se queda vacio. 
 
 	- Verificar redireccion `ls -l && (cd .. && ls -l) > output`
 

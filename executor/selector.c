@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/14 23:34:35 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 00:28:21 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	waiter(t_ast_node *node, t_terminal *tty)
 	setup_signal_handlers_process();
 	while (1)
 	{
-		if (waitpid(-1, &status, 0) == -1)
+		if (waitpid(-1, &status, 0) > 0)
 		{
 			waiter_util(node, status, tty);
 			break ;
