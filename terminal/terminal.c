@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/15 00:24:30 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/15 11:38:47 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	build_terminal(char **env, t_terminal *tty)
 		{
 			if (tty->env[0] == NULL)
 				set_env(NULL, ft_strdup("PATH"), handle_no_env(), tty);
-			// init_local_history(&tty->myhist);
-			// load_history_from_file(&tty->myhist, tty);
+			init_local_history(&tty->myhist);
+			load_history_from_file(&tty->myhist, tty);
 			set_tty(tty);
 		}
 		else
@@ -76,6 +76,7 @@ void	loop_terminal(t_terminal *tty)
 {
 	char 		*input;
 	t_token		*tokens;
+	t_token		*tmp;
 
 	while (true)
 	{
@@ -90,24 +91,26 @@ void	loop_terminal(t_terminal *tty)
 			free(input);
 			continue ;
 		}
-		// add_to_both_histories(&tty.myhist, input);
+		add_to_both_histories(&tty->myhist, input);
 		tokens = tokenize_input(input);
 		free(input);
-		t_token *tmp = tokens;
+		tmp = tokens;
 		if (!check_syntax(tmp, NULL))
 		{
-			// clean tokens and input or maybe in reverse order. If true, run the program
+			free_token(tmp);
 			continue ;
 		}
+		tmp = tokens;
 		tty->ast = build_ast(tokens); 
-		//free_token(tokens);
+		free_token(tmp);
 		execute_ast(tty);
+		tty->ast = NULL;
 	}
 }
 
 void	destroy_terminal(t_terminal *tty)
 {
-	// save_history_to_file(&tty->myhist, tty);
+	save_history_to_file(&tty->myhist, tty);
 	clear_arr_of_strs(tty->env);
 	clear_arr_of_strs(tty->env_local);
 	clear_arr_of_strs(tty->env_cmd);
