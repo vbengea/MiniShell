@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 18:42:28 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 20:42:54 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void process_env_tokens(char **env_tokens, char **cmd_args, t_ast_node *node, in
 void handle_env_var(t_token *current, char **cmd_args, t_ast_node *node, int *i);
 void handle_word(t_token *current, char **cmd_args, t_ast_node *node, int *i);
 int fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node);
-int	cmd_args_loop(t_token *current, t_cmd_args_context *context, t_ast_node *node);
+//int	cmd_args_loop(t_token *current, t_cmd_args_context *context, t_ast_node *node);
 
 
 
