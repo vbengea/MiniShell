@@ -55,6 +55,7 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/tokenizer/free_token.c \
 					$(PARSER_DIR)/tokenizer/check_syntax.c \
 					$(PARSER_DIR)/ast_build/*.c \
+					$(PARSER_DIR)/ast_build/build_ast/*.c \
 					$(PARSER_DIR)/ast_build/command_node/*.c \
 					$(PARSER_DIR)/environment/handle_no_env.c \
 					$(BUILTINS_DIR)/cd.c \
