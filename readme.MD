@@ -1,10 +1,16 @@
 
 * TODAY!!:
 
-	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 
 * To implement:
+
+	- VERIFICAR (por el momento ha dejado de pasar)
+		- A parte de still reachable leaks he observado que al ejecutar el comando
+			`ls -l | cat -e | echo hola > output && echo $PATH` funciona perfectamente pero si 
+			ejecutamos otro comando usando el mismo archivo como output, por ejemplo, `ls -l > output`
+			el archivo se actualiza con el nuevo contenido y al volver a ejecutar el comando original ya no se ecribe correctamente el output. 
+			El alrchivo deberia haberse actualizado y contener `hola` pero se queda vacio. 
 
 	- Control de errores.
 
@@ -22,6 +28,8 @@
 
 
 * Solved issues
+
+	- Guardar el historial en archivo y cargarlos a la hora de ejecturar la minishell.
 
 	- El primer argumento de echo tiene un espacio cuando se interpolan variables.
 

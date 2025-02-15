@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_build.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/14 00:54:22 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/15 13:49:18 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define AST_BUILD_H
 
 # include "headers.h"
+
+typedef struct s_cmd_args_context
+{
+	char		**cmd_args;
+	t_ast_node	*node;
+	int			*i;
+	bool		*prev_export;
+}	t_cmd_args_context;
 
 t_ast_node		*build_ast(t_token *tokens);
 t_ast_node		*create_ast_node(t_node_type type, char **cmd_args);
@@ -45,10 +53,23 @@ int				count_command_words(t_token *tokens);
 char			**allocate_cmd_args(int count);
 t_redirect_type	get_redirect_type(t_token_type type);
 int				handle_redirection(t_ast_node *node, t_token **current);
-int				fill_cmd_args(t_token *tokens, char **cmd_args, \
-				t_ast_node *node);
 t_ast_node		*build_command_node(t_token *tokens);
 
-/* HANDLE PARENTHESES */
+
+
+
+
+void free_tab(char **tab);
+void handle_word_token(t_token *temp, int *count, bool *prev_export);
+bool handle_env_var_token(bool prev_export, int *count);
+bool handle_redirect_count(t_token **temp);
+t_redirect_type get_redirect_type(t_token_type type);
+void process_env_tokens(char **env_tokens, char **cmd_args, t_ast_node *node, int *i);
+void handle_env_var(t_token *current, char **cmd_args, t_ast_node *node, int *i);
+void handle_word(t_token *current, char **cmd_args, t_ast_node *node, int *i);
+int fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node);
+int	cmd_args_loop(t_token *current, t_cmd_args_context *context, t_ast_node *node);
+
+
 
 #endif
