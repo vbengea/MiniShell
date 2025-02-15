@@ -1,9 +1,3 @@
-
-* TODAY!!:
-
-	- Verificar redireccion `ls -l && (cd .. && ls -l) > output`
-
-
 * To implement:
 
 	- VERIFICAR (por el momento ha dejado de pasar)
@@ -29,6 +23,8 @@
 
 
 * Solved issues
+
+	- Verificar redireccion `ls -l && (cd .. && ls -l) > output`
 
 	- Double free detected `ls -l && (cd .. && ls -l)`
 
