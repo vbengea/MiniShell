@@ -1,6 +1,8 @@
 
 * TODAY!!:
 
+	- Gestionar codigos de error como lo hace bash. Command not fount: 127.
+
 	- Verificar redireccion `ls -l && (cd .. && ls -l) > output`
 
 
