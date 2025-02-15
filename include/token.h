@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:15:41 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 20:29:46 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/15 19:52:50 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef enum e_token_type
 	TOKEN_PIPE,
 	TOKEN_REDIRECT_IN,
 	TOKEN_REDIRECT_OUT,
-	TOKEN_REDIRECT_FD, // Add fd redirection;
+	TOKEN_REDIRECT_FD,
 	TOKEN_APPEND_FD,
 	TOKEN_REDIRECT_FD_OUT,
 	TOKEN_REDIRECT_FD_IN,

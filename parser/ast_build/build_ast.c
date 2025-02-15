@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:00:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/08 11:49:32 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/15 19:45:29 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,12 @@ t_ast_node *build_ast(t_token *tokens)
 	{
 		return (build_command_node(tokens));
 	}
-
-	// printf("Split point found: type=%d, value=%s\n", split_point->type, split_point->value);
-
 	left = NULL;
 	if (split_point != tokens)
 	{
-		// printf("Building left subtree\n");
 		disconnect_tokens(tokens, split_point);
 		left = build_ast(tokens);
 		reconnect_tokens(tokens, split_point);
 	}
-
-	// printf("Building operator node\n");
 	return (build_operator_node(left, split_point));
 }
