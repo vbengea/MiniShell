@@ -14,7 +14,7 @@
 
 static	int	is_identifier(char c)
 {
-	if (c && c != 39 && (ft_isalnum(c) || c == '_'))
+	if (c && c != 39 && (ft_isalnum(c) || c == '_' || c == '?'))
 		return (1);
 	else
 		return (0);
