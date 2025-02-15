@@ -1,8 +1,6 @@
 
 * TODAY!!:
 
-	- Double free detected `ls -l && (cd .. && ls -l)`
-
 	- Verificar redireccion `ls -l && (cd .. && ls -l) > output`
 
 
@@ -31,6 +29,8 @@
 
 
 * Solved issues
+
+	- Double free detected `ls -l && (cd .. && ls -l)`
 
 	- La variable `?` no se esta actualizando con el ultimo codigo de error. 
 		al hacer `echo $?` muestra solo `?`,

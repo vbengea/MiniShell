@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 23:51:23 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/15 21:53:21 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,10 @@ char	**expantion(char *str, char **args)
 			free(lst->content);
 		}
 		if (lst->next == NULL)
+		{
+			free(lst);
 			break ;
+		}
 		p = lst;
 		lst = lst->next;
 		free(p);
