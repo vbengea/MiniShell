@@ -32,6 +32,8 @@
 
 * Solved issues
 
+	- Verificar redireccion `ls -l && (cd .. && ls -l) > output`
+
 	- Double free detected `ls -l && (cd .. && ls -l)`
 
 	- La variable `?` no se esta actualizando con el ultimo codigo de error. 
