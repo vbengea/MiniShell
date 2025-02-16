@@ -107,7 +107,7 @@ char	*read_files_content(char **files)
 			close(tmp);
 		}
 		else
-			cleanup(files[i]);
+			cleanup(files[i], 1);
 		i++;
 	}
 	return (content);

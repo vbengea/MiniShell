@@ -38,7 +38,7 @@ int	env_lookup(char *key, t_terminal *tty)
 
 	p = env_resolution(tty);
 	if (!p)
-		cleanup("Memory error on environment variable lookup");
+		cleanup("Memory error on environment variable lookup", 1);
 	i = 0;
 	var = ft_strjoin(key, "=");
 	if (var)

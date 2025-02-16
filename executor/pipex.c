@@ -73,7 +73,7 @@ static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 		else
 		{
 			if (execute(node->args, tty) == -1)
-				cleanup("Error executing command 3");
+				cleanup("Error executing command", 126);
 		}
 	}
 	else
@@ -86,10 +86,10 @@ void	pipex(t_ast_node *node, t_terminal *tty)
 	int			pid;
 
 	if (pipe(fd) == -1)
-		cleanup("Error creating pipe");
+		cleanup("Error creating pipe", 1);
 	pid = fork();
 	if (pid == -1)
-		cleanup("Error forking process");
+		cleanup("Error forking process", 1);
 	if (pid == 0)
 	{
 		close(fd[0]);

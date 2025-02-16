@@ -31,6 +31,11 @@ void	waiter_util(t_ast_node *node, int status, t_terminal *tty)
 	char		*file;
 	t_ast_node	*parent;
 
+	if (status >= SIGHUP && status <= (SIGSYS + 33))
+		status += 128;
+	// else if (status > 255)
+	// 	status = status & 0xFF;
+	printf("%d\n", status);
 	parent = node->parent;
 	while (parent)
 	{
@@ -181,7 +186,7 @@ void	executor(t_ast_node *node, int hold, t_terminal *tty)
 	(void) hold;
 	preexecute(node, tty);
 	if (execute(node->args, tty) == -1)
-		cleanup("Error executing command 5");
+		cleanup("Error executing command", 126);
 }
 
 static	void	builtin_end(t_ast_node *node, int hold, t_terminal *tty)
@@ -263,7 +268,7 @@ void	forker(t_ast_node *node, void (*f)(t_ast_node *node, int hold, \
 
 	pid = fork();
 	if (pid == -1)
-		cleanup("Error forking process");
+		cleanup("Error forking process", 1);
 	if (pid == 0)
 		f(node, 1, tty);
 	else
