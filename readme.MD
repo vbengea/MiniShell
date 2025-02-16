@@ -1,8 +1,7 @@
 
 * TODAY!!:
 
-	- Gestionar codigos de error como lo hace bash. Command not fount: 127.
-
+	- 
 
 * To implement:
 
@@ -22,6 +21,8 @@
 
 
 * Solved issues
+
+	- Gestionar codigos de error como lo hace bash. Command not fount: 127.
 
 	- Verificar comportamiendo de señales. Si CTRL + C se usa despues de la ejecucion de un comando o al principio del programa, imprime ^C y el cursor baja a una
 		nueva linea vacia. Hay que pulsar de nuevo CTRL + C para que vuelva a aparecer el prompt. 

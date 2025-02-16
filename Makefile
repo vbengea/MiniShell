@@ -1,8 +1,8 @@
 NAME			:=	minishell
 
-RED=\033[1;31m
-GREEN=\033[1;32m
-NC=\033[0m
+RED				:=	\033[1;31m
+GREEN			:=	\033[1;32m
+NC				:=	\033[0m
 
 CC				:= 	cc
 CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include -g
@@ -38,6 +38,7 @@ SRC				:= 	main.c\
 					$(SIGNALS_DIR)/signals.c \
 					$(SIGNALS_DIR)/terminal.c \
 					$(SIGNALS_DIR)/tty.c \
+					$(SIGNALS_DIR)/utils.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
 					$(PARSER_DIR)/tokenizer/add_token.c \
 					$(PARSER_DIR)/tokenizer/create_token.c \
@@ -155,14 +156,11 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Working on exit codes"
+	git commit -am "Norm"
 	git config pull.rebase false
 	git push
 
 runner: re
-	@# mkdir one
-	@# mkdir one/two
-	@# mkdir one/two/three
 	./$(NAME)
 	@make -C . fclean --no-print-directory
 

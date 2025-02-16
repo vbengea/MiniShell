@@ -6,26 +6,26 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 11:30:06 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 18:53:45 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-int	sig = 0;
+int	g_sig = 0;
 
 void	handle_sigint(int signal)
 {
 	(void) signal;
 	kill(0, SIGQUIT);
 	write(STDOUT_FILENO, "\n", 1);
-	if (sig == 0)
+	if (g_sig == 0)
 	{
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	sig = 0;
+	g_sig = 0;
 }
 
 void	setup_signal_handlers(void)

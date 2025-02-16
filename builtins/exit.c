@@ -16,6 +16,7 @@ void	exit_bi(t_ast_node *node, t_terminal *tty)
 {
 	int	exit_code;
 
+	exit_code = 0;
 	if (node->args[1])
 		exit_code = ft_atoi(node->args[1]);
 	if (node->out_fd < 0)
