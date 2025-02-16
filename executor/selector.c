@@ -67,7 +67,7 @@ void	waiter(t_ast_node *node, t_terminal *tty)
 	{
 		if (waitpid(-1, &status, 0) > 0)
 		{
-			if (status == 0)
+			if (status != SIGINT)
 				sig = 0;
 			waiter_util(node, status, tty);
 			break ;
