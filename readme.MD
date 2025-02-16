@@ -8,8 +8,6 @@
 		CTRL + D dependiendo de cuando se use no lo detecta a la primera, hay que pulsar una segunda vez para salir.
 		(Es probable que se deba al entorno)
 
-	- Tal vez gestionar como lo hace bash el builtin `exit`. Ejemplo `exit 150` actualiza la variable `?` de la shell original con ese codigo. 
-		Seria simplemente verificar el argumento despues de exit y pasarselo a `exit()`.
 
 * To implement:
 
@@ -29,6 +27,9 @@
 
 
 * Solved issues
+
+	- Tal vez gestionar como lo hace bash el builtin `exit`. Ejemplo `exit 150` actualiza la variable `?` de la shell original con ese codigo. 
+		Seria simplemente verificar el argumento despues de exit y pasarselo a `exit()`.
 
 	- `<< EOF << END | ls -l > file1 > file2 > file3` No esta ejecutando despues del pipe.
 
