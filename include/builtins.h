@@ -29,6 +29,6 @@ char	**expantion(char *str, char **args);
 char	*get_entry(char *key, char *value);
 int		env_lookup(char *key, t_terminal *tty);
 char	**env_resolution(t_terminal *tty);
-void	unset_one(t_ast_node *node, char *key, int j, t_terminal *tty);
+void	unset_one(char *key, t_terminal *tty);
 
 #endif
