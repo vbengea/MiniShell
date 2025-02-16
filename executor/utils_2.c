@@ -19,7 +19,7 @@ int	is_pipe_state(t_ast_node *node)
 	return (0);
 }
 
-static	int	is_identifier(char c)
+int	is_identifier(char c)
 {
 	if (c && c != 39 && (ft_isalnum(c) || c == '_' || c == '?'))
 		return (1);

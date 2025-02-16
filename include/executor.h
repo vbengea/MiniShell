@@ -61,5 +61,6 @@ void			builtin_selector(t_ast_node *node, int should_exit, \
 char			*read_path_content(char *path);
 void			redlist_out(t_redirection *lst, char *content);
 void			redlist_iter(t_redirection *lst, void (*f)(void *, int x));
+int				is_identifier(char c);
 
 #endif
