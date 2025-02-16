@@ -3,7 +3,6 @@
 
 	- Gestionar codigos de error como lo hace bash. Command not fount: 127.
 
-
 	- Mismo comando pero al reves `ls -l > file1 > file2 > file3 | << EOF << END` no esta borrando los archivos temporales de heredoc.
 
 	- Verificar comportamiendo de señales. Si CTRL + C se usa despues de la ejecucion de un comando o al principio del programa, imprime ^C y el cursor baja a una
