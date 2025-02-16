@@ -3,8 +3,6 @@
 
 	- Gestionar codigos de error como lo hace bash. Command not fount: 127.
 
-	- Mismo comando pero al reves `ls -l > file1 > file2 > file3 | << EOF << END` no esta borrando los archivos temporales de heredoc.
-
 	- Verificar comportamiendo de señales. Si CTRL + C se usa despues de la ejecucion de un comando o al principio del programa, imprime ^C y el cursor baja a una
 		nueva linea vacia. Hay que pulsar de nuevo CTRL + C para que vuelva a aparecer el prompt. 
 		CTRL + D dependiendo de cuando se use no lo detecta a la primera, hay que pulsar una segunda vez para salir.
@@ -33,6 +31,8 @@
 * Solved issues
 
 	- `<< EOF << END | ls -l > file1 > file2 > file3` No esta ejecutando despues del pipe.
+
+	- Mismo comando pero al reves `ls -l > file1 > file2 > file3 | << EOF << END` no esta borrando los archivos temporales de heredoc.
 
 	- VERIFICAR (por el momento ha dejado de pasar)
 		- A parte de still reachable leaks he observado que al ejecutar el comando
