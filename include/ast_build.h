@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_build.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 20:42:54 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/16 11:42:08 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define AST_BUILD_H
 
 # include "headers.h"
-
 
 typedef struct s_paren_context
 {
@@ -32,10 +31,10 @@ typedef struct s_cmd_args_context
 	bool		*prev_export;
 }	t_cmd_args_context;
 
-typedef struct	s_redirection_info
+typedef struct s_redirection_info
 {
 	t_redirect_type		type;
-	t_out_redirect_type otype;
+	t_out_redirect_type	otype;
 	char				*file;
 	bool				quote_flag;
 }	t_redirection_info;
@@ -62,31 +61,27 @@ int				is_redirect_token(t_token_type type);
 void			free_ast(t_ast_node *node);
 void			print_ast(t_ast_node *node, int level);
 
-void	add_redirection(t_ast_node *node, t_redirection_info *redir_info);
+void			add_redirection(t_ast_node *node, \
+	t_redirection_info *redir_info);
 
-
-/* BUILD COMMAND NODE */
 int				count_command_words(t_token *tokens);
 char			**allocate_cmd_args(int count);
 t_redirect_type	get_redirect_type(t_token_type type);
 int				handle_redirection(t_ast_node *node, t_token **current);
 t_ast_node		*build_command_node(t_token *tokens);
 
-
-
-
-
-void free_tab(char **tab);
-void handle_word_token(t_token *temp, int *count, bool *prev_export);
-bool handle_env_var_token(bool prev_export, int *count);
-bool handle_redirect_count(t_token **temp);
-t_redirect_type get_redirect_type(t_token_type type);
-void process_env_tokens(char **env_tokens, char **cmd_args, t_ast_node *node, int *i);
-void handle_env_var(t_token *current, char **cmd_args, t_ast_node *node, int *i);
-void handle_word(t_token *current, char **cmd_args, t_ast_node *node, int *i);
-int fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node);
-//int	cmd_args_loop(t_token *current, t_cmd_args_context *context, t_ast_node *node);
-
-
+void			free_tab(char **tab);
+void			handle_word_token(t_token *temp, int *count, bool *prev_export);
+bool			handle_env_var_token(bool prev_export, int *count);
+bool			handle_redirect_count(t_token **temp);
+t_redirect_type	get_redirect_type(t_token_type type);
+void			process_env_tokens(char **env_tokens, \
+	char **cmd_args, t_ast_node *node, int *i);
+void			handle_env_var(t_token *current, char **cmd_args, \
+	t_ast_node *node, int *i);
+void			handle_word(t_token *current, char **cmd_args, \
+	t_ast_node *node, int *i);
+int				fill_cmd_args(t_token *tokens, char **cmd_args, \
+	t_ast_node *node);
 
 #endif

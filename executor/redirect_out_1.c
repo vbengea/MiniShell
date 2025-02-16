@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:37 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 02:05:56 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 11:05:11 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ int	detect_out_redirection(t_ast_node *node)
 		if (node->type != NODE_GROUP && !is_builtin(node))
 		{
 			if (dup2(node->out_fd, STDOUT_FILENO) == -1)
-					perror("(6) Error redirecting");
+				perror("(6) Error redirecting");
 			return (1);
 		}
 	}
 	return (0);
 }
 
-int		has_outward_redirection(t_ast_node *ast)
+int	has_outward_redirection(t_ast_node *ast)
 {
 	t_redirection	*lst;
 	int				has_redirect;
@@ -137,7 +137,8 @@ void	multiple_output_redirections(t_ast_node *node)
 	}
 }
 
-void	pipex_redirect_out(t_ast_node *node, int fd[2], int is_last, t_terminal *tty)
+void	pipex_redirect_out(t_ast_node *node, int fd[2], int is_last, \
+	t_terminal *tty)
 {
 	(void) tty;
 	if (detect_out_redirection(node))

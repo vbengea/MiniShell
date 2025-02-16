@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juandanielflores <juandanielflores@stud    +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 00:57:13 by juandanielf       #+#    #+#             */
-/*   Updated: 2024/09/20 01:12:28 by juandanielf      ###   ########.fr       */
+/*   Updated: 2025/02/16 11:52:11 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
