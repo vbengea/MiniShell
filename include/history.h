@@ -24,8 +24,8 @@
 #  define MAX_HISTORY_LINES 500
 # endif
 
-typedef struct s_history    t_history;
-typedef struct s_terminal   t_terminal;
+typedef struct s_history	t_history;
+typedef struct s_terminal	t_terminal;
 
 char	*get_history_filepath(t_terminal *tty);
 void	load_history_from_file(t_history *myhist, t_terminal *tty);
