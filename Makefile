@@ -1,8 +1,8 @@
 NAME			:=	minishell
 
-RED=\033[1;31m
-GREEN=\033[1;32m
-NC=\033[0m
+RED				:=	\033[1;31m
+GREEN			:=	\033[1;32m
+NC				:=	\033[0m
 
 CC				:= 	cc
 CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include -g
@@ -156,9 +156,6 @@ git: norm
 	git push
 
 runner: re
-	@# mkdir one
-	@# mkdir one/two
-	@# mkdir one/two/three
 	./$(NAME)
 	@make -C . fclean --no-print-directory
 
