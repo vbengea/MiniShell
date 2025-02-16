@@ -62,6 +62,6 @@ char			*read_path_content(char *path);
 void			redlist_out(t_redirection *lst, char *content);
 void			redlist_iter(t_redirection *lst, void (*f)(void *, int x));
 int				is_identifier(char c);
-void			ast_printer_node(t_ast_node *ast, int level, int i);
+void			ast_printer_node(t_ast_node *ast, int i);
 
 #endif

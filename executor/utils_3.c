@@ -12,7 +12,7 @@
 
 #include "../include/headers.h"
 
-void	ast_printer_node(t_ast_node *ast, int level, int i)
+void	ast_printer_node(t_ast_node *ast, int i)
 {
 	printf("[TYPE:%d] [NID:%d] [SIDE:%d] [ARGS]: ", ast->type, \
 		ast->nid, ast->side);
@@ -39,7 +39,7 @@ void	ast_printer(t_ast_node *ast, int level)
 		while (i++ < level)
 			printf("  ");
 		if (ast->type == NODE_CMND || ast->type == NODE_GROUP)
-			print_ast_node(ast, level, i);
+			ast_printer_node(ast, i);
 		else
 			printf("[TYPE: %d] [NID:%d] [SIDE:%d] \n", ast->type, ast->nid, \
 				ast->side);
