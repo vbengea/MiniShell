@@ -12,9 +12,31 @@
 
 #include "libft.h"
 
+static	int	copy_arr_inner(char **arr, char **p, int purge, int len)
+{
+	int	i;
+
+	i = 0;
+	while (p && p[i])
+	{
+		arr[i] = ft_strdup(p[i]);
+		if (!arr[i])
+		{
+			clear_arr_of_strs(arr);
+			if (purge)
+				clear_arr_of_strs(p);
+			return (0);
+		}
+		i++;
+	}
+	while (i < len)
+		arr[i++] = ft_strdup(" ");
+	arr[len] = NULL;
+	return (1);
+}
+
 char	**copy_arr_of_strs(char **p, int len, int purge)
 {
-	int		i;
 	char	**arr;
 
 	if (len == 0)
@@ -26,22 +48,8 @@ char	**copy_arr_of_strs(char **p, int len, int purge)
 	arr = malloc(sizeof(char *) * (len + 1));
 	if (arr)
 	{
-		i = 0;
-		while (p && p[i])
-		{
-			arr[i] = ft_strdup(p[i]);
-			if (!arr[i])
-			{
-				clear_arr_of_strs(arr);
-				if (purge)
-					clear_arr_of_strs(p);
-				return (NULL);
-			}
-			i++;
-		}
-		while (i < len)
-			arr[i++] = ft_strdup(" ");
-		arr[len] = NULL;
+		if (!copy_arr_inner(arr, p, purge, len))
+			return (NULL);
 	}
 	if (purge)
 		clear_arr_of_strs(p);
