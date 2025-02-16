@@ -5,6 +5,8 @@
 
 	- No esta dando fallo en caso de no tener permisos una redireccion de salida.
 		`ls -l > output` habiendole quitado el permiso de escritura a output no hace nada pero tampoco da el fallo.
+	
+	- Actualmente la shell esta interpretando comandos en comillas `"ls -l"` no deberia ejecutarse
 
 * To implement:
 
