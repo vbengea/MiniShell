@@ -27,13 +27,9 @@ SRC				:= 	main.c\
 					$(EXEC_DIR)/redirect_2.c \
 					$(EXEC_DIR)/redirect_3.c \
 					$(EXEC_DIR)/redirect_4.c \
-					$(EXEC_DIR)/redirect_5.c \
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
 					$(EXEC_DIR)/pipex.c \
-					$(EXEC_DIR)/parser.c \
-					$(EXEC_DIR)/parser_redis.c \
-					$(EXEC_DIR)/parser_utils.c \
 					$(SIGNALS_DIR)/signals.c \
 					$(SIGNALS_DIR)/terminal.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
@@ -117,7 +113,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "VERIFICAR cat | ls. Al final era una tonteria"
+	git commit -am "Removing mini parser"
 	git config pull.rebase false
 	git push
 
