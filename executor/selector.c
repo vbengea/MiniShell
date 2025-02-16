@@ -26,10 +26,15 @@ void	set_history_status(int status, t_terminal *tty)
 
 void	waiter_util(t_ast_node *node, int status, t_terminal *tty)
 {
-	char	*file;
+	char		*file;
+	t_ast_node	*parent;
 
-	if (node->parent)
-		node->parent->exit = status;
+	parent = node->parent;
+	while (parent)
+	{
+		parent->exit = status;
+		parent = parent->parent;
+	}
 	node->exit = status;
 	set_history_status(status, tty);
 	if (status == 0)

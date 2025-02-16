@@ -1,9 +1,6 @@
 
 * TODAY!!:
 
-	- `ls -l && echo hello || mkdir test` Este comando esta ejecutando tambien despues del `||`. 
-		el output deberia serl unicamente el de `ls -l` y el de `echo hello`
-
 	- Gestionar codigos de error como lo hace bash. Command not fount: 127.
 
 	- Verificar comportamiendo de señales. Si CTRL + C se usa despues de la ejecucion de un comando o al principio del programa, imprime ^C y el cursor baja a una
@@ -30,6 +27,9 @@
 
 
 * Solved issues
+
+	- `ls -l && echo hello || mkdir test` Este comando esta ejecutando tambien despues del `||`. 
+		el output deberia serl unicamente el de `ls -l` y el de `echo hello`
 
 	- Tal vez gestionar como lo hace bash el builtin `exit`. Ejemplo `exit 150` actualiza la variable `?` de la shell original con ese codigo. 
 		Seria simplemente verificar el argumento despues de exit y pasarselo a `exit()`.
