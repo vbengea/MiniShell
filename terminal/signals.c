@@ -12,33 +12,6 @@
 
 #include "../include/headers.h"
 
-void	check_shlvl(t_terminal *tty)
-{
-	int		l;
-	char	*lvl;
-
-	lvl = getenv("SHLVL");
-	if (lvl)
-	{
-		l = ft_atoi(lvl) + 1;
-		lvl = ft_itoa(l);
-	}
-	else
-		lvl = ft_strdup("1");
-	set_env(NULL, "SHLVL", lvl, tty);
-	free(lvl);
-}
-
-void	set_tty(t_terminal *tty)
-{
-	struct termios	t;
-
-	check_shlvl(tty);
-	tcgetattr(0, &t);
-	tcsetattr(0, 0, &t);
-	setup_signal_handlers();
-}
-
 void	handle_sigint(int signal)
 {
 	(void)signal;
