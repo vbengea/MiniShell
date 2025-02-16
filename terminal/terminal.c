@@ -91,6 +91,7 @@ void	loop_terminal(t_terminal *tty)
 			free(input);
 			continue ;
 		}
+		printf("%s\n", input);
 		add_to_both_histories(&tty->myhist, input);
 		tokens = tokenize_input(input);
 		free(input);

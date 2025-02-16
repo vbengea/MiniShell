@@ -12,6 +12,8 @@
 
 #include "../include/headers.h"
 
+extern	int	sig;
+
 void	set_history_status(int status, t_terminal *tty)
 {
 	char	*value;
@@ -60,11 +62,13 @@ void	waiter(t_ast_node *node, t_terminal *tty)
 	int		status;
 
 	status = 0;
-	setup_signal_handlers_process();
+	sig = 1;
 	while (1)
 	{
 		if (waitpid(-1, &status, 0) > 0)
 		{
+			if (status == 0)
+				sig = 0;
 			waiter_util(node, status, tty);
 			break ;
 		}
@@ -175,7 +179,6 @@ void	navigator(t_ast_node *node, int hold, t_terminal *tty)
 void	executor(t_ast_node *node, int hold, t_terminal *tty)
 {
 	(void) hold;
-	setup_signal_handlers_child();
 	preexecute(node, tty);
 	if (execute(node->args, tty) == -1)
 		cleanup("Error executing command 5");

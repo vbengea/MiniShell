@@ -18,11 +18,7 @@
 
 void	set_tty(t_terminal *tty);
 void	setup_signal_handlers(void);
-void	setup_signal_handlers_process(void);
-void	setup_signal_handlers_child(void);
-void	handle_sigquit(int signal);
 void	handle_sigint(int signal);
-void	handle_sigexec(int signal);
 void	check_shlvl(t_terminal *tty);
 void	build_terminal(char **env, t_terminal	*tty);
 void	loop_terminal(t_terminal *tty);

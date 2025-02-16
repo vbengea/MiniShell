@@ -3,11 +3,6 @@
 
 	- Gestionar codigos de error como lo hace bash. Command not fount: 127.
 
-	- Verificar comportamiendo de señales. Si CTRL + C se usa despues de la ejecucion de un comando o al principio del programa, imprime ^C y el cursor baja a una
-		nueva linea vacia. Hay que pulsar de nuevo CTRL + C para que vuelva a aparecer el prompt. 
-		CTRL + D dependiendo de cuando se use no lo detecta a la primera, hay que pulsar una segunda vez para salir.
-		(Es probable que se deba al entorno)
-
 
 * To implement:
 
@@ -27,6 +22,11 @@
 
 
 * Solved issues
+
+	- Verificar comportamiendo de señales. Si CTRL + C se usa despues de la ejecucion de un comando o al principio del programa, imprime ^C y el cursor baja a una
+		nueva linea vacia. Hay que pulsar de nuevo CTRL + C para que vuelva a aparecer el prompt. 
+		CTRL + D dependiendo de cuando se use no lo detecta a la primera, hay que pulsar una segunda vez para salir.
+		(Es probable que se deba al entorno)
 
 	- `ls -l && echo hello || mkdir test` Este comando esta ejecutando tambien despues del `||`. 
 		el output deberia serl unicamente el de `ls -l` y el de `echo hello`
