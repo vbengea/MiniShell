@@ -1,5 +1,9 @@
 NAME			:=	minishell
 
+RED=\033[1;31m
+GREEN=\033[1;32m
+NC=\033[0m
+
 CC				:= 	cc
 CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include -g
 SFLAGS			:= 	-g3 -fsanitize=address
@@ -52,9 +56,38 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/tokenizer/handle_operator.c \
 					$(PARSER_DIR)/tokenizer/free_token.c \
 					$(PARSER_DIR)/tokenizer/check_syntax.c \
-					$(PARSER_DIR)/ast_build/*.c \
-					$(PARSER_DIR)/ast_build/build_ast/*.c \
-					$(PARSER_DIR)/ast_build/command_node/*.c \
+					$(PARSER_DIR)/tokenizer/create_env_var_token.c \
+					$(PARSER_DIR)/tokenizer/is_env_var_declaration.c \
+					$(PARSER_DIR)/tokenizer/process_operator.c \
+					$(PARSER_DIR)/tokenizer/process_token.c \
+					$(PARSER_DIR)/tokenizer/tokenize_input.c \
+					$(PARSER_DIR)/ast_build/add_redirection.c \
+					$(PARSER_DIR)/ast_build/build_operator_node.c \
+					$(PARSER_DIR)/ast_build/create_ast_node.c \
+					$(PARSER_DIR)/ast_build/find_matching_paren.c \
+					$(PARSER_DIR)/ast_build/find_split_point.c \
+					$(PARSER_DIR)/ast_build/handle_parentheses.c \
+					$(PARSER_DIR)/ast_build/is_redirect_token.c \
+					$(PARSER_DIR)/ast_build/build_ast/build_ast.c \
+					$(PARSER_DIR)/ast_build/build_ast/count_word_tokens.c \
+					$(PARSER_DIR)/ast_build/build_ast/disconnect_tokens.c \
+					$(PARSER_DIR)/ast_build/build_ast/is_valid_operator.c \
+					$(PARSER_DIR)/ast_build/build_ast/reconnect_tokens.c \
+					$(PARSER_DIR)/ast_build/build_ast/update_paren_level.c \
+					$(PARSER_DIR)/ast_build/build_ast/update_split_point.c \
+					$(PARSER_DIR)/ast_build/command_node/allocate_cmd_args.c \
+					$(PARSER_DIR)/ast_build/command_node/build_command_node.c \
+					$(PARSER_DIR)/ast_build/command_node/count_command_words.c \
+					$(PARSER_DIR)/ast_build/command_node/fill_cmd_args.c \
+					$(PARSER_DIR)/ast_build/command_node/free_tab.c \
+					$(PARSER_DIR)/ast_build/command_node/get_redirect_type.c \
+					$(PARSER_DIR)/ast_build/command_node/handle_env_var_token.c \
+					$(PARSER_DIR)/ast_build/command_node/handle_env_var.c \
+					$(PARSER_DIR)/ast_build/command_node/handle_redirect_count.c \
+					$(PARSER_DIR)/ast_build/command_node/handle_redirection.c \
+					$(PARSER_DIR)/ast_build/command_node/handle_word_token.c \
+					$(PARSER_DIR)/ast_build/command_node/handle_word.c \
+					$(PARSER_DIR)/ast_build/command_node/process_env_tokens.c \
 					$(PARSER_DIR)/environment/handle_no_env.c \
 					$(BUILTINS_DIR)/cd.c \
 					$(BUILTINS_DIR)/echo.c \
@@ -77,32 +110,35 @@ OBJ 			:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(INCLUDE)
-	$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
+	@$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
+	@echo "${GREEN}Minishell compiled${NC}"
 
 clean:
-	make -C $(LIBFT_DIR) clean
-	rm -f $(EXEC_DIR)/*.o
-	rm -f $(PARSER_DIR)/*/*.o
-	rm -f $(BUILTINS_DIR)/*.o
-	rm -f $(SIGNALS_DIR)/*.o
-	rm -f $(WILDCARD_DIR)/*.o
-	rm -rf *.dSYM
-	rm -f t0 t1 t2 t3 t4 t5 file1 file2 file3 file4 file5 tmp/__*
+	@make -C $(LIBFT_DIR) clean --no-print-directory
+	@rm -f $(EXEC_DIR)/*.o
+	@rm -f $(PARSER_DIR)/*/*.o
+	@rm -f $(BUILTINS_DIR)/*.o
+	@rm -f $(SIGNALS_DIR)/*.o
+	@rm -f $(WILDCARD_DIR)/*.o
+	@rm -rf *.dSYM
+	@rm -f t0 t1 t2 t3 t4 t5 file1 file2 file3 file4 file5 tmp/__*
+	@echo "${RED}Objects removed${NC}"
 
 fclean: clean
-	rm -rf one
-	make -C $(LIBFT_DIR) fclean
-	rm -f $(NAME)
-	rm -f a.out
-	rm -f $(NAME).dSYM
+	@rm -rf one
+	@make -C $(LIBFT_DIR) fclean --no-print-directory
+	@rm -f $(NAME)
+	@rm -f a.out
+	@rm -f $(NAME).dSYM
+	@echo "${RED}Objects and executable removed${NC}"
 
 re: fclean all
 
 $(LIBFT):
-	make -C $(LIBFT_DIR) all
+	@make -C $(LIBFT_DIR) all --no-print-directory
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 norm: fclean
 	#norminette $(SRC) $(INCLUDE)
@@ -120,11 +156,11 @@ git: norm
 	git push
 
 runner: re
-	# mkdir one
-	# mkdir one/two
-	# mkdir one/two/three
+	@# mkdir one
+	@# mkdir one/two
+	@# mkdir one/two/three
 	./$(NAME)
-	make -C . fclean
+	@make -C . fclean --no-print-directory
 
 runneri: re
 	env -i ./$(NAME)

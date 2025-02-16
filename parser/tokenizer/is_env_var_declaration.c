@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   re_token.h                                         :+:      :+:    :+:   */
+/*   is_env_var_declaration.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 20:20:23 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/01 13:36:04 by vbengea          ###   ########.fr       */
+/*   Created: 2025/02/16 18:05:05 by vbengea           #+#    #+#             */
+/*   Updated: 2025/02/16 18:05:19 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RE_TOKEN_H
-# define RE_TOKEN_H
+#include "../../include/headers.h"
 
-# include "headers.h"
-
-typedef struct s_re_token
+int	is_env_var_declaration(const char *input, int *i)
 {
-	char				*value;
-	t_token_type		type;
-	struct s_re_token	*prev;
-	struct s_re_token	*next;
-}	t_re_token;
+	int	start;
 
-t_re_token	*convert_to_double_linked_list(t_token *tokens);
-
-#endif
+	start = *i;
+	if (!ft_isalpha(input[*i]) && input[*i] != '_')
+		return (0);
+	while (ft_isalnum(input[*i]) || input[*i] == '_')
+		(*i)++;
+	if (input[*i] != '=')
+	{
+		*i = start;
+		return (0);
+	}
+	(*i)++;
+	if (!input[*i] || ft_isspace(input[*i]))
+	{
+		*i = start;
+		return (0);
+	}
+	*i = start;
+	return (1);
+}
