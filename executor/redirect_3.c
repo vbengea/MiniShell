@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 19:35:38 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:40:37 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char	*tmp_path(int nid, t_redirect_type type)
 	return (file);
 }
 
-static	void	heredoc_inner(char *str, int fd, t_redirection *lst, t_terminal *tty)
+static	void	heredoc_inner(char *str, int fd, t_redirection *lst, \
+	t_terminal *tty)
 {
 	char	*tmp;
 
@@ -77,4 +78,3 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, \
 		close(fd);
 	}
 }
-
