@@ -33,6 +33,7 @@ SRC				:= 	main.c\
 					$(EXEC_DIR)/pipex.c \
 					$(SIGNALS_DIR)/signals.c \
 					$(SIGNALS_DIR)/terminal.c \
+					$(SIGNALS_DIR)/tty.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
 					$(PARSER_DIR)/tokenizer/add_token.c \
 					$(PARSER_DIR)/tokenizer/create_token.c \
