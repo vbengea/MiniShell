@@ -99,7 +99,11 @@ SRC				:= 	main.c\
 					$(BUILTINS_DIR)/env_set.c \
 					$(BUILTINS_DIR)/expand.c \
 					$(WILDCARD_DIR)/ft_wildcard.c \
-					$(HISTORY_DIR)/history.c
+					$(HISTORY_DIR)/add_to_both_histories.c \
+					$(HISTORY_DIR)/get_history_filepath.c \
+					$(HISTORY_DIR)/init_local_history.c \
+					$(HISTORY_DIR)/load_history_from_file.c \
+					$(HISTORY_DIR)/save_history_to_file.c
 
 OBJ 			:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
 					$(patsubst $(SIGNALS_DIR)/%.c, $(SIGNALS_DIR)/%.o, $(SRC)) \
