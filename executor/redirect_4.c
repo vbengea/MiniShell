@@ -23,47 +23,6 @@ void	ft_rediter(t_redirection *lst, void (*f)(t_redirection *))
 	}
 }
 
-int		has_outward_redirection(t_ast_node *ast)
-{
-	t_redirection	*lst;
-	int				has_redirect;
-	int				flags;
-	int				fd;
-
-	has_redirect = 0;
-	lst = ast->redirs;
-	while (lst)
-	{
-		if (lst->type == REDIRECT_OUT || lst->type == REDIRECT_APPEND)
-		{
-			has_redirect = 1;
-			flags = O_WRONLY | O_CREAT | O_TRUNC;
-			if (lst->type == REDIRECT_APPEND)
-				flags = O_WRONLY | O_CREAT | O_APPEND;
-			fd = open(lst->file, flags, 0666);
-			if (fd >= 0)
-				close(fd);
-		}
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-	return (has_redirect);
-}
-
-int		has_inward_redirection(t_redirection *lst)
-{
-	while (lst)
-	{
-		if (lst->type == REDIRECT_IN || lst->type == REDIRECT_HEREDOC)
-			return (1);
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-	return (0);
-}
-
 int	has_group_redirection(t_ast_node *ast, int is_infile)
 {
 	t_ast_node	*node;

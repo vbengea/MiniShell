@@ -23,10 +23,11 @@ INCLUDE			:= 	./include/headers.h
 SRC				:= 	main.c\
 					$(EXEC_DIR)/utils_1.c \
 					$(EXEC_DIR)/utils_2.c \
-					$(EXEC_DIR)/redirect_1.c \
 					$(EXEC_DIR)/redirect_2.c \
 					$(EXEC_DIR)/redirect_3.c \
 					$(EXEC_DIR)/redirect_4.c \
+					$(EXEC_DIR)/redirect_in_1.c \
+					$(EXEC_DIR)/redirect_out_1.c \
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
 					$(EXEC_DIR)/pipex.c \
@@ -113,7 +114,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Removing unused files"
+	git commit -am "Reorganizing redirections"
 	git config pull.rebase false
 	git push
 

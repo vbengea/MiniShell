@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/14 22:01:59 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 02:03:36 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,35 +111,3 @@ char	*read_files_content(char **files)
 	return (content);
 }
 
-void	redlist_out(t_redirection *lst, char *content)
-{
-	int				tmp;
-	int				flags;
-	int				is_first;
-	t_redirection	*last;
-
-	is_first = 1;
-	while (lst)
-	{
-		if (lst->type == REDIRECT_OUT || lst->type == REDIRECT_APPEND)
-			last = lst;
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
-	}
-	if (last)
-	{
-		lst = last;
-		if (lst->type == REDIRECT_OUT)
-			flags = O_WRONLY | O_CREAT | O_TRUNC;
-		else
-			flags = O_WRONLY | O_CREAT | O_APPEND;
-		tmp = open(lst->file, flags, 0666);
-		if (is_first)
-		{
-			write(tmp, content, ft_strlen(content));
-			is_first = 0;
-		}
-		close(tmp);
-	}
-}
