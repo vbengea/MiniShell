@@ -1,7 +1,10 @@
 
 * TODAY!!:
 
-	- 
+	- HEREDOC en pipe `cat << EOF | ls` Esta ejecutando antes el comando `ls`
+
+	- No esta dando fallo en caso de no tener permisos una redireccion de salida.
+		`ls -l > output` habiendole quitado el permiso de escritura a output no hace nada pero tampoco da el fallo.
 
 * To implement:
 
