@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 19:11:40 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:23:02 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	execute_ast(t_terminal *tty)
 		selector(tty->ast, tty);
 		free_redirect_ast(tty->ast, 0);
 	}
+	tty->ast = NULL;
 }
 
 void	loop_terminal(t_terminal *tty)
@@ -69,32 +70,9 @@ void	loop_terminal(t_terminal *tty)
 	char		*input;
 	t_token		*tokens;
 
-	while (true)
-	{
-		input = readline(GREEN "minishell$ " RESET);
-		if (!input)
-		{
-			write(1, "exit\n", 5);
-			break ;
-		}
-		else if (input[0] == '\0')
-		{
-			free(input);
-			continue ;
-		}
-		add_to_both_histories(&tty->myhist, input);
-		tokens = tokenize_input(input);
-		free(input);
-		if (!check_syntax(tokens, NULL))
-		{
-			free_token(tokens);
-			continue ;
-		}
-		tty->ast = build_ast(tokens);
-		free_token(tokens);
-		execute_ast(tty);
-		tty->ast = NULL;
-	}
+	input = NULL;
+	tokens = NULL;
+	loop_inner(input, tokens, tty);
 }
 
 void	destroy_terminal(t_terminal *tty)

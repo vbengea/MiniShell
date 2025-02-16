@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 19:00:53 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:23:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,34 @@ void	tty_init(char **env, t_terminal *tty)
 		tty->env_cmd = malloc(sizeof(char *) * 1);
 		tty->env_local[0] = NULL;
 		tty->env_cmd[0] = NULL;
+	}
+}
+
+void	loop_inner(char *input, t_token *tokens, t_terminal *tty)
+{
+	while (true)
+	{
+		input = readline(GREEN "minishell$ " RESET);
+		if (!input)
+		{
+			write(1, "exit\n", 5);
+			break ;
+		}
+		else if (input[0] == '\0')
+		{
+			free(input);
+			continue ;
+		}
+		add_to_both_histories(&tty->myhist, input);
+		tokens = tokenize_input(input);
+		free(input);
+		if (!check_syntax(tokens, NULL))
+		{
+			free_token(tokens);
+			continue ;
+		}
+		tty->ast = build_ast(tokens);
+		free_token(tokens);
+		execute_ast(tty);
 	}
 }
