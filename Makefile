@@ -27,6 +27,7 @@ INCLUDE			:= 	./include/headers.h
 SRC				:= 	main.c\
 					$(EXEC_DIR)/utils_1.c \
 					$(EXEC_DIR)/utils_2.c \
+					$(EXEC_DIR)/utils_3.c \
 					$(EXEC_DIR)/redirect_2.c \
 					$(EXEC_DIR)/redirect_3.c \
 					$(EXEC_DIR)/redirect_4.c \
