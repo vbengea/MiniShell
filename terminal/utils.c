@@ -25,5 +25,5 @@ void	tty_init(char **env, t_terminal *tty)
 		tty->env_cmd = malloc(sizeof(char *) * 1);
 		tty->env_local[0] = NULL;
 		tty->env_cmd[0] = NULL;
-    }
+	}
 }
