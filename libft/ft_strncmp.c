@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:17:55 by juaflore          #+#    #+#             */
-/*   Updated: 2024/09/28 12:41:25 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/16 11:51:48 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	ft_cmpexact(const char *s1, const char *s2)
 	else
 		return (0);
 }
-
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
