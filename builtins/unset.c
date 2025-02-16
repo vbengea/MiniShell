@@ -34,14 +34,12 @@ char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
 	return (NULL);
 }
 
-void	unset_one(t_ast_node *node, char *key, int j, t_terminal *tty)
+void	unset_one(char *key, t_terminal *tty)
 {
 	int		i;
 	char	**env;
 	int		len;
 
-	(void) node;
-	(void) j;
 	len = 0;
 	while (tty->env[len])
 		len++;
@@ -66,12 +64,9 @@ void	unset_one(t_ast_node *node, char *key, int j, t_terminal *tty)
 
 void	unset_bi(t_ast_node *node, t_terminal *tty)
 {
-	int		j;
+	int	j;
 
 	j = 1;
 	while (node->args[j])
-	{
-		unset_one(node, node->args[j], j, tty);
-		j++;
-	}
+		unset_one(node->args[j++], tty);
 }
