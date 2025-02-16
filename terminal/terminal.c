@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 19:00:25 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:11:40 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	loop_terminal(t_terminal *tty)
 {
 	char		*input;
 	t_token		*tokens;
-	t_token		*tmp;
 
 	while (true)
 	{
@@ -86,15 +85,13 @@ void	loop_terminal(t_terminal *tty)
 		add_to_both_histories(&tty->myhist, input);
 		tokens = tokenize_input(input);
 		free(input);
-		tmp = tokens;
-		if (!check_syntax(tmp, NULL))
+		if (!check_syntax(tokens, NULL))
 		{
-			free_token(tmp);
+			free_token(tokens);
 			continue ;
 		}
-		tmp = tokens;
 		tty->ast = build_ast(tokens);
-		free_token(tmp);
+		free_token(tokens);
 		execute_ast(tty);
 		tty->ast = NULL;
 	}

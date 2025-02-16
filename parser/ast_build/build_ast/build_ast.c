@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:00:44 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 21:16:30 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:10:27 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,23 @@
 t_ast_node	*build_ast(t_token *tokens)
 {
 	t_token		*split_point;
+	t_token		*temp;
 	t_ast_node	*left;
 
-	if (!tokens)
+	temp = tokens;
+	if (!temp)
 		return (NULL);
-	if (tokens->type == TOKEN_OPEN_PAREN)
-		return (handle_parentheses(tokens));
-	split_point = find_split_point(tokens);
+	if (temp->type == TOKEN_OPEN_PAREN)
+		return (handle_parentheses(temp));
+	split_point = find_split_point(temp);
 	if (!split_point)
-		return (build_command_node(tokens));
+		return (build_command_node(temp));
 	left = NULL;
-	if (split_point != tokens)
+	if (split_point != temp)
 	{
-		disconnect_tokens(tokens, split_point);
-		left = build_ast(tokens);
-		reconnect_tokens(tokens, split_point);
+		disconnect_tokens(temp, split_point);
+		left = build_ast(temp);
+		reconnect_tokens(temp, split_point);
 	}
 	return (build_operator_node(left, split_point));
 }
