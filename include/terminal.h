@@ -6,13 +6,13 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/15 00:21:36 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 11:42:49 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNALS_H
+#ifndef TERMINAL_H
 
-# define SIGNALS_H
+# define TERMINAL_H
 
 # include "headers.h"
 
