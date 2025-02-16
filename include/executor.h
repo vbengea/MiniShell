@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 01:41:22 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:46:55 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ char			*read_path_content(char *path);
 void			redlist_out(t_redirection *lst, char *content);
 void			redlist_iter(t_redirection *lst, void (*f)(void *, int x));
 int				is_identifier(char c);
+void			ast_printer_node(t_ast_node *ast, int level, int i);
 
 #endif
