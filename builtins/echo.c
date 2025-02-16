@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 18:53:40 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:52:35 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	echo_bi(t_ast_node *node)
 	is_n_option = true;
 	params = node->args;
 	i = 1;
+	if (!params[i])
+		return ;
 	if (ft_strlen(params[i]) == 2 && params[i][0] == '-' && params[i][1] == 'n')
 	{
 		is_n_option = false;
