@@ -105,14 +105,13 @@ char	**expantion(char *str, char **args)
 			free(lst->content);
 		}
 		if (lst->next == NULL)
-		{
-			free(lst);
 			break ;
-		}
 		p = lst;
 		lst = lst->next;
 		free(p);
 	}
+	if (lst)
+		free(lst);
 	if (!found)
 		args = add_arr_of_strs(args, str);
 	return (args);
