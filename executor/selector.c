@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 11:22:57 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 18:13:18 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ void	waiter_util(t_ast_node *node, int status, t_terminal *tty)
 
 	if (status >= SIGHUP && status <= (SIGSYS + 33))
 		status += 128;
-	// else if (status > 255)
-	// 	status = status & 0xFF;
-	printf("%d\n", status);
+	else if (status > 256)
+		status = status >> 8;
 	parent = node->parent;
 	while (parent)
 	{
