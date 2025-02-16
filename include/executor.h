@@ -63,5 +63,6 @@ void			redlist_out(t_redirection *lst, char *content);
 void			redlist_iter(t_redirection *lst, void (*f)(void *, int x));
 int				is_identifier(char c);
 void			ast_printer_node(t_ast_node *ast, int i);
+int				do_outward_redirection(t_ast_node *node);
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "../include/headers.h"
 
-static	int	do_outward_redirection(t_ast_node *node)
+int	do_outward_redirection(t_ast_node *node)
 {
 	char	*id;
 	char	*file;
@@ -23,6 +23,8 @@ static	int	do_outward_redirection(t_ast_node *node)
 	file = tmp_path(node->nid, REDIRECT_OUT);
 	flags = O_WRONLY | O_CREAT | O_TRUNC | O_APPEND;
 	tmp = open(file, flags, 0666);
+	if (fd < 0)
+		cleanup("Error reading file", 1);
 	free(id);
 	free(file);
 	if (tmp < 0)
@@ -73,6 +75,8 @@ int	has_outward_redirection(t_ast_node *ast)
 			fd = open(lst->file, flags, 0666);
 			if (fd >= 0)
 				close(fd);
+			else if (fd < 0)
+				cleanup("Error reading file", 1);
 		}
 		if (lst->next == NULL)
 			break ;
@@ -103,6 +107,8 @@ void	redlist_out(t_redirection *lst, char *content)
 		else
 			flags = O_WRONLY | O_CREAT | O_APPEND;
 		tmp = open(lst->file, flags, 0666);
+		if (fd < 0)
+			cleanup("Error reading file", 1);
 		write(tmp, content, ft_strlen(content));
 		close(tmp);
 	}

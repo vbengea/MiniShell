@@ -63,6 +63,8 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, \
 	if (str)
 	{
 		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		if (fd < 0)
+			cleanup("Error reading file", 1);
 		free(str);
 		str = get_next_line(STDIN_FILENO);
 		str_len = ft_strlen(str);

@@ -1,11 +1,7 @@
-
 * TODAY!!:
 
 	- HEREDOC en pipe `cat << EOF | ls` Esta ejecutando antes el comando `ls`
 
-	- No esta dando fallo en caso de no tener permisos una redireccion de salida.
-		`ls -l > output` habiendole quitado el permiso de escritura a output no hace nada pero tampoco da el fallo.
-	
 	- Actualmente la shell esta interpretando comandos en comillas `"ls -l"` no deberia ejecutarse
 
 * To implement:
@@ -26,6 +22,9 @@
 
 
 * Solved issues
+
+	- No esta dando fallo en caso de no tener permisos una redireccion de salida.
+		`ls -l > output` habiendole quitado el permiso de escritura a output no hace nada pero tampoco da el fallo.
 
 	- Gestionar codigos de error como lo hace bash. Command not fount: 127.
 
