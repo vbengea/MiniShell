@@ -2,6 +2,7 @@
 
 	- HEREDOC en pipe `cat << EOF | ls` Esta ejecutando antes el comando `ls`
 
+
 * To implement:
 
 	- Control de errores.
@@ -74,7 +75,6 @@
 
 		export G1=1 G=2 hola que tal
 		GB=B 
-
 
 	- Verificar CTRL-C mientras se ejecuta HEREDOC.
 
