@@ -42,28 +42,24 @@ char	*find_path(char *cmd, char *penv)
 {
 	int		i;
 	char	**pathenv;
-	char	**tokens;
 	char	*command;
 	char	*segments;
 
 	pathenv = ft_split(penv, ':');
-	tokens = ft_split(cmd, ' ');
 	i = 0;
-	while (pathenv && tokens && pathenv[i])
+	while (pathenv && cmd && pathenv[i])
 	{
 		segments = ft_strjoin(pathenv[i++], "/");
-		command = ft_strjoin(segments, tokens[0]);
+		command = ft_strjoin(segments, cmd);
 		free(segments);
 		if (access(command, F_OK | X_OK) == 0)
 		{
 			clear_arr_of_strs(pathenv);
-			clear_arr_of_strs(tokens);
 			return (command);
 		}
 		free(command);
 	}
 	clear_arr_of_strs(pathenv);
-	clear_arr_of_strs(tokens);
 	return (NULL);
 }
 

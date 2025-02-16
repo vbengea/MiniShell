@@ -2,8 +2,6 @@
 
 	- HEREDOC en pipe `cat << EOF | ls` Esta ejecutando antes el comando `ls`
 
-	- Actualmente la shell esta interpretando comandos en comillas `"ls -l"` no deberia ejecutarse
-
 * To implement:
 
 	- Control de errores.
@@ -22,6 +20,8 @@
 
 
 * Solved issues
+
+	- Actualmente la shell esta interpretando comandos en comillas `"ls -l"` no deberia ejecutarse
 
 	- No esta dando fallo en caso de no tener permisos una redireccion de salida.
 		`ls -l > output` habiendole quitado el permiso de escritura a output no hace nada pero tampoco da el fallo.
