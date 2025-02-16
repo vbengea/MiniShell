@@ -6,13 +6,11 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 00:28:21 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 01:57:02 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
-
-extern int SIGNAL;
 
 void	set_history_status(int status, t_terminal *tty)
 {
@@ -302,7 +300,6 @@ void	selector_pipe(t_ast_node *node, t_terminal *tty)
 		if (node->type == NODE_GROUP && node->parent->type == NODE_GROUP)
 			return ;
 	}
-	SIGNAL = 3;
 	pipex(node, tty);
 }
 

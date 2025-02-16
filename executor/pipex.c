@@ -6,32 +6,18 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 00:31:19 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 01:54:44 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
+static	void	navigate_pipex(t_ast_node *node, t_terminal *tty)
 {
-	t_ast_node	*origin;
 	t_ast_node	*parent;
 
-	(void) ppid;
-	origin = node;
 	parent = NULL;
-	tty->files[0] = fd[0];
-	node = node->parent;
-	while (node)
-	{
-		if(node->type == NODE_PIPE && node->discovered == 0)
-		{
-			node->discovered = 1;
-			break ;
-		}
-		node = node->parent;
-	}
-	if(node)
+	if (node)
 	{
 		node = node->right;
 		while (node && node->left != NULL)
@@ -49,6 +35,26 @@ static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
 		if (node)
 			pipex(node, tty);
 	}
+}
+
+static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
+{
+	t_ast_node	*origin;
+
+	(void) ppid;
+	origin = node;
+	tty->files[0] = fd[0];
+	node = node->parent;
+	while (node)
+	{
+		if (node->type == NODE_PIPE && node->discovered == 0)
+		{
+			node->discovered = 1;
+			break ;
+		}
+		node = node->parent;
+	}
+	navigate_pipex(node, tty);
 	close(fd[0]);
 	waiter(origin, tty);
 }

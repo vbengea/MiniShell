@@ -113,7 +113,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Removing mini parser"
+	git commit -am "Removing unused files"
 	git config pull.rebase false
 	git push
 
