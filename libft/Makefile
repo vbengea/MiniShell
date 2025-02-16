@@ -34,7 +34,7 @@ INCLUDE := libft.h
 all: $(NAME)
 
 $(NAME): $(OBJ) $(INCLUDE)
-	ar $(AFLAGS) $(NAME) $(OBJ)
+	@ar $(AFLAGS) $(NAME) $(OBJ)
 
 bonus: bonus.bonus
 
@@ -43,14 +43,14 @@ bonus.bonus: $(OBJ) $(BOBJ) $(INCLUDE)
 	touch bonus.bonus
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(OBJ) $(BOBJ)
-	rm -f bonus.bonus
+	@rm -f $(OBJ) $(BOBJ)
+	@rm -f bonus.bonus
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
