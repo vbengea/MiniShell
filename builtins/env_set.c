@@ -109,7 +109,7 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 	str = get_entry(key, value);
 	if (str)
 	{
-		unset_one(node, key, arg_index, tty);
+		unset_one(key, tty);
 		append_entry(node, str, arg_index, tty);
 		free(str);
 	}
