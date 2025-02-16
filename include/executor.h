@@ -42,7 +42,7 @@ void			pipex_redirect_out(t_ast_node *node, int fd[2], \
 				int is_last, t_terminal *tty);
 void			parse_command(t_ast_node *node, t_terminal *tty);
 
-void			cleanup(char *err);
+void			cleanup(char *err, int code);
 int				is_last(t_ast_node *node, t_terminal *tty);
 int				is_builtin(t_ast_node *node);
 int				is_pipe_state(t_ast_node *node);

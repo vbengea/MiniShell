@@ -79,14 +79,14 @@ int	doexec(char *path, char **comm, int is_free, t_terminal *tty)
 			if (is_free)
 				free(path);
 			clear_arr_of_strs(comm);
-			cleanup("Error executing command 1");
+			cleanup("Error executing command", 126);
 			return (-1);
 		}
 	}
 	if (path && is_free)
 		free(path);
 	clear_arr_of_strs(comm);
-	cleanup("Error executing command 2");
+	cleanup("Error executing command", 127);
 	return (-1);
 }
 

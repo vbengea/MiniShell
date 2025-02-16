@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 11:24:28 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 18:14:42 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	loop_terminal(t_terminal *tty)
 			free(input);
 			continue ;
 		}
-		printf("%s\n", input);
 		add_to_both_histories(&tty->myhist, input);
 		tokens = tokenize_input(input);
 		free(input);

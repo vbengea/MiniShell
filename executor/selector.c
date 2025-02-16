@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 11:22:57 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 18:13:18 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void	waiter_util(t_ast_node *node, int status, t_terminal *tty)
 	char		*file;
 	t_ast_node	*parent;
 
+	if (status >= SIGHUP && status <= (SIGSYS + 33))
+		status += 128;
+	else if (status > 256)
+		status = status >> 8;
 	parent = node->parent;
 	while (parent)
 	{
@@ -181,7 +185,7 @@ void	executor(t_ast_node *node, int hold, t_terminal *tty)
 	(void) hold;
 	preexecute(node, tty);
 	if (execute(node->args, tty) == -1)
-		cleanup("Error executing command 5");
+		cleanup("Error executing command", 126);
 }
 
 static	void	builtin_end(t_ast_node *node, int hold, t_terminal *tty)
@@ -263,7 +267,7 @@ void	forker(t_ast_node *node, void (*f)(t_ast_node *node, int hold, \
 
 	pid = fork();
 	if (pid == -1)
-		cleanup("Error forking process");
+		cleanup("Error forking process", 1);
 	if (pid == 0)
 		f(node, 1, tty);
 	else
