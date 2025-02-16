@@ -48,7 +48,7 @@ char	**copy_arr_of_strs(char **p, int len, int purge)
 	return (arr);
 }
 
-char    **add_arr_of_strs(char **p, char *str)
+char	**add_arr_of_strs(char **p, char *str)
 {
 	int		len;
 	char	**arr;
@@ -67,7 +67,7 @@ char    **add_arr_of_strs(char **p, char *str)
 	return (arr);
 }
 
-char *ft_stradd(char *a, char *b)
+char	*ft_stradd(char *a, char *b)
 {
 	char	*t;
 
@@ -77,7 +77,7 @@ char *ft_stradd(char *a, char *b)
 	return (a);
 }
 
-char *ft_charadd(char c, char *word, int j)
+char	*ft_charadd(char c, char *word, int j)
 {
 	char	*charstr;
 

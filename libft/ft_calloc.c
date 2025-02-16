@@ -55,21 +55,21 @@ static	void swap_str(char **str, int i, int j)
 
 void sort_arr_of_strs(char **str, int order_type)
 {
-    int		i;
+	int		i;
 	int		j;
 
 	i = 0;
-    while (str[i])
+	while (str[i])
 	{
-        j = 0;
-        while (str[j])
+		j = 0;
+		while (str[j])
 		{
-            if ((order_type == 1) && (ft_strcmp(str[i], str[j]) < 0)) 
+			if ((order_type == 1) && (ft_strcmp(str[i], str[j]) < 0)) 
 				swap_str(str, i, j);
 			else if ((order_type == 0) && (ft_strcmp(str[i], str[j]) > 0)) 
-                swap_str(str, i, j);
-            j++;
-        }
-        i++;
-    }
+				swap_str(str, i, j);
+			j++;
+		}
+		i++;
+	}
 }
