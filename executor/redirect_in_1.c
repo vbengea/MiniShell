@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:41 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 11:15:04 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:15:17 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,16 +145,6 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, \
 		free(str);
 		close(fd);
 	}
-}
-
-void	pipex_redirect_in(t_ast_node *node, int fd[2], int is_last, \
-	t_terminal *tty)
-{
-	(void) is_last;
-	(void) fd;
-	if (!detect_in_redirection(node, tty) && tty->files[0] != STDIN_FILENO && \
-	dup2(tty->files[0], STDIN_FILENO) == -1)
-		perror("(1) Error redirecting");
 }
 
 int	has_inward_redirection(t_redirection *lst)

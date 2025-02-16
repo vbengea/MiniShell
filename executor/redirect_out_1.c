@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:37 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 12:33:54 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:13:56 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,16 +129,4 @@ void	multiple_output_redirections(t_ast_node *node)
 			free(file);
 		}
 	}
-}
-
-void	pipex_redirect_out(t_ast_node *node, int fd[2], int is_last, \
-	t_terminal *tty)
-{
-	(void) tty;
-	if (detect_out_redirection(node))
-		close(fd[1]);
-	else if (is_last)
-		close(fd[1]);
-	else if (dup2(fd[1], STDOUT_FILENO) == -1)
-		perror("(3) Error redirecting");
 }

@@ -35,6 +35,7 @@ SRC				:= 	main.c\
 					$(EXEC_DIR)/execute.c \
 					$(EXEC_DIR)/selector.c \
 					$(EXEC_DIR)/pipex.c \
+					$(EXEC_DIR)/pipex_redirect.c \
 					$(SIGNALS_DIR)/signals.c \
 					$(SIGNALS_DIR)/terminal.c \
 					$(SIGNALS_DIR)/tty.c \
