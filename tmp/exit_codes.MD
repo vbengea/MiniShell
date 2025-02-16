@@ -1,135 +1,72 @@
 
-```
-Exit Code 	Description
-0 	Success
-1 	Operation not permitted
-2 	No such file or directory
-3 	No such process
-4 	Interrupted system call
-5 	Input/output error
-6 	No such device or address
-7 	Argument list too long
-8 	Exec format error
-9 	Bad file descriptor
-10 	No child processes
-11 	Resource temporarily unavailable
-12 	Cannot allocate memory
-13 	Permission denied
-14 	Bad address
-15 	Block device required
-16 	Device or resource busy
-17 	File exists
-18 	Invalid cross-device link
-19 	No such device
-20 	Not a directory
-21 	Is a directory
-22 	Invalid argument
-23 	Too many open files in system
-24 	Too many open files
-25 	Inappropriate ioctl for device
-26 	Text file busy
-27 	File too large
-28 	No space left on device
-29 	Illegal seek
-30 	Read-only file system
-31 	Too many links
-32 	Broken pipe
-33 	Numerical argument out of domain
-34 	Numerical result out of range
-35 	Resource deadlock avoided
-36 	File name too long
-37 	No locks available
-38 	Function not implemented
-39 	Directory not empty
-40 	Too many levels of symbolic links
-42 	No message of desired type
-43 	Identifier removed
-44 	Channel number out of range
-45 	Level 2 not synchronized
-46 	Level 3 halted
-47 	Level 3 reset
-48 	Link number out of range
-49 	Protocol driver not attached
-50 	No CSI structure available
-51 	Level 2 halted
-52 	Invalid exchange
-53 	Invalid request descriptor
-54 	Exchange full
-55 	No anode
-56 	Invalid request code
-57 	Invalid slot
-59 	Bad font file format
-60 	Device not a stream
-61 	No data available
-62 	Timer expired
-63 	Out of streams resources
-64 	Machine is not on the network
-65 	Package not installed
-66 	Object is remote
-67 	Link has been severed
-68 	Advertise error
-69 	Srmount error
-70 	Communication error on send
-71 	Protocol error
-72 	Multihop attempted
-73 	RFS specific error
-74 	Bad message
-75 	Value too large for defined data type
-76 	Name not unique on network
-77 	File descriptor in bad state
-78 	Remote address changed
-79 	Can not access a needed shared library
-80 	Accessing a corrupted shared library
-81 	.lib section in a.out corrupted
-82 	Attempting to link in too many shared libraries
-83 	Cannot exec a shared library directly
-84 	Invalid or incomplete multibyte or wide character
-85 	Interrupted system call should be restarted
-86 	Streams pipe error
-87 	Too many users
-88 	Socket operation on non-socket
-89 	Destination address required
-90 	Message too long
-91 	Protocol wrong type for socket
-92 	Protocol not available
-93 	Protocol not supported
-94 	Socket type not supported
-95 	Operation not supported
-96 	Protocol family not supported
-97 	Address family not supported by protocol
-98 	Address already in use
-99 	Cannot assign requested address
-100 	Network is down
-101 	Network is unreachable
-102 	Network dropped connection on reset
-103 	Software caused connection abort
-104 	Connection reset by peer
-105 	No buffer space available
-106 	Transport endpoint is already connected
-107 	Transport endpoint is not connected
-108 	Cannot send after transport endpoint shutdown
-109 	Too many references
-110 	Connection timed out
-111 	Connection refused
-112 	Host is down
-113 	No route to host
-114 	Operation already in progress
-115 	Operation now in progress
-116 	Stale file handle
-117 	Structure needs cleaning
-118 	Not a XENIX named type file
-119 	No XENIX semaphores available
-120 	Is a named type file
-121 	Remote I/O error
-122 	Disk quota exceeded
-123 	No medium found
-125 	Operation canceled
-126 	Required key not available
-127 	Key has expired
-128 	Key has been revoked
-129 	Key was rejected by service
-130 	Owner died
-131 	State not recoverable
-132 	Operation not possible due to RF-kill
-133 	Memory page has hardware error
-```
+
+* SIGNALS & EXIT CODES:
+
+	- `kill -l` en bash nos devuelve esta lista:
+
+		```
+		 1) SIGHUP		2) SIGINT	 	3) SIGQUIT	 	4) SIGILL	 	5) SIGTRAP
+		 6) SIGABRT	 	7) SIGBUS	 	8) SIGFPE	 	9) SIGKILL		10) SIGUSR1
+		11) SIGSEGV		12) SIGUSR2		13) SIGPIPE		14) SIGALRM		15) SIGTERM
+		16) SIGSTKFLT	17) SIGCHLD		18) SIGCONT		19) SIGSTOP		20) SIGTSTP
+		21) SIGTTIN		22) SIGTTOU		23) SIGURG		24) SIGXCPU		25) SIGXFSZ
+		26) SIGVTALRM	27) SIGPROF		28) SIGWINCH	29) SIGIO		30) SIGPWR
+		31) SIGSYS		34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3
+		38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8
+		43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13
+		48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12
+		53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7
+		58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2
+		63) SIGRTMAX-1	64) SIGRTMAX
+		```
+	- Cuando un proceso es terminado con una señal, su codigo de salida se convierte en 128 + N.
+		N corresponde a la señal recibida. 
+		Ejemplo: `sleep 10` y lo paramos con `CTRL + C` (SIGINT). Si hacemos `echo $?` nos saldra 130.
+		128 + 2 que corresponde a SIGINT. 
+
+	- Rango de codigos de salida `0 - 255`
+
+	- Algunos comunes:
+		
+		+ `0` Success
+		+ `1` General error
+		+ `2` Incorrect usage of builtins `cd /noexist`
+		+ `126` Command found but not executable
+		+ `127` Command not found
+		+ `128 + N` Process killed by signal.
+		+ `255` Exit status out of range
+
+
+* BUILTINS EXIT CODES (`man 1 command`)
+
+	- exit
+
+		+ The  exit  status shall be n, if specified, except that the behavior is unspecified if n is not an unsigned decimal
+	   integer or is greater than 255. Otherwise, the value shall be the exit value of the last command executed, or  zero
+	   if  no  command was executed. When exit is executed in a trap action, the last command is considered to be the com‐
+	   mand that executed immediately preceding the trap action.
+
+
+	- cd 
+
+		+    The following exit values shall be returned:
+
+			0    The directory was successfully changed.
+
+			\>0    An error occurred.
+
+	- export
+
+		+
+
+			0    All name operands were successfully exported.
+
+			\> 0    At least one name could not be exported, or the -p option was specified and an error occurred.
+
+	- unset
+
+		+
+
+			0    All name operands were successfully unset.
+
+			\> 0    At least one name could not be unset.
