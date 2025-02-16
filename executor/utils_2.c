@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:49:12 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 01:41:03 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 11:17:00 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,22 @@ int	is_pipe_state(t_ast_node *node)
 
 void	ast_printer(t_ast_node *ast, int level)
 {
-	int i = 0;
+	int	i;
 
 	if (ast)
 	{
+		i = 0;
 		while (i++ < level)
 			printf("  ");
 		if (ast->type == NODE_CMND || ast->type == NODE_GROUP)
 		{
-			printf("[TYPE:%d] [NID:%d] [SIDE:%d] [ARGS]: ", ast->type, ast->nid, ast->side);
+			printf("[TYPE:%d] [NID:%d] [SIDE:%d] [ARGS]: ", ast->type, \
+				ast->nid, ast->side);
 			i = 0;
 			while (ast->args && ast->args[i])
 			{
-				printf("_%s_(%d, %d),", ast->args[i], ast->expand_flag[i], ast->has_space[i]);
+				printf("_%s_(%d, %d),", ast->args[i], ast->expand_flag[i], \
+					ast->has_space[i]);
 				i++;
 			}
 			printf("[REDIRS]: ");
@@ -42,7 +45,8 @@ void	ast_printer(t_ast_node *ast, int level)
 			printf("\n");
 		}
 		else
-			printf("[TYPE: %d] [NID:%d] [SIDE:%d] \n", ast->type, ast->nid, ast->side);
+			printf("[TYPE: %d] [NID:%d] [SIDE:%d] \n", ast->type, ast->nid, \
+				ast->side);
 		if (ast->left)
 			ast_printer(ast->left, level + 1);
 		if (ast->right)
@@ -52,7 +56,7 @@ void	ast_printer(t_ast_node *ast, int level)
 
 void	print_redirs(void *content, int flag)
 {
-	char *str;
+	char	*str;
 
 	str = (char *) content;
 	printf("(%s [%d]) ", str, flag);

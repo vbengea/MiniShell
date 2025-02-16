@@ -114,7 +114,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Reorganizing redirections"
+	git commit -am "More norminette checks"
 	git config pull.rebase false
 	git push
 

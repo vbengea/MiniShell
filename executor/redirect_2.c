@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 02:03:36 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 11:19:04 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ char	*read_path_content(char *path)
 	char	*content;
 	char	*clear;
 	char	*str;
+	int		tmp;
 
 	content = NULL;
 	clear = NULL;
 	str = NULL;
-	int tmp = open(path, O_RDONLY);
-	if(tmp >= 0)
+	tmp = open(path, O_RDONLY);
+	if (tmp >= 0)
 	{
 		clear = content;
 		str = read_fd_content(tmp);
@@ -74,6 +75,7 @@ char	*read_path_content(char *path)
 char	*read_files_content(char **files)
 {
 	int		i;
+	int		tmp;
 	char	*clear;
 	char	*str;
 	char	*content;
@@ -84,8 +86,8 @@ char	*read_files_content(char **files)
 	content = NULL;
 	while (files[i])
 	{
-		int tmp = open(files[i], O_RDONLY);
-		if(tmp >= 0)
+		tmp = open(files[i], O_RDONLY);
+		if (tmp >= 0)
 		{
 			clear = content;
 			str = read_fd_content(tmp);
@@ -110,4 +112,3 @@ char	*read_files_content(char **files)
 	}
 	return (content);
 }
-

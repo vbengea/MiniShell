@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 01:57:02 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 11:22:57 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	set_history_status(int status, t_terminal *tty)
 {
 	char	*value;
-	
+
 	value = ft_itoa(status);
 	if (value && tty->env)
 	{
@@ -168,7 +168,7 @@ void	navigator(t_ast_node *node, int hold, t_terminal *tty)
 }
 
 void	executor(t_ast_node *node, int hold, t_terminal *tty)
-{	
+{
 	(void) hold;
 	setup_signal_handlers_child();
 	preexecute(node, tty);
@@ -185,7 +185,7 @@ static	void	builtin_end(t_ast_node *node, int hold, t_terminal *tty)
 		exit(1);
 }
 
-static	int		check_options(t_ast_node *node, int hold, t_terminal *tty)
+static	int	check_options(t_ast_node *node, int hold, t_terminal *tty)
 {
 	int	i;
 
@@ -248,7 +248,8 @@ static	void	builtin(t_ast_node *node, int hold, t_terminal *tty)
 	}
 }
 
-void	forker(t_ast_node *node, void (*f)(t_ast_node *node, int hold, t_terminal *tty), t_terminal *tty)
+void	forker(t_ast_node *node, void (*f)(t_ast_node *node, int hold, \
+	t_terminal *tty), t_terminal *tty)
 {
 	int	pid;
 

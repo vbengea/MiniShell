@@ -6,13 +6,11 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 00:29:51 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 11:30:06 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
-
-int	SIGNAL = 2;
 
 void	check_shlvl(t_terminal *tty)
 {
@@ -33,13 +31,11 @@ void	check_shlvl(t_terminal *tty)
 
 void	set_tty(t_terminal *tty)
 {
-	struct termios 	t;
+	struct termios	t;
 
 	check_shlvl(tty);
 	tcgetattr(0, &t);
-	tcsetattr(0, 0, &t );
-	// t.c_lflag &= ~ECHOCTL;
-	// tcsetattr(0, 0, &t);
+	tcsetattr(0, 0, &t);
 	setup_signal_handlers();
 }
 
@@ -74,7 +70,7 @@ void	handle_sigpipe(int signal)
 
 void	setup_signal_handlers(void)
 {
-	struct	sigaction sa;
+	struct sigaction	sa;
 
 	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = handle_sigint;
@@ -86,7 +82,7 @@ void	setup_signal_handlers(void)
 
 void	setup_signal_handlers_process(void)
 {
-	struct	sigaction sa;
+	struct sigaction	sa;
 
 	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = handle_sigquit;
@@ -98,7 +94,7 @@ void	setup_signal_handlers_process(void)
 
 void	setup_signal_handlers_child(void)
 {
-	struct	sigaction sa;
+	struct sigaction	sa;
 
 	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = handle_sigexec;

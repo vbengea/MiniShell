@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:41 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 02:06:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 11:15:04 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ static	void	brbin(char ***arr, t_ast_node *node)
 	}
 }
 
-static	void	brb(t_redirection *lst, char ***arr, t_ast_node *node, t_terminal *tty)
+static	void	brb(t_redirection *lst, char ***arr, t_ast_node *node, \
+	t_terminal *tty)
 {
-	bool		is_first_time;
+	bool	is_first_time;
 
 	is_first_time = true;
 	while (lst)
@@ -77,9 +78,9 @@ static	void	brb(t_redirection *lst, char ***arr, t_ast_node *node, t_terminal *t
 	}
 }
 
-int		detect_in_redirection(t_ast_node *node, t_terminal *tty)
+int	detect_in_redirection(t_ast_node *node, t_terminal *tty)
 {
-	char 	**arr;
+	char	**arr;
 	char	*content;
 
 	if (has_inward_redirection(node->redirs))
@@ -94,7 +95,8 @@ int		detect_in_redirection(t_ast_node *node, t_terminal *tty)
 			return (1);
 		}
 	}
-	else if (has_group_redirection(node, 1) && node->type != NODE_GROUP && !is_builtin(node))
+	else if (has_group_redirection(node, 1) && node->type != NODE_GROUP && \
+	!is_builtin(node))
 	{
 		if (dup2(node->in_fd, STDIN_FILENO) == -1)
 			perror("(7) Error redirecting");
@@ -103,21 +105,21 @@ int		detect_in_redirection(t_ast_node *node, t_terminal *tty)
 	return (0);
 }
 
-void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, t_terminal *tty)
+void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, \
+	t_terminal *tty)
 {
 	char	*str;
-	char	*file;
-	int		str_len;
-	int		fd;
 	char	*delimit;
 	char	*tmp;
+	int		str_len;
+	int		fd;
 
 	delimit = lst->file;
-	file = tmp_path(node->nid, REDIRECT_HEREDOC);
-	if (file)
+	str = tmp_path(node->nid, REDIRECT_HEREDOC);
+	if (str)
 	{
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		free(file);
+		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		free(str);
 		str = get_next_line(STDIN_FILENO);
 		str_len = ft_strlen(str);
 		while (ft_strncmp(str, delimit, str_len - 1) != 0)
@@ -127,7 +129,7 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, t_terminal *tt
 				if (lst->is_quote)
 				{
 					tmp = interpolation(str, -1, tty);
-					if  (tmp)
+					if (tmp)
 					{
 						write(fd, tmp, ft_strlen(tmp));
 						free(tmp);
@@ -141,19 +143,21 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, t_terminal *tt
 			str_len = ft_strlen(str);
 		}
 		free(str);
-		close(fd);	
+		close(fd);
 	}
 }
 
-void	pipex_redirect_in(t_ast_node *node, int fd[2], int is_last, t_terminal *tty)
+void	pipex_redirect_in(t_ast_node *node, int fd[2], int is_last, \
+	t_terminal *tty)
 {
 	(void) is_last;
 	(void) fd;
-	if (!detect_in_redirection(node, tty) && tty->files[0] != STDIN_FILENO && dup2(tty->files[0], STDIN_FILENO) == -1)
+	if (!detect_in_redirection(node, tty) && tty->files[0] != STDIN_FILENO && \
+	dup2(tty->files[0], STDIN_FILENO) == -1)
 		perror("(1) Error redirecting");
 }
 
-int		has_inward_redirection(t_redirection *lst)
+int	has_inward_redirection(t_redirection *lst)
 {
 	while (lst)
 	{

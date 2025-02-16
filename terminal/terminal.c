@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/15 19:13:21 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/16 11:24:28 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	execute_ast(t_terminal *tty)
 
 void	loop_terminal(t_terminal *tty)
 {
-	char 		*input;
+	char		*input;
 	t_token		*tokens;
 	t_token		*tmp;
 
@@ -101,7 +101,7 @@ void	loop_terminal(t_terminal *tty)
 			continue ;
 		}
 		tmp = tokens;
-		tty->ast = build_ast(tokens); 
+		tty->ast = build_ast(tokens);
 		free_token(tmp);
 		execute_ast(tty);
 		tty->ast = NULL;
