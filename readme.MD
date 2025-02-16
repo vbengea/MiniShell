@@ -3,7 +3,6 @@
 
 	- Gestionar codigos de error como lo hace bash. Command not fount: 127.
 
-	- `<< EOF << END | ls -l > file1 > file2 > file3` No esta ejecutando despues del pipe.
 
 	- Mismo comando pero al reves `ls -l > file1 > file2 > file3 | << EOF << END` no esta borrando los archivos temporales de heredoc.
 
@@ -33,6 +32,8 @@
 
 
 * Solved issues
+
+	- `<< EOF << END | ls -l > file1 > file2 > file3` No esta ejecutando despues del pipe.
 
 	- VERIFICAR (por el momento ha dejado de pasar)
 		- A parte de still reachable leaks he observado que al ejecutar el comando
