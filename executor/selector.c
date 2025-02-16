@@ -196,7 +196,7 @@ static	int	check_options(t_ast_node *node, int hold, t_terminal *tty)
 	{
 		if (node->args[i][0] == '-')
 		{
-			if (ft_cmpexact(node->args[i], "echo") && \
+			if (ft_cmpexact(node->args[0], "echo") && \
 				node->args[i][1] == 'n' && ft_strlen(node->args[i]) == 2)
 				break ;
 			else
