@@ -12,14 +12,6 @@
 
 #include "../include/headers.h"
 
-static	int	is_identifier(char c)
-{
-	if (c && c != 39 && (ft_isalnum(c) || c == '_' || c == '?'))
-		return (1);
-	else
-		return (0);
-}
-
 char	*extract_variable(char *str, int *i, t_terminal *tty)
 {
 	char	*cmp;
