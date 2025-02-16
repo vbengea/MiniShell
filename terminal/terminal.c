@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 18:14:42 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 19:00:25 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,7 @@ void	build_terminal(char **env, t_terminal *tty)
 {
 	if (tty)
 	{
-		tty->files[0] = STDIN_FILENO;
-		tty->files[1] = STDOUT_FILENO;
-		tty->files[2] = 0;
-		tty->ast = NULL;
-		tty->env = copy_arr_of_strs(env, 0, 0);
-		tty->env_local = malloc(sizeof(char *) * 1);
-		tty->env_cmd = malloc(sizeof(char *) * 1);
-		tty->env_local[0] = NULL;
-		tty->env_cmd[0] = NULL;
+		tty_init(env, tty);
 		if (tty->env)
 		{
 			if (tty->env[0] == NULL)

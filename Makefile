@@ -38,6 +38,7 @@ SRC				:= 	main.c\
 					$(SIGNALS_DIR)/signals.c \
 					$(SIGNALS_DIR)/terminal.c \
 					$(SIGNALS_DIR)/tty.c \
+					$(SIGNALS_DIR)/utils.c \
 					$(PARSER_DIR)/tokenizer/tokenize.c \
 					$(PARSER_DIR)/tokenizer/add_token.c \
 					$(PARSER_DIR)/tokenizer/create_token.c \
@@ -151,7 +152,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Chaning signal global variable name"
+	git commit -am "Norm"
 	git config pull.rebase false
 	git push
 
