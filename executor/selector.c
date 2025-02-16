@@ -6,13 +6,13 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 18:13:18 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/16 18:53:16 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-extern	int	sig;
+extern	int	g_sig;
 
 void	set_history_status(int status, t_terminal *tty)
 {
@@ -66,13 +66,13 @@ void	waiter(t_ast_node *node, t_terminal *tty)
 	int		status;
 
 	status = 0;
-	sig = 1;
+	g_sig = 1;
 	while (1)
 	{
 		if (waitpid(-1, &status, 0) > 0)
 		{
 			if (status != SIGINT)
-				sig = 0;
+				g_sig = 0;
 			waiter_util(node, status, tty);
 			break ;
 		}

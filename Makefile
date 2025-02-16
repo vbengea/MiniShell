@@ -151,7 +151,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Working on exit codes"
+	git commit -am "Chaning signal global variable name"
 	git config pull.rebase false
 	git push
 
