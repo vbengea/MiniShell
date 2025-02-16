@@ -51,7 +51,7 @@ void	free_redirect_ast(t_ast_node *ast, int find_root)
 void	cleanup(char *err, int code)
 {
 	perror(err);
-	exit(code & 0xFF);
+	exit(code);
 }
 
 int	is_last(t_ast_node *node, t_terminal *tty)
