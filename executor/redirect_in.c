@@ -78,6 +78,19 @@ static	void	brb(t_redirection *lst, char ***arr, t_ast_node *node, \
 	}
 }
 
+int	has_inward_redirection(t_redirection *lst)
+{
+	while (lst)
+	{
+		if (lst->type == REDIRECT_IN || lst->type == REDIRECT_HEREDOC)
+			return (1);
+		if (lst->next == NULL)
+			break ;
+		lst = lst->next;
+	}
+	return (0);
+}
+
 int	detect_in_redirection(t_ast_node *node, t_terminal *tty)
 {
 	char	**arr;
@@ -101,19 +114,6 @@ int	detect_in_redirection(t_ast_node *node, t_terminal *tty)
 		if (dup2(node->in_fd, STDIN_FILENO) == -1)
 			perror("(7) Error redirecting");
 		return (1);
-	}
-	return (0);
-}
-
-int	has_inward_redirection(t_redirection *lst)
-{
-	while (lst)
-	{
-		if (lst->type == REDIRECT_IN || lst->type == REDIRECT_HEREDOC)
-			return (1);
-		if (lst->next == NULL)
-			break ;
-		lst = lst->next;
 	}
 	return (0);
 }
