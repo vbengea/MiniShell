@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:41:36 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/14 13:06:01 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/17 09:37:22 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ static bool	is_valid_redirection(t_token *token, t_token *prev)
 	if (is_redirect_token(token->type) && prev
 		&& is_redirect_token(prev->type))
 		return (false);
+	if (is_redirect_token(token->type) && ((prev && prev->type == TOKEN_WORD && prev->value && ft_cmpexact(prev->value, "-")) || (token->next && token->next->type == TOKEN_WORD && token->next->value  && ft_cmpexact(token->next->value, "-"))))
+		return (false);
+
 	return (true);
 }
 
