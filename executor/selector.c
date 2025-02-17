@@ -82,8 +82,10 @@ void	waiter(t_ast_node *node, t_terminal *tty)
 void	parse_command(t_ast_node *node, t_terminal *tty)
 {
 	int		i;
+	int 	j;
 	char	*str;
 	char	**args;
+	char	**inter;
 
 	if (node->type == NODE_CMND && node->args[0] != NULL)
 	{
@@ -94,8 +96,28 @@ void	parse_command(t_ast_node *node, t_terminal *tty)
 			if (node->expand_flag[i] == 1)
 			{
 				str = interpolation(node->args[i], i, tty);
-				args = expantion(str, args);
+				inter = ft_split(str, ' ');
 				free(str);
+				if (inter)
+				{
+					j = 0;
+					while (inter[j])
+						j++;
+					if (j > 1)
+					{
+						j = 0;
+						while (inter[j])
+						{
+							str = ft_strjoin(inter[j], " ");
+							args = expantion(str, args);
+							free(str);
+							j++;
+						}
+					}
+					else if(j == 1)
+						args = expantion(inter[0], args);
+					clear_arr_of_strs(inter);
+				}
 			}
 			else
 			{
