@@ -1,5 +1,9 @@
 * TODAY!!:
 
+	- Variable de entorno
+		Gestionar declaracion del tipo `export ARG="a b c d e"` igual que haciamos para probar push_swap.
+		Al igual que en push_swap, expandir la variable con un split cuando es pasada como parametro. 
+
 	- HEREDOC en pipe `cat << EOF | ls` Esta ejecutando antes el comando `ls`
 
 
