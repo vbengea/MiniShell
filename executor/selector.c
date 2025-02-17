@@ -6,13 +6,13 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/17 22:14:37 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/17 22:27:52 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-extern	int	g_sig;
+extern int	g_sig;
 
 void	set_history_status(int status, t_terminal *tty)
 {
@@ -75,7 +75,7 @@ void	waiter(t_ast_node *node, t_terminal *tty)
 void	parse_command(t_ast_node *node, t_terminal *tty)
 {
 	int		i;
-	int 	j;
+	int		j;
 	char	*str;
 	char	**args;
 	char	**inter;
@@ -107,7 +107,7 @@ void	parse_command(t_ast_node *node, t_terminal *tty)
 							j++;
 						}
 					}
-					else if(j == 1)
+					else if (j == 1)
 						args = expantion(inter[0], args);
 					clear_arr_of_strs(inter);
 				}
