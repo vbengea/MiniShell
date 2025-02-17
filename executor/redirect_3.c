@@ -59,7 +59,7 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, \
 	int		fd;
 
 	delimit = lst->file;
-	str = tmp_path(node->nid, REDIRECT_HEREDOC);
+	str = tmp_path(node->nid, REDIRECT_IN);
 	if (str)
 	{
 		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0666);

@@ -52,13 +52,6 @@ void	waiter_util(t_ast_node *node, int status, t_terminal *tty)
 			unlink(file);
 		free(file);
 	}
-	file = tmp_path(node->nid, REDIRECT_HEREDOC);
-	if (file)
-	{
-		if (access(file, F_OK) == 0)
-			unlink(file);
-		free(file);
-	}
 }
 
 void	waiter(t_ast_node *node, t_terminal *tty)
@@ -335,6 +328,7 @@ void	selector_pipe(t_ast_node *node, t_terminal *tty)
 		if (node->type == NODE_GROUP && node->parent->type == NODE_GROUP)
 			return ;
 	}
+	detect_in_redirection(node, tty);
 	pipex(node, tty);
 }
 

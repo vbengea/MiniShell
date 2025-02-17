@@ -15,15 +15,13 @@
 void	pipex_redirect_in(t_ast_node *node, int fd[2], int is_last, \
 	t_terminal *tty)
 {
-	(void) is_last;
-	(void) fd;
-	if (detect_in_redirection(node, tty))
+	if (node->in_fd > 0)
 	{
-
+		(void) is_last;
+		(void) fd;
 	}
 	else if (dup2(tty->files[0], STDIN_FILENO) == -1)
 		perror("(1) Error redirecting");
-	//tty->files[0] != STDIN_FILENO && 
 }
 
 void	pipex_redirect_out(t_ast_node *node, int fd[2], int is_last, \

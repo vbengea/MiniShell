@@ -23,15 +23,18 @@ static	void	write_content(t_ast_node *node, char *content)
 		tmp = open(file, O_RDWR | O_CREAT | O_TRUNC, 0666);
 		if (tmp >= 0)
 		{
-			write(tmp, content, ft_strlen(content));
 			node->in_fd = tmp;
+			write(tmp, content, ft_strlen(content));
 			close(tmp);
-			if (node->type != NODE_GROUP && !is_builtin(node))
+			if (node->type != NODE_GROUP)
 			{
 				tmp = open(file, O_RDONLY);
 				node->in_fd = tmp;
-				if (dup2(node->in_fd, STDIN_FILENO) == -1)
-					perror("(4) Error redirecting");
+				if (!is_builtin(node))
+				{
+					if (dup2(node->in_fd, STDIN_FILENO) == -1)
+						perror("(4) Error redirecting");
+				}
 			}
 		}
 		free(file);
@@ -43,7 +46,7 @@ static	void	brbin(char ***arr, t_ast_node *node)
 {
 	char		*file;
 
-	file = tmp_path(node->nid, REDIRECT_HEREDOC);
+	file = tmp_path(node->nid, REDIRECT_IN);
 	if (file)
 	{
 		*arr = add_arr_of_strs(*arr, file);
