@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 00:59:17 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 00:59:49 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/17 22:13:10 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_ast_node
 	int					has_group_in_fd;
 	int					has_group_out_fd;
 	int					discovered;
+	int					traversed;
 	bool				env_declare;
 	bool				has_env;
 	int					expand_flag[200];

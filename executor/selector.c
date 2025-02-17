@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 18:53:16 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/17 22:14:37 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,7 @@ void	selector_pipe(t_ast_node *node, t_terminal *tty)
 		if (node->type == NODE_GROUP && node->parent->type == NODE_GROUP)
 			return ;
 	}
-	detect_in_redirection(node, tty);
+	in_redirect_first(node, tty);
 	pipex(node, tty);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:15:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 11:36:04 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/17 22:14:17 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args)
 	node->nid = 0;
 	node->side = 0;
 	node->discovered = 0;
+	node->traversed = 0;
 	node->exit = -1;
 	node->in_fd = -1;
 	node->out_fd = -1;
