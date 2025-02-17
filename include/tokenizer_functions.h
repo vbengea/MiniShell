@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_functions.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/16 11:38:40 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/17 18:29:43 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	is_quote(char c);
 void	free_token(t_token *token);
 
 t_token	*create_env_var_token(const char *input, int *i);
-int		is_env_var_declaration(const char *input, int *i);
+bool		is_env_var_declaration(const char *input, int *i);
 
 t_token	*create_fd_redirection_token(const char *input, int *i);
 t_token	*create_invalid_operator_token(const char *input, int *i);
