@@ -80,10 +80,26 @@ void	traverse_pipex(t_ast_node *node, t_terminal *tty, \
 	}
 }
 
+static	void	nullify_exit(t_ast_node *node)
+{
+	if (node->args[0] && ft_cmpexact(node->args[0], "exit"))
+	{
+
+		free(node->args[0]);
+		node->args[0] = ft_strdup("echo");
+		if (node->args[1])
+		{
+			free(node->args[0]);
+			node->args[0] = ft_strdup("-n");
+		}
+	}
+}
+
 int	in_redirect_first(t_ast_node *node, t_terminal *tty)
 {
 	if (node)
 	{
+		nullify_exit(node);
 		detect_in_redirection(node, tty);
 		traverse_pipex(node, tty, in_redirect_first);
 	}
