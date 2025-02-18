@@ -31,7 +31,9 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 			value = node->args[i + 2];
 			if (!value || ft_cmpexact(value, "export"))
 			{
-				value = "";
+				value = get_env(NULL, -1, key, tty);
+				if (!value)
+					value = "";
 				i += 1;
 			}
 			else
@@ -41,7 +43,9 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 		}
 		else if (key)
 		{
-			value = "";
+			value = get_env(NULL, -1, key, tty);
+			if (!value)
+				value = "";
 			set_env(node, key, value, tty);
 		}
 		i++;

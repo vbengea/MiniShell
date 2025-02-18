@@ -51,7 +51,7 @@ void	unset_one(char *key, t_terminal *tty)
 		else
 		{
 			i = i - len;
-			env = tty->env_local;
+			env = tty->env_cmd;
 		}
 		free(env[i]);
 		while (env[i])

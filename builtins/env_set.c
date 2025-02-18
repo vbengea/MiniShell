@@ -83,7 +83,7 @@ t_terminal *tty)
 	if (arg_index < 0 || (arg_index >= 0 && node->expand_flag[arg_index]))
 		tty->env = add_arr_of_strs(tty->env, entry);
 	else
-		tty->env_local = add_arr_of_strs(tty->env_local, entry);
+		tty->env_cmd = add_arr_of_strs(tty->env_cmd, entry);
 }
 
 void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
@@ -107,7 +107,6 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 		}
 	}
 	str = get_entry(key, value);
-	printf("KEY:%s\n", str);
 	if (str)
 	{
 		unset_one(key, tty);
