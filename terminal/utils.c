@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 19:42:05 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/18 20:00:45 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	tty_init(char **env, t_terminal *tty)
 		tty->env_cmd = malloc(sizeof(char *) * 1);
 		tty->env_local[0] = NULL;
 		tty->env_cmd[0] = NULL;
-
 		tty->myhist = NULL;
 	}
 }

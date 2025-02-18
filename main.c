@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 19:42:25 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 20:03:26 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc == 1)
 	{
-		build_terminal(env, &tty);
+		build_terminal(env, &tty, 1);
 		loop_terminal(&tty);
 		destroy_terminal(&tty);
 	}
 	else if (argc >= 3 && ft_cmpexact(argv[1], "-c"))
 	{
-		build_terminal(env, &tty);
+		build_terminal(env, &tty, 0);
 		exec_one(argv[2], &tty);
-		destroy_terminal(&tty);
+		clear_arr_of_strs(tty.env);
+		clear_arr_of_strs(tty.env_local);
+		clear_arr_of_strs(tty.env_cmd);
 	}
 	else
 	{

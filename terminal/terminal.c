@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 19:38:41 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/18 20:00:57 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-void	build_terminal(char **env, t_terminal *tty)
+void	build_terminal(char **env, t_terminal *tty, int do_history)
 {
 	if (tty)
 	{
@@ -21,8 +21,11 @@ void	build_terminal(char **env, t_terminal *tty)
 		{
 			if (tty->env[0] == NULL)
 				set_env(NULL, ft_strdup("PATH"), handle_no_env(), tty);
-			tty->myhist = init_local_history();
-			load_history_from_file(tty->myhist, tty);
+			if (do_history)
+			{
+				tty->myhist = init_local_history();
+				load_history_from_file(tty->myhist, tty);
+			}
 			set_tty(tty);
 		}
 		else
