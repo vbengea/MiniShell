@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 18:47:55 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:36:49 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void			pipex(t_ast_node *node, t_terminal *tty);
 
 char			*environment(char *name, t_terminal *tty);
 char			*find_path(char *cmd, char *penv);
-int				doexec(char *path, t_ast_node *node, char **comm, int is_free, t_terminal *tty);
+int				doexec(t_ast_node *node, char **comm, int is_free, \
+	t_terminal *tty);
 int				execute(t_ast_node *node, char **comm, t_terminal *tty);
 
 int				detect_in_redirection(t_ast_node *node, t_terminal *tty);

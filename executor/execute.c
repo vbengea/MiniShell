@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 21:47:04 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:40:06 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,24 @@ char	*find_path(char *cmd, char *penv)
 	return (NULL);
 }
 
-int	doexec(char *path, t_ast_node *node, char **comm, int is_free, t_terminal *tty)
+int	doexec(t_ast_node *node, char **comm, int is_free, t_terminal *tty)
 {
 	char	**p;
 
-	if ((path && access(path, X_OK) == 0))
+	if ((node->path && access(node->path, X_OK) == 0))
 	{
 		p = env_resolution(tty, 1);
-		if (p && execve(path, (comm + node->args_index), p) == -1)
+		if (p && execve(node->path, (comm + node->args_index), p) == -1)
 		{
 			if (is_free)
-				free(path);
+				free(node->path);
 			clear_arr_of_strs(comm);
 			cleanup("Error executing command", 126);
 			return (-1);
 		}
 	}
-	if (path && is_free)
-		free(path);
+	if (node->path && is_free)
+		free(node->path);
 	clear_arr_of_strs(comm);
 	cleanup("Error executing command", 127);
 	return (-1);
@@ -124,7 +124,8 @@ int	execute(t_ast_node *node, char **comm, t_terminal *tty)
 	if (comm)
 	{
 		path = get_command_path(comm[node->args_index], &i, &is_free, tty);
-		return (doexec(path + i, node, comm, is_free, tty));
+		node->path = (path + i);
+		return (doexec(node, comm, is_free, tty));
 	}
 	return (0);
 }
