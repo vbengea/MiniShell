@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 00:59:17 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/17 22:13:10 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:31:54 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_ast_node
 	bool				has_env;
 	int					expand_flag[200];
 	int					has_space[200];
+	int					args_index;
 }	t_ast_node;
 
 typedef struct s_terminal

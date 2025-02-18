@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 19:23:02 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:44:56 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	assign_ids(t_ast_node *node, int *id)
 void	execute_ast(t_terminal *tty)
 {
 	int		id;
+	int		i;
 
 	if (tty->ast)
 	{
@@ -61,6 +62,13 @@ void	execute_ast(t_terminal *tty)
 		tty->files[2] = 0;
 		selector(tty->ast, tty);
 		free_redirect_ast(tty->ast, 0);
+		i = 0;
+		while (tty->env_cmd[i])
+		{
+			free(tty->env_cmd[i]);
+			i++;
+		}
+		tty->env_cmd[0] = NULL;
 	}
 	tty->ast = NULL;
 }

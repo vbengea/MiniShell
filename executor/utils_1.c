@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 22:50:35 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 18:07:07 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ int	is_builtin(t_ast_node *node)
 	b = ft_split("cd echo env exit export pwd unset", ' ');
 	if (b)
 	{
-		if (node->args[0] == NULL)
+		if (node->args[node->args_index] == NULL)
 			r = 1;
 		if (node->type == NODE_CMND && node->args)
 		{
 			i = 0;
 			while (r == 0 && b[i])
 			{
-				if (ft_cmpexact(node->args[0], b[i]))
+				if (ft_cmpexact(node->args[node->args_index], b[i]))
 					r = 1;
 				i++;
 			}

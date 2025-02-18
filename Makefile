@@ -158,7 +158,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "export ARG=a b c d e"
+	git commit -am "Support command level environemnt variable"
 	git config pull.rebase false
 	git push
 

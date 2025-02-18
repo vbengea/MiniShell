@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 14:54:18 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:56:00 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,32 @@ static	char	*clean_value(char *value, int *to_free)
 	return (str);
 }
 
+static	int	validate_cmd_level(t_ast_node *node)
+{
+	int		i;
+	char	*key;
+	char	*value;
+
+	i = 0;
+	while (node->args[i])
+	{
+		key = node->args[i];
+		if (ft_cmpexact(key, "export"))
+		{
+			key = node->args[i + 1];
+			value = node->args[i + 2];
+			if (!value || ft_cmpexact(value, "export"))
+				i += 1;
+			else
+				i += 2;
+		}
+		else if (key)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 {
 	int		i;
@@ -37,6 +63,8 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 
 	i = 0;
 	export_expand = node->expand_flag[0];
+	if (!validate_cmd_level(node))
+		export_expand = 2;
 	while (i < len && node->args[i])
 	{
 		node->expand_flag[i] = export_expand;
@@ -68,7 +96,7 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 				set_env(node, key, value, tty);
 			}
 		}
-		else if (key)
+		else if (key && export_expand < 2)
 		{
 			value = get_env(NULL, -1, key, tty);
 			if (!value)
@@ -77,6 +105,14 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 				to_free = 1;
 			value = clean_value(value, &to_free);
 			set_env(node, key, value, tty);
+		}
+		else
+		{
+			if (to_free)
+				free(value);
+			node->args_index = i;
+			selector(node, tty);
+			break ;
 		}
 		if (to_free)
 			free(value);
