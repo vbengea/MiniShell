@@ -5,6 +5,8 @@
 		Al igual que en push_swap, expandir la variable con un split cuando es pasada como parametro. 
 
 		export AA=1 AB=2 AC=3 AD AE
+		BA=1 BB=2 BC
+		export BA
 
 
 * To implement:

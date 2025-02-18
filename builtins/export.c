@@ -29,7 +29,7 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 		{
 			key = node->args[i + 1];
 			value = node->args[i + 2];
-			if (ft_cmpexact(value, "export"))
+			if (!value || ft_cmpexact(value, "export"))
 			{
 				value = "";
 				i += 1;
