@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_word_token.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:36:36 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/15 21:14:37 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/18 08:25:36 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
