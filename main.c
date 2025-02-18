@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 19:31:48 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:42:25 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_terminal	tty;
 
-	(void) argv;
 	if (argc == 1)
 	{
 		build_terminal(env, &tty);
