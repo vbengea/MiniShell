@@ -6,7 +6,7 @@
 /*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:37:15 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/18 09:22:49 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/18 10:07:16 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,38 @@ static void add_cmd_arg(char **cmd_args, char *value, int *i)
 	(*i)++;
 }
 
-static void	process_env_var_token(t_token *current, t_cmd_args_context *context)
+static void process_env_var_token(t_token *current, t_cmd_args_context *context)
 {
-	if (!*context->prev_export)
+	char *equals_pos;
+	char *name;
+	char *value;
+	
+	if (!*context->prev_export && context->first_env_var)
 	{
-		handle_env_var(current, context->cmd_args, context->node, context->i);
+		add_cmd_arg(context->cmd_args, "export", context->i);
+		context->first_env_var = false;
+	}
+	
+	equals_pos = ft_strchr(current->value, '=');
+	if (equals_pos)
+	{
+		*equals_pos = '\0';
+		name = ft_strdup(current->value);
+		*equals_pos = '=';
+		
+		value = ft_strdup(equals_pos + 1);
+		
+		add_cmd_arg(context->cmd_args, name, context->i);
+		add_cmd_arg(context->cmd_args, value, context->i);
+		
+		free(name);
+		free(value);
 	}
 	else
 	{
 		add_cmd_arg(context->cmd_args, current->value, context->i);
 	}
-	*context->prev_export = false;
 }
-
 
 
 static int	process_redirect_token(t_ast_node *node, t_token **current)
@@ -62,6 +81,7 @@ int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 	bool				prev_export;
 	t_cmd_args_context	context;
 
+	context.first_env_var = true;
 	i = 0;
 	prev_export = false;
 	current = tokens;
