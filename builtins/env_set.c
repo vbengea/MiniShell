@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 19:09:27 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 13:26:12 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@ char	**env_resolution(t_terminal *tty)
 	p = copy_arr_of_strs(tty->env, 0, 0);
 	if (p)
 	{
-		i = 0;
-		while (p && tty->env[i])
-			p = add_arr_of_strs(p, tty->env[i++]);
 		i = 0;
 		while (p && tty->env_local[i])
 			p = add_arr_of_strs(p, tty->env_local[i++]);
@@ -84,9 +81,15 @@ static	void	append_entry(t_ast_node *node, char *entry, int arg_index, \
 t_terminal *tty)
 {
 	if (arg_index < 0 || (arg_index >= 0 && node->expand_flag[arg_index]))
+	{
+		printf("SET_ENV MAIN: %s\n", entry);
 		tty->env = add_arr_of_strs(tty->env, entry);
+	}
 	else
+	{
+		printf("SET_ENV LOCAL: %s\n", entry);
 		tty->env_local = add_arr_of_strs(tty->env_local, entry);
+	}
 }
 
 void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
