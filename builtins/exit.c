@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 12:50:53 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:10:03 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	exit_bi(t_ast_node *node, t_terminal *tty)
 		node = node->parent;
 	free_redirect_ast(node, 1);
 	clear_arr_of_strs(tty->env);
+	clear_arr_of_strs(tty->env_local);
+	clear_arr_of_strs(tty->env_cmd);
 	rl_clear_history();
 	if (exit_code && (exit_code > 0 && exit_code <= 255))
 		exit(exit_code);
