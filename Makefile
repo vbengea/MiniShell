@@ -173,6 +173,9 @@ runneri: re
 valgrind: re
 	valgrind $(VFLAGS) ./$(NAME)
 
+valgrind_mini: re
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell -c "ls -l"
+
 sanitizer: $(LIBFT) $(OBJ) $(INCLUDE)
 	$(CC) $(SFLAGS) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
 	./$(NAME)
