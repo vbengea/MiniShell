@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 22:25:00 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:43:45 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,12 @@ void	parse_command(t_ast_node *node, t_terminal *tty)
 						j = 0;
 						while (inter[j])
 						{
-							if (ft_cmpexact(node->args[node->args_index], "echo"))
+							if (ft_cmpexact(node->args[node->args_index], \
+								"echo"))
 							{
 								str = ft_strjoin(inter[j], " ");
 								args = expantion(str, args);
-								free(str);	
+								free(str);
 							}
 							else
 								args = expantion(inter[j], args);

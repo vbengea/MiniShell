@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:15:33 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/17 22:12:50 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:42:52 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ static	void	nullify_exit(t_ast_node *node)
 {
 	if (node->args[0] && ft_cmpexact(node->args[0], "exit"))
 	{
-
 		free(node->args[0]);
 		node->args[0] = ft_strdup("echo");
 		if (node->args[1])
