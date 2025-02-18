@@ -34,7 +34,10 @@ SRC				:= 	main.c\
 					$(EXEC_DIR)/redirect_in.c \
 					$(EXEC_DIR)/redirect_out.c \
 					$(EXEC_DIR)/execute.c \
-					$(EXEC_DIR)/selector.c \
+					$(EXEC_DIR)/selector_1.c \
+					$(EXEC_DIR)/selector_2.c \
+					$(EXEC_DIR)/selector_3.c \
+					$(EXEC_DIR)/selector_4.c \
 					$(EXEC_DIR)/pipex.c \
 					$(EXEC_DIR)/pipex_redirect.c \
 					$(SIGNALS_DIR)/signals.c \

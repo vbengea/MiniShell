@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 22:36:49 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 23:54:41 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,14 @@ int				is_identifier(char c);
 void			ast_printer_node(t_ast_node *ast, int i);
 int				do_outward_redirection(t_ast_node *node);
 int				in_redirect_first(t_ast_node *node, t_terminal *tty);
+void			nullify_exit(t_ast_node *node);
+void			traverse_pipex(t_ast_node *node, t_terminal *tty, \
+	int (*f)(t_ast_node *, t_terminal *));
+int				check_options(t_ast_node *node, int hold, t_terminal *tty);
+void			builtin_end(t_ast_node *node, int hold, t_terminal *tty);
+void			preexecute(t_ast_node *node, t_terminal *tty);
+void			postexecute(t_ast_node *node);
+void			navigator_init(t_ast_node *node, t_terminal *tty);
+void			set_history_status(int status, t_terminal *tty);
 
 #endif

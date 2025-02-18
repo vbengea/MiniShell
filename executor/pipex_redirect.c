@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:15:33 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 22:42:52 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 23:44:09 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	traverse_pipex(t_ast_node *node, t_terminal *tty, \
 	}
 }
 
-static	void	nullify_exit(t_ast_node *node)
+void	nullify_exit(t_ast_node *node)
 {
 	if (node->args[0] && ft_cmpexact(node->args[0], "exit"))
 	{
@@ -92,15 +92,4 @@ static	void	nullify_exit(t_ast_node *node)
 			node->args[0] = ft_strdup("-n");
 		}
 	}
-}
-
-int	in_redirect_first(t_ast_node *node, t_terminal *tty)
-{
-	if (node)
-	{
-		nullify_exit(node);
-		detect_in_redirection(node, tty);
-		traverse_pipex(node, tty, in_redirect_first);
-	}
-	return (1);
 }
