@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 00:34:28 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 12:25:31 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 	char	*key;
 	char	*value;
 	int		export_expand;
+	int		to_free;
 
 	i = 0;
 	export_expand = node->expand_flag[0];
 	while (i < len && node->args[i])
 	{
+		to_free = 0;
 		node->expand_flag[i] = export_expand;
 		key = node->args[i];
 		if (ft_cmpexact(key, "export"))
@@ -34,6 +36,8 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 				value = get_env(NULL, -1, key, tty);
 				if (!value)
 					value = "";
+				else
+					to_free = 1;
 				i += 1;
 			}
 			else
@@ -46,8 +50,12 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 			value = get_env(NULL, -1, key, tty);
 			if (!value)
 				value = "";
+			else
+				to_free = 1;
 			set_env(node, key, value, tty);
 		}
+		if (to_free)
+			free(value);
 		i++;
 	}
 }
