@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 01:50:52 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 18:47:31 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ char	*find_path(char *cmd, char *penv)
 	return (NULL);
 }
 
-int	doexec(char *path, char **comm, int is_free, t_terminal *tty)
+int	doexec(char *path, t_ast_node *node, char **comm, int is_free, t_terminal *tty)
 {
 	char	**p;
 
 	if ((path && access(path, X_OK) == 0))
 	{
 		p = env_resolution(tty);
-		if (p && execve(path, comm, p) == -1)
+		if (p && execve(path, (comm + node->args_index), p) == -1)
 		{
 			if (is_free)
 				free(path);
@@ -86,16 +86,16 @@ int	doexec(char *path, char **comm, int is_free, t_terminal *tty)
 	return (-1);
 }
 
-char	*get_command_path(char **comm, int *i, int *is_free, t_terminal *tty)
+char	*get_command_path(char *cmd, int *i, int *is_free, t_terminal *tty)
 {
 	char	*path;
 	char	*penv;
 
-	if (ft_strchr(comm[0], '/') != NULL || \
-		ft_strchr(comm[0], '.') != NULL || \
-		ft_cmpexact(comm[0], "minishell"))
+	if (ft_strchr(cmd, '/') != NULL || \
+		ft_strchr(cmd, '.') != NULL || \
+		ft_cmpexact(cmd, "minishell"))
 	{
-		path = ft_strdup(comm[0]);
+		path = ft_strdup(cmd);
 		if (ft_strncmp(path, "./", 2) == 0)
 			*i = 2;
 	}
@@ -104,7 +104,7 @@ char	*get_command_path(char **comm, int *i, int *is_free, t_terminal *tty)
 		penv = environment("PATH", tty);
 		if (penv)
 		{
-			path = find_path(comm[0], penv);
+			path = find_path(cmd, penv);
 			*is_free = 1;
 		}
 		else
@@ -113,7 +113,7 @@ char	*get_command_path(char **comm, int *i, int *is_free, t_terminal *tty)
 	return (path);
 }
 
-int	execute(char **comm, t_terminal *tty)
+int	execute(t_ast_node *node, char **comm, t_terminal *tty)
 {
 	char	*path;
 	int		is_free;
@@ -123,8 +123,8 @@ int	execute(char **comm, t_terminal *tty)
 	i = 0;
 	if (comm)
 	{
-		path = get_command_path(comm, &i, &is_free, tty);
-		return (doexec(path + i, comm, is_free, tty));
+		path = get_command_path(comm[node->args_index], &i, &is_free, tty);
+		return (doexec(path + i, node, comm, is_free, tty));
 	}
 	return (0);
 }

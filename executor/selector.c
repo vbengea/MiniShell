@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 18:11:32 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 18:43:40 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,14 @@ void	parse_command(t_ast_node *node, t_terminal *tty)
 						j = 0;
 						while (inter[j])
 						{
-							str = ft_strjoin(inter[j], " ");
-							args = expantion(str, args);
-							free(str);
+							if (ft_cmpexact(node->args[node->args_index], "echo"))
+							{
+								str = ft_strjoin(inter[j], " ");
+								args = expantion(str, args);
+								free(str);	
+							}
+							else
+								args = expantion(inter[j], args);
 							j++;
 						}
 					}
@@ -202,7 +207,7 @@ void	executor(t_ast_node *node, int hold, t_terminal *tty)
 {
 	(void) hold;
 	preexecute(node, tty);
-	if (execute((node->args + node->args_index), tty) == -1)
+	if (execute(node, node->args, tty) == -1)
 		cleanup("Error executing command", 126);
 }
 

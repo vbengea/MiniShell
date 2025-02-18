@@ -18,6 +18,9 @@
 
 * Solved issues
 
+	- export VER="ls -l"
+		$VER
+
 	- Support command level environemnt variable
 		GO=5 env
 		GA=1 GE=2 GI=3 GO=4 GU=5 env
