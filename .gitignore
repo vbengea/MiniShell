@@ -4,3 +4,4 @@
 __*__
 .nfs*
 bin/minishell
+*.o
