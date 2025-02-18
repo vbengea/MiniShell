@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:15:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/17 22:14:17 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:34:47 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ t_ast_node	*create_ast_node(t_node_type type, char **cmd_args)
 	node->env_declare = false;
 	ft_memset((void *)node->expand_flag, 0, 200);
 	ft_memset((void *)node->has_space, 0, 200);
+	node->args_index = 0;
 	return (node);
 }

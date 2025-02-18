@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/14 19:23:09 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 17:52:03 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,20 @@ static	void	print_env(t_ast_node *node, int sorted, char **p)
 	}
 }
 
-static	void	sort_env(t_ast_node *node, t_terminal *tty)
+void	env_bi(t_ast_node *node, int sorted, t_terminal *tty)
 {
 	char		**p;
 
-	p = copy_arr_of_strs(tty->env, 0, 0);
+	p = env_resolution(tty);
 	if (p)
 	{
-		if (p)
+		if (sorted)
 		{
 			sort_arr_of_strs(p, 1);
 			print_env(node, 1, p);
-			clear_arr_of_strs(p);
 		}
+		else
+			print_env(node, 0, p);
+		clear_arr_of_strs(p);
 	}
-}
-
-void	env_bi(t_ast_node *node, int sorted, t_terminal *tty)
-{
-	if (sorted)
-		sort_env(node, tty);
-	else
-		print_env(node, 0, tty->env);
 }

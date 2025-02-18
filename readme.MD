@@ -1,6 +1,6 @@
-* TODAY!!:
+* URGENT:
 
-	- 
+	- ...
 
 
 * To implement:
@@ -12,16 +12,16 @@
 
 * Nice to have
 
-	- Support command level environemnt variable
-		GO=5 env
-		GA=1 GE=2 GI=3 GO=4 GU=5 env
-	
 	- Enviar un comando al binario de la minishell:
 		minishell "ls -l | cat -e"
 
 
 * Solved issues
 
+	- Support command level environemnt variable
+		GO=5 env
+		GA=1 GE=2 GI=3 GO=4 GU=5 env
+	
 	- Variable de entorno
 		Gestionar declaracion del tipo `export ARG="a b c d e"` igual que haciamos para probar push_swap.
 		Al igual que en push_swap, expandir la variable con un split cuando es pasada como parametro. 

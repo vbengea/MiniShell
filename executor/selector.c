@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 12:26:49 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 18:11:32 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	parse_command(t_ast_node *node, t_terminal *tty)
 
 	if (node->type == NODE_CMND && node->args[0] != NULL)
 	{
-		i = 0;
+		i = node->args_index;
 		args = ft_split(" ", ' ');
 		while (node->args[i])
 		{
@@ -126,9 +126,12 @@ void	parse_command(t_ast_node *node, t_terminal *tty)
 
 static	void	preexecute(t_ast_node *node, t_terminal *tty)
 {
-	parse_command(node, tty);
-	detect_in_redirection(node, tty);
-	detect_out_redirection(node);
+	if (node->args_index == 0)
+	{
+		parse_command(node, tty);
+		detect_in_redirection(node, tty);
+		detect_out_redirection(node);
+	}
 }
 
 static	void	postexecute(t_ast_node *node)
@@ -199,7 +202,7 @@ void	executor(t_ast_node *node, int hold, t_terminal *tty)
 {
 	(void) hold;
 	preexecute(node, tty);
-	if (execute(node->args, tty) == -1)
+	if (execute((node->args + node->args_index), tty) == -1)
 		cleanup("Error executing command", 126);
 }
 
