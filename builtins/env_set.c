@@ -21,6 +21,9 @@ char	**env_resolution(t_terminal *tty)
 	if (p)
 	{
 		i = 0;
+		while (p && tty->env[i])
+			p = add_arr_of_strs(p, tty->env[i++]);
+		i = 0;
 		while (p && tty->env_local[i])
 			p = add_arr_of_strs(p, tty->env_local[i++]);
 		i = 0;
@@ -83,7 +86,7 @@ t_terminal *tty)
 	if (arg_index < 0 || (arg_index >= 0 && node->expand_flag[arg_index]))
 		tty->env = add_arr_of_strs(tty->env, entry);
 	else
-		tty->env_cmd = add_arr_of_strs(tty->env_cmd, entry);
+		tty->env_local = add_arr_of_strs(tty->env_local, entry);
 }
 
 void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)

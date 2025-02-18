@@ -58,14 +58,10 @@ static	void	print_env(t_ast_node *node, int sorted, char **p)
 static	void	sort_env(t_ast_node *node, t_terminal *tty)
 {
 	char		**p;
-	int			i;
 
-	i = 0;
 	p = copy_arr_of_strs(tty->env, 0, 0);
 	if (p)
 	{
-		while (p && tty->env_local[i])
-			p = add_arr_of_strs(p, tty->env_local[i++]);
 		if (p)
 		{
 			sort_arr_of_strs(p, 1);
