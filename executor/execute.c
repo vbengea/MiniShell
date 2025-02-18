@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 18:47:31 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 21:47:04 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	doexec(char *path, t_ast_node *node, char **comm, int is_free, t_terminal *t
 
 	if ((path && access(path, X_OK) == 0))
 	{
-		p = env_resolution(tty);
+		p = env_resolution(tty, 1);
 		if (p && execve(path, (comm + node->args_index), p) == -1)
 		{
 			if (is_free)

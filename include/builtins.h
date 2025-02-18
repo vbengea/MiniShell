@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:22:57 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/14 19:22:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 21:51:06 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ char	*interpolation(char *str, int arg_index, t_terminal *tty);
 char	**expantion(char *str, char **args);
 char	*get_entry(char *key, char *value);
 int		env_lookup(char *key, t_terminal *tty);
-char	**env_resolution(t_terminal *tty);
+char	**env_resolution(t_terminal *tty, int hidden_level);
 void	unset_one(char *key, t_terminal *tty);
+
+char	*clean_value(char *value, int *to_free);
+int		validate_cmd_level(t_ast_node *node);
+int		expand_flag(t_ast_node *node, int len, int *j);
 
 #endif

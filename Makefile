@@ -101,6 +101,7 @@ SRC				:= 	main.c\
 					$(BUILTINS_DIR)/unset.c \
 					$(BUILTINS_DIR)/env_set.c \
 					$(BUILTINS_DIR)/expand.c \
+					$(BUILTINS_DIR)/utils.c \
 					$(WILDCARD_DIR)/ft_wildcard.c \
 					$(HISTORY_DIR)/add_to_both_histories.c \
 					$(HISTORY_DIR)/get_history_filepath.c \
@@ -158,7 +159,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Enviar un comando al binario de la minishell"
+	git commit -am "Builtin norms and other fixes"
 	git config pull.rebase false
 	git push
 
@@ -174,7 +175,7 @@ valgrind: re
 	valgrind $(VFLAGS) ./$(NAME)
 
 valgrind_mini: re
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell -c "ls -l"
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell -c "ls -l | cat -e | cat -e"
 
 sanitizer: $(LIBFT) $(OBJ) $(INCLUDE)
 	$(CC) $(SFLAGS) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)

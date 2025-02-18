@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 17:52:03 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:21:31 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	env_bi(t_ast_node *node, int sorted, t_terminal *tty)
 {
 	char		**p;
 
-	p = env_resolution(tty);
+	p = env_resolution(tty, 0);
 	if (p)
 	{
 		if (sorted)

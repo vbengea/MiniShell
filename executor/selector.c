@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 18:43:40 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 22:25:00 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,19 +253,19 @@ void	builtin_selector(t_ast_node *node, int should_exit, t_terminal *tty)
 {
 	if (node->args[0] == NULL)
 		(void) node;
-	else if (ft_cmpexact(node->args[0], "cd"))
+	else if (ft_cmpexact(node->args[node->args_index], "cd"))
 		cd_bi(node, tty);
-	else if (ft_cmpexact(node->args[0], "exit"))
+	else if (ft_cmpexact(node->args[node->args_index], "exit"))
 		exit_bi(node, tty);
-	else if (ft_cmpexact(node->args[0], "pwd"))
+	else if (ft_cmpexact(node->args[node->args_index], "pwd"))
 		pwd_bi(node);
-	else if (ft_cmpexact(node->args[0], "env"))
+	else if (ft_cmpexact(node->args[node->args_index], "env"))
 		env_bi(node, 0, tty);
-	else if (ft_cmpexact(node->args[0], "export"))
+	else if (ft_cmpexact(node->args[node->args_index], "export"))
 		export_bi(node, tty);
-	else if (ft_cmpexact(node->args[0], "unset"))
+	else if (ft_cmpexact(node->args[node->args_index], "unset"))
 		unset_bi(node, tty);
-	else if (ft_cmpexact(node->args[0], "echo"))
+	else if (ft_cmpexact(node->args[node->args_index], "echo"))
 		echo_bi(node);
 	if (should_exit)
 		exit(0);

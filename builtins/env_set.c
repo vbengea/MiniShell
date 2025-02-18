@@ -6,13 +6,13 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 17:59:20 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 21:47:33 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-char	**env_resolution(t_terminal *tty)
+char	**env_resolution(t_terminal *tty, int hidden_level)
 {
 	char		**p;
 	int			i;
@@ -20,9 +20,12 @@ char	**env_resolution(t_terminal *tty)
 	p = copy_arr_of_strs(tty->env, 0, 0);
 	if (p)
 	{
-		i = 0;
-		while (p && tty->env_local[i])
-			p = add_arr_of_strs(p, tty->env_local[i++]);
+		if (hidden_level)
+		{
+			i = 0;
+			while (p && tty->env_local[i])
+				p = add_arr_of_strs(p, tty->env_local[i++]);
+		}
 		i = 0;
 		while (p && tty->env_cmd[i])
 			p = add_arr_of_strs(p, tty->env_cmd[i++]);
@@ -36,7 +39,7 @@ int	env_lookup(char *key, t_terminal *tty)
 	int		i;
 	char	*var;
 
-	p = env_resolution(tty);
+	p = env_resolution(tty, 1);
 	if (!p)
 		cleanup("Memory error on environment variable lookup", 1);
 	i = 0;
