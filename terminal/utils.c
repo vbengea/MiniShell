@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 19:08:23 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:28:00 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,17 @@ void	loop_inner(char *input, t_token *tokens, t_terminal *tty)
 		free_token(tokens);
 		execute_ast(tty);
 	}
+}
+
+void	exec_one(char *input, t_terminal *tty)
+{
+	t_token		*tokens;
+
+	tokens = tokenize_input(input);
+	if (check_syntax(tokens, NULL))
+	{
+		tty->ast = build_ast(tokens);
+		execute_ast(tty);
+	}
+	free_token(tokens);
 }

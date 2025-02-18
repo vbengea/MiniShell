@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:44 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/15 00:24:50 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:31:48 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,23 @@ int	main(int argc, char **argv, char **env)
 	t_terminal	tty;
 
 	(void) argv;
-	if (argc != 1)
+	if (argc == 1)
 	{
-		printf("Incorrect number of arguments.\n");
+		build_terminal(env, &tty);
+		loop_terminal(&tty);
+		destroy_terminal(&tty);
+	}
+	else if (argc >= 3 && ft_cmpexact(argv[1], "-c"))
+	{
+		build_terminal(env, &tty);
+		exec_one(argv[2], &tty);
+		destroy_terminal(&tty);
+	}
+	else
+	{
+		printf("minishell: %s: No such file or directory\n", argv[1]);
 		exit(1);
 	}
-	build_terminal(env, &tty);
-	loop_terminal(&tty);
-	destroy_terminal(&tty);
+
 	return (0);
 }

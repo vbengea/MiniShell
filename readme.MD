@@ -1,22 +1,20 @@
-* URGENT:
-
-	- ...
-
-
 * To implement:
 
-	- Control de errores.
+	- Pasar la norma
+	
+	- Control de errores
 
-	- Memory Leaks. Context errors. File descriptor leaks.
+	- Memory Leaks
 
-
-* Nice to have
-
-	- Enviar un comando al binario de la minishell:
-		minishell "ls -l | cat -e"
+	- Context errors
+	
+	- File descriptor leaks
 
 
 * Solved issues
+
+	- Enviar un comando al binario de la minishell:
+		minishell -c "ls -l | cat -e"
 
 	- export VER="ls -l"
 		$VER

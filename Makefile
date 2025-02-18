@@ -158,7 +158,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Valgrind memory leaks related to ENVs"
+	git commit -am "Enviar un comando al binario de la minishell"
 	git config pull.rebase false
 	git push
 
