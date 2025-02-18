@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:25:59 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/16 11:43:57 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:37:52 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_terminal	t_terminal;
 char	*get_history_filepath(t_terminal *tty);
 void	load_history_from_file(t_history *myhist, t_terminal *tty);
 void	save_history_to_file(t_history *myhist, t_terminal *tty);
-void	init_local_history(t_history *myhist);
+t_history	*init_local_history(void);
 void	add_to_both_histories(t_history *myhist, const char *line);
 
 #endif

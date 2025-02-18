@@ -6,11 +6,27 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:50:06 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/16 18:56:59 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:39:01 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+static void	free_commands(t_history *myhist)
+{
+	int	i;
+
+	if (!myhist)
+		return ;
+	i = 0;
+	while (i < myhist->count)
+	{
+		free(myhist->commands[i]);
+		myhist->commands[i] = NULL;
+		i++;
+	}
+	myhist->count = 0;
+}
 
 static void	write_to_file(t_history *myhist, int fd)
 {
@@ -23,7 +39,6 @@ static void	write_to_file(t_history *myhist, int fd)
 		{
 			ft_putstr_fd(myhist->commands[i], fd);
 			ft_putchar_fd('\n', fd);
-			free (myhist->commands[i]);
 		}
 		i++;
 	}
@@ -44,6 +59,9 @@ void	save_history_to_file(t_history *myhist, t_terminal *tty)
 		return ;
 	}
 	write_to_file(myhist, fd);
+	free_commands(myhist);
 	close(fd);
 	free(history_path);
+	free (myhist);
+	tty->myhist = NULL;
 }

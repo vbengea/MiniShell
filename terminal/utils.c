@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 19:23:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:28:05 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	tty_init(char **env, t_terminal *tty)
 		tty->env_cmd = malloc(sizeof(char *) * 1);
 		tty->env_local[0] = NULL;
 		tty->env_cmd[0] = NULL;
+
+		tty->myhist = NULL;
 	}
 }
 
@@ -43,7 +45,7 @@ void	loop_inner(char *input, t_token *tokens, t_terminal *tty)
 			free(input);
 			continue ;
 		}
-		add_to_both_histories(&tty->myhist, input);
+		add_to_both_histories(tty->myhist, input);
 		tokens = tokenize_input(input);
 		free(input);
 		if (!check_syntax(tokens, NULL))

@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:49:34 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/16 19:01:52 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/18 18:54:44 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ static void	read_from_file(t_history *myhist, char *line, int fd)
 {
 	size_t	len;
 
-	while (line && myhist->count < MAX_HISTORY_LINES)
+	while (line)
 	{
 		len = ft_strlen(line);
 		if (len > 0 && line[len - 1] == '\n')
 			line[len -1] = '\0';
-		add_to_both_histories(myhist, line);
+		if (myhist->count < MAX_HISTORY_LINES)
+			add_to_both_histories(myhist, line);
 		free(line);
 		line = get_next_line(fd);
 	}

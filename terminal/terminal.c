@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 17:44:56 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/18 19:38:41 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	build_terminal(char **env, t_terminal *tty)
 		{
 			if (tty->env[0] == NULL)
 				set_env(NULL, ft_strdup("PATH"), handle_no_env(), tty);
-			init_local_history(&tty->myhist);
-			load_history_from_file(&tty->myhist, tty);
+			tty->myhist = init_local_history();
+			load_history_from_file(tty->myhist, tty);
 			set_tty(tty);
 		}
 		else
@@ -85,7 +85,7 @@ void	loop_terminal(t_terminal *tty)
 
 void	destroy_terminal(t_terminal *tty)
 {
-	save_history_to_file(&tty->myhist, tty);
+	save_history_to_file(tty->myhist, tty);
 	clear_arr_of_strs(tty->env);
 	clear_arr_of_strs(tty->env_local);
 	clear_arr_of_strs(tty->env_cmd);

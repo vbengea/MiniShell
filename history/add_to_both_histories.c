@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:49:11 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/16 19:02:02 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/18 18:44:57 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	add_to_both_histories(t_history *myhist, const char *line)
 	if (myhist->count < MAX_HISTORY_LINES)
 	{
 		myhist->commands[myhist->count] = ft_strdup(line);
+		if (!myhist->commands[myhist->count])
+			return ;
 		myhist->count++;
 	}
 	else
@@ -32,5 +34,7 @@ void	add_to_both_histories(t_history *myhist, const char *line)
 			i++;
 		}
 		myhist->commands[MAX_HISTORY_LINES - 1] = ft_strdup(line);
+		if (!myhist->commands[MAX_HISTORY_LINES - 1])
+			return ;
 	}
 }
