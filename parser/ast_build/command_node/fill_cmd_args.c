@@ -6,7 +6,7 @@
 /*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:37:15 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/18 10:07:16 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/18 10:25:07 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,8 @@ static void process_env_var_token(t_token *current, t_cmd_args_context *context)
 	char *name;
 	char *value;
 	
-	if (!*context->prev_export && context->first_env_var)
-	{
+	if (!*context->prev_export)
 		add_cmd_arg(context->cmd_args, "export", context->i);
-		context->first_env_var = false;
-	}
 	
 	equals_pos = ft_strchr(current->value, '=');
 	if (equals_pos)
@@ -66,6 +63,7 @@ static void process_env_var_token(t_token *current, t_cmd_args_context *context)
 	{
 		add_cmd_arg(context->cmd_args, current->value, context->i);
 	}
+	*context->prev_export = false;
 }
 
 
@@ -81,7 +79,6 @@ int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 	bool				prev_export;
 	t_cmd_args_context	context;
 
-	context.first_env_var = true;
 	i = 0;
 	prev_export = false;
 	current = tokens;
