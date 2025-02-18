@@ -107,6 +107,7 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 		}
 	}
 	str = get_entry(key, value);
+	printf("KEY:%s\n", str);
 	if (str)
 	{
 		unset_one(key, tty);

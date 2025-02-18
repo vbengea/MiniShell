@@ -17,18 +17,32 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 	int		i;
 	char	*key;
 	char	*value;
+	int		export_expand;
 
 	i = 0;
+	export_expand = node->expand_flag[0];
 	while (i < len && node->args[i])
 	{
+		node->expand_flag[i] = export_expand;
 		key = node->args[i];
 		if (ft_cmpexact(key, "export"))
 		{
 			key = node->args[i + 1];
 			value = node->args[i + 2];
+			if (ft_cmpexact(value, "export"))
+			{
+				value = "";
+				i += 1;
+			}
+			else
+				i += 2;
 			if (key)
 				set_env(node, key, value, tty);
-			i += 2;
+		}
+		else if (key)
+		{
+			value = "";
+			set_env(node, key, value, tty);
 		}
 		i++;
 	}
