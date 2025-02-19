@@ -5,3 +5,9 @@ __*__
 .nfs*
 bin/minishell
 *.o
+parser/Makefile
+parser/free_ast.c
+parser/main.c
+parser/parser
+parser/print_ast.c
+*.sh

@@ -62,6 +62,7 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/tokenizer/handle_operator.c \
 					$(PARSER_DIR)/tokenizer/free_token.c \
 					$(PARSER_DIR)/tokenizer/check_syntax.c \
+					$(PARSER_DIR)/tokenizer/check_syntax_utils.c \
 					$(PARSER_DIR)/tokenizer/create_env_var_token.c \
 					$(PARSER_DIR)/tokenizer/is_env_var_declaration.c \
 					$(PARSER_DIR)/tokenizer/process_operator.c \

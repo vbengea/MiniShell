@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 00:59:17 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 22:32:58 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:49:58 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DATA_STRUCTURE_H
 
 # define DATA_STRUCTURE_H
+
+# ifndef MAX_FLAGS
+#  define MAX_FLAGS 256
+# endif
 
 # include "history.h"
 

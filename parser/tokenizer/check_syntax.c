@@ -6,23 +6,11 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:41:36 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/18 18:24:18 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:05:33 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
-
-static bool	has_empty_parentheses(t_token *token)
-{
-	while (token && token->next)
-	{
-		if (token->type == TOKEN_OPEN_PAREN
-			&& token->next->type == TOKEN_CLOSE_PAREN)
-			return (true);
-		token = token->next;
-	}
-	return (false);
-}
 
 static bool	even_parentheses(t_token *token)
 {
@@ -60,46 +48,16 @@ static bool	is_valid_pipe(t_token *token, t_token *prev)
 	return (true);
 }
 
-static bool	token_is_dash(t_token *token)
+static bool	has_empty_parentheses(t_token *token)
 {
-	return (token && token->type == TOKEN_WORD
-		&& token->value && ft_cmpexact(token->value, "-"));
-}
-
-static bool	is_logic_operator(t_token_type type)
-{
-	return (type == TOKEN_AND || type == TOKEN_OR);
-}
-
-static bool	is_invalid_redirection_with_operator(t_token *token, t_token *other)
-{
-	return (token && is_redirect_token(token->type)
-		&& other && is_logic_operator(other->type));
-}
-
-
-
-
-
-static bool	is_valid_redirection(t_token *token, t_token *prev)
-{
-	if (!token)
-		return (true);
-	if (is_redirect_token(token->type) && !token->next)
-		return (false);
-	if (is_redirect_token(token->type) && token->next
-		&& is_redirect_token(token->next->type))
-		return (false);
-	if (is_redirect_token(token->type) && prev
-		&& is_redirect_token(prev->type))
-		return (false);
-	if (is_redirect_token(token->type)
-		&& (token_is_dash(prev) || token_is_dash(token->next)))
-		return (false);
-	if (is_invalid_redirection_with_operator(token, prev)
-		|| is_invalid_redirection_with_operator(token, token->next))
-		return (false);
-	return (true);
+	while (token && token->next)
+	{
+		if (token->type == TOKEN_OPEN_PAREN
+			&& token->next->type == TOKEN_CLOSE_PAREN)
+			return (true);
+		token = token->next;
+	}
+	return (false);
 }
 
 bool	check_syntax(t_token *tokens, t_token *prev)
