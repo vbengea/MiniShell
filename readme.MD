@@ -1,6 +1,5 @@
 * To implement:
 
-
 	- Pasar la norma
 
 	- Control de errores
@@ -13,7 +12,7 @@
 * To be tested (bash vs. minishell) 😅:
 
 	- We should set and use $TMPDIR as the variable holding the directory where temporary files. Like those we use to gather input / output from different redirections. The reason this might be important is that if the binary is placed in another directory and executed, it won't find the "./tmp" file we are currently using.
-å
+
 	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we first do:
 
 		$ VAR=9
