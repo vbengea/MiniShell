@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/19 17:25:36 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 20:27:48 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ void			preexecute(t_ast_node *node, t_terminal *tty);
 void			postexecute(t_ast_node *node);
 void			navigator_init(t_ast_node *node, t_terminal *tty);
 void			set_history_status(int status, t_terminal *tty);
+void			selector_node(t_ast_node *node, t_terminal *tty);
 
 #endif
