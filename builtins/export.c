@@ -68,6 +68,7 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 	int		export_expand;
 	int		to_free;
 
+	value = NULL;
 	export_expand = expand_flag(node, len, &i);
 	while (i < len && node->args[i])
 	{
