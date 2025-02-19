@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 21:47:33 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:29:27 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	env_lookup(char *key, t_terminal *tty)
 
 	p = env_resolution(tty, 1);
 	if (!p)
-		cleanup("Memory error on environment variable lookup", 1);
+		cleanup("Memory error on environment variable lookup", 1, NULL, tty);
 	i = 0;
 	var = ft_strjoin(key, "=");
 	if (var)

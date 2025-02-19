@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 11:19:04 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:28:29 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*read_files_content(char **files)
 			close(tmp);
 		}
 		else
-			cleanup(files[i], 1);
+			cleanup(files[i], 1, NULL, NULL);
 		i++;
 	}
 	return (content);

@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 23:43:43 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:28:58 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 		else
 		{
 			if (execute(node, node->args, tty) == -1)
-				cleanup("Error executing command", 126);
+				cleanup("Error executing command", 126, node, tty);
 		}
 	}
 	else
@@ -86,10 +86,10 @@ void	pipex(t_ast_node *node, t_terminal *tty)
 	int			pid;
 
 	if (pipe(fd) == -1)
-		cleanup("Error creating pipe", 1);
+		cleanup("Error creating pipe", 1, node, tty);
 	pid = fork();
 	if (pid == -1)
-		cleanup("Error forking process", 1);
+		cleanup("Error forking process", 1, node, tty);
 	if (pid == 0)
 	{
 		close(fd[0]);

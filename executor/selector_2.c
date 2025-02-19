@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:47:46 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 23:52:03 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:27:04 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	executor(t_ast_node *node, int hold, t_terminal *tty)
 	(void) hold;
 	preexecute(node, tty);
 	if (execute(node, node->args, tty) == -1)
-		cleanup("Error executing command", 126);
+		cleanup("Error executing command", 126, node, tty);
 }
 
 void	builtin_end(t_ast_node *node, int hold, t_terminal *tty)

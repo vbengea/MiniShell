@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/16 19:40:37 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:28:10 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, \
 	{
 		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (fd < 0)
-			cleanup("Error reading file", 1);
+			cleanup("Error reading file", 1, node, tty);
 		free(str);
 		str = get_next_line(STDIN_FILENO);
 		str_len = ft_strlen(str);

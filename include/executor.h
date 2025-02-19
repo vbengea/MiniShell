@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 23:54:41 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:25:36 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			pipex_redirect_out(t_ast_node *node, int fd[2], \
 				int is_last, t_terminal *tty);
 void			parse_command(t_ast_node *node, t_terminal *tty);
 
-void			cleanup(char *err, int code);
+void			cleanup(char *err, int code, t_ast_node *node, t_terminal *tty);
 int				is_last(t_ast_node *node, t_terminal *tty);
 int				is_builtin(t_ast_node *node);
 int				is_pipe_state(t_ast_node *node);

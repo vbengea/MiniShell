@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirect_out_1.c                                   :+:      :+:    :+:   */
+/*   redirect_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:37 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 19:13:56 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:27:58 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	do_outward_redirection(t_ast_node *node)
 	flags = O_WRONLY | O_CREAT | O_TRUNC | O_APPEND;
 	tmp = open(file, flags, 0666);
 	if (tmp < 0)
-		cleanup("Error reading file", 1);
+		cleanup("Error reading file", 1, node, NULL);
 	free(id);
 	free(file);
 	if (tmp < 0)
@@ -76,7 +76,7 @@ int	has_outward_redirection(t_ast_node *ast)
 			if (fd >= 0)
 				close(fd);
 			else if (fd < 0)
-				cleanup("Error reading file", 1);
+				cleanup("Error reading file", 1, ast, NULL);
 		}
 		if (lst->next == NULL)
 			break ;
@@ -108,7 +108,7 @@ void	redlist_out(t_redirection *lst, char *content)
 			flags = O_WRONLY | O_CREAT | O_APPEND;
 		tmp = open(lst->file, flags, 0666);
 		if (tmp < 0)
-			cleanup("Error reading file", 1);
+			cleanup("Error reading file", 1, NULL, NULL);
 		write(tmp, content, ft_strlen(content));
 		close(tmp);
 	}

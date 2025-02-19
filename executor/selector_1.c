@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/18 23:50:05 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:27:11 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	forker(t_ast_node *node, void (*f)(t_ast_node *node, int hold, \
 
 	pid = fork();
 	if (pid == -1)
-		cleanup("Error forking process", 1);
+		cleanup("Error forking process", 1, node, tty);
 	if (pid == 0)
 		f(node, 1, tty);
 	else
