@@ -41,6 +41,9 @@
 		$ echo ~
 		/Users/juandanielflores
 
+	- There are variables like $SHELL and $BASH that output the location of the bash binary. Should we do the same with $MINISHELL?
+
+	- 
 	- 
 
 	- 
@@ -55,17 +58,17 @@
 
 	- 
 
-	- 
 
-	- 
+* Food for thought:
 
-	- 
+	- The $BASH_ENV and $ENV variables contains a location of a script that be used for debugging and doing things before the command is executed. I wonder if we could have used this to store commands in a history file.
 
 	- We should make sure that all errors are sent to the standard error. I assume that `perror` does that but we need to scan code for printf's and write's that don't.
 
-	- 🤦 Apparently there is a GLOBIGNORE environemnt variable that describes colon separated patterns that should be ignored by the "wildcard" file expansions. It's like a git .gitignore. I think this could be difficult to implement and not sure it is part of the assignment.
+	- 🤦 Apparently there is a GLOBIGNORE environemnt variable that describes colon separated patterns that should be ignored by the "wildcard" file expansions. It's like a git .gitignore. I think this could be difficult to implement and not sure it is part of the assignment. There is also a way to ignore executables even if their containing folder is listed by $PATH. We can do this with $EXECIGNORE.
 
 	- A la hora de probar la minishell, debemos procurar que no se pruebe con un perfil diferente del de uno de nosotros dos. En teoria no deberia pasar nada pero las configuraciones de cada perfil pueden ser unicas.
+
 
 * Solved issues:
 
