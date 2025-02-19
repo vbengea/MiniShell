@@ -57,7 +57,7 @@
 
 	- When the user uses `cd` we correctly set the $PWD, but we don't set the $OLDPWD to the previous working directory.
 
-	- 
+	- We should set and use $TMPDIR as the variable holding the directory where temporary files. Like those we use to gather input / output from different redirections. The reason this might be important is that if the binary is placed in another directory and executed, it won't find the "./tmp" file we are currently using.
 
 	- 
 
@@ -71,6 +71,8 @@
 
 
 * Food for thought:
+
+	- There is a $CDPATH variable that `cd` uses to resolve things in the order specified. I don't think it applies to use because we are using chdir() c function in the background.
 
 	- If we would like to version our minishell, there are variables that are used to indicate this $BASH_VERSION and $BASH_VERSINFO[n]. The `n` indicating (mayor, minor, patch, build, release, etc..).
 
