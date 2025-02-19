@@ -15,8 +15,13 @@
 
 * To be tested (bash vs. minishell) 😅:
 
-	- Deberiamos soportar $(<variable>)
+	- Deberiamos soportar $(CMD) y ${VAR_NAME}?
 		$ ls $(pwd)/executor
+
+		[12:28, 19/02/2025] Juan Daniel Flores: ${VAR_NAME} expands a variable
+		[12:28, 19/02/2025] Juan Daniel Flores: creo que si funcionaria
+		[12:28, 19/02/2025] Juan Daniel Flores: ls ${PWD}/executor
+		[12:29, 19/02/2025] Juan Daniel Flores: so ${PWD} y $(pwd) son diferentes
 
 	- Should we detect non-word characters that we don't support at the tokenize level:
 		$ }
