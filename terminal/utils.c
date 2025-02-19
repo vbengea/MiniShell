@@ -6,13 +6,11 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 17:44:46 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 18:20:54 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
-
-char	*get_prompt(t_terminal *tty);
 
 void	tty_init(char **env, t_terminal *tty)
 {

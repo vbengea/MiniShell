@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_prompt.c                                       :+:      :+:    :+:   */
+/*   get_user_host.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 16:46:59 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 18:50:49 by vbengea          ###   ########.fr       */
+/*   Created: 2025/02/19 18:49:01 by vbengea           #+#    #+#             */
+/*   Updated: 2025/02/19 18:49:28 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-char *get_prompt(t_terminal *tty)
+char *get_user_host(char **host_ptr)
 {
-	char *host;
 	char *user;
-	char *user_host_prompt;
-	char *final_prompt;
+	char *host;
 
-	if (!tty)
+	host = get_hostname();
+	if (!host)
 		return (NULL);
-	clean_existing_prompt(tty);
+	*host_ptr = host;
 	
-	user = get_user_host(&host);
+	user = get_username();
 	if (!user)
+	{
+		free(host);
 		return (NULL);
-	
-	user_host_prompt = create_base_prompt(user, host);
-	if (!user_host_prompt)
-		return (NULL);
-	
-	final_prompt = create_path_prompt(user_host_prompt);
-	free(user_host_prompt);
-	if (!final_prompt)
-		return (NULL);
-	
-	tty->prompt = final_prompt;
-	return (final_prompt);
+	}
+	return (user);
 }

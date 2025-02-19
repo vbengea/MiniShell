@@ -98,6 +98,16 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/ast_build/command_node/process_env_tokens.c \
 					$(PARSER_DIR)/prompt/get_prompt.c \
 					$(PARSER_DIR)/environment/handle_no_env.c \
+					$(PARSER_DIR)/prompt/append_prompt_suffix.c \
+					$(PARSER_DIR)/prompt/clean_existing_prompt.c \
+					$(PARSER_DIR)/prompt/create_base_prompt.c \
+					$(PARSER_DIR)/prompt/create_initial_prompt.c \
+					$(PARSER_DIR)/prompt/create_path_prompt.c \
+					$(PARSER_DIR)/prompt/create_user_host_name.c \
+					$(PARSER_DIR)/prompt/get_colored_cwd.c \
+					$(PARSER_DIR)/prompt/get_hostname.c \
+					$(PARSER_DIR)/prompt/get_user_host.c \
+					$(PARSER_DIR)/prompt/get_username.c \
 					$(BUILTINS_DIR)/cd.c \
 					$(BUILTINS_DIR)/echo.c \
 					$(BUILTINS_DIR)/env.c \
