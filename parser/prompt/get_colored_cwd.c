@@ -6,16 +6,16 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:44:45 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 18:45:00 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:05:29 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-char *get_colored_cwd(void)
+char	*get_colored_cwd(void)
 {
-	char *cwd;
-	char *colored_cwd;
+	char	*cwd;
+	char	*colored_cwd;
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)

@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:46:57 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 18:47:18 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:06:34 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 char	*create_path_prompt(char *base_prompt)
 {
-	char *initial_prompt;
-	char *colored_cwd;
-	char *combined_prompt;
-	char *final;
+	char	*initial_prompt;
+	char	*colored_cwd;
+	char	*combined_prompt;
+	char	*final;
 
 	initial_prompt = create_initial_prompt(base_prompt);
 	if (!initial_prompt)
