@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 18:43:31 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 18:44:29 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:06:13 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*create_initial_prompt(char *base_prompt)
 {
-	char *partial_prompt;
+	char	*partial_prompt;
 
 	partial_prompt = ft_strjoin(base_prompt, WHITE ":");
 	return (partial_prompt);
