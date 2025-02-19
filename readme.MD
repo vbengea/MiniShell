@@ -30,9 +30,7 @@
 		$ TZ=UTC date
 		Wed Feb 19 08:28:53 UTC 2025
 	
-	- When the shell starts, the environment variables are loaded from a file called `.bashrc`. Do we have support something similar?
-
-	- The variables we thought were hidden "local environment" are visible if we use the `declare` command. This one lists all. Well, this was tested in Mac so... The only thing `export` does different is that it still shows variables without values. Also `set` without areguments lists all environment variables in order. Don't know if there is another difference.
+	- When the shell starts, the environment variables are loaded from a file called `.bashrc`. Do we have to support something similar?
 
 	- Do we support having several arguments to the `unset` command?
 
@@ -72,6 +70,8 @@
 
 * Food for thought:
 
+	- The variables we thought were hidden "local environment" are visible if we use the `declare` command. This one lists all. Well, this was tested in Mac so... The only thing `export` does different is that it still shows variables without values. Also `set` without arguments lists all environment variables in order. Don't know if there is another difference.
+	
 	- We need to watch out from the $IGNOREEOF variable which can be used to customize how the shell behaves in interactive mode when pressing CTRL+D. By default it exits the terminal. So we are good.
 
 	- There is a $CDPATH variable that `cd` uses to resolve things in the order specified. I don't think it applies to use because we are using chdir() c function in the background.
