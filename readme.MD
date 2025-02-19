@@ -20,7 +20,7 @@
 		$ VAR=9
 		$ ./script.sh
 
-		does script.sh sees `VAR`?
+		does the `script.sh` script sees `VAR`?
 
 	- Verificar que se puede cambiar el timezone antes de llamar el comando `date`
 
