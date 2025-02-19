@@ -15,21 +15,8 @@
 
 * To be tested (bash vs. minishell) 😅:
 
-	- Deberiamos soportar $(CMD) y ${VAR_NAME}?
-		$ ls $(pwd)/executor
-
-		[12:28, 19/02/2025] Juan Daniel Flores: ${VAR_NAME} expands a variable
-		[12:28, 19/02/2025] Juan Daniel Flores: creo que si funcionaria
-		[12:28, 19/02/2025] Juan Daniel Flores: ls ${PWD}/executor
-		[12:29, 19/02/2025] Juan Daniel Flores: so ${PWD} y $(pwd) son diferentes
-
-	- Should we detect non-word characters that we don't support at the tokenize level:
-		$ }
-		$ {
-		Syntax error: INVALID TOKEN
-
-	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
-
+	- We should set and use $TMPDIR as the variable holding the directory where temporary files. Like those we use to gather input / output from different redirections. The reason this might be important is that if the binary is placed in another directory and executed, it won't find the "./tmp" file we are currently using.
+å
 	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we first do:
 
 		$ VAR=9
@@ -37,24 +24,16 @@
 
 		does the `script.sh` script sees `VAR`?
 
-	- Verificar que se puede cambiar el timezone antes de llamar el comando `date`
-
-		$ date
-		Wed Feb 19 09:29:07 CET 2025
-
-		$ TZ=UTC date
-		Wed Feb 19 08:28:53 UTC 2025
-	
-	- When the shell starts, the environment variables are loaded from a file called `.bashrc`. Do we have to support something similar?
+	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
 
 	- Do we need to support having several arguments to the `unset` command?
+
+	- When the user uses `cd` we correctly set the $PWD, but we don't set the $OLDPWD to the previous working directory.
 
 	- We should support `~` as an environment variable. Our project doesn't do it. I wonder if there are other conversions we need to support e.g.:
 
 		$ echo ~
 		/Users/juandanielflores
-
-	- There are variables like $SHELL and $BASH that output the location of the bash binary. Should we do the same with $MINISHELL?
 
 	- We are currently printing SHLVL but I didn't know there is also a BASH_SUBSHELL environment variable that indicates the level of sub shell bash is currently in. e.g
 
@@ -68,19 +47,19 @@
 		$ echo (($SHLVL $BASH_SUBSHELL))
 		2 2
 
-	- When the user uses `cd` we correctly set the $PWD, but we don't set the $OLDPWD to the previous working directory.
+	- Deberiamos soportar $(CMD) y ${VAR_NAME}?
+		$ ls $(pwd)/executor
+		ls ${PWD}/executor
+		${PWD} y $(pwd) son diferentes
 
-	- We should set and use $TMPDIR as the variable holding the directory where temporary files. Like those we use to gather input / output from different redirections. The reason this might be important is that if the binary is placed in another directory and executed, it won't find the "./tmp" file we are currently using.
+	- Should we detect non-word characters that we don't support at the tokenize level:
+		$ }
+		$ {
+		Syntax error: INVALID TOKEN
 
-	- 
+	- When the shell starts, the environment variables are loaded from a file called `.bashrc`. Do we have to support something similar?
 
-	- 
-
-	- 
-
-	- 
-
-	- 
+	- There are variables like $SHELL and $BASH that output the location of the bash binary. Should we do the same with $MINISHELL?
 
 
 * Food for thought:
@@ -103,6 +82,14 @@
 
 
 * Solved issues:
+
+	- Verificar que se puede cambiar el timezone antes de llamar el comando `date`
+
+		$ date
+		Wed Feb 19 09:29:07 CET 2025
+
+		$ TZ=UTC date
+		Wed Feb 19 08:28:53 UTC 2025
 
 	- Enviar un comando al binario de la minishell:
 		minishell -c "ls -l | cat -e"
