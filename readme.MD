@@ -30,7 +30,7 @@
 		$ TZ=UTC date
 		Wed Feb 19 08:28:53 UTC 2025
 	
-	- 
+	- When the shell starts, the environment variables are loaded from a file called `.bashrc`. Do we have support something similar?
 
 	- 
 
