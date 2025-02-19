@@ -11,7 +11,7 @@
 	- File descriptor leaks
 
 
-* To be tested (bash vs. minishell):
+* To be tested (bash vs. minishell) 😅:
 
 	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
 
