@@ -36,7 +36,7 @@
 
 	- Do we support having several arguments to the `unset` command?
 
-	- Apparently, the wildcard or any other means should resolve `~`. Our project doesn't do it. I wonder if there are other conversions we need to support e.g.:
+	- We should support `~` as an environment variable. Our project doesn't do it. I wonder if there are other conversions we need to support e.g.:
 
 		$ echo ~
 		/Users/juandanielflores
