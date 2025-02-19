@@ -15,6 +15,19 @@
 
 * To be tested (bash vs. minishell) 😅:
 
+	- Deberiamos soportar $(CMD) y ${VAR_NAME}?
+		$ ls $(pwd)/executor
+
+		[12:28, 19/02/2025] Juan Daniel Flores: ${VAR_NAME} expands a variable
+		[12:28, 19/02/2025] Juan Daniel Flores: creo que si funcionaria
+		[12:28, 19/02/2025] Juan Daniel Flores: ls ${PWD}/executor
+		[12:29, 19/02/2025] Juan Daniel Flores: so ${PWD} y $(pwd) son diferentes
+
+	- Should we detect non-word characters that we don't support at the tokenize level:
+		$ }
+		$ {
+		Syntax error: INVALID TOKEN
+
 	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
 
 	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we first do:
