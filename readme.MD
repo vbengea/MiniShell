@@ -17,10 +17,52 @@
 
 	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we frist do:
 
-	$ VAR=9
-	$ ./script.sh
+		$ VAR=9
+		$ ./script.sh
 
-	does script.sh sees `VAR`?
+		does script.sh sees `VAR`?
+
+	- Verificar que se puede cambiar el timezone antes de llamar el comando `date`
+
+		$ date
+		Wed Feb 19 09:29:07 CET 2025
+
+		$ TZ=UTC date
+		Wed Feb 19 08:28:53 UTC 2025
+	
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- 
+
+	- A la hora de probar la minishell, debemos procurar que no se pruebe con un perfil diferente del de uno de nosotros dos. En teoria no deberia pasar nada pero las configuraciones de cada perfil pueden ser unicas.
 
 * Solved issues:
 
