@@ -72,6 +72,8 @@
 
 * Food for thought:
 
+	- We need to watch out from the $IGNOREEOF variable which can be used to customize how the shell behaves in interactive mode when pressing CTRL+D. By default it exits the terminal. So we are good.
+
 	- There is a $CDPATH variable that `cd` uses to resolve things in the order specified. I don't think it applies to use because we are using chdir() c function in the background.
 
 	- If we would like to version our minishell, there are variables that are used to indicate this $BASH_VERSION and $BASH_VERSINFO[n]. The `n` indicating (mayor, minor, patch, build, release, etc..).
