@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 19:13:54 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:26:20 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	loop_inner(char *input, t_token *tokens, t_terminal *tty)
 			write(1, "exit\n", 5);
 			break ;
 		}
-		else if (input[0] == '\0')
+		else if (input[0] == '\0' || input[0] == '\t')
 		{
 			free(input);
 			continue ;
