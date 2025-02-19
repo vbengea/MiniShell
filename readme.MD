@@ -13,9 +13,9 @@
 
 * To be tested (bash vs. minishell):
 
-	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed.
+	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
 
-	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we frist do:
+	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we first do:
 
 		$ VAR=9
 		$ ./script.sh
