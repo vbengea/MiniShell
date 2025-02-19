@@ -43,7 +43,18 @@
 
 	- There are variables like $SHELL and $BASH that output the location of the bash binary. Should we do the same with $MINISHELL?
 
-	- 
+	- We are currently printing SHLVL but I didn't know there is also a BASH_SUBSHELL environment variable that indicates the level of sub shell bash is currently in. e.g
+
+		$ echo $SHLVL $BASH_SUBSHELL
+		1 0
+		$ bash
+		$ echo $SHLVL $BASH_SUBSHELL
+		2 0
+		$ echo ($SHLVL $BASH_SUBSHELL)
+		2 1
+		$ echo (($SHLVL $BASH_SUBSHELL))
+		2 2
+
 	- 
 
 	- 
