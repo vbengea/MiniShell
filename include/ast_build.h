@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 13:02:07 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:16:00 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,10 @@ void			handle_word(t_token *current, char **cmd_args, \
 int				fill_cmd_args(t_token *tokens, char **cmd_args, \
 	t_ast_node *node);
 
-void process_word_token(t_token *current, t_cmd_args_context *context);
-void add_cmd_arg(char **cmd_args, char *value, int *i);
-void process_env_var_with_equals(t_token *current, \
+void			process_word_token(t_token *current, \
+	t_cmd_args_context *context);
+void			add_cmd_arg(char **cmd_args, char *value, int *i);
+void			process_env_var_with_equals(t_token *current, \
 	t_cmd_args_context *context, char *equals_pos);
-
-
 
 #endif
