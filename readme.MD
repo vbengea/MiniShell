@@ -1,12 +1,9 @@
 * To implement:
 
-	- Memory Leaks
-		Cuando introducimos comandos invalidos, sin importar el comando en si, se generan still reachable leaks. El comando que probe fue `ls-l|cat-e` (sin espacios)
 
 	- Pasar la norma
 
 	- Control de errores
-
 
 	- Context errors
 	
@@ -82,6 +79,9 @@
 
 
 * Solved issues:
+
+	- Memory Leaks
+		Cuando introducimos comandos invalidos, sin importar el comando en si, se generan still reachable leaks. El comando que probe fue `ls-l|cat-e` (sin espacios)
 
 	- Verificar que se puede cambiar el timezone antes de llamar el comando `date`
 
