@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 17:52:51 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 18:32:53 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ char	*get_command_path(char *cmd, int *i, int *is_free, t_terminal *tty)
 	char	*path;
 	char	*penv;
 
+	if (cmd == NULL)
+		cleanup("Command not found", 127, tty->ast, tty);
 	if (ft_strchr(cmd, '/') != NULL || \
 		ft_strchr(cmd, '.') != NULL || \
 		ft_cmpexact(cmd, "minishell"))
