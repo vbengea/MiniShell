@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 11:22:57 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/18 10:29:32 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:28:19 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define BLUE "\001\033[1;34m\002"
 # define MAGENTA "\001\033[1;35m\002"
 # define CYAN "\001\033[1;36m\002"
-# define WHITE "\001\033[1;37m\002"
+# define WHITE "\001\033[0;37m\002"
 
 # define RESET "\001\033[0m\002"
 

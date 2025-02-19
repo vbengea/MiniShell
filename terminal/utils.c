@@ -6,11 +6,13 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 16:45:33 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:44:46 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
+
+char	*get_prompt(t_terminal *tty);
 
 void	tty_init(char **env, t_terminal *tty)
 {
@@ -26,6 +28,7 @@ void	tty_init(char **env, t_terminal *tty)
 		tty->env_local[0] = NULL;
 		tty->env_cmd[0] = NULL;
 		tty->myhist = NULL;
+		tty->prompt = NULL;
 	}
 }
 
@@ -33,7 +36,7 @@ void	loop_inner(char *input, t_token *tokens, t_terminal *tty)
 {
 	while (true)
 	{
-		input = readline(GREEN "minishell$ " RESET);
+		input = readline(get_prompt(tty));
 		if (!input)
 		{
 			write(1, "exit\n", 5);
@@ -55,6 +58,11 @@ void	loop_inner(char *input, t_token *tokens, t_terminal *tty)
 		tty->ast = build_ast(tokens);
 		free_token(tokens);
 		execute_ast(tty);
+		if (tty->prompt)
+		{
+			free (tty->prompt);
+			tty->prompt = NULL;
+		}
 	}
 }
 

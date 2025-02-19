@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 20:00:57 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 17:58:01 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	loop_terminal(t_terminal *tty)
 
 void	destroy_terminal(t_terminal *tty)
 {
+	if (tty->prompt)
+		free(tty->prompt);
 	save_history_to_file(tty->myhist, tty);
 	clear_arr_of_strs(tty->env);
 	clear_arr_of_strs(tty->env_local);

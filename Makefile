@@ -96,6 +96,7 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/ast_build/command_node/handle_word_token.c \
 					$(PARSER_DIR)/ast_build/command_node/handle_word.c \
 					$(PARSER_DIR)/ast_build/command_node/process_env_tokens.c \
+					$(PARSER_DIR)/prompt/get_prompt.c \
 					$(PARSER_DIR)/environment/handle_no_env.c \
 					$(BUILTINS_DIR)/cd.c \
 					$(BUILTINS_DIR)/echo.c \
