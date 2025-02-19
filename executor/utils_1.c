@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 17:32:55 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 18:08:38 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	free_redirect_ast(t_ast_node *ast, int find_root)
 
 void	cleanup(char *err, int code, t_ast_node *node, t_terminal *tty)
 {
-	perror(err);
+	if (err == NULL)
+		perror(err);
 	if (node)
 	{
 		free_redirect_ast(node, 1);
