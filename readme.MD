@@ -13,6 +13,14 @@
 
 * To be tested (bash vs. minishell) 😅:
 
+	- Deberiamos soportar $(<variable>)
+		$ ls $(pwd)/executor
+
+	- Should we detect non-word characters that we don't support at the tokenize level:
+		$ }
+		$ {
+		Syntax error: INVALID TOKEN
+
 	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
 
 	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we first do:
