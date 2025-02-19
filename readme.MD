@@ -32,9 +32,9 @@
 	
 	- When the shell starts, the environment variables are loaded from a file called `.bashrc`. Do we have support something similar?
 
-	- 
+	- The variables we thought were hidden "local environment" are visible if we use the `declare` command. This one lists all. Well, this was tested in Mac so... The only thing `export` does different is that it still shows variables without values. Also `set` without areguments lists all environment variables in order. Don't know if there is another difference.
 
-	- 
+	- Do we support having several arguments to the `unset` command?
 
 	- 
 
