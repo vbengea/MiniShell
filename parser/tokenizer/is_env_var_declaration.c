@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:05:05 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/17 18:32:34 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 11:57:56 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,8 @@ static bool	check_unquoted_value(const char *input, int *i)
 	return (true);
 }
 
-bool	is_env_var_declaration(const char *input, int *i)
+static bool	check_var_value(const char *input, int *i, int start)
 {
-	int	start;
-
-	start = *i;
-	if (!check_var_name(input, i))
-		return (false);
-	if (input[*i] != '=')
-	{
-		*i = start;
-		return (false);
-	}
-	(*i)++;
 	if (input[*i] == '"')
 	{
 		if (!check_quoted_value(input, i))
@@ -69,4 +58,20 @@ bool	is_env_var_declaration(const char *input, int *i)
 	}
 	*i = start;
 	return (true);
+}
+
+bool	is_env_var_declaration(const char *input, int *i)
+{
+	int	start;
+
+	start = *i;
+	if (!check_var_name(input, i))
+		return (false);
+	if (input[*i] != '=')
+	{
+		*i = start;
+		return (false);
+	}
+	(*i)++;
+	return (check_var_value(input, i, start));
 }

@@ -1,10 +1,12 @@
 * To implement:
 
+	- Memory Leaks
+		Cuando introducimos comandos invalidos, sin importar el comando en si, se generan still reachable leaks. El comando que probe fue `ls-l|cat-e` (sin espacios)
+
 	- Pasar la norma
-	
+
 	- Control de errores
 
-	- Memory Leaks
 
 	- Context errors
 	
