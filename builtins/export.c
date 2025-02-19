@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 19:10:47 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:54:05 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static	void	main_pattern(t_ast_node *node, int *i, int *to_free, \
 		value = clean_value(value, to_free);
 		set_env(node, key, value, tty);
 	}
+	if (*to_free)
+		free(value);
 }
 
 static	void	secondary_pattern(t_ast_node *node, char *key, int *to_free, \
@@ -50,6 +52,8 @@ static	void	secondary_pattern(t_ast_node *node, char *key, int *to_free, \
 		*to_free = 1;
 	value = clean_value(value, to_free);
 	set_env(node, key, value, tty);
+	if (*to_free)
+		free(value);
 }
 
 static	void	terciary_pattern(t_ast_node *node, int *to_free, \
@@ -84,8 +88,6 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 			selector(node, tty);
 			break ;
 		}
-		if (to_free)
-			free(value);
 		i++;
 	}
 }
