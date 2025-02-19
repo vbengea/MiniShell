@@ -55,7 +55,7 @@
 		$ echo (($SHLVL $BASH_SUBSHELL))
 		2 2
 
-	- 
+	- When the user uses `cd` we correctly set the $PWD, but we don't set the $OLDPWD to the previous working directory.
 
 	- 
 
