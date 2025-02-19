@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 18:43:32 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 21:23:39 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,14 @@ int	doexec(t_ast_node *node, char **comm, int is_free, t_terminal *tty)
 char	*get_command_path(char *cmd, int *i, int *is_free, t_terminal *tty)
 {
 	char	*path;
-	char	*penv;
 
+	path = NULL;
 	if (cmd == NULL)
 	{
 		printf("Command not found\n");
 		cleanup(NULL, 127, tty->ast, tty);
-		return (NULL);
 	}
-	else if (ft_strchr(cmd, '/') != NULL || \
-		ft_strchr(cmd, '.') != NULL || \
+	else if (ft_strchr(cmd, '/') != NULL || ft_strchr(cmd, '.') != NULL || \
 		ft_cmpexact(cmd, "minishell"))
 	{
 		path = ft_strdup(cmd);
@@ -105,14 +103,12 @@ char	*get_command_path(char *cmd, int *i, int *is_free, t_terminal *tty)
 	}
 	else
 	{
-		penv = environment("PATH", tty);
-		if (penv)
+		path = environment("PATH", tty);
+		if (path)
 		{
-			path = find_path(cmd, penv);
+			path = find_path(cmd, path);
 			*is_free = 1;
 		}
-		else
-			path = NULL;
 	}
 	return (path);
 }
