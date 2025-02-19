@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/19 21:17:30 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 21:33:29 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	read_files_inner(int tmp, char **content)
 		else
 			*content = str;
 		if (!*content)
-			return (NULL);
+			return ;
 	}
 }
 
@@ -105,6 +105,8 @@ char	*read_files_content(char **files)
 		{
 			read_files_inner(tmp, &content);
 			close(tmp);
+			if (!content)
+				return (NULL);
 		}
 		else
 			cleanup(files[i], 1, NULL, NULL);
