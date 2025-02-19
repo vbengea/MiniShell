@@ -63,7 +63,7 @@
 
 	- 
 
-	- 
+	- 🤦 Apparently there is a GLOBIGNORE environemnt variable that describes colon separated patterns that should be ignored by the "wildcard" file expansions. It's like a git .gitignore. I think this could be difficult to implement and not sure it is part of the assignment.
 
 	- A la hora de probar la minishell, debemos procurar que no se pruebe con un perfil diferente del de uno de nosotros dos. En teoria no deberia pasar nada pero las configuraciones de cada perfil pueden ser unicas.
 
