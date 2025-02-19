@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 22:41:53 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 16:45:33 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	loop_inner(char *input, t_token *tokens, t_terminal *tty)
 			free(input);
 			continue ;
 		}
-		add_to_both_histories(tty->myhist, input);
 		tokens = tokenize_input(input);
-		free(input);
 		if (!check_syntax(tokens, NULL))
 		{
 			free_token(tokens);
 			continue ;
 		}
+		add_to_both_histories(tty->myhist, input);
+		free(input);
 		tty->ast = build_ast(tokens);
 		free_token(tokens);
 		execute_ast(tty);
