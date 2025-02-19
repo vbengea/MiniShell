@@ -11,16 +11,9 @@
 
 * To be tested (bash vs. minishell) 😅:
 
-	- We should set and use $TMPDIR as the variable holding the directory where temporary files. Like those we use to gather input / output from different redirections. The reason this might be important is that if the binary is placed in another directory and executed, it won't find the "./tmp" file we are currently using.
-
-	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we first do:
-
-		$ VAR=9
-		$ ./script.sh
-
-		does the `script.sh` script sees `VAR`?
-
 	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
+
+	- We should set and use $TMPDIR as the variable holding the directory where temporary files. Like those we use to gather input / output from different redirections. The reason this might be important is that if the binary is placed in another directory and executed, it won't find the "./tmp" file we are currently using.
 
 	- Do we need to support having several arguments to the `unset` command?
 
@@ -78,6 +71,13 @@
 
 
 * Solved issues:
+
+	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we first do:
+
+		$ VAR=9
+		$ ./script.sh
+
+		does the `script.sh` script sees `VAR`?
 
 	- Memory Leaks
 		Cuando introducimos comandos invalidos, sin importar el comando en si, se generan still reachable leaks. El comando que probe fue `ls-l|cat-e` (sin espacios)
