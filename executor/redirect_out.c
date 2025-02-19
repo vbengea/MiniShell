@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:37 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 17:27:58 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:31:36 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,9 @@ int	has_outward_redirection(t_ast_node *ast)
 			if (lst->type == REDIRECT_APPEND)
 				flags = O_WRONLY | O_CREAT | O_APPEND;
 			fd = open(lst->file, flags, 0666);
-			if (fd >= 0)
-				close(fd);
-			else if (fd < 0)
+			if (fd < 0)
 				cleanup("Error reading file", 1, ast, NULL);
+			close(fd);
 		}
 		if (lst->next == NULL)
 			break ;
