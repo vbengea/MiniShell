@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/19 17:28:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 21:17:30 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ char	*read_path_content(char *path)
 	int		tmp;
 
 	content = NULL;
-	clear = NULL;
-	str = NULL;
 	tmp = open(path, O_RDONLY);
 	if (tmp >= 0)
 	{
@@ -64,46 +62,48 @@ char	*read_path_content(char *path)
 			}
 			else
 				content = str;
-			if (!content)
-				return (NULL);
 		}
 		close(tmp);
 	}
 	return (content);
 }
 
+void	read_files_inner(int tmp, char **content)
+{
+	char	*clear;
+	char	*str;
+
+	clear = *content;
+	str = read_fd_content(tmp);
+	if (str)
+	{
+		if (*content)
+		{
+			*content = ft_strjoin(*content, str);
+			free(clear);
+			free(str);
+		}
+		else
+			*content = str;
+		if (!*content)
+			return (NULL);
+	}
+}
+
 char	*read_files_content(char **files)
 {
 	int		i;
 	int		tmp;
-	char	*clear;
-	char	*str;
 	char	*content;
 
 	i = 0;
-	str = NULL;
-	clear = NULL;
 	content = NULL;
 	while (files[i])
 	{
 		tmp = open(files[i], O_RDONLY);
 		if (tmp >= 0)
 		{
-			clear = content;
-			str = read_fd_content(tmp);
-			if (str)
-			{
-				if (content)
-				{
-					content = ft_strjoin(content, str);
-					free(clear);
-					free(str);
-				}
-				else
-					content = str;
-				if (!content)
-					return (NULL);
-			}
+			read_files_inner(tmp, &content);
 			close(tmp);
 		}
 		else
