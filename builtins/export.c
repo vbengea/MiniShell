@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 22:18:35 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 19:10:47 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static	void	export_multiple(t_ast_node *node, int len, t_terminal *tty)
 	int		export_expand;
 	int		to_free;
 
-	value = NULL;
+	value = NULL;	// TODO: check in campus
 	export_expand = expand_flag(node, len, &i);
 	while (i < len && node->args[i])
 	{
