@@ -61,7 +61,7 @@
 
 	- 
 
-	- 
+	- We should make sure that all errors are sent to the standard error. I assume that `perror` does that but we need to scan code for printf's and write's that don't.
 
 	- 🤦 Apparently there is a GLOBIGNORE environemnt variable that describes colon separated patterns that should be ignored by the "wildcard" file expansions. It's like a git .gitignore. I think this could be difficult to implement and not sure it is part of the assignment.
 
