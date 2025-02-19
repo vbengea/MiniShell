@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_build.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/18 10:25:19 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:02:07 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ typedef struct s_redirection_info
 	char				*file;
 	bool				quote_flag;
 }	t_redirection_info;
+
+typedef struct t_init_params
+{
+	char		**cmd_args;
+	t_ast_node	*node;
+	int			*i;
+	bool		*prev_export;
+}	t_init_params;
 
 t_ast_node		*build_ast(t_token *tokens);
 t_ast_node		*create_ast_node(t_node_type type, char **cmd_args);
@@ -83,5 +91,12 @@ void			handle_word(t_token *current, char **cmd_args, \
 	t_ast_node *node, int *i);
 int				fill_cmd_args(t_token *tokens, char **cmd_args, \
 	t_ast_node *node);
+
+void process_word_token(t_token *current, t_cmd_args_context *context);
+void add_cmd_arg(char **cmd_args, char *value, int *i);
+void process_env_var_with_equals(t_token *current, \
+	t_cmd_args_context *context, char *equals_pos);
+
+
 
 #endif

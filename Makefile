@@ -86,6 +86,7 @@ SRC				:= 	main.c\
 					$(PARSER_DIR)/ast_build/command_node/build_command_node.c \
 					$(PARSER_DIR)/ast_build/command_node/count_command_words.c \
 					$(PARSER_DIR)/ast_build/command_node/fill_cmd_args.c \
+					$(PARSER_DIR)/ast_build/command_node/fill_cmd_args_utils.c \
 					$(PARSER_DIR)/ast_build/command_node/free_tab.c \
 					$(PARSER_DIR)/ast_build/command_node/get_redirect_type.c \
 					$(PARSER_DIR)/ast_build/command_node/handle_env_var_token.c \
