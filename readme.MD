@@ -1,5 +1,8 @@
 * To implement:
 
+	- Probar
+		VAR="test" && echo "$VAR" | grep "test" > output.txt && cat < output.txt | wc -l >> output.txt && echo "Success" || echo "Failure"
+
 	- Pasar la norma
 
 	- Control de errores
