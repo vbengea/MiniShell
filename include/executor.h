@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/19 21:50:49 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:21:16 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				doexec(t_ast_node *node, char **comm, int is_free, \
 int				execute(t_ast_node *node, char **comm, t_terminal *tty);
 
 int				detect_in_redirection(t_ast_node *node, t_terminal *tty);
-int				detect_out_redirection(t_ast_node *node);
+int				detect_out_redirection(t_ast_node *node, t_terminal *tty);
 int				has_outward_redirection(t_ast_node *ast);
 int				has_inward_redirection(t_redirection *lst);
 void			multiple_output_redirections(t_ast_node *node);
@@ -64,7 +64,7 @@ void			redlist_out(t_redirection *lst, char *content);
 void			redlist_iter(t_redirection *lst, void (*f)(void *, int x));
 int				is_identifier(char c);
 void			ast_printer_node(t_ast_node *ast, int i);
-int				do_outward_redirection(t_ast_node *node);
+int				do_outward_redirection(t_ast_node *node, t_terminal *tty);
 int				in_redirect_first(t_ast_node *node, t_terminal *tty);
 void			nullify_exit(t_ast_node *node);
 void			traverse_pipex(t_ast_node *node, t_terminal *tty, \

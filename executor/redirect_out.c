@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:37 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 19:31:36 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:20:30 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-int	do_outward_redirection(t_ast_node *node)
+int	do_outward_redirection(t_ast_node *node, t_terminal *tty)
 {
 	char	*id;
 	char	*file;
@@ -24,7 +24,7 @@ int	do_outward_redirection(t_ast_node *node)
 	flags = O_WRONLY | O_CREAT | O_TRUNC | O_APPEND;
 	tmp = open(file, flags, 0666);
 	if (tmp < 0)
-		cleanup("Error reading file", 1, node, NULL);
+		cleanup("Error reading file", 1, node, tty);
 	free(id);
 	free(file);
 	if (tmp < 0)
@@ -39,10 +39,10 @@ int	do_outward_redirection(t_ast_node *node)
 	return (0);
 }
 
-int	detect_out_redirection(t_ast_node *node)
+int	detect_out_redirection(t_ast_node *node, t_terminal *tty)
 {
 	if (has_outward_redirection(node))
-		return (do_outward_redirection(node));
+		return (do_outward_redirection(node, tty));
 	else if (has_group_redirection(node, 0))
 	{
 		if (node->type != NODE_GROUP && !is_builtin(node))

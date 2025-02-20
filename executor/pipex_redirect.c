@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:15:33 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 23:44:09 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:21:27 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	pipex_redirect_out(t_ast_node *node, int fd[2], int is_last, \
 	t_terminal *tty)
 {
 	(void) tty;
-	if (detect_out_redirection(node))
+	if (detect_out_redirection(node, tty))
 		close(fd[1]);
 	else if (is_last)
 		close(fd[1]);

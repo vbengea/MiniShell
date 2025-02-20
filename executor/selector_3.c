@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   selector_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:49:26 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 21:36:17 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:21:39 by juaflore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	preexecute(t_ast_node *node, t_terminal *tty)
 	{
 		parse_command(node, tty);
 		detect_in_redirection(node, tty);
-		detect_out_redirection(node);
+		detect_out_redirection(node, tty);
 	}
 }
 
