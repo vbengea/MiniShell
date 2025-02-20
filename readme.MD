@@ -1,9 +1,11 @@
-* PIPELINE Tests:
-
-
 * To implement:
 
-	- Pasar la norma
+	-
+
+
+* Solved issues:
+
+	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
 
 	- Control de errores
 
@@ -11,69 +13,7 @@
 
 	- File descriptor leaks
 
-
-* To be tested (bash vs. minishell) 😅:
-
-	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
-
-	- We should set and use $TMPDIR as the variable holding the directory where temporary files. Like those we use to gather input / output from different redirections. The reason this might be important is that if the binary is placed in another directory and executed, it won't find the "./tmp" file we are currently using.
-
-	- Do we need to support having several arguments to the `unset` command?
-
-	- When the user uses `cd` we correctly set the $PWD, but we don't set the $OLDPWD to the previous working directory.
-
-	- We should support `~` as an environment variable. Our project doesn't do it. I wonder if there are other conversions we need to support e.g.:
-
-		$ echo ~
-		/Users/juandanielflores
-
-	- We are currently printing SHLVL but I didn't know there is also a BASH_SUBSHELL environment variable that indicates the level of sub shell bash is currently in. e.g
-
-		$ echo $SHLVL $BASH_SUBSHELL
-		1 0
-		$ bash
-		$ echo $SHLVL $BASH_SUBSHELL
-		2 0
-		$ echo ($SHLVL $BASH_SUBSHELL)
-		2 1
-		$ echo (($SHLVL $BASH_SUBSHELL))
-		2 2
-
-	- Deberiamos soportar $(CMD) y ${VAR_NAME}?
-		$ ls $(pwd)/executor
-		ls ${PWD}/executor
-		${PWD} y $(pwd) son diferentes
-
-	- Should we detect non-word characters that we don't support at the tokenize level:
-		$ }
-		$ {
-		Syntax error: INVALID TOKEN
-
-	- When the shell starts, the environment variables are loaded from a file called `.bashrc`. Do we have to support something similar?
-
-	- There are variables like $SHELL and $BASH that output the location of the bash binary. Should we do the same with $MINISHELL?
-
-
-* Food for thought:
-
-	- The variables we thought were hidden "local environment" are visible if we use the `declare` command. This one lists all. Well, this was tested in Mac so... The only thing `export` does different is that it still shows variables without values. Also `set` without arguments lists all environment variables in order. Don't know if there is another difference.
-
-	- We need to watch out from the $IGNOREEOF variable which can be used to customize how the shell behaves in interactive mode when pressing CTRL+D. By default it exits the terminal. So we are good.
-
-	- There is a $CDPATH variable that `cd` uses to resolve things in the order specified. I don't think it applies to use because we are using chdir() c function in the background.
-
-	- If we would like to version our minishell, there are variables that are used to indicate this $BASH_VERSION and $BASH_VERSINFO[n]. The `n` indicating (mayor, minor, patch, build, release, etc..).
-
-	- The $BASH_ENV and $ENV variables contains a location of a script that be used for debugging and doing things before the command is executed. I wonder if we could have used this to store commands in a history file.
-
-	- We should make sure that all errors are sent to the standard error. I assume that `perror` does that but we need to scan code for printf's and write's that don't.
-
-	- 🤦 Apparently there is a GLOBIGNORE environemnt variable that describes colon separated patterns that should be ignored by the "wildcard" file expansions. It's like a git .gitignore. I think this could be difficult to implement and not sure it is part of the assignment. There is also a way to ignore executables even if their containing folder is listed by $PATH. We can do this with $EXECIGNORE. And yet also, there is a variable called $FIGIGNORE with file extension patterns to ignore when fetching the wildcards pattterns.
-
-	- A la hora de probar la minishell, debemos procurar que no se pruebe con un perfil diferente del de uno de nosotros dos. En teoria no deberia pasar nada pero las configuraciones de cada perfil pueden ser unicas.
-
-
-* Solved issues:
+	- Pasar la norma
 
 	- << EOF cat -e | cat -e << END > T1
 
@@ -276,3 +216,62 @@
 		+ With the updated signals we need to handle them at execution level; this means that a child process should execute:
 			- `signal(SIGINT, SIG_DFL)`
 			- `signal(SIGQUIT, SIG_DFL)`
+
+
+* To be tested (bash vs. minishell) 😅:
+
+	- We should set and use $TMPDIR as the variable holding the directory where temporary files. Like those we use to gather input / output from different redirections. The reason this might be important is that if the binary is placed in another directory and executed, it won't find the "./tmp" file we are currently using.
+
+	- Do we need to support having several arguments to the `unset` command?
+
+	- When the user uses `cd` we correctly set the $PWD, but we don't set the $OLDPWD to the previous working directory.
+
+	- We should support `~` as an environment variable. Our project doesn't do it. I wonder if there are other conversions we need to support e.g.:
+
+		$ echo ~
+		/Users/juandanielflores
+
+	- We are currently printing SHLVL but I didn't know there is also a BASH_SUBSHELL environment variable that indicates the level of sub shell bash is currently in. e.g
+
+		$ echo $SHLVL $BASH_SUBSHELL
+		1 0
+		$ bash
+		$ echo $SHLVL $BASH_SUBSHELL
+		2 0
+		$ echo ($SHLVL $BASH_SUBSHELL)
+		2 1
+		$ echo (($SHLVL $BASH_SUBSHELL))
+		2 2
+
+	- Deberiamos soportar $(CMD) y ${VAR_NAME}?
+		$ ls $(pwd)/executor
+		ls ${PWD}/executor
+		${PWD} y $(pwd) son diferentes
+
+	- Should we detect non-word characters that we don't support at the tokenize level:
+		$ }
+		$ {
+		Syntax error: INVALID TOKEN
+
+	- When the shell starts, the environment variables are loaded from a file called `.bashrc`. Do we have to support something similar?
+
+	- There are variables like $SHELL and $BASH that output the location of the bash binary. Should we do the same with $MINISHELL?
+
+
+* Food for thought:
+
+	- The variables we thought were hidden "local environment" are visible if we use the `declare` command. This one lists all. Well, this was tested in Mac so... The only thing `export` does different is that it still shows variables without values. Also `set` without arguments lists all environment variables in order. Don't know if there is another difference.
+
+	- We need to watch out from the $IGNOREEOF variable which can be used to customize how the shell behaves in interactive mode when pressing CTRL+D. By default it exits the terminal. So we are good.
+
+	- There is a $CDPATH variable that `cd` uses to resolve things in the order specified. I don't think it applies to use because we are using chdir() c function in the background.
+
+	- If we would like to version our minishell, there are variables that are used to indicate this $BASH_VERSION and $BASH_VERSINFO[n]. The `n` indicating (mayor, minor, patch, build, release, etc..).
+
+	- The $BASH_ENV and $ENV variables contains a location of a script that be used for debugging and doing things before the command is executed. I wonder if we could have used this to store commands in a history file.
+
+	- We should make sure that all errors are sent to the standard error. I assume that `perror` does that but we need to scan code for printf's and write's that don't.
+
+	- 🤦 Apparently there is a GLOBIGNORE environemnt variable that describes colon separated patterns that should be ignored by the "wildcard" file expansions. It's like a git .gitignore. I think this could be difficult to implement and not sure it is part of the assignment. There is also a way to ignore executables even if their containing folder is listed by $PATH. We can do this with $EXECIGNORE. And yet also, there is a variable called $FIGIGNORE with file extension patterns to ignore when fetching the wildcards pattterns.
+
+	- A la hora de probar la minishell, debemos procurar que no se pruebe con un perfil diferente del de uno de nosotros dos. En teoria no deberia pasar nada pero las configuraciones de cada perfil pueden ser unicas.
