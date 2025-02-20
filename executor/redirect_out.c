@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:37 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 17:01:09 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:40:56 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int	has_outward_redirection(t_ast_node *ast, t_terminal *tty)
 	return (has_redirect);
 }
 
-void	redlist_out(t_redirection *lst, char *content, t_ast_node *node, t_terminal *tty)
+void	redlist_out(t_redirection *lst, char *content, t_ast_node *node, \
+	t_terminal *tty)
 {
 	int				tmp;
 	int				flags;
