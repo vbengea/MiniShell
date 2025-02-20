@@ -2,6 +2,7 @@
 
 	- pipeline without redirections: no leaks on file descriptors, memory.
 
+	- `ls -l && (cd .. && ls -l) > file`
 
 * To implement:
 
