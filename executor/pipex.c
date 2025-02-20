@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/19 21:03:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 10:08:29 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 {
 	pipex_redirect_in(node, fd, is_last(node, tty), tty);
 	pipex_redirect_out(node, fd, is_last(node, tty), tty);
+	close(fd[0]);
+	close(fd[1]);
 	if (node->type == NODE_CMND)
 	{
 		parse_command(node, tty);
