@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 10:56:35 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 19:11:26 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,20 @@ t_terminal *tty)
 		tty->env_local = add_arr_of_strs(tty->env_local, entry);
 }
 
+void	set_env_inner(char *key, char **str, t_ast_node *node, t_terminal *tty)
+{
+	if (key && (!ft_isalpha(key[0]) && key[0] != '_' && key[0] != '?'))
+	{
+		if (*str)
+		{
+			printf("export: `%s': not a valid identifier\n", *str);
+			if (*str)
+				free(*str);
+		}
+		cleanup(NULL, 1, node, tty);
+	}
+}
+
 void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 {
 	char	*str;
@@ -98,16 +112,7 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 	int		arg_index;
 
 	str = get_entry(key, value);
-	if (key && (!ft_isalpha(key[0]) && key[0] != '_' && key[0] != '?'))
-	{
-		if (str)
-		{
-			printf("export: `%s': not a valid identifier\n", str);
-			if (str)
-				free(str);
-		}
-		cleanup(NULL, 1, node, tty);
-	}
+	set_env_inner(key, &str, node, tty);
 	arg_index = -1;
 	if (node != NULL)
 	{
