@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/20 10:08:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 16:54:40 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,30 @@ static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
 	t_ast_node	*origin;
 
 	(void) ppid;
+	if (!node)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		return ;
+	}
 	origin = node;
-	tty->files[0] = fd[0];
+	// if (node->in_fd > 0)
+	// {
+	// 	(void) is_last;
+	// 	(void) fd;
+	// }
+	if (node->last)
+	{
+		if (dup2(STDOUT_FILENO, STDIN_FILENO) == -1)
+			perror("(1) Error redirecting");
+	}
+	else
+	{
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+			perror("(1) Error redirecting");
+	}
+	close(fd[0]);
+	close(fd[1]);
 	node = node->parent;
 	while (node)
 	{
@@ -55,26 +77,36 @@ static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
 		node = node->parent;
 	}
 	navigate_pipex(node, tty);
-	close(fd[0]);
 	waiter(origin, tty);
 }
 
 static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 {
-	pipex_redirect_in(node, fd, is_last(node, tty), tty);
-	pipex_redirect_out(node, fd, is_last(node, tty), tty);
-	close(fd[0]);
-	close(fd[1]);
-	if (node->type == NODE_CMND)
+	if (node)
 	{
-		parse_command(node, tty);
-		if (is_builtin(node))
-			builtin_selector(node, 1, tty);
-		else if (execute(node, node->args, tty) == -1)
-			cleanup("Error executing command", 126, node, tty);
+		if (!detect_out_redirection(node, tty) && !node->last)
+		{
+			if (dup2(fd[1], STDOUT_FILENO) == -1)
+				perror("(3) Error redirecting");
+		}
+		close(fd[1]);
+		close(fd[0]);
+		if (node->type == NODE_CMND)
+		{
+			parse_command(node, tty);
+			if (is_builtin(node))
+				builtin_selector(node, 1, tty);
+			else if (execute(node, node->args, tty) == -1)
+				cleanup("Error executing command", 126, node, tty);
+		}
+		else
+			navigator(node, 1, tty);
 	}
 	else
-		navigator(node, 1, tty);
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
 }
 
 void	pipex(t_ast_node *node, t_terminal *tty)
@@ -88,30 +120,7 @@ void	pipex(t_ast_node *node, t_terminal *tty)
 	if (pid == -1)
 		cleanup("Error forking process", 1, node, tty);
 	if (pid == 0)
-	{
-		close(fd[0]);
-		if (node)
-			child(fd, node, tty);
-		else
-			close(fd[1]);
-	}
+		child(fd, node, tty);
 	else
-	{
-		close(fd[1]);
-		if (node)
-			parent(fd, node, pid, tty);
-		else
-			close(fd[0]);
-	}
-}
-
-int	in_redirect_first(t_ast_node *node, t_terminal *tty)
-{
-	if (node)
-	{
-		nullify_exit(node);
-		detect_in_redirection(node, tty);
-		traverse_pipex(node, tty, in_redirect_first);
-	}
-	return (1);
+		parent(fd, node, pid, tty);
 }

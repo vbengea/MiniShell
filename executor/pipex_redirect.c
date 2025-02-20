@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_redirect.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:15:33 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 09:21:27 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:39:10 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
-
-void	pipex_redirect_in(t_ast_node *node, int fd[2], int is_last, \
-	t_terminal *tty)
-{
-	if (node->in_fd > 0)
-	{
-		(void) is_last;
-		(void) fd;
-	}
-	else if (dup2(tty->files[0], STDIN_FILENO) == -1)
-		perror("(1) Error redirecting");
-}
-
-void	pipex_redirect_out(t_ast_node *node, int fd[2], int is_last, \
-	t_terminal *tty)
-{
-	(void) tty;
-	if (detect_out_redirection(node, tty))
-		close(fd[1]);
-	else if (is_last)
-		close(fd[1]);
-	else if (dup2(fd[1], STDOUT_FILENO) == -1)
-		perror("(3) Error redirecting");
-}
 
 t_ast_node	*compute_parent(t_ast_node *node)
 {
@@ -55,7 +31,9 @@ void	traverse_pipex(t_ast_node *node, t_terminal *tty, \
 	int (*f)(t_ast_node *, t_terminal *))
 {
 	t_ast_node	*parent;
+	t_ast_node	*original;
 
+	original = node;
 	node = compute_parent(node);
 	parent = NULL;
 	if (node)
@@ -78,6 +56,8 @@ void	traverse_pipex(t_ast_node *node, t_terminal *tty, \
 			f(node, tty);
 		}
 	}
+	else
+		original->last = 1;
 }
 
 void	nullify_exit(t_ast_node *node)
@@ -92,4 +72,15 @@ void	nullify_exit(t_ast_node *node)
 			node->args[0] = ft_strdup("-n");
 		}
 	}
+}
+
+int	in_redirect_first(t_ast_node *node, t_terminal *tty)
+{
+	if (node)
+	{
+		nullify_exit(node);
+		detect_in_redirection(node, tty);
+		traverse_pipex(node, tty, in_redirect_first);
+	}
+	return (1);
 }

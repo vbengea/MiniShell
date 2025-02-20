@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 11:15:50 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 11:52:41 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/20 15:09:32 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	init_ast_node_values(t_ast_node *node)
 	ft_memset((void *)node->expand_flag, 0, MAX_FLAGS);
 	ft_memset((void *)node->has_space, 0, MAX_FLAGS);
 	node->args_index = 0;
+	node->last = 0;
 	node->path = NULL;
 }
 

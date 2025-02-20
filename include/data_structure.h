@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 00:59:17 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 16:51:58 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/20 15:10:04 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_ast_node
 	int					has_space[200];
 	int					args_index;
 	char				*path;
+	int					last;
 }	t_ast_node;
 
 typedef struct s_terminal
