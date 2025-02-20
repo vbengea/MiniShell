@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:41 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 22:53:14 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:55:22 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static	void	write_content(t_ast_node *node, char *content)
 				node->in_fd = tmp;
 				if (!is_builtin(node))
 				{
-					if(dup2(node->in_fd, STDIN_FILENO) == -1)
+					if (dup2(node->in_fd, STDIN_FILENO) == -1)
 						perror("(4) Error redirecting");
 					close(node->in_fd);
 				}

@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/20 23:00:04 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:54:41 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,14 @@ static	void	navigate_pipex(t_ast_node *node, t_terminal *tty)
 	}
 }
 
-static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
+static	void	parent_redirect(t_ast_node *node, int fd[2])
 {
-	t_ast_node	*origin;
-
-	(void) ppid;
 	if (!node)
 	{
 		close(fd[0]);
 		close(fd[1]);
 		return ;
 	}
-	origin = node;
 	if (node->last)
 	{
 		if (dup2(STDOUT_FILENO, STDIN_FILENO) == -1)
@@ -61,6 +57,17 @@ static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
 	}
 	close(fd[0]);
 	close(fd[1]);
+}
+
+static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
+{
+	t_ast_node	*origin;
+
+	(void) ppid;
+	parent_redirect(node, fd);
+	if (!node)
+		return ;
+	origin = node;
 	node = node->parent;
 	while (node)
 	{
@@ -77,15 +84,9 @@ static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
 
 static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 {
+	child_redirect(fd, node, tty);
 	if (node)
 	{
-		if (!detect_out_redirection(node, tty) && !node->last)
-		{
-			if (dup2(fd[1], STDOUT_FILENO) == -1)
-				perror("(3) Error redirecting");
-		}
-		close(fd[1]);
-		close(fd[0]);
 		if (node->type == NODE_CMND)
 		{
 			parse_command(node, tty);
@@ -98,11 +99,6 @@ static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 		}
 		else
 			navigator(node, 1, tty);
-	}
-	else
-	{
-		close(fd[0]);
-		close(fd[1]);
 	}
 }
 

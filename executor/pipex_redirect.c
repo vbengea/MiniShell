@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:15:33 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 23:49:05 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:53:35 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,23 @@ int	in_redirect_first(t_ast_node *node, t_terminal *tty)
 		traverse_pipex(node, tty, in_redirect_first);
 	}
 	return (1);
+}
+
+void	child_redirect(int fd[2], t_ast_node *node, t_terminal *tty)
+{
+	if (node)
+	{
+		if (!detect_out_redirection(node, tty) && !node->last)
+		{
+			if (dup2(fd[1], STDOUT_FILENO) == -1)
+				perror("(3) Error redirecting");
+		}
+		close(fd[1]);
+		close(fd[0]);
+	}
+	else
+	{
+		close(fd[0]);
+		close(fd[1]);
+	}
 }
