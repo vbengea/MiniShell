@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/16 12:28:34 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/19 21:49:16 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,32 @@ void	ft_rediter(t_redirection *lst, void (*f)(t_redirection *))
 	}
 }
 
+int	has_group_inner(t_ast_node *ast, int is_infile, t_ast_node *node)
+{
+	if (ast->type == NODE_GROUP && ast->redirs)
+	{
+		if (is_infile)
+		{
+			if (ast->in_fd >= 0)
+			{
+				node->in_fd = ast->in_fd;
+				node->has_group_in_fd = 1;
+				return (1);
+			}
+		}
+		else
+		{
+			if (ast->out_fd >= 0)
+			{
+				node->out_fd = ast->out_fd;
+				node->has_group_out_fd = 1;
+				return (1);
+			}
+		}
+	}
+	return (0);
+}
+
 int	has_group_redirection(t_ast_node *ast, int is_infile)
 {
 	t_ast_node	*node;
@@ -33,27 +59,8 @@ int	has_group_redirection(t_ast_node *ast, int is_infile)
 		if (ast->parent == NULL)
 			break ;
 		ast = ast->parent;
-		if (ast->type == NODE_GROUP && ast->redirs)
-		{
-			if (is_infile)
-			{
-				if (ast->in_fd >= 0)
-				{
-					node->in_fd = ast->in_fd;
-					node->has_group_in_fd = 1;
-					return (1);
-				}
-			}
-			else
-			{
-				if (ast->out_fd >= 0)
-				{
-					node->out_fd = ast->out_fd;
-					node->has_group_out_fd = 1;
-					return (1);
-				}
-			}
-		}
+		if (has_group_inner(ast, is_infile, node))
+			return (1);
 	}
 	return (0);
 }

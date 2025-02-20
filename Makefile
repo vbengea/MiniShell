@@ -38,6 +38,7 @@ SRC				:= 	main.c\
 					$(EXEC_DIR)/selector_2.c \
 					$(EXEC_DIR)/selector_3.c \
 					$(EXEC_DIR)/selector_4.c \
+					$(EXEC_DIR)/selector_5.c \
 					$(EXEC_DIR)/pipex.c \
 					$(EXEC_DIR)/pipex_redirect.c \
 					$(SIGNALS_DIR)/signals.c \
