@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/20 09:50:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:17:15 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,13 @@ int				doexec(t_ast_node *node, char **comm, int is_free, \
 	t_terminal *tty);
 int				execute(t_ast_node *node, char **comm, t_terminal *tty);
 
-int				detect_in_redirection(t_ast_node *node, t_terminal *tty);
+void			detect_in_redirection(t_ast_node *node, int hold, t_terminal *tty);
 int				detect_out_redirection(t_ast_node *node, t_terminal *tty);
 int				has_outward_redirection(t_ast_node *ast, t_terminal *tty);
 int				has_inward_redirection(t_redirection *lst);
 void			multiple_output_redirections(t_ast_node *node, t_terminal *tty);
 void			here_doc(t_ast_node *node, t_redirection *lst, \
 				int do_write, t_terminal *tty);
-void			pipex_redirect_in(t_ast_node *node, int fd[2], \
-				int is_last, t_terminal *tty);
-void			pipex_redirect_out(t_ast_node *node, int fd[2], \
-				int is_last, t_terminal *tty);
 void			parse_command(t_ast_node *node, t_terminal *tty);
 
 void			cleanup(char *err, int code, t_ast_node *node, t_terminal *tty);

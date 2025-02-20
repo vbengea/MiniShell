@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:15:33 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 16:39:10 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:11:33 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	in_redirect_first(t_ast_node *node, t_terminal *tty)
 	if (node)
 	{
 		nullify_exit(node);
-		detect_in_redirection(node, tty);
+		detect_in_redirection(node, 0, tty);
 		traverse_pipex(node, tty, in_redirect_first);
 	}
 	return (1);

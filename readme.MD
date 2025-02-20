@@ -1,18 +1,7 @@
 * PIPELINE Tests:
 
-	- << EOF cat -e | cat -e << END > T1
-
-	- pipeline without redirections: no leaks on file descriptors, memory.
-
-	- `ls -l && (cd .. && ls -l) > file`
 
 * To implement:
-
-	- `ls -l | echo "hola" > a.txt && cat -e a.txt >> hola.txt` No esta funcionando correctamente. Esta creando los archivos pero estan vacios.
-	Parece que `echo` no esta funcionando en una pipe
-
-	- Probar
-		VAR="test" && echo "$VAR" | grep "test" > output.txt && cat < output.txt | wc -l >> output.txt && echo "Success" || echo "Failure"
 
 	- Pasar la norma
 
@@ -85,6 +74,18 @@
 
 
 * Solved issues:
+
+	- << EOF cat -e | cat -e << END > T1
+
+	- pipeline without redirections: no leaks on file descriptors, memory.
+
+	- `ls -l && (cd .. && ls -l) > file`
+
+	- `ls -l | echo "hola" > a.txt && cat -e a.txt >> hola.txt` No esta funcionando correctamente. Esta creando los archivos pero estan vacios.
+	Parece que `echo` no esta funcionando en una pipe
+
+	- Probar
+		VAR="test" && echo "$VAR" | grep "test" > output.txt && cat < output.txt | wc -l >> output.txt && echo "Success" || echo "Failure"
 
 	- We have discovered an environment variable context which is not env OR export. We call it local to differentiate from global OR command. Are the variables in the local container visible to the command: e.g. if we have script.sh which echoes the variable $VAR and we first do:
 

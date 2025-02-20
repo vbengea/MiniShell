@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:49:26 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 09:48:55 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 22:50:48 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	preexecute(t_ast_node *node, t_terminal *tty)
 	if (node->args_index == 0)
 	{
 		parse_command(node, tty);
-		detect_in_redirection(node, tty);
+		detect_in_redirection(node, 0, tty);
 		detect_out_redirection(node, tty);
 	}
 }

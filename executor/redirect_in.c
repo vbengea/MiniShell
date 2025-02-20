@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:41 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 17:02:28 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 22:53:14 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,12 @@ int	has_inward_redirection(t_redirection *lst)
 	return (0);
 }
 
-int	detect_in_redirection(t_ast_node *node, t_terminal *tty)
+void	detect_in_redirection(t_ast_node *node, int hold, t_terminal *tty)
 {
 	char	**arr;
 	char	*content;
 
+	(void) hold;
 	if (has_inward_redirection(node->redirs))
 	{
 		arr = ft_calloc(sizeof(char *), 1);
@@ -107,10 +108,7 @@ int	detect_in_redirection(t_ast_node *node, t_terminal *tty)
 		content = read_files_content(arr, node, tty);
 		clear_arr_of_strs(arr);
 		if (content)
-		{
 			write_content(node, content);
-			return (1);
-		}
 	}
 	else if (has_group_redirection(node, 1) && node->type != NODE_GROUP && \
 	!is_builtin(node))
@@ -118,7 +116,5 @@ int	detect_in_redirection(t_ast_node *node, t_terminal *tty)
 		if (dup2(node->in_fd, STDIN_FILENO) == -1)
 			perror("(7) Error redirecting");
 		close(node->in_fd);
-		return (1);
 	}
-	return (0);
 }

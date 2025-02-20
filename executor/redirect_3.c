@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/19 19:40:08 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:10:05 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ char	*tmp_path(int nid, t_redirect_type type)
 	{
 		if (type == REDIRECT_OUT || type == REDIRECT_APPEND)
 			file = ft_strjoin("tmp/__OUTFILE__", id);
-		else if (type == REDIRECT_IN)
+		else if (type == REDIRECT_IN || type == REDIRECT_HEREDOC)
 			file = ft_strjoin("tmp/__INFILE__", id);
-		else if (type == REDIRECT_HEREDOC)
-			file = ft_strjoin("tmp/__HEREDOC__", id);
 		free(id);
 	}
 	return (file);
@@ -36,10 +34,12 @@ static	void	heredoc_inner(char *str, int fd, t_redirection *lst, \
 	t_terminal *tty)
 {
 	char	*tmp;
+	char	*s;
 
+	s = str;
 	if (lst->is_quote)
 	{
-		tmp = interpolation(str, -1, tty);
+		tmp = interpolation(s, -1, tty);
 		if (tmp)
 		{
 			write(fd, tmp, ft_strlen(tmp));
@@ -47,33 +47,46 @@ static	void	heredoc_inner(char *str, int fd, t_redirection *lst, \
 		}
 	}
 	else
-		write(fd, str, ft_strlen(str));
+		write(fd, s, ft_strlen(s));
 }
 
 void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, \
 	t_terminal *tty)
 {
 	char	*str;
-	int		str_len;
 	int		fd;
+	char	*delimit;
 
-	str = tmp_path(node->nid, REDIRECT_IN);
-	if (str)
+	delimit = ft_strjoin(lst->file, "\n");
+	if (delimit)
 	{
-		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		free(str);
-		if (fd < 0)
-			cleanup("Error reading file", 1, node, tty);
-		str = get_next_line(STDIN_FILENO);
-		str_len = ft_strlen(str);
-		while (ft_strncmp(str, lst->file, str_len - 1) != 0)
+		str = tmp_path(node->nid, REDIRECT_IN);
+		if (str)
 		{
-			if (do_write)
-				heredoc_inner(str, fd, lst, tty);
+			fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 			free(str);
-			str = get_next_line(STDIN_FILENO);
-			str_len = ft_strlen(str);
+			if (fd < 0)
+				cleanup("Error reading file", 1, node, tty);
+			while (1)
+			{
+				write(1, "> ", 2);
+				str = get_next_line(tty->files[0]);
+				if (str)
+				{
+					if (ft_cmpexact(str, delimit))
+					{
+						free(str);
+						break ;
+					}
+					if (do_write)
+						heredoc_inner(str, fd, lst, tty);
+					free(str);
+				}
+				else
+					break ;
+			}
+			close(fd);
 		}
-		close(fd);
+		free(delimit);
 	}
 }
