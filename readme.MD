@@ -1,5 +1,8 @@
 * To implement:
 
+	- `ls -l | echo "hola" > a.txt && cat -e a.txt >> hola.txt` No esta funcionando correctamente. Esta creando los archivos pero estan vacios.
+	Parece que `echo` no esta funcionando en una pipe
+
 	- Probar
 		VAR="test" && echo "$VAR" | grep "test" > output.txt && cat < output.txt | wc -l >> output.txt && echo "Success" || echo "Failure"
 
