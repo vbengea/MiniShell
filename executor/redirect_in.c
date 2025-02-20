@@ -6,17 +6,14 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:41 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 23:55:22 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:57:30 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-static	void	write_content(t_ast_node *node, char *content)
+static	void	write_content(t_ast_node *node, char *content, int tmp, char *file)
 {
-	int		tmp;
-	char	*file;
-
 	file = tmp_path(node->nid, REDIRECT_IN);
 	if (file)
 	{
@@ -108,7 +105,7 @@ void	detect_in_redirection(t_ast_node *node, int hold, t_terminal *tty)
 		content = read_files_content(arr, node, tty);
 		clear_arr_of_strs(arr);
 		if (content)
-			write_content(node, content);
+			write_content(node, content, 0, NULL);
 	}
 	else if (has_group_redirection(node, 1) && node->type != NODE_GROUP && \
 	!is_builtin(node))
