@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 19:27:23 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 10:36:19 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	loop_inner(char *input, t_token *tokens, t_terminal *tty)
 		tokens = tokenize_input(input);
 		if (!check_syntax(tokens, NULL))
 		{
+			set_history_status(2, tty);
 			free_token(tokens);
 			continue ;
 		}
