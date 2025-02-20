@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 09:38:41 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 10:56:35 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,17 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 	int		j;
 	int		arg_index;
 
+	str = get_entry(key, value);
+	if (key && (!ft_isalpha(key[0]) && key[0] != '_' && key[0] != '?'))
+	{
+		if (str)
+		{
+			printf("export: `%s': not a valid identifier\n", str);
+			if (str)
+				free(str);
+		}
+		cleanup(NULL, 1, node, tty);
+	}
 	arg_index = -1;
 	if (node != NULL)
 	{
@@ -111,7 +122,6 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 			j++;
 		}
 	}
-	str = get_entry(key, value);
 	if (str)
 	{
 		unset_one(key, node, tty);

@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 09:51:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 10:32:58 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
 	char	**p;
 	char	*value;
 
-	(void) node;
 	(void) arg_index;
 	i = env_lookup(key, node, tty);
 	if (i >= 0)
