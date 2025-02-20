@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:15:33 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 23:11:33 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:49:05 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	traverse_pipex(t_ast_node *node, t_terminal *tty, \
 
 	original = node;
 	node = compute_parent(node);
-	parent = NULL;
 	if (node)
 	{
 		node = node->right;
@@ -52,9 +51,7 @@ void	traverse_pipex(t_ast_node *node, t_terminal *tty, \
 			node = node->left;
 		}
 		if (node)
-		{
 			f(node, tty);
-		}
 	}
 	else
 		original->last = 1;
