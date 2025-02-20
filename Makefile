@@ -176,7 +176,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Heredoc issues"
+	git commit -am "Norm"
 	git config pull.rebase false
 	git push
 

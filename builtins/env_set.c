@@ -6,32 +6,11 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 19:11:26 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:37:45 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
-
-char	**env_resolution(t_terminal *tty, int hidden_level)
-{
-	char		**p;
-	int			i;
-
-	p = copy_arr_of_strs(tty->env, 0, 0);
-	if (p)
-	{
-		if (hidden_level)
-		{
-			i = 0;
-			while (p && tty->env_local[i])
-				p = add_arr_of_strs(p, tty->env_local[i++]);
-		}
-		i = 0;
-		while (p && tty->env_cmd[i])
-			p = add_arr_of_strs(p, tty->env_cmd[i++]);
-	}
-	return (p);
-}
 
 int	env_lookup(char *key, t_ast_node *node, t_terminal *tty)
 {
@@ -93,7 +72,8 @@ t_terminal *tty)
 
 void	set_env_inner(char *key, char **str, t_ast_node *node, t_terminal *tty)
 {
-	if (key && (!ft_isalpha(key[0]) && key[0] != '_' && key[0] != '?'))
+	if (!*str || \
+		(key && (!ft_isalpha(key[0]) && key[0] != '_' && key[0] != '?')))
 	{
 		if (*str)
 		{
@@ -127,10 +107,7 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 			j++;
 		}
 	}
-	if (str)
-	{
-		unset_one(key, node, tty);
-		append_entry(node, str, arg_index, tty);
-		free(str);
-	}
+	unset_one(key, node, tty);
+	append_entry(node, str, arg_index, tty);
+	free(str);
 }
