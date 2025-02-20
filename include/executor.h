@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/20 23:17:15 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 23:39:54 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int				doexec(t_ast_node *node, char **comm, int is_free, \
 	t_terminal *tty);
 int				execute(t_ast_node *node, char **comm, t_terminal *tty);
 
-void			detect_in_redirection(t_ast_node *node, int hold, t_terminal *tty);
+void			detect_in_redirection(t_ast_node *node, int hold, \
+	t_terminal *tty);
 int				detect_out_redirection(t_ast_node *node, t_terminal *tty);
 int				has_outward_redirection(t_ast_node *ast, t_terminal *tty);
 int				has_inward_redirection(t_redirection *lst);
@@ -48,7 +49,8 @@ void			print_redirs(void *content, int flag);
 void			ast_printer(t_ast_node *ast, int level);
 void			free_redirect_ast(t_ast_node *ast, int find_root);
 
-char			*read_files_content(char **files, t_ast_node *ast, t_terminal *tty);
+char			*read_files_content(char **files, t_ast_node *ast, \
+	t_terminal *tty);
 char			*read_fd_content(int tmp);
 
 int				has_group_redirection(t_ast_node *ast, int is_infile);
@@ -56,8 +58,8 @@ char			*tmp_path(int nid, t_redirect_type type);
 void			builtin_selector(t_ast_node *node, int should_exit, \
 				t_terminal *tty);
 char			*read_path_content(char *path);
-void			redlist_out(t_redirection *lst, char *content, t_ast_node *node, \
-	t_terminal *tty);
+void			redlist_out(t_redirection *lst, char *content, \
+	t_ast_node *node, t_terminal *tty);
 void			redlist_iter(t_redirection *lst, void (*f)(void *, int x));
 int				is_identifier(char c);
 void			ast_printer_node(t_ast_node *ast, int i);
