@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:37 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 09:48:25 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 17:01:09 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	do_outward_redirection(t_ast_node *node, t_terminal *tty)
 	{
 		if (dup2(tmp, STDOUT_FILENO) == -1)
 			perror("(5) Error redirecting");
+		close(tmp);
 		return (1);
 	}
 	return (0);
@@ -49,6 +50,7 @@ int	detect_out_redirection(t_ast_node *node, t_terminal *tty)
 		{
 			if (dup2(node->out_fd, STDOUT_FILENO) == -1)
 				perror("(6) Error redirecting");
+			close(node->out_fd);
 			return (1);
 		}
 	}

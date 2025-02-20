@@ -1,7 +1,6 @@
 * PIPELINE Tests:
 
 	- pipeline without redirections: no leaks on file descriptors, memory.
-	
 
 
 * To implement:
