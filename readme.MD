@@ -1,5 +1,7 @@
 * PIPELINE Tests:
 
+	- << EOF cat -e | cat -e << END > T1
+
 	- pipeline without redirections: no leaks on file descriptors, memory.
 
 	- `ls -l && (cd .. && ls -l) > file`
