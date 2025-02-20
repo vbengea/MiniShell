@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_redirect_type.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:34:12 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/20 08:44:54 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/20 19:30:27 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_redirect_type	get_redirect_type(t_token_type token_type)
 		return (REDIRECT_IN);
 	else if (token_type == TOKEN_APPEND)
 		return (REDIRECT_APPEND);
+	else if (token_type == TOKEN_HEREDOC)
+		return (REDIRECT_HEREDOC);
 	else
 		return (REDIRECT_NONE);
 }
