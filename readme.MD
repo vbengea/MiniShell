@@ -10,6 +10,9 @@
 	- Este comando no esta haciendo output:
 		ls -l > file1 > file2 > file3 > file4 > file5 | << EOF cat -e << END
 
+	- En un momento me dio memory leaks:
+		ls -l > file1 > file2 > file3 > file4 | << EOF << END
+
 
 * Solved issues:
 
