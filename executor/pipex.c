@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/20 16:54:40 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:25:07 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ static	void	parent(int fd[2], t_ast_node *node, int ppid, t_terminal *tty)
 		return ;
 	}
 	origin = node;
-	// if (node->in_fd > 0)
-	// {
-	// 	(void) is_last;
-	// 	(void) fd;
-	// }
 	if (node->last)
 	{
 		if (dup2(STDOUT_FILENO, STDIN_FILENO) == -1)
@@ -95,7 +90,9 @@ static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 		{
 			parse_command(node, tty);
 			if (is_builtin(node))
+			{
 				builtin_selector(node, 1, tty);
+			}
 			else if (execute(node, node->args, tty) == -1)
 				cleanup("Error executing command", 126, node, tty);
 		}

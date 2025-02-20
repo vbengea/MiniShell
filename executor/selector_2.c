@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:47:46 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 21:02:32 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:26:10 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,8 @@ void	builtin_selector(t_ast_node *node, int should_exit, t_terminal *tty)
 	else if (ft_cmpexact(node->args[node->args_index], "echo"))
 		echo_bi(node);
 	if (should_exit)
+	{
+		multiple_output_redirections(node, tty);
 		cleanup(NULL, 0, node, tty);
+	}
 }
