@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_build.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:29:19 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 13:16:00 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/20 08:53:58 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,7 @@ void			add_cmd_arg(char **cmd_args, char *value, int *i);
 void			process_env_var_with_equals(t_token *current, \
 	t_cmd_args_context *context, char *equals_pos);
 
+t_redirect_type	get_redirection_otype(t_token_type type);
+void			init_cmd_args_context(t_cmd_args_context *context, \
+	t_init_params *params);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:37:15 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 20:27:13 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/20 08:53:33 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,6 @@ static bool	is_quoted(const char *str)
 	return (str[0] == '"' || str[0] == '\'');
 }
 
-static t_redirect_type	get_redirection_otype(t_token_type type)
-{
-	if (type == TOKEN_REDIRECT_OUT)
-		return (REDIRECT_OUT);
-	else if (type == TOKEN_REDIRECT_IN)
-		return (REDIRECT_IN);
-	else if (type == TOKEN_APPEND)
-		return (REDIRECT_APPEND);
-	else
-		return (REDIRECT_NONE);
-}
-
 static int	process_redirect_token(t_ast_node *node, t_token **current)
 {
 	t_token				*redirect_token;
@@ -58,7 +46,8 @@ static int	process_redirect_token(t_ast_node *node, t_token **current)
 	if (!filename_token || filename_token->type != TOKEN_WORD)
 		return (0);
 	redir_info.type = get_redirect_type(redirect_token->type);
-	redir_info.otype = (t_out_redirect_type)get_redirection_otype(redirect_token->type);
+	redir_info.otype = \
+		(t_out_redirect_type)get_redirection_otype(redirect_token->type);
 	redir_info.file = ft_strdup(filename_token->value);
 	redir_info.quote_flag = is_quoted(filename_token->value);
 	if (!redir_info.file)
@@ -68,23 +57,14 @@ static int	process_redirect_token(t_ast_node *node, t_token **current)
 	return (1);
 }
 
-static void	init_cmd_args_context(t_cmd_args_context *context, \
-	t_init_params *params)
-{
-	*params->i = 0;
-	*params->prev_export = false;
-	context->cmd_args = params->cmd_args;
-	context->node = params->node;
-	context->i = params->i;
-	context->prev_export = params->prev_export;
-}
-
 static bool	process_current_token(t_token *current, \
 	t_cmd_args_context *context, t_ast_node *node)
 {
+	t_token	*temp_current;
+
 	if (is_redirect_token(current->type))
 	{
-		t_token *temp_current = current;
+		temp_current = current;
 		if (!process_redirect_token(node, &temp_current))
 			return (false);
 		return (true);
@@ -96,7 +76,6 @@ static bool	process_current_token(t_token *current, \
 		process_env_var_token(current, context);
 	return (true);
 }
-
 
 int	fill_cmd_args(t_token *tokens, char **cmd_args, t_ast_node *node)
 {

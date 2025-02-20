@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_args_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:51:46 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 13:07:58 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/20 08:52:44 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,27 @@ void	process_env_var_with_equals(t_token *current, \
 	add_cmd_arg(context->cmd_args, value, context->i);
 	free(name);
 	free(value);
+}
+
+t_redirect_type	get_redirection_otype(t_token_type type)
+{
+	if (type == TOKEN_REDIRECT_OUT)
+		return (REDIRECT_OUT);
+	else if (type == TOKEN_REDIRECT_IN)
+		return (REDIRECT_IN);
+	else if (type == TOKEN_APPEND)
+		return (REDIRECT_APPEND);
+	else
+		return (REDIRECT_NONE);
+}
+
+void	init_cmd_args_context(t_cmd_args_context *context, \
+	t_init_params *params)
+{
+	*params->i = 0;
+	*params->prev_export = false;
+	context->cmd_args = params->cmd_args;
+	context->node = params->node;
+	context->i = params->i;
+	context->prev_export = params->prev_export;
 }
