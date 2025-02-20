@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 17:29:27 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:38:41 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**env_resolution(t_terminal *tty, int hidden_level)
 	return (p);
 }
 
-int	env_lookup(char *key, t_terminal *tty)
+int	env_lookup(char *key, t_ast_node *node, t_terminal *tty)
 {
 	char	**p;
 	int		i;
@@ -41,7 +41,7 @@ int	env_lookup(char *key, t_terminal *tty)
 
 	p = env_resolution(tty, 1);
 	if (!p)
-		cleanup("Memory error on environment variable lookup", 1, NULL, tty);
+		cleanup("Memory error on environment variable lookup", 1, node, tty);
 	i = 0;
 	var = ft_strjoin(key, "=");
 	if (var)
@@ -114,7 +114,7 @@ void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 	str = get_entry(key, value);
 	if (str)
 	{
-		unset_one(key, tty);
+		unset_one(key, node, tty);
 		append_entry(node, str, arg_index, tty);
 		free(str);
 	}

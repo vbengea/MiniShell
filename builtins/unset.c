@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 21:47:10 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:51:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
 
 	(void) node;
 	(void) arg_index;
-	i = env_lookup(key, tty);
+	i = env_lookup(key, node, tty);
 	if (i >= 0)
 	{
 		p = env_resolution(tty, 1);
@@ -34,16 +34,17 @@ char	*get_env(t_ast_node *node, int arg_index, char *key, t_terminal *tty)
 	return (NULL);
 }
 
-void	unset_one(char *key, t_terminal *tty)
+void	unset_one(char *key, t_ast_node *node, t_terminal *tty)
 {
 	int		i;
 	char	**env;
 	int		len;
 
 	len = 0;
+	(void) node;
 	while (tty->env[len])
 		len++;
-	i = env_lookup(key, tty);
+	i = env_lookup(key, tty->ast, tty);
 	if (i >= 0)
 	{
 		if (i < len)
@@ -68,5 +69,5 @@ void	unset_bi(t_ast_node *node, t_terminal *tty)
 
 	j = 1;
 	while (node->args[j])
-		unset_one(node->args[j++], tty);
+		unset_one(node->args[j++], node, tty);
 }

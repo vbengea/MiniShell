@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:41 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 21:19:05 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:52:07 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	detect_in_redirection(t_ast_node *node, t_terminal *tty)
 	{
 		arr = ft_calloc(sizeof(char *), 1);
 		brb(node->redirs, &arr, node, tty);
-		content = read_files_content(arr);
+		content = read_files_content(arr, node, tty);
 		clear_arr_of_strs(arr);
 		if (content)
 		{

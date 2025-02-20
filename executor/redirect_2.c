@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/19 21:33:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:40:00 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	read_files_inner(int tmp, char **content)
 	}
 }
 
-char	*read_files_content(char **files)
+char	*read_files_content(char **files, t_ast_node *node, t_terminal *tty)
 {
 	int		i;
 	int		tmp;
@@ -109,7 +109,7 @@ char	*read_files_content(char **files)
 				return (NULL);
 		}
 		else
-			cleanup(files[i], 1, NULL, NULL);
+			cleanup(files[i], 1, node, tty);
 		i++;
 	}
 	return (content);

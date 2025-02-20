@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/19 20:28:51 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:49:56 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static	void	builtin(t_ast_node *node, int hold, t_terminal *tty)
 	{
 		preexecute(node, tty);
 		builtin_selector(node, 0, tty);
-		postexecute(node);
+		postexecute(node, tty);
 		builtin_end(node, hold, tty);
 	}
 }

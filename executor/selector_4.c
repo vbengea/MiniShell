@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:50:17 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/18 23:50:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:49:03 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	waiter_util(t_ast_node *node, int status, t_terminal *tty)
 	node->exit = status;
 	set_history_status(status, tty);
 	if (status == 0)
-		multiple_output_redirections(node);
+		multiple_output_redirections(node, tty);
 	file = tmp_path(node->nid, REDIRECT_IN);
 	if (file)
 	{

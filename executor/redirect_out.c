@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_out.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:37 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 09:20:30 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/20 09:48:25 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	do_outward_redirection(t_ast_node *node, t_terminal *tty)
 
 int	detect_out_redirection(t_ast_node *node, t_terminal *tty)
 {
-	if (has_outward_redirection(node))
+	if (has_outward_redirection(node, tty))
 		return (do_outward_redirection(node, tty));
 	else if (has_group_redirection(node, 0))
 	{
@@ -55,7 +55,7 @@ int	detect_out_redirection(t_ast_node *node, t_terminal *tty)
 	return (0);
 }
 
-int	has_outward_redirection(t_ast_node *ast)
+int	has_outward_redirection(t_ast_node *ast, t_terminal *tty)
 {
 	t_redirection	*lst;
 	int				has_redirect;
@@ -74,7 +74,7 @@ int	has_outward_redirection(t_ast_node *ast)
 				flags = O_WRONLY | O_CREAT | O_APPEND;
 			fd = open(lst->file, flags, 0666);
 			if (fd < 0)
-				cleanup("Error reading file", 1, ast, NULL);
+				cleanup("Error reading file", 1, ast, tty);
 			close(fd);
 		}
 		if (lst->next == NULL)
@@ -84,7 +84,7 @@ int	has_outward_redirection(t_ast_node *ast)
 	return (has_redirect);
 }
 
-void	redlist_out(t_redirection *lst, char *content)
+void	redlist_out(t_redirection *lst, char *content, t_ast_node *node, t_terminal *tty)
 {
 	int				tmp;
 	int				flags;
@@ -107,13 +107,13 @@ void	redlist_out(t_redirection *lst, char *content)
 			flags = O_WRONLY | O_CREAT | O_APPEND;
 		tmp = open(lst->file, flags, 0666);
 		if (tmp < 0)
-			cleanup("Error reading file", 1, NULL, NULL);
+			cleanup("Error reading file", 1, node, tty);
 		write(tmp, content, ft_strlen(content));
 		close(tmp);
 	}
 }
 
-void	multiple_output_redirections(t_ast_node *node)
+void	multiple_output_redirections(t_ast_node *node, t_terminal *tty)
 {
 	char	*content;
 	char	*file;
@@ -126,7 +126,7 @@ void	multiple_output_redirections(t_ast_node *node)
 			content = read_path_content(file);
 			if (content)
 			{
-				redlist_out(node->redirs, content);
+				redlist_out(node->redirs, content, node, tty);
 				free(content);
 			}
 			if (access(file, F_OK) == 0)

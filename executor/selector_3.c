@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   selector_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juaflore <juaflore@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:49:26 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 09:21:39 by juaflore         ###   ########.fr       */
+/*   Updated: 2025/02/20 09:48:55 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	preexecute(t_ast_node *node, t_terminal *tty)
 	}
 }
 
-void	postexecute(t_ast_node *node)
+void	postexecute(t_ast_node *node, t_terminal *tty)
 {
 	char	*file;
 
-	multiple_output_redirections(node);
+	multiple_output_redirections(node, tty);
 	file = tmp_path(node->nid, REDIRECT_IN);
 	if (file)
 	{
