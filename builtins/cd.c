@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
@@ -19,7 +19,7 @@ int	cd_bi(t_ast_node *node, t_terminal *tty)
 	char	*path;
 
 	r = 1;
-	if (node->args[2])
+	if (node->args[1] && node->args[2])
 		return (printf("VJ.SH: cd: too many arguments\n"), -1);
 	path = node->args[1];
 	if (path == NULL)
