@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/20 23:58:45 by jflores           #+#    #+#             */
+/*   Updated: 2025/02/20 23:59:41 by jflores          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int i = 0;
+	int	i;
 
-	while(i < argc)
+	i = 0;
+	while (i < argc)
 	{
 		printf("%s\n", argv[i]);
 		i++;
 	}
-	return(0);
+	return (0);
 }
