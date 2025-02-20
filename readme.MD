@@ -1,6 +1,14 @@
 * To implement:
 
-	-
+	- El arbol tiene los flags de espacios para el siguiente comando pero en `5` y `6` estan juntos en el output.
+		echo "ba$PWD '$PWD'  3" 4 5  6 '$PWD'
+
+	- En el siguiente comando hay un error de sintaxis pero deberia parsearse:
+		((ls) >t2 | cat -e)
+		Syntax error: UNCLOSED PARENTHSES
+
+	- Este comando no esta haciendo output:
+		ls -l > file1 > file2 > file3 > file4 > file5 | << EOF cat -e << END
 
 
 * Solved issues:
