@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/20 18:25:07 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:51:28 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 				builtin_selector(node, 1, tty);
 			}
 			else if (execute(node, node->args, tty) == -1)
-				cleanup("Error executing command", 126, node, tty);
+				cleanup("Error executing command", 127, node, tty);
 		}
 		else
 			navigator(node, 1, tty);

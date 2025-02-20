@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/19 21:23:39 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:49:53 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	doexec(t_ast_node *node, char **comm, int is_free, t_terminal *tty)
 		{
 			if (is_free)
 				free(node->path);
-			cleanup("Error executing command", 126, node, tty);
+			cleanup("Error executing command", 127, node, tty);
 			return (-1);
 		}
 	}
