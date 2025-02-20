@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handle_no_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 17:09:08 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 17:35:23 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/20 09:50:00 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/headers.h"
 
-/**
- * @warning Returns a char * allocated in the heap
- */
 char	*handle_no_env(void)
 {
 	char	*line;
