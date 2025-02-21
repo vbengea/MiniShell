@@ -176,7 +176,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "readme.MD"
+	git commit -am "Llamar builtin en funciona superior que valida desde el pipeline."
 	git config pull.rebase false
 	git push
 
