@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/20 23:45:53 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/21 10:56:34 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ char	*tmp_path(int nid, t_redirect_type type)
 	if (id)
 	{
 		if (type == REDIRECT_OUT || type == REDIRECT_APPEND)
-			file = ft_strjoin("tmp/__OUTFILE__", id);
+			file = ft_strjoin("/.__OUTFILE__", id);
 		else if (type == REDIRECT_IN || type == REDIRECT_HEREDOC)
-			file = ft_strjoin("tmp/__INFILE__", id);
+			file = ft_strjoin("/.__INFILE__", id);
 		free(id);
 	}
 	return (file);
