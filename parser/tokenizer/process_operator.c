@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_operator.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
+/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:04:39 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/16 18:04:47 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:59:53 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ t_token	*process_operator(const char *input, int *i)
 	t_token	*new_token;
 
 	new_token = NULL;
-	handle_operator(&new_token, NULL, input, i);
+	if (input[*i] == '(' || input[*i] == ')')
+	{
+		handle_parens(&new_token, new_token, input[*i], 1);
+		(*i)++;
+	}
+	else
+		handle_operator(&new_token, NULL, input, i);
 	return (new_token);
 }
