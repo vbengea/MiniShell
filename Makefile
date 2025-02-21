@@ -176,7 +176,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "Llamar builtin en funciona superior que valida desde el pipeline."
+	git commit -am "echo \"ba$PWD '$PWD'  3\" 4 5  6 '$PWD'"
 	git config pull.rebase false
 	git push
 
