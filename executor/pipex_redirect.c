@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 19:15:33 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 23:53:35 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:13:57 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,12 @@ void	child_redirect(int fd[2], t_ast_node *node, t_terminal *tty)
 		{
 			if (dup2(fd[1], STDOUT_FILENO) == -1)
 				perror("(3) Error redirecting");
+		}
+		if (node->in_fd > 0)
+		{
+			if (dup2(node->in_fd, STDIN_FILENO) == -1)
+				perror("(4) Error redirecting");
+			close(node->in_fd);
 		}
 		close(fd[1]);
 		close(fd[0]);

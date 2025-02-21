@@ -7,14 +7,14 @@
 		((ls) >t2 | cat -e)
 		Syntax error: UNCLOSED PARENTHSES
 
-	- Este comando no esta haciendo output:
-		ls -l > file1 > file2 > file3 > file4 > file5 | << EOF cat -e << END
-
 	- En un momento me dio memory leaks:
 		ls -l > file1 > file2 > file3 > file4 | << EOF << END
 
 
 * Solved issues:
+
+	- Este comando no esta haciendo output:
+		ls -l > file1 > file2 > file3 > file4 > file5 | << EOF cat -e << END
 
 	- What happens if we specify an environment variable name starting with a number? Or any other name not allowed?
 

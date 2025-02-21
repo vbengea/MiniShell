@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:53:41 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/21 00:00:40 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/21 01:14:06 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static	void	write_content(t_ast_node *node, char *content, int tmp, \
 				{
 					if (dup2(node->in_fd, STDIN_FILENO) == -1)
 						perror("(4) Error redirecting");
-					close(node->in_fd);
 				}
 			}
 		}
