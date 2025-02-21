@@ -1,8 +1,5 @@
 * To implement:
 
-	- En el siguiente comando hay un error de sintaxis pero deberia parsearse:
-		((ls) >t2 | cat -e)
-		Syntax error: UNCLOSED PARENTHSES
 
 	- En un momento me dio memory leaks:
 		ls -l > file1 > file2 > file3 > file4 | << EOF << END
@@ -16,6 +13,9 @@
 
 * Solved issues:
 
+	- En el siguiente comando hay un error de sintaxis pero deberia parsearse:
+		((ls) >t2 | cat -e)
+		Syntax error: UNCLOSED PARENTHSES
 
 	- Llamar builtin en funciona superior que valida desde el pipeline.
 
