@@ -11,7 +11,14 @@
 		ls -l > file1 > file2 > file3 > file4 | << EOF << END
 
 
+	- Poner los archivos temporales en la misma ruta donde esta el historial.
+
+	- Revisar la funcion cleanup. Enviar el codigo negativo para desactivar la salida.
+
+
 * Solved issues:
+
+	- Llamar builtin en funciona superior que valida desde el pipeline.
 
 	- Este comando no esta haciendo output:
 		ls -l > file1 > file2 > file3 > file4 > file5 | << EOF cat -e << END

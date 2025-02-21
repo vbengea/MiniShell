@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/21 01:12:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:53:34 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ static	void	child(int fd[2], t_ast_node *node, t_terminal *tty)
 			parse_command(node, tty);
 			if (is_builtin(node))
 			{
-				builtin_selector(node, 1, tty);
+				if (check_options(node, 1, tty))
+					builtin_selector(node, 1, tty);
 			}
 			else if (execute(node, node->args, tty) == -1)
 				cleanup("Error executing command", 127, node, tty);

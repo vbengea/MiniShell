@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/20 23:14:28 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/21 09:52:23 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static	void	builtin(t_ast_node *node, int hold, t_terminal *tty)
 {
-	(void) tty;
 	if (check_options(node, hold, tty))
 	{
 		preexecute(node, tty);
