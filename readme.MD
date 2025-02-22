@@ -4,13 +4,11 @@
 		hace match con los directorios `.` y `..` de cada folder. De ahi es que da el error aunque el comando se ejecuta.
 
 	- CTRL + D tuvo un comportamiendo raro en el heredoc durante la correccion que no he podido replicar. 
-	
-	- Gestionar nombres de variables invalidos. `name-more=value` debe ser invalido. (export)
-	
+
 	- El historial tiene un comportamiento raro cuando se esta ejecutando un heredoc.
-	
+
 	- Verificar las prioridades de los parentesis. 
-	
+
 	- ?? Exandir variables en heredoc ?? Esto no es necesario pero antes funcionaba.
 
 
@@ -28,6 +26,8 @@
 
 
 * Solved issues:
+
+	- Gestionar nombres de variables invalidos. `name-more=value` debe ser invalido. (export)
 
 	- Cuando se hace `echo $NOVAR`, es decir, a una variable que no existe, deberia mostrarse un salto de linea al igual que en bash.
 

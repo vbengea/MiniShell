@@ -63,7 +63,8 @@ void	cleanup(char *err, int code, t_ast_node *node, t_terminal *tty)
 		close(tty->files[0]);
 		destroy_terminal(tty);
 	}
-	exit(code);
+	if (code >= 0)
+		exit(code);
 }
 
 int	is_last(t_ast_node *node, t_terminal *tty)

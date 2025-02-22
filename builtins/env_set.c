@@ -70,44 +70,51 @@ t_terminal *tty)
 		tty->env_local = add_arr_of_strs(tty->env_local, entry);
 }
 
-void	set_env_inner(char *key, char **str, t_ast_node *node, t_terminal *tty)
+static	int	is_env_valid(char *key)
 {
-	if (!*str || \
-		(key && (!ft_isalpha(key[0]) && key[0] != '_' && key[0] != '?')))
+	int	i;
+	int	start;
+	int	between;
+
+	start = 0;
+	between = 1;
+	if (key)
 	{
-		if (*str)
+		if (ft_isalpha(key[0]) || key[0] == '_' || (key[0] == '?' && ft_strlen(key) == 1))
+			start = 1;
+		if (ft_strlen(key) == 1)
+			between = 1;
+		else
 		{
-			printf("export: `%s': not a valid identifier\n", *str);
-			if (*str)
-				free(*str);
+			i = 1;
+			while (key[i])
+			{
+				if(key[i] != '_' && !ft_isalnum(key[i]))
+				{
+					between = 0;
+					break ;
+				}
+				i++;
+			}
 		}
-		cleanup(NULL, 1, node, tty);
 	}
+	return (start && between);
 }
 
 void	set_env(t_ast_node *node, char *key, char *value, t_terminal *tty)
 {
 	char	*str;
-	int		j;
-	int		arg_index;
 
 	str = get_entry(key, value);
-	set_env_inner(key, &str, node, tty);
-	arg_index = -1;
-	if (node != NULL)
+	if (str)
 	{
-		j = 0;
-		while (node->args[j])
+		if (is_env_valid(key))
 		{
-			if (ft_cmpexact(node->args[j], key))
-			{
-				arg_index = j - 1;
-				break ;
-			}
-			j++;
+			unset_one(key, node, tty);
+			append_entry(node, str, get_arg_index(node, key), tty);
 		}
+		else
+			printf("minishell: export: `%s': not a valid identifier\n", str);
+		free(str);
 	}
-	unset_one(key, node, tty);
-	append_entry(node, str, arg_index, tty);
-	free(str);
 }

@@ -70,3 +70,25 @@ int	expand_flag(t_ast_node *node, int len, int *j)
 	}
 	return (export_expand);
 }
+
+int	get_arg_index(t_ast_node *node, char *key)
+{
+	int		j;
+	int		arg_index;
+
+	arg_index = -1;
+	if (node != NULL)
+	{
+		j = 0;
+		while (node->args[j])
+		{
+			if (ft_cmpexact(node->args[j], key))
+			{
+				arg_index = j - 1;
+				break ;
+			}
+			j++;
+		}
+	}
+	return (arg_index);
+}

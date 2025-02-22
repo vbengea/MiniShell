@@ -34,5 +34,6 @@ void	unset_one(char *key, t_ast_node *node, t_terminal *tty);
 char	*clean_value(char *value, int *to_free);
 int		validate_cmd_level(t_ast_node *node);
 int		expand_flag(t_ast_node *node, int len, int *j);
+int		get_arg_index(t_ast_node *node, char *key);
 
 #endif
