@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_cmd_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 20:37:15 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/20 08:53:33 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/22 12:30:39 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@ static void	process_env_var_token(t_token *current, t_cmd_args_context *context)
 	*context->prev_export = false;
 }
 
-static bool	is_quoted(const char *str)
-{
-	if (!str)
-		return (false);
-	return (str[0] == '"' || str[0] == '\'');
-}
-
 static int	process_redirect_token(t_ast_node *node, t_token **current)
 {
 	t_token				*redirect_token;
@@ -49,7 +42,7 @@ static int	process_redirect_token(t_ast_node *node, t_token **current)
 	redir_info.otype = \
 		(t_out_redirect_type)get_redirection_otype(redirect_token->type);
 	redir_info.file = ft_strdup(filename_token->value);
-	redir_info.quote_flag = is_quoted(filename_token->value);
+	redir_info.quote_flag = filename_token->is_quoted;
 	if (!redir_info.file)
 		return (0);
 	add_redirection(node, &redir_info);
