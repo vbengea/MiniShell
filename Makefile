@@ -176,7 +176,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "echo \"ba$PWD '$PWD'  3\" 4 5  6 '$PWD'"
+	git commit -am "Norm"
 	git config pull.rebase false
 	git push
 

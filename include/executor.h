@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/20 23:53:54 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:10:07 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ char			*read_files_content(char **files, t_ast_node *ast, \
 char			*read_fd_content(int tmp);
 
 int				has_group_redirection(t_ast_node *ast, int is_infile);
-char			*tmp_path(int nid, t_redirect_type type, t_ast_node *node, t_terminal *tty);
+char			*tmp_path(int nid, t_redirect_type type, t_ast_node *node, \
+	t_terminal *tty);
 void			builtin_selector(t_ast_node *node, int should_exit, \
 				t_terminal *tty);
 char			*read_path_content(char *path);

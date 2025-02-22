@@ -6,18 +6,36 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/21 10:56:34 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:19:13 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-char	*tmp_path(int nid, t_redirect_type type, t_ast_node *node, t_terminal *tty)
+char	*tmp_path_str(char *file, t_ast_node *node, t_terminal *tty)
 {
-	char	*id;
 	char	*file;
 	char	*path;
 	char	*tmp;
+
+	tmp = file;
+	path = get_env(node, -1, "HOME", tty);
+	if (path)
+	{
+		file = ft_strjoin(path, file);
+		free(path);
+	}
+	else
+		file = ft_strjoin("/tmp", file);
+	free(tmp);
+	return (file);
+}
+
+char	*tmp_path(int nid, t_redirect_type type, t_ast_node *node, \
+	t_terminal *tty)
+{
+	char	*id;
+	char	*file;
 
 	id = ft_itoa(nid);
 	file = NULL;
@@ -28,16 +46,8 @@ char	*tmp_path(int nid, t_redirect_type type, t_ast_node *node, t_terminal *tty)
 		else if (type == REDIRECT_IN || type == REDIRECT_HEREDOC)
 			file = ft_strjoin(IN_FILE, id);
 		free(id);
-		tmp = file;
-		path = get_env(node, -1, "HOME", tty);
-		if (path)
-		{
-			file = ft_strjoin(path, file);
-			free(path);
-		}
-		else
-			file = ft_strjoin("/tmp", file);
-		free(tmp);
+		if (file)
+			file = tmp_path_str(file, node, tty);
 	}
 	return (file);
 }
