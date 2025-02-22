@@ -34,6 +34,7 @@ void	set_tty(t_terminal *tty)
 	struct termios	t;
 
 	check_shlvl(tty);
+	set_env(NULL, "?", "0", tty);
 	tcgetattr(0, &t);
 	tcsetattr(0, 0, &t);
 	setup_signal_handlers();

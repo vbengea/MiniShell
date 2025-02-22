@@ -1,7 +1,5 @@
 * Errores de correccion
 
-	- La variable `?` esta sin inicializar al empezar el programa. Deberia mostrar 0 al igual que bash.
-	
 	- Gestionar las redirecciones (archivos temporales en un directorio accesible desde cualquier sitio)
 	
 	- Comprobar el funcionamiento de wildcard; el comando usado por Kevin fue `rm -rf **`. El caso es que es comando en concreto
@@ -33,6 +31,8 @@
 		echo "ba$PWD '$PWD'  3" 4 5  6 '$PWD'
 
 * Solved issues:
+
+	- La variable `?` esta sin inicializar al empezar el programa. Deberia mostrar 0 al igual que bash.
 
 	- En el siguiente comando hay un error de sintaxis pero deberia parsearse:
 		((ls) >t2 | cat -e)
