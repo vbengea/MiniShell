@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/22 10:19:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/22 11:28:24 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ void	here_doc_loop(int fd, int do_write, t_redirection *lst, t_terminal *tty)
 	char	*str;
 	char	*delimit;
 
-	delimit = ft_strjoin(lst->file, "\n");
+	delimit = ft_strdup(lst->file); //ft_strjoin(lst->file, "\n");
 	while (delimit)
 	{
-		write(1, "> ", 2);
-		str = get_next_line(tty->files[0]);
+		// write(1, "> ", 2);
+		str = readline("> "); //get_next_line(tty->files[0]);
 		if (str)
 		{
 			if (ft_cmpexact(str, delimit))
