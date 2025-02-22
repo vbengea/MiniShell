@@ -14,7 +14,6 @@
 
 char	*tmp_path_str(char *file, t_ast_node *node, t_terminal *tty)
 {
-	char	*file;
 	char	*path;
 	char	*tmp;
 
