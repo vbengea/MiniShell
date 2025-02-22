@@ -9,8 +9,6 @@
 
 	- Verificar las prioridades de los parentesis. 
 
-	- ?? Exandir variables en heredoc ?? Esto no es necesario pero antes funcionaba.
-
 
 * To implement:
 
@@ -26,6 +24,8 @@
 
 
 * Solved issues:
+
+	- ?? Exandir variables en heredoc ?? Esto no es necesario pero antes funcionaba.
 
 	- Gestionar nombres de variables invalidos. `name-more=value` debe ser invalido. (export)
 
