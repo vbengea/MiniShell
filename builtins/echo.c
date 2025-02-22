@@ -52,14 +52,15 @@ void	echo_bi(t_ast_node *node)
 	is_n_option = true;
 	params = node->args;
 	i = 1;
-	if (!params[i])
-		return ;
-	if (ft_strlen(params[i]) == 2 && params[i][0] == '-' && params[i][1] == 'n')
+	if (params[i])
 	{
-		is_n_option = false;
-		i++;
+		if (ft_strlen(params[i]) == 2 && params[i][0] == '-' && params[i][1] == 'n')
+		{
+			is_n_option = false;
+			i++;
+		}
+		do_export(node, i, params);
 	}
-	do_export(node, i, params);
 	if (is_n_option)
 		new_line(node);
 }
