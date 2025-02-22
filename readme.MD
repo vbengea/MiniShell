@@ -1,5 +1,7 @@
 * Errores de correccion
 
+	- Cuando se hace `echo $NOVAR`, es decir, a una variable que no existe, deberia mostrarse un salto de linea al igual que en bash.
+
 	- Comprobar el funcionamiento de wildcard; el comando usado por Kevin fue `rm -rf **`. El caso es que es comando en concreto
 		hace match con los directorios `.` y `..` de cada folder. De ahi es que da el error aunque el comando se ejecuta.
 
@@ -29,7 +31,6 @@
 
 * Solved issues:
 
-	- Cuando se hace `echo $NOVAR`, es decir, a una variable que no existe, deberia mostrarse un salto de linea al igual que en bash.
 
 	- Gestionar las redirecciones (archivos temporales en un directorio accesible desde cualquier sitio)
 
