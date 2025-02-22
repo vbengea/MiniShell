@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 18:22:00 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/22 10:30:11 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	echo_bi(t_ast_node *node)
 	i = 1;
 	if (params[i])
 	{
-		if (ft_strlen(params[i]) == 2 && params[i][0] == '-' && params[i][1] == 'n')
+		if (ft_strlen(params[i]) == 2 && params[i][0] == '-' && \
+		params[i][1] == 'n')
 		{
 			is_n_option = false;
 			i++;
