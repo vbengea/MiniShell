@@ -12,20 +12,32 @@
 
 #include "../include/headers.h"
 
-char	*tmp_path(int nid, t_redirect_type type)
+char	*tmp_path(int nid, t_redirect_type type, t_ast_node *node, t_terminal *tty)
 {
 	char	*id;
 	char	*file;
+	char	*path;
+	char	*tmp;
 
 	id = ft_itoa(nid);
 	file = NULL;
 	if (id)
 	{
 		if (type == REDIRECT_OUT || type == REDIRECT_APPEND)
-			file = ft_strjoin("/.__OUTFILE__", id);
+			file = ft_strjoin(OUT_FILE, id);
 		else if (type == REDIRECT_IN || type == REDIRECT_HEREDOC)
-			file = ft_strjoin("/.__INFILE__", id);
+			file = ft_strjoin(IN_FILE, id);
 		free(id);
+		tmp = file;
+		path = get_env(node, -1, "HOME", tty);
+		if (path)
+		{
+			file = ft_strjoin(path, file);
+			free(path);
+		}
+		else
+			file = ft_strjoin("/tmp", file);
+		free(tmp);
 	}
 	return (file);
 }
@@ -84,7 +96,7 @@ void	here_doc(t_ast_node *node, t_redirection *lst, int do_write, \
 	char	*str;
 	int		fd;
 
-	str = tmp_path(node->nid, REDIRECT_IN);
+	str = tmp_path(node->nid, REDIRECT_IN, node, tty);
 	if (str)
 	{
 		fd = open(str, O_WRONLY | O_CREAT | O_TRUNC, 0666);

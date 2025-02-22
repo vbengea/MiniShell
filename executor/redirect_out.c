@@ -20,7 +20,7 @@ int	do_outward_redirection(t_ast_node *node, t_terminal *tty)
 	int		flags;
 
 	id = ft_itoa(node->nid);
-	file = tmp_path(node->nid, REDIRECT_OUT);
+	file = tmp_path(node->nid, REDIRECT_OUT, node, tty);
 	flags = O_WRONLY | O_CREAT | O_TRUNC | O_APPEND;
 	tmp = open(file, flags, 0666);
 	if (tmp < 0)
@@ -123,7 +123,7 @@ void	multiple_output_redirections(t_ast_node *node, t_terminal *tty)
 
 	if (node->has_group_out_fd == 0)
 	{
-		file = tmp_path(node->nid, REDIRECT_OUT);
+		file = tmp_path(node->nid, REDIRECT_OUT, node, tty);
 		if (file)
 		{
 			content = read_path_content(file);

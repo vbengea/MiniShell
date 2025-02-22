@@ -13,9 +13,11 @@
 #include "../include/headers.h"
 
 static	void	write_content(t_ast_node *node, char *content, int tmp, \
-	char *file)
+	t_terminal *tty)
 {
-	file = tmp_path(node->nid, REDIRECT_IN);
+	char	*file;
+
+	file = tmp_path(node->nid, REDIRECT_IN, node, tty);
 	if (file)
 	{
 		tmp = open(file, O_RDWR | O_CREAT | O_TRUNC, 0666);
@@ -40,11 +42,11 @@ static	void	write_content(t_ast_node *node, char *content, int tmp, \
 	free(content);
 }
 
-static	void	brbin(char ***arr, t_ast_node *node)
+static	void	brbin(char ***arr, t_ast_node *node, t_terminal *tty)
 {
 	char		*file;
 
-	file = tmp_path(node->nid, REDIRECT_IN);
+	file = tmp_path(node->nid, REDIRECT_IN, node, tty);
 	if (file)
 	{
 		*arr = add_arr_of_strs(*arr, file);
@@ -70,7 +72,7 @@ static	void	brb(t_redirection *lst, char ***arr, t_ast_node *node, \
 		{
 			here_doc(node, lst, 1, tty);
 			if (is_first_time)
-				brbin(arr, node);
+				brbin(arr, node, tty);
 			is_first_time = false;
 		}
 		if (lst->next == NULL)
@@ -105,7 +107,7 @@ void	detect_in_redirection(t_ast_node *node, int hold, t_terminal *tty)
 		content = read_files_content(arr, node, tty);
 		clear_arr_of_strs(arr);
 		if (content)
-			write_content(node, content, 0, NULL);
+			write_content(node, content, 0, tty);
 	}
 	else if (has_group_redirection(node, 1) && node->type != NODE_GROUP && \
 	!is_builtin(node))

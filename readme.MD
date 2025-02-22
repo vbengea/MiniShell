@@ -1,7 +1,5 @@
 * Errores de correccion
 
-	- Gestionar las redirecciones (archivos temporales en un directorio accesible desde cualquier sitio)
-	
 	- Comprobar el funcionamiento de wildcard; el comando usado por Kevin fue `rm -rf **`. El caso es que es comando en concreto
 		hace match con los directorios `.` y `..` de cada folder. De ahi es que da el error aunque el comando se ejecuta.
 	
@@ -30,7 +28,10 @@
 	- El arbol tiene los flags de espacios para el siguiente comando pero en `5` y `6` estan juntos en el output.
 		echo "ba$PWD '$PWD'  3" 4 5  6 '$PWD'
 
+
 * Solved issues:
+
+	- Gestionar las redirecciones (archivos temporales en un directorio accesible desde cualquier sitio)
 
 	- La variable `?` esta sin inicializar al empezar el programa. Deberia mostrar 0 al igual que bash.
 

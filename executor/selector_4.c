@@ -45,7 +45,7 @@ void	waiter_util(t_ast_node *node, int status, t_terminal *tty)
 	set_history_status(status, tty);
 	if (status == 0)
 		multiple_output_redirections(node, tty);
-	file = tmp_path(node->nid, REDIRECT_IN);
+	file = tmp_path(node->nid, REDIRECT_IN, node, tty);
 	if (file)
 	{
 		if (access(file, F_OK) == 0)

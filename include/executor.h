@@ -16,6 +16,14 @@
 
 # include "headers.h"
 
+# ifndef OUT_FILE
+#  define OUT_FILE "/.outfile_"
+# endif
+
+# ifndef IN_FILE
+#  define IN_FILE "/.infile_"
+# endif
+
 void			waiter(t_ast_node *node, t_terminal *tty);
 void			selector(t_ast_node *node, t_terminal *tty);
 void			forker(t_ast_node *node, void (*f)(t_ast_node *node, \
@@ -54,7 +62,7 @@ char			*read_files_content(char **files, t_ast_node *ast, \
 char			*read_fd_content(int tmp);
 
 int				has_group_redirection(t_ast_node *ast, int is_infile);
-char			*tmp_path(int nid, t_redirect_type type);
+char			*tmp_path(int nid, t_redirect_type type, t_ast_node *node, t_terminal *tty);
 void			builtin_selector(t_ast_node *node, int should_exit, \
 				t_terminal *tty);
 char			*read_path_content(char *path);
