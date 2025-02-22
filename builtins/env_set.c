@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 23:37:45 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/22 11:46:24 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,18 @@ static	int	is_env_valid(char *key)
 	between = 1;
 	if (key)
 	{
-		if (ft_isalpha(key[0]) || key[0] == '_' || (key[0] == '?' && ft_strlen(key) == 1))
+		if (ft_isalpha(key[0]) || key[0] == '_' || \
+		(key[0] == '?' && ft_strlen(key) == 1))
 			start = 1;
 		if (ft_strlen(key) == 1)
 			between = 1;
 		else
 		{
 			i = 1;
-			while (key[i])
+			while (between == 1 && key[i])
 			{
-				if(key[i] != '_' && !ft_isalnum(key[i]))
-				{
+				if (key[i] != '_' && !ft_isalnum(key[i]))
 					between = 0;
-					break ;
-				}
 				i++;
 			}
 		}
