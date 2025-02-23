@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 18:18:52 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 12:28:31 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/23 11:07:54 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ bool	is_valid_redirection(t_token *token, t_token *prev);
 
 t_token	*process_token(const char *input, int *i);
 t_token	*process_operator(const char *input, int *i);
+
+bool	is_logic_operator(t_token_type type);
 
 #endif

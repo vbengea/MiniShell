@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 12:00:40 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 12:05:54 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/23 11:07:39 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	token_is_dash(t_token *token)
 		&& token->value && ft_cmpexact(token->value, "-"));
 }
 
-static bool	is_logic_operator(t_token_type type)
+bool	is_logic_operator(t_token_type type)
 {
 	return (type == TOKEN_AND || type == TOKEN_OR);
 }

@@ -6,7 +6,7 @@
 /*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 13:41:36 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/19 12:05:33 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/23 11:11:57 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,13 @@ bool	check_syntax(t_token *tokens, t_token *prev)
 
 	if (!tokens)
 		return (true);
+	if (is_logic_operator(tokens->type))
+		return (printf("Syntax error: AND / OR at first token\n"), false);
 	current = tokens;
 	while (current)
 	{
+		if (!current->next && is_logic_operator(current->type))
+			return (printf("Syntax error: AND / OR at last token\n"), false);
 		if (current->type == TOKEN_INVALID)
 			return (printf("Syntax error: INVALID TOKEN\n"), false);
 		if (!is_valid_pipe(current, prev))
