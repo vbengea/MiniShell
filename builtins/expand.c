@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/23 14:58:52 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 15:12:44 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ char	*interpolation(char *words, int arg_index, t_terminal *tty)
 		{
 			if (words[j] == '~' && (!words[j + 1] || words[j + 1] == '/'))
 				parsed_word = expand_diacritical("HOME", &j, parsed_word, tty);
-			else if (words[j] == '$' && words[j + 1] && !ft_isspace(words[j + 1]))
+			else if (words[j] == '$' && words[j + 1] && \
+				!ft_isspace(words[j + 1]))
 				parsed_word = expand_variable(words, &j, parsed_word, tty);
 			else
 				parsed_word = ft_charadd(words[j], parsed_word, j);
