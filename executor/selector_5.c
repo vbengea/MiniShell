@@ -6,21 +6,20 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:49:26 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/23 14:04:59 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 14:11:46 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/headers.h"
 
-void	parse_command_inner(char **inter, t_ast_node *node, char ***args)
+void	parse_command_inner(char **inter, char ***args)
 {
 	int		j;
 
 	j = 0;
-	(void) node;
- 	while (inter[j])
+	while (inter[j])
 	{
-		*args = expantion(inter[j], *args, node);
+		*args = expantion(inter[j], *args);
 		j++;
 	}
 }
@@ -34,7 +33,7 @@ void	parse_command_master(t_ast_node *node, int i, char ***args, \
 
 	str = interpolation(node->args[i], i, tty);
 	if (ft_cmpexact("echo", node->args[0]))
-		*args = expantion(str, *args, node);
+		*args = expantion(str, *args);
 	else
 	{
 		inter = ft_split(str, ' ');
@@ -45,9 +44,9 @@ void	parse_command_master(t_ast_node *node, int i, char ***args, \
 			while (inter[j])
 				j++;
 			if (j > 1)
-				parse_command_inner(inter, node, args);
+				parse_command_inner(inter, args);
 			else if (j == 1)
-				*args = expantion(inter[0], *args, node);
+				*args = expantion(inter[0], *args);
 			clear_arr_of_strs(inter);
 		}
 	}

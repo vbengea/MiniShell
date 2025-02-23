@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:49:26 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/23 13:44:29 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 14:10:15 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	parse_command(t_ast_node *node, t_terminal *tty)
 			else
 			{
 				str = node->args[i];
-				args = expantion(str, args, node);
+				args = expantion(str, args);
 			}
 			i++;
 		}
