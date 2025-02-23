@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_wildcard.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:16:58 by vbengea           #+#    #+#             */
-/*   Updated: 2025/02/13 17:06:54 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 10:52:09 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ t_list	*ft_wildcard(char *input)
 	entry = readdir(dir);
 	while (entry)
 	{
-		add_node(&copy_files, entry->d_name);
+		if (ft_strcmp(entry->d_name, ".") != 0
+			&& ft_strcmp(entry->d_name, "..") != 0)
+			add_node(&copy_files, entry->d_name);
 		entry = readdir(dir);
 	}
 	closedir(dir);

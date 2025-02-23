@@ -1,8 +1,5 @@
 * Errores de correccion
 
-	- Comprobar el funcionamiento de wildcard; el comando usado por Kevin fue `rm -rf **`. El caso es que es comando en concreto
-		hace match con los directorios `.` y `..` de cada folder. De ahi es que da el error aunque el comando se ejecuta.
-
 	- CTRL + D tuvo un comportamiendo raro en el heredoc durante la correccion que no he podido replicar. 
 
 	- El historial tiene un comportamiento raro cuando se esta ejecutando un heredoc.
@@ -24,6 +21,9 @@
 
 
 * Solved issues:
+
+	- Comprobar el funcionamiento de wildcard; el comando usado por Kevin fue `rm -rf **`. El caso es que es comando en concreto
+		hace match con los directorios `.` y `..` de cada folder. De ahi es que da el error aunque el comando se ejecuta.
 
 	- ?? Exandir variables en heredoc ?? Esto no es necesario pero antes funcionaba.
 
