@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/23 15:12:44 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 15:27:16 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char	*extract_variable(char *str, int *i, t_terminal *tty)
 	char	*r;
 
 	r = ft_strdup("");
-	cmp = ft_calloc(1, ft_strlen(str) + 1);
-	if (cmp)
+	if (r)
 	{
-		if (r)
+		cmp = ft_calloc(1, ft_strlen(str) + 1);
+		if (cmp)
 		{
 			while (is_identifier(str[*i]))
 			{
@@ -35,8 +35,8 @@ char	*extract_variable(char *str, int *i, t_terminal *tty)
 				r = ft_stradd(r, s);
 				free(s);
 			}
+			free(cmp);
 		}
-		free(cmp);
 	}
 	return (r);
 }
