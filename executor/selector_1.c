@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 12:10:56 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/23 12:33:39 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 12:38:57 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	forker(t_ast_node *node, void (*f)(t_ast_node *node, int hold, \
 
 void	selector_node(t_ast_node *node, t_terminal *tty)
 {
-	t_ast_node *parent;
+	t_ast_node	*parent;
 
 	parent = parent_no_group(node);
 	if (parent)
