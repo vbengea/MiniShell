@@ -176,7 +176,7 @@ git: norm
 	rm -f __tmp__
 	rm -rf one
 	git add -A
-	git commit -am "echo: we are not ouputing the dollar sign"
+	git commit -am "echo: we were not supporting virgulilla"
 	git config pull.rebase false
 	git push
 

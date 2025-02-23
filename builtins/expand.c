@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 20:48:23 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/23 14:44:04 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 14:58:52 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,26 @@ char	*expand_variable(char *words, int *j, char *parsed_word, \
 	return (parsed_word);
 }
 
+char	*expand_diacritical(char *words, int *j, char *parsed_word, \
+	t_terminal *tty)
+{
+	char	*s;
+
+	s = get_env(NULL, -1, words, tty);
+	if (s)
+	{
+		if (*j == 0 && *s)
+		{
+			parsed_word[0] = s[0];
+			parsed_word = ft_stradd(parsed_word, (s + 1));
+		}
+		else
+			parsed_word = ft_stradd(parsed_word, s);
+		free(s);
+	}
+	return (parsed_word);
+}
+
 char	*interpolation(char *words, int arg_index, t_terminal *tty)
 {
 	int		j;
@@ -78,7 +98,9 @@ char	*interpolation(char *words, int arg_index, t_terminal *tty)
 	{
 		while (words && words[j])
 		{
-			if (words[j] == '$' && words[j + 1] && !ft_isspace(words[j + 1]))
+			if (words[j] == '~' && (!words[j + 1] || words[j + 1] == '/'))
+				parsed_word = expand_diacritical("HOME", &j, parsed_word, tty);
+			else if (words[j] == '$' && words[j + 1] && !ft_isspace(words[j + 1]))
 				parsed_word = expand_variable(words, &j, parsed_word, tty);
 			else
 				parsed_word = ft_charadd(words[j], parsed_word, j);
