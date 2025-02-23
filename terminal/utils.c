@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbengea <vbengea@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:57:15 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 10:36:19 by vbengea          ###   ########.fr       */
+/*   Updated: 2025/02/23 10:34:41 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	tty_init(char **env, t_terminal *tty)
 		tty->env_cmd[0] = NULL;
 		tty->myhist = NULL;
 		tty->prompt = NULL;
+		tty->exit = -1;
 	}
 }
 

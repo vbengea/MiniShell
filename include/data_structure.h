@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 00:59:17 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 15:10:04 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 10:34:10 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_terminal
 	t_history	*myhist;
 	int			files[3];
 	char		*prompt;
+	int			exit;
 }	t_terminal;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:03:32 by juaflore          #+#    #+#             */
-/*   Updated: 2025/02/22 10:10:07 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 10:39:32 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ void			parse_command_inner(char **inter, t_ast_node *node, \
 void			parse_command_master(t_ast_node *node, int i, char ***args, \
 	t_terminal *tty);
 void			child_redirect(int fd[2], t_ast_node *node, t_terminal *tty);
+t_ast_node		*parent_no_group(t_ast_node *node);
 
 #endif

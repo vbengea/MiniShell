@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/21 00:28:35 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 10:34:57 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	execute_ast(t_terminal *tty)
 		tty->env_cmd[0] = NULL;
 	}
 	tty->ast = NULL;
+	tty->exit = -1;
 }
 
 void	loop_terminal(t_terminal *tty)

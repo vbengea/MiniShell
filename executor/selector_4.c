@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:50:17 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/20 09:49:03 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 12:34:04 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,33 @@ void	set_history_status(int status, t_terminal *tty)
 	}
 }
 
+t_ast_node	*parent_no_group(t_ast_node *node)
+{
+	t_ast_node	*parent;
+
+	parent = NULL;
+	if (node)
+	{
+		parent = node->parent;
+		while (parent)
+		{
+			if (parent->type == NODE_AND || parent->type == NODE_OR)
+				break ;
+			parent = parent->parent;
+		}
+	}
+	return (parent);
+}
+
 void	waiter_util(t_ast_node *node, int status, t_terminal *tty)
 {
 	char		*file;
-	t_ast_node	*parent;
 
 	if (status >= SIGHUP && status <= (SIGSYS + 33))
 		status += 128;
 	else if (status > 256)
 		status = status >> 8;
-	parent = node->parent;
-	while (parent)
-	{
-		parent->exit = status;
-		parent = parent->parent;
-	}
+	tty->exit = status;
 	node->exit = status;
 	set_history_status(status, tty);
 	if (status == 0)

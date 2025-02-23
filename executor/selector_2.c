@@ -6,7 +6,7 @@
 /*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:47:46 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/21 09:52:13 by jflores          ###   ########.fr       */
+/*   Updated: 2025/02/23 12:33:33 by jflores          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	navigator(t_ast_node *node, int hold, t_terminal *tty)
 			close(node->out_fd);
 			node->out_fd = -1;
 		}
-		cleanup(NULL, 0, node, tty);
+		if (tty->exit > 0)
+			cleanup(NULL, 1, node, tty);
+		else
+			cleanup(NULL, 0, node, tty);
 	}
 }
 

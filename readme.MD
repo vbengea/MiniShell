@@ -4,8 +4,6 @@
 
 	- El historial tiene un comportamiento raro cuando se esta ejecutando un heredoc.
 
-	- Verificar las prioridades de los parentesis. 
-
 
 * To implement:
 
@@ -21,6 +19,8 @@
 
 
 * Solved issues:
+
+	- Verificar las prioridades de los parentesis. 
 
 	- Comprobar el funcionamiento de wildcard; el comando usado por Kevin fue `rm -rf **`. El caso es que es comando en concreto
 		hace match con los directorios `.` y `..` de cada folder. De ahi es que da el error aunque el comando se ejecuta.
