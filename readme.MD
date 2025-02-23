@@ -4,11 +4,11 @@
 
 	- El historial tiene un comportamiento raro cuando se esta ejecutando un heredoc.
 
-	- El arbol tiene los flags de espacios para el siguiente comando pero en `5` y `6` estan juntos en el output.
-		echo "ba$PWD '$PWD'  3" 4 5  6 '$PWD'
-
 
 * Solved issues:
+
+	- El arbol tiene los flags de espacios para el siguiente comando pero en `5` y `6` estan juntos en el output.
+		echo "ba$PWD '$PWD'  3" 4 5  6 '$PWD'
 
 	- En un momento me dio memory leaks:
 		ls -l > file1 > file2 > file3 > file4 | << EOF << END
