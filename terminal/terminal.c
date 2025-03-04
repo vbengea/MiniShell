@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 00:13:20 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/23 10:34:57 by jflores          ###   ########.fr       */
+/*   Updated: 2025/03/04 13:27:51 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execute_ast(t_terminal *tty)
 	{
 		id = 0;
 		assign_ids(tty->ast, &id);
-		ast_printer(tty->ast, 0);
+		// ast_printer(tty->ast, 0);
 		tty->files[0] = STDIN_FILENO;
 		tty->files[1] = STDOUT_FILENO;
 		tty->files[2] = 0;

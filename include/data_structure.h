@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_structure.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jflores <jflores@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbengea < vbengea@student.42madrid.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 00:59:17 by jflores           #+#    #+#             */
-/*   Updated: 2025/02/23 10:34:10 by jflores          ###   ########.fr       */
+/*   Updated: 2025/03/04 13:27:17 by vbengea          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ typedef struct s_ast_node
 	int					traversed;
 	bool				env_declare;
 	bool				has_env;
-	int					expand_flag[200];
-	int					has_space[200];
+	int					expand_flag[MAX_FLAGS];
+	int					has_space[MAX_FLAGS];
 	int					args_index;
 	char				*path;
 	int					last;
