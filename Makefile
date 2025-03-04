@@ -5,26 +5,28 @@ GREEN			:=	\033[1;32m
 NC				:=	\033[0m
 
 CC				:= 	cc
-CFLAGS			:= 	-Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include -g
+CFLAGS			:= 	-Wall -Wextra -Werror -Iinclude
 SFLAGS			:= 	-g3 -fsanitize=address
 
 VALGRIND_PATH	:=	./tmp/suppressions/valgrind.supp
 VALGRIND_VALE	:=	./tmp/suppressions/new_suppression.supp
 VALGRIND_JUAF	:=	./tmp/suppressions/mac.supp
 VFLAGS			:=	--leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --suppressions=$(VALGRIND_VALE) # --trace-children=yes
-LDFLAGS 		:=	-lreadline -L/opt/homebrew/opt/readline/lib
+LDFLAGS 		:=	-lreadline
 
-LIBFT_DIR		:= 	./libft
+SRCS_DIR		:=	srcs
+LIBFT_DIR		:= 	include/libft
 LIBFT			:= 	$(LIBFT_DIR)/libft.a
-EXEC_DIR		:=	executor
-PARSER_DIR		:=  parser
-BUILTINS_DIR	:=  builtins
-SIGNALS_DIR		:=  terminal
-WILDCARD_DIR	:=  wildcard
-HISTORY_DIR		:=  history
-INCLUDE			:= 	./include/headers.h
+EXEC_DIR		:=	$(SRCS_DIR)/executor
+PARSER_DIR		:=  $(SRCS_DIR)/parser
+BUILTINS_DIR	:=  $(SRCS_DIR)/builtins
+SIGNALS_DIR		:=  $(SRCS_DIR)/terminal
+WILDCARD_DIR	:=  $(SRCS_DIR)/wildcard
+HISTORY_DIR		:=  $(SRCS_DIR)/history
+INCLUDE_DIR		:= 	include
+OBJ_DIR			:=  obj
 
-SRC				:= 	main.c\
+SRC				:= 	$(SRCS_DIR)/main.c \
 					$(EXEC_DIR)/utils_1.c \
 					$(EXEC_DIR)/utils_2.c \
 					$(EXEC_DIR)/utils_3.c \
@@ -126,11 +128,7 @@ SRC				:= 	main.c\
 					$(HISTORY_DIR)/load_history_from_file.c \
 					$(HISTORY_DIR)/save_history_to_file.c
 
-OBJ 			:= 	$(patsubst $(EXEC_DIR)/%.c, $(EXEC_DIR)/%.o, $(SRC)) \
-					$(patsubst $(SIGNALS_DIR)/%.c, $(SIGNALS_DIR)/%.o, $(SRC)) \
-					$(patsubst $(PARSER_DIR)/*/%.c, $(PARSER_DIR)/*/%.o, $(SRC)) \
-					$(patsubst $(BUILTINS_DIR)/%.c, $(BUILTINS_DIR)/%.o, $(SRC)) \
-					$(patsubst $(WILDCARD_DIR)/%.c, $(WILDCARD_DIR)/%.o, $(SRC))
+OBJ 			:= 	$(patsubst $(SRCS_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
 all: $(NAME)
 
@@ -138,23 +136,18 @@ $(NAME): $(LIBFT) $(OBJ) $(INCLUDE)
 	@$(CC) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
 	@echo "${GREEN}Minishell compiled${NC}"
 
+$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c -o $@ $<
+
 clean:
+	@rm -rf $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean --no-print-directory
-	@rm -f $(EXEC_DIR)/*.o
-	@rm -f $(PARSER_DIR)/*/*.o
-	@rm -f $(BUILTINS_DIR)/*.o
-	@rm -f $(SIGNALS_DIR)/*.o
-	@rm -f $(WILDCARD_DIR)/*.o
-	@rm -rf *.dSYM
-	@rm -f t0 t1 t2 t3 t4 t5 file1 file2 file3 file4 file5 tmp/__*
 	@echo "${RED}Objects removed${NC}"
 
 fclean: clean
-	@rm -rf one
-	@make -C $(LIBFT_DIR) fclean --no-print-directory
 	@rm -f $(NAME)
-	@rm -f a.out
-	@rm -f $(NAME).dSYM
+	@make -C $(LIBFT_DIR) fclean --no-print-directory
 	@echo "${RED}Objects and executable removed${NC}"
 
 re: fclean all
@@ -162,41 +155,12 @@ re: fclean all
 $(LIBFT):
 	@make -C $(LIBFT_DIR) all --no-print-directory
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -c -o $@ $<
-
-norm: fclean
-	#norminette $(SRC) $(INCLUDE)
-
-git: norm
-	rm -f t1
-	rm -f t2
-	rm -f infile
-	rm -f outfile
-	rm -f __tmp__
-	rm -rf one
-	git add -A
-	git commit -am "Memory leaks"
-	git config pull.rebase false
-	git push
-
-runner: re
-	./$(NAME)
-	@make -C . fclean --no-print-directory
-
-runneri: re
-	env -i ./$(NAME)
-	make -C . fclean
-
 valgrind: re
 	valgrind $(VFLAGS) ./$(NAME)
-
-valgrind_mini: re
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell -c "ls -l | cat -e | cat -e"
 
 sanitizer: $(LIBFT) $(OBJ) $(INCLUDE)
 	$(CC) $(SFLAGS) $(CFLAGS) $(SRC) $(LIBFT) -o $(NAME) $(LDFLAGS)
 	./$(NAME)
 	make -C . fclean
 
-.PHONY: all clean fclean re norm git runner valgrind sanitizer
+.PHONY: all clean fclean re valgrind sanitizer
